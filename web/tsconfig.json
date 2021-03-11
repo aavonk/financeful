@@ -22,7 +22,8 @@
       "@Hooks/*": ["./src/hooks/*"],
       "@Pages/*": ["./src/pages/*"],
       "@Constants/*": ["./src/constants/*"],
-      "@Globals/*": ["./src/globals/*"]
+      "@Globals/*": ["./src/globals/*"],
+      "@Generated/*": ["./src/generated/*"]
     }
   },
   "include": ["src"],

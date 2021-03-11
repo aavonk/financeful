@@ -20,6 +20,7 @@ const config: webpack.Configuration = {
       '@Constants': path.resolve(__dirname, 'src/constants'),
       '@Images': path.resolve(__dirname, 'src/images'),
       '@Globals': path.resolve(__dirname, 'src/globals'),
+      '@Generated': path.resolve(__dirname, 'src/generated'),
     },
   },
   ignoreWarnings: [/Failed to parse source map/],
