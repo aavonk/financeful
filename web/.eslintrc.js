@@ -27,10 +27,10 @@ module.exports = {
     'plugin:prettier/recommended', // Make this the last element so prettier config overrides other formatting rules
   ],
   rules: {
-    'no-unused-vars': [
-      'error',
-      { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
-    ],
+    // 'no-unused-vars': [
+    //   'error',
+    //   { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
+    // ],
     'prettier/prettier': [
       'error',
       { endOfLine: 'auto' },

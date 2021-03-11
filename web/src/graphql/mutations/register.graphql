@@ -1,0 +1,10 @@
+mutation Register($registerInput: RegisterInput!) {
+  register(registerInput: $registerInput) {
+    id
+    email
+    displayName
+    firstName
+    token
+    avatar
+  }
+}
