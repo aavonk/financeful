@@ -1,0 +1,14 @@
+# ignore generated modules/files
+/node_modules/
+/.vscode/
+package-lock.json
+yarn.lock
+/coverage/
+!public/assets/
+.env
+
+# IDE stuff
+.DS_Store
+npm-debug.log
+yarn-error.log
+.idea

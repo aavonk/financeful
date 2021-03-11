@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/",
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "es5",
+    "lib": ["es5", "es6", "dom"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "typeRoots": ["./src/types", "node_modules/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "@Components/*": ["./src/components/*"],
+      "@Common/*": ["./src/common/*"],
+      "@Images/*": ["./src/images/*"],
+      "@Hooks/*": ["./src/hooks/*"],
+      "@Pages/*": ["./src/pages/*"],
+      "@Constants/*": ["./src/constants/*"],
+      "@Globals/*": ["./src/globals/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
