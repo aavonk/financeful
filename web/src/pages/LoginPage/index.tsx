@@ -5,60 +5,58 @@ import { Container, Brand } from './style';
 import { UnderlineInput } from '@Common/FormElements';
 import { useForm } from '@Hooks/useForm';
 import Button from '@Common/Button';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useLoginMutation } from '@Generated/graphql';
+import { isApolloError } from '@apollo/client';
+
 type User = {
   email: string;
   password: string;
 };
 
-const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-      displayName
-      firstName
-      token
-      avatar
-    }
-  }
-`;
+type LoginErrors = {
+  email?: string;
+  password?: string;
+  general?: string;
+};
 
 function LoginPage() {
-  const [loginErrors, setLoginErrors] = React.useState({});
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const [loginErrors, setLoginErrors] = React.useState<LoginErrors | {}>({});
+  const [loginMutation] = useLoginMutation();
 
-  const { data, errors, handleChange, handleSubmit } = useForm<User>({
-    validations: {
-      email: {
-        custom: {
-          isValid: (value) => value.length > 6,
-          message: 'This must be a valid email address',
-        },
-      },
-      password: {
-        custom: {
-          isValid: (value) => value.length > 0,
-          message: 'A password is required',
-        },
-      },
-    },
-    onSubmit: () => console.log(data),
+  const { values, handleChange, handleSubmit } = useForm<User>({
     initialValue: {
       email: '',
       password: '',
     },
+    onSubmit: () => {
+      submitHandler(values);
+    },
   });
 
-  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update(_, result) {
-      console.log(result);
-    },
-    onError(err) {
-      setLoginErrors(err.graphQLErrors[0].extensions.exception.errors);
-    },
-    variables: data,
-  });
+  const submitHandler = async (values: User) => {
+    try {
+      const response = await loginMutation({
+        variables: { email: values.email, password: values.password },
+      });
 
+      if (response.data?.login) {
+        console.log(response.data.login);
+      }
+    } catch (e) {
+      if (isApolloError(e)) {
+        for (const error of e.graphQLErrors) {
+          const err: LoginErrors = error.extensions?.errors;
+          console.log(error.extensions?.errors);
+          setLoginErrors(err);
+        }
+      } else {
+        setLoginErrors({
+          general: 'An error has occured. Please try again later',
+        });
+      }
+    }
+  };
   return (
     <Container>
       <Card minWidth="400px">
@@ -71,28 +69,27 @@ function LoginPage() {
             <UnderlineInput
               type="text"
               id="email"
-              value={data.email}
+              value={values.email}
               onChange={handleChange('email')}
             >
               Email
             </UnderlineInput>
-            {errors && errors.email && <p>{errors.email}</p>}
             <UnderlineInput
               type="password"
               id="password"
-              value={data.password}
+              value={values.password}
               onChange={handleChange('password')}
             >
               Password
             </UnderlineInput>
-            {errors && errors.password && <p>{errors.password}</p>}
-
             <Button type="submit" fullWidth outline margin="1.2rem 0 0 0">
               Login
             </Button>
           </form>
         </CardBody>
       </Card>
+      {Object.keys(loginErrors).length > 0 &&
+        Object.values(loginErrors).map((err) => <div key={err}>{err}</div>)}
     </Container>
   );
 }

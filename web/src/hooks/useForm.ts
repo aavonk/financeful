@@ -4,7 +4,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 
 // EXAMPLE USAGE:
 /* 
-const { handleSubmit, handleChange, data, errors } = useForm({
+const { handleSubmit, handleChange, values, errors } = useForm({
   validations: {
     name: {
       pattern: {
@@ -58,7 +58,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
   initialValue?: Partial<T>;
   onSubmit?: () => void;
 }) => {
-  const [data, setData] = useState<T>((options?.initialValue || {}) as T);
+  const [values, setValues] = useState<T>((options?.initialValue || {}) as T);
   const [errors, setErrors] = useState<ErrorRecord<T>>({} as ErrorRecord<T>);
 
   const handleChange = <S extends unknown>(
@@ -66,8 +66,8 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     sanitizeFn?: (value: string) => S,
   ) => (e: ChangeEvent<HTMLInputElement & HTMLSelectElement>) => {
     const value = sanitizeFn ? sanitizeFn(e.target.value) : e.target.value;
-    setData({
-      ...data,
+    setValues({
+      ...values,
       [key]: value,
     });
   };
@@ -79,7 +79,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
       let valid = true;
       const newErrors = {} as ErrorRecord<T>;
       for (const key in validations) {
-        const value = data[key];
+        const value = values[key];
         const validation = validations[key];
 
         // REQUIRED
@@ -118,7 +118,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
   };
 
   return {
-    data,
+    values,
     handleChange,
     handleSubmit,
     errors,
