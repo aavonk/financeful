@@ -12,7 +12,8 @@ export type State = {
 export type Action =
   | { type: 'LOG_IN'; payload: User }
   | { type: 'LOGOUT' }
-  | { type: 'AUTH_ERROR'; payload: Error };
+  | { type: 'AUTH_ERROR'; payload: Error }
+  | { type: 'USER_LOADED'; payload: User };
 
 export type Dispatch = (action: Action) => void;
 

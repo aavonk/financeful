@@ -3,7 +3,9 @@ import { State, Action } from './types';
 export function authReducer(state: State, action: Action) {
   switch (action.type) {
     case 'LOG_IN':
-      localStorage.setItem('token', action.payload.token);
+      if (action.payload.token) {
+        localStorage.setItem('token', action.payload.token);
+      }
       return {
         ...state,
         user: action.payload,
@@ -17,6 +19,14 @@ export function authReducer(state: State, action: Action) {
         ...state,
         isAuthenticated: false,
         user: null,
+        loading: false,
+        error: null,
+      };
+    case 'USER_LOADED':
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
         loading: false,
         error: null,
       };

@@ -1,0 +1,10 @@
+query fetchUser {
+  getCurrentUser {
+    id
+    firstName
+    displayName
+    email
+    avatar
+    createdAt
+  }
+}

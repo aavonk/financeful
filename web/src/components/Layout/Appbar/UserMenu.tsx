@@ -2,14 +2,15 @@ import * as React from 'react';
 import { Dropdown } from '@Common/Dropdown';
 import { LogoutIcon, WalletIcon } from '@Common/Icons';
 import { StyledMenuItem, Divider } from './UserMenu.style';
+import { useAuth } from '@Context/auth/authContext';
 
 type UserMenuProps = {
   open: boolean;
-  // eslint-disable-next-line no-unused-vars
   setOpen: (_: boolean) => void;
 };
 
 function UserMenu({ open, setOpen }: UserMenuProps) {
+  const { dispatch } = useAuth();
   return (
     <>
       <Dropdown open={open} setOpen={setOpen} className="user-menu">
@@ -18,7 +19,7 @@ function UserMenu({ open, setOpen }: UserMenuProps) {
           <span>My Wallet</span>
         </StyledMenuItem>
         <Divider />
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => dispatch({ type: 'LOGOUT' })}>
           <LogoutIcon />
           <span>Logout</span>
         </StyledMenuItem>
