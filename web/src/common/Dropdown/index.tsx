@@ -20,10 +20,10 @@ export function Dropdown({
   className,
   ...props
 }: DropdownProps) {
-  const ref = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLUListElement>(null);
   const closeMenu = useCallback(
     (e) => {
-      if (ref && ref.current && ref.current.contains(e.target)) {
+      if (menuRef?.current && menuRef.current.contains(e.target)) {
         return;
       }
       setOpen(false);
@@ -46,6 +46,7 @@ export function Dropdown({
       id={id}
       $margin={margin}
       className={className}
+      ref={menuRef}
     >
       {children}
     </StyledUl>
