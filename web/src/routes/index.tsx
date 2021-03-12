@@ -4,6 +4,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
@@ -24,8 +25,12 @@ function Routes() {
             </Route>
             <Route exact path="/login" component={LoginPage} />
             <Layout>
-              <Route exact path="/dashboard" component={DashboardPage} />
-              <Route exact path="/transactions" component={TransactionPage} />
+              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
+              <PrivateRoute
+                exact
+                path="/transactions"
+                component={TransactionPage}
+              />
             </Layout>
           </Switch>
         </AuthProvider>

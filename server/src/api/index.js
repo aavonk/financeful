@@ -15,8 +15,8 @@ import {
 } from '../util/auth';
 
 const userApiDependencies = {
-  generateToken,
-  user: User,
+  userModel: User,
+  checkAuth,
 };
 
 const authApiDependencies = {
