@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, CardBody } from '@Common/Card';
 import IconSvg from '@Common/LogoSvg/IconSvg';
-import { Container, Brand } from './style';
+import { Container, Brand, ErrorMessage } from './style';
 import { UnderlineInput } from '@Common/FormElements';
 import { useForm } from '@Hooks/useForm';
 import Button from '@Common/Button';
@@ -59,6 +59,12 @@ function LoginPage() {
   };
   return (
     <Container>
+      {Object.keys(loginErrors).length > 0 &&
+        Object.values(loginErrors).map((err) => (
+          <ErrorMessage role="alert" key={err}>
+            {err}
+          </ErrorMessage>
+        ))}
       <Card minWidth="400px">
         <CardBody>
           <Brand>
@@ -88,8 +94,6 @@ function LoginPage() {
           </form>
         </CardBody>
       </Card>
-      {Object.keys(loginErrors).length > 0 &&
-        Object.values(loginErrors).map((err) => <div key={err}>{err}</div>)}
     </Container>
   );
 }
