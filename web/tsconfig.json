@@ -18,6 +18,7 @@
     "paths": {
       "@Components/*": ["./src/components/*"],
       "@Common/*": ["./src/common/*"],
+      "@Context/*": ["./src/context/*"],
       "@Images/*": ["./src/images/*"],
       "@Hooks/*": ["./src/hooks/*"],
       "@Pages/*": ["./src/pages/*"],

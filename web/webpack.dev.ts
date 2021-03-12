@@ -15,6 +15,7 @@ const config: webpack.Configuration = {
     alias: {
       '@Components': path.resolve(__dirname, 'src/components/'),
       '@Common': path.resolve(__dirname, 'src/common'),
+      '@Context': path.resolve(__dirname, 'src/context'),
       '@Hooks': path.resolve(__dirname, 'src/hooks'),
       '@Pages': path.resolve(__dirname, 'src/pages'),
       '@Constants': path.resolve(__dirname, 'src/constants'),

@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { Card, CardBody } from '@Common/Card';
+import { isApolloError } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+
 import IconSvg from '@Common/LogoSvg/IconSvg';
-import { Container, Brand, ErrorMessage } from './style';
+import Button from '@Common/Button';
+import { Card, CardBody } from '@Common/Card';
 import { UnderlineInput } from '@Common/FormElements';
 import { useForm } from '@Hooks/useForm';
-import Button from '@Common/Button';
 import { useLoginMutation } from '@Generated/graphql';
-import { isApolloError } from '@apollo/client';
+import { useAuth } from '@Context/auth/authContext';
+import { Container, Brand, ErrorMessage } from './style';
 
 type User = {
   email: string;
@@ -20,9 +23,12 @@ type LoginErrors = {
 };
 
 function LoginPage() {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const [loginErrors, setLoginErrors] = React.useState<LoginErrors | {}>({});
+  const [loginErrors, setLoginErrors] = React.useState<
+    LoginErrors | Record<string, never>
+  >({});
   const [loginMutation] = useLoginMutation();
+  const { dispatch } = useAuth();
+  const history = useHistory();
 
   const { values, handleChange, handleSubmit } = useForm<User>({
     initialValue: {
@@ -41,18 +47,29 @@ function LoginPage() {
       });
 
       if (response.data?.login) {
-        console.log(response.data.login);
+        dispatch({
+          type: 'LOG_IN',
+          payload: response.data.login,
+        });
+        history.push('/dashboard');
       }
     } catch (e) {
       if (isApolloError(e)) {
         for (const error of e.graphQLErrors) {
           const err: LoginErrors = error.extensions?.errors;
-          console.log(error.extensions?.errors);
           setLoginErrors(err);
+          dispatch({
+            type: 'AUTH_ERROR',
+            payload: err,
+          });
         }
       } else {
         setLoginErrors({
           general: 'An error has occured. Please try again later',
+        });
+        dispatch({
+          type: 'AUTH_ERROR',
+          payload: { error: 'An error has occured in the login process.' },
         });
       }
     }
