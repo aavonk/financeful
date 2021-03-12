@@ -96,6 +96,7 @@ function LoginPage() {
             <UnderlineInput
               type="text"
               id="email"
+              autoFocus={true}
               value={values.email}
               onChange={handleChange('email')}
             >
