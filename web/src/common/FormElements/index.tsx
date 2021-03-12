@@ -12,7 +12,7 @@ type InputTypes = {
     e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
   ) => void;
   value: string;
-  autoFocus?: boolean | string;
+  autoFocus?: boolean;
 };
 
 export function UnderlineInput(props: InputTypes) {
