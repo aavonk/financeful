@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { StyledUl } from './style';
 
 interface DropdownProps {
@@ -20,22 +20,29 @@ export function Dropdown({
   className,
   ...props
 }: DropdownProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const menuRef = useRef<HTMLUListElement>(null);
   const closeMenu = useCallback(
     (e) => {
       if (menuRef?.current && menuRef.current.contains(e.target)) {
         return;
       }
-      setOpen(false);
-      document.removeEventListener('mousedown', closeMenu);
+
+      if (menuRef?.current && !isMounted) {
+        setOpen(false);
+        document.removeEventListener('mousedown', closeMenu);
+      }
     },
     [setOpen],
   );
 
   useEffect(() => {
     if (open) {
+      setIsMounted(true);
       document.addEventListener('mousedown', closeMenu);
     }
+
+    return () => setIsMounted(false);
   }, [closeMenu, open]);
   return (
     <StyledUl

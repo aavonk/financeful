@@ -26,7 +26,7 @@ function LoginPage() {
   const [loginErrors, setLoginErrors] = React.useState<
     LoginErrors | Record<string, never>
   >({});
-  const [loginMutation] = useLoginMutation();
+  const [loginMutation, { loading }] = useLoginMutation();
   const { dispatch } = useAuth();
   const history = useHistory();
 
@@ -39,6 +39,10 @@ function LoginPage() {
       submitHandler(values);
     },
   });
+
+  if (loading) {
+    console.log('LOADINGGGGG');
+  }
 
   const submitHandler = async (values: User) => {
     try {

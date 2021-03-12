@@ -29,10 +29,6 @@ type Props = {
   setDrawerOpen: (__: boolean) => void;
 };
 
-const TooltipStyle = {
-  width: 'auto',
-} as const;
-
 function Appbar({ setDrawerOpen, drawerOpen }: Props) {
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
