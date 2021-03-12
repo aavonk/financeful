@@ -5,6 +5,11 @@ import {
 } from '../../util/validators';
 
 export const usersResolver = {
+  Query: {
+    async getCurrentUser(_, __, { dataSources: { userAPI } }) {
+      return userAPI.getCurrentUser();
+    },
+  },
   Mutation: {
     async login(_, { email, password }, { dataSources: { authAPI } }) {
       const { errors, valid } = validateLoginInput(email, password);

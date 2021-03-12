@@ -12,17 +12,24 @@ export default class UsersAPI extends DataSource {
     this.context = config.context;
   }
 
-  async fetchCurrentUser() {
+  async getCurrentUser() {
     const user = this.checkAuth(this.context);
 
     if (!user) {
       throw new AuthenticationError('Not authorized');
     }
 
-    const currentUser = await this.user.findById(user.id);
+    const currentUser = await this.user
+      .findById(user.id)
+      .select('-password')
+      .lean()
+      .exec();
     if (!currentUser) {
       throw new Error('User not found by ID');
     }
-    return currentUser;
+    return {
+      ...currentUser,
+      id: currentUser._id,
+    };
   }
 }

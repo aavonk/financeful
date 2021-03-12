@@ -27,8 +27,8 @@ export const typeDefs = gql`
     firstName: String
     avatar: String
     createdAt: String!
-    token: String!
-    email: String!
+    token: String
+    email: String
   }
   type Transaction {
     id: ID!
@@ -48,6 +48,7 @@ export const typeDefs = gql`
   type Query {
     getTransactions: [Transaction]!
     getTransaction(transId: ID!): Transaction!
+    getCurrentUser: User
   }
   type Mutation {
     register(registerInput: RegisterInput): User!
