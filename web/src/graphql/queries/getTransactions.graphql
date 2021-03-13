@@ -1,0 +1,10 @@
+query GetTransactions {
+  getTransactions {
+    id
+    date
+    payee
+    category
+    type
+    createdAt
+  }
+}

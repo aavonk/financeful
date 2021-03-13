@@ -110,7 +110,13 @@ function LoginPage() {
             >
               Password
             </UnderlineInput>
-            <Button type="submit" fullWidth outline margin="1.2rem 0 0 0">
+            <Button
+              type="submit"
+              fullWidth
+              outline
+              margin="1.2rem 0 0 0"
+              disabled={loading}
+            >
               Login
             </Button>
           </form>

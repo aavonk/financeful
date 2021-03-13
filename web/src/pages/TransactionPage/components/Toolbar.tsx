@@ -1,11 +1,13 @@
-import { FlexRow } from '@Globals/index';
+import { ToolbarRoot } from './style';
+import Searchbox from './Searchbox';
 import Tabs from './Tabs';
 
 function Toolbar() {
   return (
-    <FlexRow>
+    <ToolbarRoot>
       <Tabs />
-    </FlexRow>
+      <Searchbox />
+    </ToolbarRoot>
   );
 }
 

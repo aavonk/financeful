@@ -8,6 +8,7 @@ import {
   BsWallet,
   BsPlusCircle,
   BsCreditCard,
+  BsSearch,
 } from 'react-icons/bs';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
@@ -60,4 +61,8 @@ export const PlusIcon = ({ ...props }) => {
 
 export const CreditCardIcon = ({ ...props }) => {
   return <BsCreditCard {...props} />;
+};
+
+export const SearchIcon = ({ ...props }) => {
+  return <BsSearch {...props} />;
 };
