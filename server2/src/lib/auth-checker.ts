@@ -13,7 +13,7 @@ export const authChecker: AuthChecker<Context> = ({ context }) => {
         return false;
       }
       //@ts-ignore
-      context.user = user.id;
+      context.user = user;
       return true;
     }
     return false;

@@ -63,14 +63,14 @@ export class AuthResolver {
 
   @Mutation(() => User)
   async register(
-    @Arg('data') data: RegisterInput,
+    @Arg('input') input: RegisterInput,
     @Ctx() { prisma }: Context,
   ): Promise<User> {
     const { errors, valid } = validateRegisterFields(
-      data.displayName,
-      data.email,
-      data.password,
-      data.passwordConfirmation,
+      input.displayName,
+      input.email,
+      input.password,
+      input.passwordConfirmation,
     );
 
     if (!valid) {
@@ -78,7 +78,7 @@ export class AuthResolver {
     }
     const existingUser = await prisma.user.findUnique({
       where: {
-        email: data.email,
+        email: input.email,
       },
     });
 
@@ -93,14 +93,14 @@ export class AuthResolver {
       );
     }
 
-    const hashedPassword = await hashpashword(data.password);
-    const firstName = data.displayName.split(' ')[0];
+    const hashedPassword = await hashpashword(input.password);
+    const firstName = input.displayName.split(' ')[0];
 
     const newUser = await prisma.user.create({
       data: {
-        email: data.email,
+        email: input.email,
         password: hashedPassword,
-        displayName: data.displayName,
+        displayName: input.displayName,
         firstName: firstName,
       },
     });
