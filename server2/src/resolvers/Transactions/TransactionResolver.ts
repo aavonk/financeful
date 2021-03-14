@@ -1,12 +1,14 @@
-import { Resolver, Query, Mutation, Authorized, Arg, Ctx } from 'type-graphql';
-import { TransactionInput } from './transaction.types';
+import { Resolver, Mutation, Authorized, Arg, Ctx } from 'type-graphql';
+import { AuthenticationError } from 'apollo-server-express';
+import { TransactionInput, Updates } from './transaction.types';
 import { Transaction } from '../../types/Transaction';
 import { Context } from '../../types/Context';
 
 @Resolver()
 export class TransactionResolver {
+  // ------ CREATE TRANSACTION ------ //
   @Authorized()
-  @Mutation()
+  @Mutation(() => Transaction)
   async createTransaction(
     @Arg('input') input: TransactionInput,
     @Ctx() { prisma, user }: Context,
@@ -21,5 +23,65 @@ export class TransactionResolver {
         type: input.type,
       },
     });
+    return transaction;
+  }
+
+  // ------ DELETE TRANSACTION ------ //
+  @Authorized()
+  @Mutation(() => String)
+  async deleteTransaction(
+    @Arg('id') id: number,
+    @Ctx() { user, prisma }: Context,
+  ): Promise<string> {
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (transaction?.userId !== user.id) {
+      throw new AuthenticationError('Unauthorized to perform this action');
+    }
+
+    await prisma.transaction.delete({
+      where: {
+        id: transaction.id,
+      },
+    });
+    return 'Successfully removed';
+  }
+
+  // ------ UPDATE TRANSACTION ------ //
+  @Authorized()
+  @Mutation(() => Transaction)
+  async updateTransaction(
+    @Arg('id') id: number,
+    @Arg('input') input: Updates,
+    @Ctx() { prisma, user }: Context,
+  ): Promise<Transaction> {
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!transaction) {
+      throw new Error('Unable to find transaction');
+    }
+
+    if (transaction?.userId !== user.id) {
+      throw new AuthenticationError('Unauthorized to perform this action');
+    }
+
+    const updatedTransaction = await prisma.transaction.update({
+      where: {
+        id: transaction.id,
+      },
+      data: {
+        ...input,
+      },
+    });
+
+    return updatedTransaction;
   }
 }

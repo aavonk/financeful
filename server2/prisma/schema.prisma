@@ -21,11 +21,7 @@ model User {
   createdAt   DateTime      @default(now())
 }
 
-enum Type {
-  INCOME
-  EXPENSE
-  TRANSFER
-}
+
 
 model Transaction {
   id          Int      @id @default(autoincrement())
@@ -35,7 +31,7 @@ model Transaction {
   description String?
   amount      Int
   category    String?
-  type        Type
+  type        String
   date        DateTime
 
 }

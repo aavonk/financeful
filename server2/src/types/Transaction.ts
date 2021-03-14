@@ -1,24 +1,13 @@
-import { Field, ObjectType, ID, Int, registerEnumType } from 'type-graphql';
+import { Field, ObjectType, ID, Int } from 'type-graphql';
 import { User } from './User';
-
-export enum Type {
-  INCOME = 'INCOME',
-  EXPENSE = 'ESPENSE',
-  TRANSFER = 'TRANSFER',
-}
-
-registerEnumType(Type, {
-  name: 'Type',
-  description: 'Types of transactions',
-});
 
 @ObjectType()
 export class Transaction {
   @Field(() => ID)
   id: number;
 
-  @Field(() => User)
-  user: User;
+  @Field(() => User, { nullable: true })
+  user?: User;
 
   @Field(() => Int)
   userId: number;
@@ -27,16 +16,16 @@ export class Transaction {
   payee: string;
 
   @Field(() => String, { nullable: true })
-  description: string;
+  description?: string | null;
 
   @Field(() => Int)
   amount: number;
 
   @Field(() => String, { nullable: true })
-  category: string;
+  category?: string | null;
 
-  @Field(() => Type)
-  type: Type;
+  @Field(() => String)
+  type: string;
 
   @Field(() => Date)
   date: Date;

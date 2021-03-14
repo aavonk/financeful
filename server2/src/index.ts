@@ -7,6 +7,7 @@ import { authChecker as customAuthChecker } from './lib/auth-checker';
 import { HelloResolver } from './resolvers/HelloResolver';
 import { AuthResolver } from './resolvers/AuthResolver';
 import { UserResolver } from './resolvers/Users/UserResolver';
+import { TransactionResolver } from './resolvers/Transactions/TransactionResolver';
 
 const prisma = new PrismaClient();
 
@@ -15,7 +16,12 @@ const main = async () => {
   const PORT = process.env.port || 4000;
   const server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, AuthResolver, UserResolver],
+      resolvers: [
+        HelloResolver,
+        AuthResolver,
+        UserResolver,
+        TransactionResolver,
+      ],
       authChecker: customAuthChecker,
     }),
     context: ({ req }) => ({
