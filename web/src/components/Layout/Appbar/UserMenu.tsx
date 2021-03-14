@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dropdown } from '@Common/Dropdown';
+import Dropdown from '@Common/Dropdown';
 import { LogoutIcon, WalletIcon } from '@Common/Icons';
 import { StyledMenuItem, Divider } from './UserMenu.style';
 import { useAuth } from '@Context/auth/authContext';

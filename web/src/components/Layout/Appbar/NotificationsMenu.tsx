@@ -1,4 +1,4 @@
-import { Dropdown } from '@Common/Dropdown';
+import Dropdown from '@Common/Dropdown';
 type Props = {
   open: boolean;
   // eslint-disable-next-line no-unused-vars

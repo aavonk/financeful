@@ -1,11 +1,13 @@
 import styled, { css } from 'styled-components';
 
 type ButtonProps = {
-  outline?: boolean;
   fullWidth?: boolean;
   margin?: string;
-  variant: string;
 };
+
+export const Container = styled.div`
+  position: relative;
+`;
 export const StyledButton = styled.button<ButtonProps>`
   font-size: 1rem;
   min-width: 64px;
@@ -20,38 +22,29 @@ export const StyledButton = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   padding: 5px 15px;
+  background-color: ${({ theme }) => theme.colors.darkTwo};
   transition: background-color 0.2s ease-in-out;
   color: ${(props) => props.theme.colors.textPrimary};
   margin: ${(props) => (props.margin ? props.margin : '0')};
-  background-color: ${(props) =>
-    props.outline ? 'transparent' : props.theme.colors.primary};
-  border: ${(props) =>
-    props.outline ? '1px solid ' + props.theme.colors.primary : 'transparent'};
 
   &:hover {
-    border: ${(props) =>
-      props.outline
-        ? '1px solid ' + props.theme.colors.primary
-        : 'transparent'};
-    background-color: ${(props) =>
-      props.outline ? 'rgba(30, 136, 229, 0.08)' : '#007dcb'};
-    /*  */
+    background-color: ${({ theme }) => theme.colors.darkThree};
   }
   &:disabled {
     opacity: 0.5;
     cursor: auto;
   }
 
-  ${({ variant }) =>
-    variant === 'dark' &&
-    css`
-      background-color: ${({ theme }) => theme.colors.darkTwo};
-      color: ${({ theme }) => theme.colors.textPrimary};
-
-      &:hover {
-        background-color: ${({ theme }) => theme.colors.darkThree};
-      }
-    `}
+  &::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: '';
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+  }
   ${(props) =>
     props.fullWidth &&
     css`

@@ -57,4 +57,10 @@ export const StyledUl = styled.ul<Props>`
       right: 30px !important;
     }
   }
+
+  &.dropdown-button {
+    inset: 0px auto auto 0px;
+    position: absolute;
+    transform: translate(0px, 40px);
+  }
 `;

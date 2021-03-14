@@ -10,8 +10,7 @@ interface DropdownProps {
   margin?: string | null;
   className?: string;
 }
-
-export function Dropdown({
+function Dropdown({
   open,
   setOpen,
   id,
@@ -59,3 +58,5 @@ export function Dropdown({
     </StyledUl>
   );
 }
+
+export default Dropdown;
