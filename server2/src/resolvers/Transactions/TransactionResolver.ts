@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Authorized, Arg, Ctx } from 'type-graphql';
+import { Resolver, Mutation, Authorized, Arg, Ctx, Query } from 'type-graphql';
 import { AuthenticationError } from 'apollo-server-express';
 import { TransactionInput, Updates } from './transaction.types';
 import { Transaction } from '../../types/Transaction';
@@ -6,6 +6,44 @@ import { Context } from '../../types/Context';
 
 @Resolver()
 export class TransactionResolver {
+  // ------ GET MANY TRANSACTIONS ------ //
+  //TODO: Pagination
+  @Authorized()
+  @Query(() => [Transaction], { nullable: true })
+  async getTransactions(
+    @Ctx() { user, prisma }: Context,
+  ): Promise<Transaction[]> {
+    return await prisma.transaction.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+  }
+
+  // ------ GET ONE TRANSACTION ------ //
+  @Authorized()
+  @Query(() => Transaction, { nullable: true })
+  async getTransaction(
+    @Arg('id') id: number,
+    @Ctx() { user, prisma }: Context,
+  ): Promise<Transaction | null> {
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!transaction) {
+      throw new Error('No Transaction found by that ID');
+    }
+
+    if (transaction.userId !== user.id) {
+      throw new AuthenticationError('Not authorized');
+    }
+
+    return transaction;
+  }
+
   // ------ CREATE TRANSACTION ------ //
   @Authorized()
   @Mutation(() => Transaction)
