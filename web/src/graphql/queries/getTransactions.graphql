@@ -1,10 +1,12 @@
 query GetTransactions {
   getTransactions {
     id
-    date
+    userId
     payee
+    description
+    amount
     category
     type
-    createdAt
+    date
   }
 }

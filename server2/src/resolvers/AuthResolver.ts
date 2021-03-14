@@ -40,10 +40,14 @@ export class AuthResolver {
       },
     });
     if (!user) {
-      throw new Error('No account found by that email');
+      throw new UserInputError('Invalid Credentials', {
+        errors: {
+          general: 'Invalid Credentials',
+        },
+      });
     }
 
-    const match = validatePassword(password, user.password);
+    const match = await validatePassword(password, user.password);
 
     if (!match) {
       throw new UserInputError('Invalid Credentials', {
