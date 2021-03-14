@@ -1,10 +1,17 @@
+type Fields = {
+  displayName?: string;
+  email?: string;
+  password?: string;
+  passwordConfirmation?: string;
+};
+
 export const validateRegisterFields = (
-  displayName,
-  email,
-  password,
-  passwordConfirmation,
+  displayName: string,
+  email: string,
+  password: string,
+  passwordConfirmation: any,
 ) => {
-  const errors = {};
+  const errors: Fields = {};
 
   if (displayName.trim() === '') {
     errors.displayName = 'This field is required';
@@ -29,8 +36,8 @@ export const validateRegisterFields = (
   };
 };
 
-export const validateLoginInput = (email, password) => {
-  const errors = {};
+export const validateLoginInput = (email: string, password: string) => {
+  const errors: Fields = {};
   if (email.trim() === '') {
     errors.email = 'This field is required';
   } else {

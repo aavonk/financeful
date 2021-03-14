@@ -16,8 +16,82 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  hello: Scalars['String'];
+  getCurrentUser: User;
+  getTransactions?: Maybe<Array<Transaction>>;
+  getTransaction?: Maybe<Transaction>;
+};
+
+export type QueryGetTransactionArgs = {
+  id: Scalars['Float'];
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['ID'];
+  firstName: Scalars['String'];
+  displayName: Scalars['String'];
+  email: Scalars['String'];
+  password?: Scalars['String'];
+  avatar?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  token?: Maybe<Scalars['String']>;
+};
+
+export type Transaction = {
+  __typename?: 'Transaction';
+  id: Scalars['ID'];
+  user?: Maybe<User>;
+  userId: Scalars['Int'];
+  payee: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  amount: Scalars['Int'];
+  category?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+  date: Scalars['DateTime'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createSomething: Scalars['Boolean'];
+  login: User;
+  register: User;
+  createTransaction: Transaction;
+  deleteTransaction: Scalars['String'];
+  updateTransaction: Transaction;
+};
+
+export type MutationCreateSomethingArgs = {
+  minutes: Scalars['Int'];
+  title?: Maybe<Scalars['String']>;
+};
+
+export type MutationLoginArgs = {
+  password: Scalars['String'];
+  email: Scalars['String'];
+};
+
+export type MutationRegisterArgs = {
+  input: RegisterInput;
+};
+
+export type MutationCreateTransactionArgs = {
+  input: TransactionInput;
+};
+
+export type MutationDeleteTransactionArgs = {
+  id: Scalars['Float'];
+};
+
+export type MutationUpdateTransactionArgs = {
+  input: Updates;
+  id: Scalars['Float'];
 };
 
 export type RegisterInput = {
@@ -30,95 +104,20 @@ export type RegisterInput = {
 export type TransactionInput = {
   payee: Scalars['String'];
   date: Scalars['String'];
-  amount: Scalars['Float'];
+  amount: Scalars['Int'];
+  description?: Maybe<Scalars['String']>;
   category?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  type: Scalars['String'];
 };
 
-export type TransactionUpdates = {
+export type Updates = {
   payee?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['Float']>;
+  amount?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
   category?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
-
-export type User = {
-  __typename?: 'User';
-  id: Scalars['ID'];
-  displayName: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-  createdAt: Scalars['String'];
-  token?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-};
-
-export type Transaction = {
-  __typename?: 'Transaction';
-  id: Scalars['ID'];
-  payee: Scalars['String'];
-  date: Scalars['String'];
-  amount: Scalars['Float'];
-  category?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['String']>;
-  user: Scalars['String'];
-};
-
-export type DeleteResponse = {
-  __typename?: 'DeleteResponse';
-  message?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  getTransactions: Array<Maybe<Transaction>>;
-  getTransaction: Transaction;
-  getCurrentUser?: Maybe<User>;
-};
-
-export type QueryGetTransactionArgs = {
-  transId: Scalars['ID'];
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  register: User;
-  login: User;
-  createTransaction: Transaction;
-  deleteTransaction: DeleteResponse;
-  updateTransaction?: Maybe<Transaction>;
-};
-
-export type MutationRegisterArgs = {
-  registerInput?: Maybe<RegisterInput>;
-};
-
-export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type MutationCreateTransactionArgs = {
-  transactionInput?: Maybe<TransactionInput>;
-};
-
-export type MutationDeleteTransactionArgs = {
-  transId: Scalars['ID'];
-};
-
-export type MutationUpdateTransactionArgs = {
-  transId: Scalars['ID'];
-  updates?: Maybe<TransactionUpdates>;
-};
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
-}
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -139,35 +138,46 @@ export type LoginMutation = { __typename?: 'Mutation' } & {
 };
 
 export type RegisterMutationVariables = Exact<{
-  registerInput: RegisterInput;
+  input: RegisterInput;
 }>;
 
 export type RegisterMutation = { __typename?: 'Mutation' } & {
   register: { __typename?: 'User' } & Pick<
     User,
-    'id' | 'email' | 'displayName' | 'firstName' | 'token' | 'avatar'
+    | 'id'
+    | 'email'
+    | 'displayName'
+    | 'firstName'
+    | 'token'
+    | 'avatar'
+    | 'createdAt'
   >;
 };
 
 export type FetchUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type FetchUserQuery = { __typename?: 'Query' } & {
-  getCurrentUser?: Maybe<
-    { __typename?: 'User' } & Pick<
-      User,
-      'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'
-    >
+  getCurrentUser: { __typename?: 'User' } & Pick<
+    User,
+    'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'
   >;
 };
 
 export type GetTransactionsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTransactionsQuery = { __typename?: 'Query' } & {
-  getTransactions: Array<
-    Maybe<
+  getTransactions?: Maybe<
+    Array<
       { __typename?: 'Transaction' } & Pick<
         Transaction,
-        'id' | 'date' | 'payee' | 'category' | 'type' | 'createdAt'
+        | 'id'
+        | 'userId'
+        | 'payee'
+        | 'description'
+        | 'amount'
+        | 'category'
+        | 'type'
+        | 'date'
       >
     >
   >;
@@ -228,14 +238,15 @@ export type LoginMutationOptions = Apollo.BaseMutationOptions<
   LoginMutationVariables
 >;
 export const RegisterDocument = gql`
-  mutation Register($registerInput: RegisterInput!) {
-    register(registerInput: $registerInput) {
+  mutation Register($input: RegisterInput!) {
+    register(input: $input) {
       id
       email
       displayName
       firstName
       token
       avatar
+      createdAt
     }
   }
 `;
@@ -257,7 +268,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
- *      registerInput: // value for 'registerInput'
+ *      input: // value for 'input'
  *   },
  * });
  */
@@ -343,11 +354,13 @@ export const GetTransactionsDocument = gql`
   query GetTransactions {
     getTransactions {
       id
-      date
+      userId
       payee
+      description
+      amount
       category
       type
-      createdAt
+      date
     }
   }
 `;
