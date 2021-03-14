@@ -12,6 +12,8 @@ export const authChecker: AuthChecker<Context> = ({ context }) => {
       if (!user) {
         return false;
       }
+      //@ts-ignore
+      context.user = user.id;
       return true;
     }
     return false;

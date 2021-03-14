@@ -1,11 +1,21 @@
-import { Mutation, Query, Resolver, Arg, Int, Authorized } from 'type-graphql';
+import {
+  Mutation,
+  Query,
+  Resolver,
+  Arg,
+  Int,
+  Authorized,
+  Ctx,
+} from 'type-graphql';
+import { Context } from '../types/Context';
 
 @Resolver()
 export class HelloResolver {
   @Authorized()
   @Query(() => String)
-  hello() {
-    return 'hi!';
+  hello(@Ctx() { user }: Context) {
+    console.log(user);
+    return `hi`;
   }
 
   @Mutation(() => Boolean)
