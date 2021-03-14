@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-
-export interface Context {
+import { ExpressContext } from 'apollo-server-express';
+export interface Context extends ExpressContext {
   prisma: PrismaClient;
+  user?: {
+    id: string;
+  };
 }

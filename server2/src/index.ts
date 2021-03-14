@@ -2,9 +2,10 @@ import 'reflect-metadata';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
+import { PrismaClient } from '@prisma/client';
+import { authChecker as customAuthChecker } from './lib/auth-checker';
 import { HelloResolver } from './resolvers/HelloResolver';
 import { AuthResolver } from './resolvers/AuthResolver';
-import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,7 @@ const main = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
       resolvers: [HelloResolver, AuthResolver],
+      authChecker: customAuthChecker,
     }),
     context: ({ req }) => ({
       req,

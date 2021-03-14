@@ -1,7 +1,8 @@
-import { Mutation, Query, Resolver, Arg, Int } from 'type-graphql';
+import { Mutation, Query, Resolver, Arg, Int, Authorized } from 'type-graphql';
 
 @Resolver()
 export class HelloResolver {
+  @Authorized()
   @Query(() => String)
   hello() {
     return 'hi!';
