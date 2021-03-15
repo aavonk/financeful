@@ -61,6 +61,6 @@ export const StyledUl = styled.ul<Props>`
   &.dropdown-button {
     inset: 0px auto auto 0px;
     position: absolute;
-    transform: translate(0px, 40px);
+    transform: translate(-26px, 40px);
   }
 `;

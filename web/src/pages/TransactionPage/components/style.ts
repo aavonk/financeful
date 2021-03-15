@@ -3,6 +3,7 @@ import { FlexRow } from '@Globals/index';
 
 export const ToolbarRoot = styled(FlexRow)`
   align-items: flex-end;
+  justify-content: space-between;
 `;
 
 export const TabContainer = styled(FlexRow)`
@@ -44,6 +45,11 @@ export const TabLabel = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
+export const ActionsContainer = styled(FlexRow)`
+  flex: 1 0 auto;
+  justify-content: flex-end;
+`;
+
 export const SearchContainer = styled.div`
   position: relative;
   max-width: 340px;
@@ -52,6 +58,7 @@ export const SearchContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 9px;
   padding: 0 0.25rem;
+  margin-right: 20px;
   & > svg {
     margin-right: 12px;
     height: 1.25rem;

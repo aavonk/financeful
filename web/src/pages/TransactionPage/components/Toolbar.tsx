@@ -1,14 +1,16 @@
-import { ToolbarRoot } from './style';
+import { ToolbarRoot, ActionsContainer } from './style';
 import Searchbox from './Searchbox';
 import Tabs from './Tabs';
-import Filters from './Filters';
+import SortButton from './SortButton';
 
 function Toolbar() {
   return (
     <ToolbarRoot>
       <Tabs />
-      <Searchbox />
-      <Filters />
+      <ActionsContainer>
+        <Searchbox />
+        <SortButton />
+      </ActionsContainer>
     </ToolbarRoot>
   );
 }

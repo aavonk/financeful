@@ -9,6 +9,7 @@ type ButtonProps = {
   margin?: string;
   disabled?: boolean;
   variant: 'primary' | 'outline' | 'dark';
+  id?: string;
 };
 
 const Button = ({
@@ -18,6 +19,7 @@ const Button = ({
   margin,
   disabled,
   variant,
+  id,
 }: ButtonProps) => {
   return (
     <StyledButton
@@ -26,6 +28,7 @@ const Button = ({
       margin={margin}
       disabled={disabled}
       variant={variant}
+      id={id}
     >
       <ButtonText>{children}</ButtonText>
     </StyledButton>

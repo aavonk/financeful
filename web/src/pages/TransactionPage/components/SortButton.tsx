@@ -1,8 +1,8 @@
 import DropdownButton from '@Common/DropdownButton';
 
-function Filters() {
+function SortButton() {
   return (
-    <DropdownButton text="Newest">
+    <DropdownButton text="Newest" ariaLabel="sort-transactions">
       <li>Hi</li>
       <li>Hi</li>
       <li>Hi</li>
@@ -11,4 +11,4 @@ function Filters() {
   );
 }
 
-export default Filters;
+export default SortButton;

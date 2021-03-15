@@ -9,6 +9,7 @@ interface DropdownProps {
   children: React.ReactNode;
   margin?: string | null;
   className?: string;
+  ariaLabeledBy?: string;
 }
 function Dropdown({
   open,
@@ -17,6 +18,7 @@ function Dropdown({
   children,
   margin,
   className,
+  ariaLabeledBy,
   ...props
 }: DropdownProps) {
   const [isMounted, setIsMounted] = useState(false);
@@ -48,6 +50,7 @@ function Dropdown({
       $open={open}
       {...props}
       aria-hidden={!open}
+      aria-labeledby={ariaLabeledBy}
       role="menu"
       id={id}
       $margin={margin}
