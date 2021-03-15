@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   SidebarRoot,
   SidebarBrand,
@@ -15,6 +14,7 @@ import {
   CreditCardIcon,
 } from '@Common/Icons';
 import Tooltip from '@Common/Tooltip';
+// import {useSidebar} from '@Context/sidebar/sidebarContext'
 
 const items = [
   {

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Avatar from '@Common/Avatar';
 import Tooltip from '@Common/Tooltip';
@@ -23,25 +22,25 @@ import {
   DropdownContainer,
 } from './style';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
+import { useSidebar } from '@Context/sidebar/sidebarContext';
 
-type Props = {
-  drawerOpen: boolean;
-  setDrawerOpen: (__: boolean) => void;
-};
-
-function Appbar({ setDrawerOpen, drawerOpen }: Props) {
+function Appbar() {
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
   const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
   const mobileDevice = useMediaQuery('(max-width: 500px)');
+  const {
+    state: { isOpen },
+    dispatch,
+  } = useSidebar();
   return (
     <>
-      <AppbarRoot $open={drawerOpen}>
+      <AppbarRoot $open={isOpen}>
         <AppbarContainer>
           <AppbarMenu>
             <IconButton
               grey
-              onClick={() => setDrawerOpen(!drawerOpen)}
+              onClick={() => dispatch({ type: 'TOGGLE' })}
               data-testid="toggle-button"
               aria-label="toggle-sidebar"
             >
@@ -115,10 +114,5 @@ function Appbar({ setDrawerOpen, drawerOpen }: Props) {
     </>
   );
 }
-
-Appbar.propTypes = {
-  drawerOpen: PropTypes.bool.isRequired,
-  setDrawerOpen: PropTypes.func.isRequired,
-};
 
 export default Appbar;

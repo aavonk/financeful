@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import Appbar from '@Components/Layout/Appbar';
 import Sidebar from '@Components/Layout/Sidebar';
 import PageContainer from '@Components/Layout/PageContainer';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
+import { useSidebar } from '@Context/sidebar/sidebarContext';
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const {
+    state: { isOpen },
+    dispatch,
+  } = useSidebar();
   const tabletAndDown = useMediaQuery('(max-width: 768px)');
 
   useEffect(() => {
-    if (tabletAndDown && drawerOpen) {
-      setDrawerOpen(!drawerOpen);
+    if (tabletAndDown && isOpen) {
+      dispatch({ type: 'CLOSE' });
     }
   }, [tabletAndDown]);
 
   return (
     <>
-      <Appbar setDrawerOpen={setDrawerOpen} drawerOpen={drawerOpen} />
-      <Sidebar drawerOpen={drawerOpen} />
-      <PageContainer drawerOpen={drawerOpen}>{children}</PageContainer>
+      <Appbar />
+      <Sidebar drawerOpen={isOpen} />
+      <PageContainer drawerOpen={isOpen}>{children}</PageContainer>
     </>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
 
 export default Layout;
