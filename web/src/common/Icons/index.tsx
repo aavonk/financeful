@@ -14,8 +14,15 @@ import {
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
-import { MdSchedule } from 'react-icons/md';
+import { MdSchedule, MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 
+export const CheckOutline = ({ ...props }) => {
+  return <MdCheckBoxOutlineBlank />;
+};
+
+export const CheckFilled = ({ ...props }) => {
+  return <MdCheckBox />;
+};
 export const DashboardIcon = ({ ...props }) => {
   return <BsColumns {...props} />;
 };
