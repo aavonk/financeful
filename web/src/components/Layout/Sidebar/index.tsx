@@ -4,6 +4,7 @@ import {
   NavigationItems,
   NavItem,
   NavWrapper,
+  Logo,
 } from './style';
 import IconSvg from '@Common/LogoSvg/IconSvg';
 import {
@@ -12,9 +13,11 @@ import {
   CalendarIcon,
   BillsIcon,
   CreditCardIcon,
+  ChevronLeftIcon,
 } from '@Common/Icons';
 import Tooltip from '@Common/Tooltip';
-// import {useSidebar} from '@Context/sidebar/sidebarContext'
+import IconButton from '@Common/IconButton';
+import { useSidebar } from '@Context/sidebar/sidebarContext';
 
 const items = [
   {
@@ -51,12 +54,24 @@ const items = [
   },
 ];
 
-function Sidebar({ drawerOpen }: { drawerOpen: boolean }) {
+function Sidebar() {
+  const {
+    state: { isOpen },
+    dispatch,
+  } = useSidebar();
+
   return (
-    <SidebarRoot $open={drawerOpen} data-testid="sidebar">
+    <SidebarRoot $open={isOpen} data-testid="sidebar">
       <SidebarBrand>
-        <IconSvg />
-        <h2>financeful</h2>
+        <Logo>
+          <IconSvg />
+          <h2>financeful</h2>
+        </Logo>
+        <span>
+          <IconButton onClick={() => dispatch({ type: 'CLOSE' })}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </span>
       </SidebarBrand>
       <NavWrapper>
         <NavigationItems>

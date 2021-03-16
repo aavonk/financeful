@@ -31,8 +31,8 @@ export const SidebarRoot = styled.div<{ $open: boolean }>`
       ${NavigationItems} {
         align-items: flex-start;
       }
-      ${SidebarBrand} {
-        justify-content: flex-start;
+      ${Logo} {
+        /* justify-content: flex-start; */
         padding: 0 1.55rem;
 
         & > h2 {
@@ -55,6 +55,14 @@ export const SidebarRoot = styled.div<{ $open: boolean }>`
       ${TooltipBody} {
         display: none;
       }
+
+      @media ${({ theme }) => theme.device.mobile} {
+        width: 100vw;
+
+        ${Logo} {
+          justify-content: flex-start;
+        }
+      }
     `}
 `;
 
@@ -63,30 +71,50 @@ export const SidebarBrand = styled.div`
   width: 75px;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+
+  & > span {
+    display: none;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100% !important;
+    & > span {
+      display: block;
+      margin-right: 1rem;
+    }
+  }
+`;
+
+export const Logo = styled.div`
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
   & > h2 {
     display: none;
     color: #fff;
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
   }
 
   & > svg {
-    margin-bottom: 5px;
+    margin-top: 0.313rem;
+    vertical-align: text-bottom;
   }
 `;
 
-export const NavWrapper = styled.div`
+export const NavWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 70px);
 `;
 
-export const NavigationItems = styled.nav`
+export const NavigationItems = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;

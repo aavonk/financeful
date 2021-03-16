@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   BsCalendar,
   BsChevronDown,
+  BsChevronLeft,
   BsNewspaper,
   BsColumns,
   BsGear,
@@ -29,6 +30,10 @@ export const CalendarIcon = ({ ...props }) => {
 
 export const ChevronDownIcon = ({ ...props }) => {
   return <BsChevronDown {...props} />;
+};
+
+export const ChevronLeftIcon = ({ ...props }) => {
+  return <BsChevronLeft {...props} />;
 };
 
 export const NotificationsIcon = ({ ...props }) => {

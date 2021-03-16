@@ -21,7 +21,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Appbar />
-      <Sidebar drawerOpen={isOpen} />
+      <Sidebar />
       <PageContainer drawerOpen={isOpen}>{children}</PageContainer>
     </>
   );
