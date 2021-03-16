@@ -70,7 +70,7 @@ function UserMenu() {
   const { dispatch } = useAuth();
   return (
     <Menu>
-      <StyledMenuButton>
+      <StyledMenuButton id="user-actions">
         <span aria-hidden="true" className="icon">
           <ChevronDownIcon />
         </span>

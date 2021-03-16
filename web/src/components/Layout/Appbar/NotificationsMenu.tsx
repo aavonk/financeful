@@ -21,7 +21,13 @@ const notifications = [
 ];
 
 function NotificationsMenu() {
-  return <IconDropdown icon={<NotificationsIcon />} items={notifications} />;
+  return (
+    <IconDropdown
+      icon={<NotificationsIcon />}
+      id="notifications"
+      items={notifications}
+    />
+  );
 }
 
 export default NotificationsMenu;

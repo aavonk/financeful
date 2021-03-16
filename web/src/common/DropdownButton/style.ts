@@ -1,14 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { MenuButton, MenuList, MenuItem } from '@reach/menu-button';
 
-type ButtonProps = {
-  fullWidth?: boolean;
-  margin?: string;
-};
-
-export const Container = styled.div`
-  position: relative;
-`;
-export const StyledButton = styled.button<ButtonProps>`
+export const StyledMenuButton = styled(MenuButton)`
   font-size: 1rem;
   min-width: 64px;
   font-weight: 500;
@@ -30,10 +23,6 @@ export const StyledButton = styled.button<ButtonProps>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.darkThree};
   }
-  &:disabled {
-    opacity: 0.5;
-    cursor: auto;
-  }
 
   &::after {
     display: inline-block;
@@ -45,16 +34,22 @@ export const StyledButton = styled.button<ButtonProps>`
     border-bottom: 0;
     border-left: 0.3em solid transparent;
   }
-  ${(props) =>
-    props.fullWidth &&
-    css`
-      width: 100% !important;
-    `}
 `;
 
-export const ButtonText = styled.span`
-  width: 100%;
-  display: inherit;
-  align-items: inherit;
-  justify-content: inherit;
+export const StyledMenuList = styled(MenuList)`
+  background: ${({ theme }) => theme.colors.darkTwo};
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  text-align: left;
+`;
+
+export const StyledMenuItem = styled(MenuItem)`
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+  }
+
+  &[data-selected] {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+  }
 `;

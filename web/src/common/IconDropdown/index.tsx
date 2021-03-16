@@ -8,6 +8,7 @@ type Props = {
   icon: React.ReactNode;
   withBadge?: boolean;
   badgeContent?: string | number;
+  id: string;
   items: Array<{
     icon?: React.ReactNode;
     label: string;
@@ -25,15 +26,19 @@ type Props = {
 
 */
 
-function IconDropdown({ icon, withBadge, badgeContent, items }: Props) {
+function IconDropdown({ icon, withBadge, badgeContent, items, id }: Props) {
   return (
     <Menu>
       {withBadge && badgeContent ? (
         <Badge badgeContent={badgeContent}>
-          <StyledMenuButton $grey>{icon}</StyledMenuButton>
+          <StyledMenuButton $grey id={id}>
+            {icon}
+          </StyledMenuButton>
         </Badge>
       ) : (
-        <StyledMenuButton $grey>{icon}</StyledMenuButton>
+        <StyledMenuButton $grey id={id}>
+          {icon}
+        </StyledMenuButton>
       )}
 
       <StyledMenuList>

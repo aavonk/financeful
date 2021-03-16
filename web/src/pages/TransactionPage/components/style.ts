@@ -81,7 +81,7 @@ export const TabItem = styled.div`
         transition: color 0.2s ease-in;
       }
       ${TabLabel} {
-        color: ${({ theme }) => theme.colors.primary};
+        color: ${({ theme }) => theme.colors.textPrimary};
         transition: color 0.2s ease-in;
       }
     `}

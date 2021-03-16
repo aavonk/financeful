@@ -1,29 +1,26 @@
-import * as React from 'react';
-import { StyledButton, ButtonText, Container } from './style';
-import Dropdown from '@Common/Dropdown';
+import '@reach/menu-button/styles.css';
+import { Menu } from '@reach/menu-button';
+import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';
+
 type Props = {
-  children: React.ReactNode;
-  text: string;
-  ariaLabel: string;
+  selected: string;
+  id: string;
+  items: Array<{ label: string; onSelect: () => void }>;
 };
 
-function DropdownButton({ children, text, ariaLabel }: Props) {
-  const [open, setOpen] = React.useState(false);
+function Dropdown({ selected, items, id }: Props) {
   return (
-    <Container>
-      <StyledButton onClick={() => setOpen(true)} id={ariaLabel}>
-        <ButtonText>{text}</ButtonText>
-      </StyledButton>
-      <Dropdown
-        open={open}
-        setOpen={setOpen}
-        className="dropdown-button"
-        ariaLabeledBy={ariaLabel}
-      >
-        {children}
-      </Dropdown>
-    </Container>
+    <Menu>
+      <StyledMenuButton id={id}>{selected}</StyledMenuButton>
+      <StyledMenuList>
+        {items.map((item, index) => (
+          <StyledMenuItem key={index} onSelect={item.onSelect}>
+            {item.label}
+          </StyledMenuItem>
+        ))}
+      </StyledMenuList>
+    </Menu>
   );
 }
 
-export default DropdownButton;
+export default Dropdown;
