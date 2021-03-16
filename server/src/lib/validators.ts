@@ -14,10 +14,10 @@ export const validateRegisterFields = (
   const errors: Fields = {};
 
   if (displayName.trim() === '') {
-    errors.displayName = 'This field is required';
+    errors.displayName = 'Name is required';
   }
   if (email.trim() === '') {
-    errors.email = 'This field is required';
+    errors.email = 'Email is required';
   } else {
     const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-z]\.)+[a-zA-Z]{2,9})$/;
     if (!email.match(regEx)) {
@@ -39,7 +39,7 @@ export const validateRegisterFields = (
 export const validateLoginInput = (email: string, password: string) => {
   const errors: Fields = {};
   if (email.trim() === '') {
-    errors.email = 'This field is required';
+    errors.email = 'Email is required';
   } else {
     const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-z]\.)+[a-zA-Z]{2,9})$/;
     if (!email.match(regEx)) {

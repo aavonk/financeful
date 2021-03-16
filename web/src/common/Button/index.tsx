@@ -8,6 +8,8 @@ type ButtonProps = {
   type?: 'submit' | undefined;
   margin?: string;
   disabled?: boolean;
+  variant: 'primary' | 'outline' | 'dark';
+  id?: string;
 };
 
 const Button = ({
@@ -16,6 +18,8 @@ const Button = ({
   fullWidth,
   margin,
   disabled,
+  variant,
+  id,
 }: ButtonProps) => {
   return (
     <StyledButton
@@ -23,6 +27,8 @@ const Button = ({
       fullWidth={fullWidth}
       margin={margin}
       disabled={disabled}
+      variant={variant}
+      id={id}
     >
       <ButtonText>{children}</ButtonText>
     </StyledButton>

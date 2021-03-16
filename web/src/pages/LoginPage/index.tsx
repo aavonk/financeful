@@ -113,9 +113,9 @@ function LoginPage() {
             <Button
               type="submit"
               fullWidth
-              outline
               margin="1.2rem 0 0 0"
               disabled={loading}
+              variant="primary"
             >
               Login
             </Button>

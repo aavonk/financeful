@@ -1,19 +1,32 @@
-import { Dropdown } from '@Common/Dropdown';
-type Props = {
-  open: boolean;
-  // eslint-disable-next-line no-unused-vars
-  setOpen: (_: boolean) => void;
-};
+import IconDropdown from '@Common/IconDropdown';
+import { NotificationsIcon } from '@Common/Icons';
 
-function NotificationsMenu({ open, setOpen }: Props) {
+const notifications = [
+  {
+    label: 'Notification 1',
+    onSelect: () => console.log('Notification selected'),
+  },
+  {
+    label: 'Notification 2',
+    onSelect: () => console.log('Notification selected'),
+  },
+  {
+    label: 'Notification 3',
+    onSelect: () => console.log('Notification selected'),
+  },
+  {
+    label: 'Notification 4',
+    onSelect: () => console.log('Notification selected'),
+  },
+];
+
+function NotificationsMenu() {
   return (
-    <>
-      <Dropdown open={open} setOpen={setOpen} className="notification-menu">
-        <li>Hiu</li>
-        <li>Hiu</li>
-        <li>Hiu</li>
-      </Dropdown>
-    </>
+    <IconDropdown
+      icon={<NotificationsIcon />}
+      id="notifications"
+      items={notifications}
+    />
   );
 }
 

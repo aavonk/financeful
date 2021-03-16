@@ -4,13 +4,14 @@ type ButtonProps = {
   outline?: boolean;
   fullWidth?: boolean;
   margin?: string;
+  variant: string;
 };
 export const StyledButton = styled.button<ButtonProps>`
   font-size: 1rem;
   min-width: 64px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.75;
-  border-radius: 12px;
+  border-radius: 9px;
   letter-spacing: 0.02857em;
   cursor: pointer;
   display: inline-flex;
@@ -40,6 +41,17 @@ export const StyledButton = styled.button<ButtonProps>`
     opacity: 0.5;
     cursor: auto;
   }
+
+  ${({ variant }) =>
+    variant === 'dark' &&
+    css`
+      background-color: ${({ theme }) => theme.colors.darkTwo};
+      color: ${({ theme }) => theme.colors.textPrimary};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.darkThree};
+      }
+    `}
   ${(props) =>
     props.fullWidth &&
     css`

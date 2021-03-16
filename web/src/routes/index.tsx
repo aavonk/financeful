@@ -5,11 +5,12 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import AppThemeProvider from '@Context/AppThemeProvider';
+import SidebarProvider from '@Context/sidebar/SidebarProvider';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
-import AppThemeProvider from '../context/AppThemeProvider';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
 
@@ -42,14 +43,16 @@ function Routes() {
             <Redirect to="/dashboard" />
           </Route>
           <Route exact path="/login" component={LoginPage} />
-          <Layout>
-            <PrivateRoute exact path="/dashboard" component={DashboardPage} />
-            <PrivateRoute
-              exact
-              path="/transactions"
-              component={TransactionPage}
-            />
-          </Layout>
+          <SidebarProvider>
+            <Layout>
+              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
+              <PrivateRoute
+                exact
+                path="/transactions"
+                component={TransactionPage}
+              />
+            </Layout>
+          </SidebarProvider>
         </Switch>
       </AppThemeProvider>
     </Router>

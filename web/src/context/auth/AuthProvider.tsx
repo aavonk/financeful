@@ -15,8 +15,6 @@ function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const [state, dispatch] = React.useReducer(authReducer, initialState);
-  //@ts-ignore
-  window.auth = state;
 
   const value = { state, dispatch };
 

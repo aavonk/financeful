@@ -9,7 +9,7 @@ export const StyledContainer = styled.main<ContainerProps>`
   margin-left: 75px;
   margin-top: 75px;
   transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
-
+  overflow-x: hidden;
   ${({ $open }) =>
     $open &&
     css`
