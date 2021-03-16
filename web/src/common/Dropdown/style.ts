@@ -12,8 +12,8 @@ export const StyledUl = styled.ul<Props>`
   min-width: 8rem;
   padding: 0.5rem 0;
   font-size: 1rem;
-  list-style: none;
   text-align: left;
+  list-style: none;
   background-color: ${({ theme }) => theme.colors.paper};
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);

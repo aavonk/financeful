@@ -1,11 +1,13 @@
 import styled, { css } from 'styled-components';
+import { MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 
 type ButtonProps = {
   $small?: boolean;
   $grey?: boolean;
   $active?: boolean;
 };
-export const StyledButton = styled.button<ButtonProps>`
+
+export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
   cursor: pointer;
   display: inline-flex;
   outline: 0;
@@ -26,6 +28,10 @@ export const StyledButton = styled.button<ButtonProps>`
   &:hover {
     background-color: ${({ theme }) => theme.effects.buttonHover};
   }
+
+  &[aria-expanded='true'] {
+    background-color: ${({ theme }) => theme.effects.buttonHover};
+  }
   ${(props) =>
     props.$small &&
     css`
@@ -44,4 +50,27 @@ export const StyledButton = styled.button<ButtonProps>`
     css`
       background-color: ${({ theme }) => theme.effects.buttonHover};
     `}
+`;
+
+export const StyledMenuList = styled(MenuList)`
+  background: ${({ theme }) => theme.colors.darkTwo};
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  text-align: left;
+`;
+
+export const StyledMenuItem = styled(MenuItem)`
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+  }
+
+  &[data-selected] {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+  }
+
+  & > i > svg {
+    margin-right: 0.35rem;
+    vertical-align: middle;
+  }
 `;
