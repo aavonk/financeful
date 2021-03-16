@@ -29,18 +29,18 @@ const tabItems = [
 function Tabs() {
   const query = useQuery();
   const [activeTab, setActiveTab] = useState(() => {
-    const path = query.get('tab');
-    if (!path) {
+    const filter = query.get('filter');
+    if (!filter) {
       return 'all-transactions';
     } else {
-      return path;
+      return filter;
     }
   });
   // eslint-disable-next-line prefer-const
   let history = useHistory();
 
   useEffect(() => {
-    history.push(`${history.location.pathname}?tab=${activeTab}`);
+    history.push(`${history.location.pathname}?filter=${activeTab}`);
   }, [activeTab]);
 
   const handleClick = (tab: string) => {

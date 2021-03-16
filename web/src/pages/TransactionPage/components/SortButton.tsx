@@ -14,8 +14,8 @@ function SortButton() {
       onSelect: () => setSelectedOption('Oldest'),
     },
     {
-      label: 'By date',
-      onSelect: () => setSelectedOption('By date'),
+      label: 'Date',
+      onSelect: () => setSelectedOption('Date'),
     },
   ];
   return (
