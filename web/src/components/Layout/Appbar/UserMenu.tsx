@@ -67,7 +67,10 @@ export const Divider = styled.div`
 `;
 
 function UserMenu() {
-  const { dispatch } = useAuth();
+  const {
+    state: { user },
+    dispatch,
+  } = useAuth();
   return (
     <Menu>
       <StyledMenuButton id="user-actions">
@@ -75,7 +78,7 @@ function UserMenu() {
           <ChevronDownIcon />
         </span>
         <Avatar size="36px" alt="profile" />
-        <span className="name">Name!!</span>
+        <span className="name">{user?.firstName}</span>
       </StyledMenuButton>
 
       <StyledMenuList>
