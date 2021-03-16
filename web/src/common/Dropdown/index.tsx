@@ -50,7 +50,7 @@ function Dropdown({
       $open={open}
       {...props}
       aria-hidden={!open}
-      aria-labeledby={ariaLabeledBy}
+      aria-labelledby={ariaLabeledBy}
       role="menu"
       id={id}
       $margin={margin}
