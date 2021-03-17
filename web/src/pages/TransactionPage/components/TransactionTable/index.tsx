@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { Column, Cell } from 'react-table';
+import { parseMoney } from '../../../../lib/parseMoney';
 // import { Transaction } from '@Generated/graphql';
 // import { COLUMNS } from './columns';
 import Paper from '@Common/Paper';
@@ -38,7 +39,7 @@ function TransactionTable({ data }: Props) {
       Header: () => <div className="align-right">Amount</div>,
       accessor: 'amount',
       Cell: ({ value }: Cell<Transaction>) => {
-        return <div className="number">${value}</div>;
+        return <div className="number">{parseMoney(value)}</div>;
       },
     },
     {
@@ -94,7 +95,6 @@ function TransactionTable({ data }: Props) {
                 {row.cells.map((cell) => {
                   return (
                     <TableCell {...cell.getCellProps()}>
-                      {console.log(cell.row)}
                       {cell.render('Cell')}
                     </TableCell>
                   );
