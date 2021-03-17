@@ -25,7 +25,8 @@
       "@Pages/*": ["./src/pages/*"],
       "@Constants/*": ["./src/constants/*"],
       "@Globals/*": ["./src/globals/*"],
-      "@Generated/*": ["./src/generated/*"]
+      "@Generated/*": ["./src/generated/*"],
+      "@Lib/*": ["./src/lib/*"]
     }
   },
   "include": ["src"],
