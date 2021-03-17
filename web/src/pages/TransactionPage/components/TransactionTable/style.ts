@@ -35,6 +35,10 @@ export const Header = styled.th<CellProps>`
   border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   letter-spacing: 0.01071em;
   vertical-align: inherit;
+
+  & .align-right {
+    text-align: right;
+  }
 `;
 
 export const TableBody = styled.tbody`
@@ -51,4 +55,9 @@ export const TableCell = styled.td<CellProps>`
   border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   letter-spacing: 0.01071em;
   vertical-align: inherit;
+
+  & .number {
+    font-weight: 700;
+    text-align: right;
+  }
 `;
