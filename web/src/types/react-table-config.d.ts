@@ -153,3 +153,86 @@ declare module 'react-table' {
       UseRowSelectRowProps<D>,
       UseRowStateRowProps<D> {}
 }
+
+//#region useFilters
+export function useFilters<D extends object = {}>(hooks: Hooks<D>): void;
+
+export namespace useFilters {
+  const pluginName = 'useFilters';
+}
+
+export type UseFiltersOptions<D extends object> = Partial<{
+  manualFilters: boolean;
+  disableFilters: boolean;
+  defaultCanFilter: boolean;
+  filterTypes: FilterTypes<D>;
+  autoResetFilters?: boolean;
+}>;
+
+export interface UseFiltersState<D extends object> {
+  filters: Filters<D>;
+}
+
+export type UseFiltersColumnOptions<D extends object> = Partial<{
+  Filter: Renderer<FilterProps<D>>;
+  disableFilters: boolean;
+  defaultCanFilter: boolean;
+  filter: FilterType<D> | DefaultFilterTypes | string;
+}>;
+
+export interface UseFiltersInstanceProps<D extends object> {
+  preFilteredRows: Array<Row<D>>;
+  preFilteredFlatRows: Array<Row<D>>;
+  preFilteredRowsById: Record<string, Row<D>>;
+  filteredRows: Array<Row<D>>;
+  filteredFlatRows: Array<Row<D>>;
+  filteredRowsById: Record<string, Row<D>>;
+  rows: Array<Row<D>>;
+  flatRows: Array<Row<D>>;
+  rowsById: Record<string, Row<D>>;
+  setFilter: (
+    columnId: IdType<D>,
+    updater: ((filterValue: FilterValue) => FilterValue) | FilterValue,
+  ) => void;
+  setAllFilters: (
+    updater: Filters<D> | ((filters: Filters<D>) => Filters<D>),
+  ) => void;
+}
+
+export interface UseFiltersColumnProps<D extends object> {
+  canFilter: boolean;
+  setFilter: (
+    updater: ((filterValue: FilterValue) => FilterValue) | FilterValue,
+  ) => void;
+  filterValue: FilterValue;
+  preFilteredRows: Array<Row<D>>;
+  filteredRows: Array<Row<D>>;
+}
+
+export type FilterProps<D extends object> = HeaderProps<D>;
+export type FilterValue = any;
+export type Filters<D extends object> = Array<{
+  id: IdType<D>;
+  value: FilterValue;
+}>;
+export type FilterTypes<D extends object> = Record<string, FilterValue>;
+
+export type DefaultFilterTypes =
+  | 'text'
+  | 'exactText'
+  | 'exactTextCase'
+  | 'includes'
+  | 'includesAll'
+  | 'exact'
+  | 'equals'
+  | 'between';
+
+export interface FilterType<D extends object> {
+  (
+    rows: Array<Row<D>>,
+    columnIds: Array<IdType<D>>,
+    filterValue: FilterValue,
+  ): Array<Row<D>>;
+
+  autoRemove?: (filterValue: FilterValue) => boolean;
+}

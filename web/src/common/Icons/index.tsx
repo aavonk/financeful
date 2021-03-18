@@ -10,18 +10,27 @@ import {
   BsPlusCircle,
   BsCreditCard,
   BsSearch,
+  BsArrowUpShort,
+  BsArrowDownShort,
 } from 'react-icons/bs';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { MdSchedule, MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 
+export const UpArrow = ({ ...props }) => {
+  return <BsArrowUpShort {...props} />;
+};
+export const DownArrow = ({ ...props }) => {
+  return <BsArrowDownShort {...props} />;
+};
+
 export const CheckOutline = ({ ...props }) => {
-  return <MdCheckBoxOutlineBlank />;
+  return <MdCheckBoxOutlineBlank {...props} />;
 };
 
 export const CheckFilled = ({ ...props }) => {
-  return <MdCheckBox />;
+  return <MdCheckBox {...props} />;
 };
 export const DashboardIcon = ({ ...props }) => {
   return <BsColumns {...props} />;

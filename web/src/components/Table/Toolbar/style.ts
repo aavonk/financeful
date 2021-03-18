@@ -110,6 +110,7 @@ export const ToolbarRoot = styled.div`
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
+  margin-bottom: 1rem;
   //1005px
   @media (max-width: 1195px) {
     flex-direction: column;
