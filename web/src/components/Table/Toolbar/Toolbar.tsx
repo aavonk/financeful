@@ -1,15 +1,20 @@
 import { ToolbarRoot, ActionsContainer } from './style';
 import Searchbox from './Searchbox';
 import Tabs from './Tabs';
-import SortButton from './SortButton';
+import { TableInstance } from 'react-table';
 
-function Toolbar() {
+type ToolbarProps<T extends Record<string, unknown>> = {
+  instance: TableInstance<T>;
+};
+
+function Toolbar<T extends Record<string, unknown>>({
+  instance,
+}: ToolbarProps<T>) {
   return (
     <ToolbarRoot>
-      <Tabs />
+      <Tabs instance={instance} />
       <ActionsContainer>
-        <Searchbox />
-        <SortButton />
+        <Searchbox instance={instance} />
       </ActionsContainer>
     </ToolbarRoot>
   );

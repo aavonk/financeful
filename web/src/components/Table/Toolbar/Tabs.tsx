@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { TableInstance } from 'react-table';
 import { TabContainer, TabItem, TabLabel, Indicator } from './style';
 import { useQuery } from '@Hooks/useQuery';
 
@@ -26,7 +27,11 @@ const tabItems = [
   },
 ];
 
-function Tabs() {
+type TabProps<T extends Record<string, unknown>> = {
+  instance: TableInstance<T>;
+};
+
+function Tabs<T extends Record<string, unknown>>({ instance }: TabProps<T>) {
   const query = useQuery();
   const [activeTab, setActiveTab] = useState(() => {
     const filter = query.get('filter');

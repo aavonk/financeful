@@ -15,8 +15,8 @@ export const SearchContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 9px;
   padding: 0 0.25rem;
-  margin-right: 1.25rem;
-  margin-left: 1.25rem;
+  /* margin-right: 1.25rem;
+  margin-left: 1.25rem; */
   & > svg {
     margin-right: 0.75rem;
     height: 1.25rem;

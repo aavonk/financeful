@@ -1,11 +1,18 @@
 /* eslint-disable react/jsx-key */
 import * as React from 'react';
-import { useTable, useSortBy } from 'react-table';
+import {
+  useTable,
+  useSortBy,
+  TableInstance,
+  TableOptions,
+  useGlobalFilter,
+} from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { Column } from 'react-table';
 import Paper from '@Common/Paper';
 import { UpArrow, DownArrow } from '@Common/Icons';
 import Toolbar from './Toolbar/Toolbar';
+
 import {
   TableRoot,
   TableHead,
@@ -15,22 +22,28 @@ import {
   TableCell,
 } from './style';
 
-type TableProps = {
-  data: Transaction[];
-  columns: Column<Transaction>[];
-};
+export interface TableProperties<T extends Record<string, unknown>>
+  extends TableOptions<T> {
+  name?: string;
+  // data: any[];
+}
 
-function Table({ data, columns }: TableProps) {
+function Table<T extends Record<string, unknown>>({
+  data,
+  columns,
+}: TableProperties<T>) {
+  const instance = useTable<T>({ columns, data }, useGlobalFilter, useSortBy);
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-  } = useTable<Transaction>({ columns, data }, useSortBy);
+  } = instance;
+
   return (
     <>
-      <Toolbar />
+      <Toolbar instance={instance} />
       <Paper>
         <TableRoot {...getTableProps()}>
           <TableHead>
