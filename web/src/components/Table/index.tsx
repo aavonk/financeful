@@ -85,7 +85,7 @@ function Table<T extends Record<string, unknown>>({
             ))}
           </TableHead>
           <TableBody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
+            {rows.map((row) => {
               prepareRow(row);
               return (
                 <TableRow

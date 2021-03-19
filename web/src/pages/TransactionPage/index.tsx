@@ -1,12 +1,12 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { TableContainer } from './style';
-import Table from '@Components/Table';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { parseMoney } from '@Lib/parseMoney';
 import { useGetTransactionsQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
+import Table from '@Components/Table';
 import SelectTypeFilter from '@Components/Table/Toolbar/SelectTypeFilter';
 
 function TransactionPage() {
@@ -26,7 +26,6 @@ function TransactionPage() {
     {
       Header: 'Payee',
       accessor: 'payee',
-      // filter: 'fuzzyText',
       Filter: SelectTypeFilter,
       disableFilters: true,
     },
