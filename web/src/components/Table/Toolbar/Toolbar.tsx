@@ -12,7 +12,6 @@ function Toolbar<T extends Record<string, unknown>>({
   const { allColumns } = instance;
   return (
     <ToolbarRoot>
-      {/* <Tabs instance={instance} /> */}
       {allColumns
         .filter((it) => it.canFilter)
         .map((column) => (

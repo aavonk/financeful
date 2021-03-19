@@ -3,13 +3,10 @@ import * as React from 'react';
 import {
   useTable,
   useSortBy,
-  TableInstance,
   TableOptions,
   useGlobalFilter,
   useFilters,
 } from 'react-table';
-import { Transaction } from '@Generated/graphql';
-import { Column } from 'react-table';
 import Paper from '@Common/Paper';
 import { UpArrow, DownArrow } from '@Common/Icons';
 import Toolbar from './Toolbar/Toolbar';
@@ -26,7 +23,6 @@ import {
 export interface TableProperties<T extends Record<string, unknown>>
   extends TableOptions<T> {
   name?: string;
-  // data: any[];
 }
 
 function Table<T extends Record<string, unknown>>({

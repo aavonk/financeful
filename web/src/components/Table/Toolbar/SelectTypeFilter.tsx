@@ -20,7 +20,6 @@ function SelectTypeFilter({
     setFilter(value);
     setActiveTab(index);
   };
-  console.log({ filterValue });
   return (
     <>
       <TabContainer>
@@ -42,7 +41,6 @@ function SelectTypeFilter({
             onClick={() => onMappedItemClick(item, index + 1)}
             active={activeTab === index + 1}
           >
-            {console.log(item)}
             <TabLabel>{formatTransactionType(item)}</TabLabel>
             <Indicator />
           </TabItem>
