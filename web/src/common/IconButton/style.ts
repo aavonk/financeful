@@ -26,6 +26,10 @@ export const StyledButton = styled.button<ButtonProps>`
   &:hover {
     background-color: ${({ theme }) => theme.effects.buttonHover};
   }
+
+  &[data-selected] {
+    background-color: ${({ theme }) => theme.effects.buttonHover};
+  }
   ${(props) =>
     props.$small &&
     css`

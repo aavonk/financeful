@@ -31,6 +31,7 @@ function Appbar() {
               onClick={() => dispatch({ type: 'TOGGLE' })}
               data-testid="toggle-button"
               aria-label="toggle-sidebar"
+              ariaText="Toggle sidebar"
             >
               <MenuIcon />
             </IconButton>
@@ -44,6 +45,7 @@ function Appbar() {
                   onClick={() => alert('Upcoming items reminder')}
                   aria-label="Show upcoming items menu"
                   aria-haspopup="true"
+                  ariaText="Upcoming items"
                 >
                   <ScheduleIcon />
                 </IconButton>

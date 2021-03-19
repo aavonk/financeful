@@ -5,7 +5,7 @@ import { TabContainer, TabItem, TabLabel, Indicator } from './style';
 import { formatTransactionType } from '@Lib/formatTransactionType';
 
 function SelectTypeFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
+  column: { setFilter, preFilteredRows, id },
 }: FilterProps<Transaction>) {
   const [activeTab, setActiveTab] = React.useState(0);
   const options = React.useMemo(() => {

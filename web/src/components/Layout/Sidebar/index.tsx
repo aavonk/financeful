@@ -68,7 +68,10 @@ function Sidebar() {
           <h2>financeful</h2>
         </Logo>
         <span>
-          <IconButton onClick={() => dispatch({ type: 'CLOSE' })}>
+          <IconButton
+            onClick={() => dispatch({ type: 'CLOSE' })}
+            ariaText="Close sidebar"
+          >
             <ChevronLeftIcon />
           </IconButton>
         </span>

@@ -7,13 +7,22 @@ type Props = {
   grey?: boolean;
   children: React.ReactNode;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  ariaText: string;
 };
 
-function IconButton({ small, active, grey, ...props }: Props) {
+function IconButton({ small, active, grey, ariaText, ...props }: Props) {
   return (
-    <StyledButton $small={small} $grey={grey} $active={active} {...props}>
-      {props.children}
-    </StyledButton>
+    <>
+      <StyledButton
+        $small={small}
+        $grey={grey}
+        $active={active}
+        {...props}
+        aria-label={ariaText}
+      >
+        {props.children}
+      </StyledButton>
+    </>
   );
 }
 
