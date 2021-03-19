@@ -6,6 +6,7 @@ import {
   TableInstance,
   TableOptions,
   useGlobalFilter,
+  useFilters,
 } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { Column } from 'react-table';
@@ -32,7 +33,12 @@ function Table<T extends Record<string, unknown>>({
   data,
   columns,
 }: TableProperties<T>) {
-  const instance = useTable<T>({ columns, data }, useGlobalFilter, useSortBy);
+  const instance = useTable<T>(
+    { columns, data },
+    useGlobalFilter,
+    useFilters,
+    useSortBy,
+  );
   const {
     getTableProps,
     getTableBodyProps,

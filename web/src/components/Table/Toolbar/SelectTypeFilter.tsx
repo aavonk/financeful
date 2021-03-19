@@ -2,12 +2,12 @@ import * as React from 'react';
 import { FilterProps } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { TabContainer, TabItem, TabLabel, Indicator } from './style';
-import { isTypeSystemDefinitionNode } from 'graphql';
+import { formatTransactionType } from '@Lib/formatTransactionType';
 
 function SelectTypeFilter({
-  column: { filterValue, render, setFilter, preFilteredRows, id },
+  column: { filterValue, setFilter, preFilteredRows, id },
 }: FilterProps<Transaction>) {
-  // const [activeTab, setActiveTab] = React.useState('all-transactions')
+  const [activeTab, setActiveTab] = React.useState(0);
   const options = React.useMemo(() => {
     const opts = new Set<any>();
     preFilteredRows.forEach((row) => {
@@ -16,16 +16,34 @@ function SelectTypeFilter({
     return [...Array.from(opts.values())];
   }, [id, preFilteredRows]);
 
+  const onMappedItemClick = (value: string, index: number) => {
+    setFilter(value);
+    setActiveTab(index);
+  };
+  console.log({ filterValue });
   return (
     <>
       <TabContainer>
+        <TabItem
+          defaultValue=""
+          onClick={() => {
+            setFilter(undefined);
+            setActiveTab(0);
+          }}
+          active={activeTab === 0}
+        >
+          <TabLabel>All Transactions</TabLabel>
+          <Indicator />
+        </TabItem>
         {options.map((item, index) => (
           <TabItem
             key={index}
             defaultValue={item}
-            onClick={() => setFilter(item)}
+            onClick={() => onMappedItemClick(item, index + 1)}
+            active={activeTab === index + 1}
           >
-            <TabLabel>{item}</TabLabel>
+            {console.log(item)}
+            <TabLabel>{formatTransactionType(item)}</TabLabel>
             <Indicator />
           </TabItem>
         ))}
