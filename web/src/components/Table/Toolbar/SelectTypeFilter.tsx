@@ -8,6 +8,7 @@ function SelectTypeFilter({
   column: { setFilter, preFilteredRows, id },
 }: FilterProps<Transaction>) {
   const [activeTab, setActiveTab] = React.useState(0);
+
   const options = React.useMemo(() => {
     const opts = new Set<any>();
     preFilteredRows.forEach((row) => {
