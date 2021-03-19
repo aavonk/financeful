@@ -1,7 +1,6 @@
 import { ToolbarRoot, ActionsContainer } from './style';
 import Searchbox from './Searchbox';
 import { TableInstance } from 'react-table';
-// import DatePicker from './DateRangeFilter';
 
 type ToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>;
@@ -19,7 +18,6 @@ function Toolbar<T extends Record<string, unknown>>({
           <div key={column.id}>{column.render('Filter')}</div>
         ))}
       <ActionsContainer>
-        {/* <DatePicker /> */}
         <Searchbox instance={instance} />
       </ActionsContainer>
     </ToolbarRoot>
