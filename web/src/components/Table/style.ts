@@ -67,7 +67,7 @@ export const TableCell = styled.td`
   vertical-align: inherit;
 
   & .number {
-    font-weight: 700;
+    font-weight: 600;
     text-align: right;
   }
 `;
