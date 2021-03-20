@@ -10,6 +10,7 @@ type ButtonProps = {
   disabled?: boolean;
   variant: 'primary' | 'outline' | 'dark';
   id?: string;
+  onClick?: () => void;
 };
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
   margin,
   disabled,
   variant,
+  onClick,
   id,
 }: ButtonProps) => {
   return (
@@ -29,6 +31,7 @@ const Button = ({
       disabled={disabled}
       variant={variant}
       id={id}
+      onClick={onClick}
     >
       <ButtonText>{children}</ButtonText>
     </StyledButton>

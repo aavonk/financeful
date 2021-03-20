@@ -28,6 +28,9 @@ export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
   &:hover {
     background-color: ${({ theme }) => theme.effects.buttonHover};
   }
+  &:focus {
+    background-color: ${({ theme }) => theme.effects.buttonHover};
+  }
 
   &[aria-expanded='true'] {
     background-color: ${({ theme }) => theme.effects.buttonHover};

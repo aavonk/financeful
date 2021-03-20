@@ -152,7 +152,8 @@ export const NavItem = styled(NavLink).attrs({ activeClassName })<{
     background-color: ${({ theme }) => theme.colors.primary};
   }
 
-  &:hover {
+  &:hover,
+  :focus {
     color: #fff;
   }
 

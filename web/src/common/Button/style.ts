@@ -28,7 +28,8 @@ export const StyledButton = styled.button<ButtonProps>`
   border: ${(props) =>
     props.outline ? '1px solid ' + props.theme.colors.primary : 'transparent'};
 
-  &:hover {
+  &:hover,
+  :focus {
     border: ${(props) =>
       props.outline
         ? '1px solid ' + props.theme.colors.primary
