@@ -1,13 +1,29 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const StyledPaper = styled.div`
+type Props = {
+  minHeight?: string;
+  flex?: boolean;
+  center?: boolean;
+  children: React.ReactNode;
+};
+const StyledPaper = styled.div<Props>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   border-radius: 9px;
   overflow-x: auto;
+  min-height: ${({ minHeight }) => minHeight || '0'};
+
+  ${({ flex, center }) =>
+    flex &&
+    css`
+      display: flex;
+      flex-direction: column;
+      justify-content: ${center ? 'center' : 'flex-start'};
+      align-items: ${center ? 'center' : 'flex-start'};
+    `};
   ::-webkit-scrollbar {
     width: 14px;
     height: 16px;
@@ -34,8 +50,12 @@ const StyledPaper = styled.div`
   }
 `;
 
-function Paper({ children }: { children: React.ReactNode }) {
-  return <StyledPaper>{children}</StyledPaper>;
+function Paper({ children, minHeight, flex, center }: Props) {
+  return (
+    <StyledPaper minHeight={minHeight} flex={flex} center={center}>
+      {children}
+    </StyledPaper>
+  );
 }
 
 export default Paper;

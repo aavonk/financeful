@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components';
 import { UpArrowCircle, DownArrowCircle } from '@Common/Icons';
+import { formatTransactionType } from '@Lib/formatTransactionType';
+import { FlexRow } from '@Globals/index';
+
 type Props = {
   type: string;
 };
@@ -33,12 +36,12 @@ const ArrowContainer = styled.span<{ type?: string }>`
 
 function TransactionTypeCell({ type }: Props) {
   return (
-    <>
+    <FlexRow>
       <ArrowContainer aria-hidden="true" type={type}>
         {type === 'EXPENSE' ? <UpArrowCircle /> : <DownArrowCircle />}
       </ArrowContainer>
-      <span>{type}</span>
-    </>
+      <span>{formatTransactionType(type)}</span>
+    </FlexRow>
   );
 }
 

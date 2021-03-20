@@ -10,6 +10,7 @@ import Table from '@Components/Table';
 import SelectTypeFilter from '@Components/Table/Toolbar/SelectTypeFilter';
 import TableSkeleton from '@Components/Table/TableSkeleton';
 import TransactionTypeCell from './components/TransactionTypeCell';
+import { TableError } from '@Components/ErrorViews';
 
 function TransactionPage() {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
@@ -75,12 +76,13 @@ function TransactionPage() {
   }
 
   if (error) {
-    console.log(error);
+    return <TableError />;
   }
   return (
     <>
       <TableContainer>
-        {data ? <Table data={transactions} columns={tableColumns} /> : null}
+        {/* <Table data={transactions} columns={tableColumns} /> */}
+        <TableError />
       </TableContainer>
     </>
   );
