@@ -88,12 +88,7 @@ function Table<T extends Record<string, unknown>>({
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <TableRow
-                  {...row.getRowProps()}
-                  onClick={() => {
-                    throw new Error('Test');
-                  }}
-                >
+                <TableRow {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
                       <TableCell {...cell.getCellProps()}>
