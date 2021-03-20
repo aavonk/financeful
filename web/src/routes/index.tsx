@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import AppThemeProvider from '@Context/AppThemeProvider';
 import SidebarProvider from '@Context/sidebar/SidebarProvider';
 import PrivateRoute from './PrivateRoute';
@@ -13,7 +14,7 @@ import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
-
+import { BlueScreen } from '@Components/ErrorViews';
 import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
 
@@ -35,27 +36,33 @@ function Routes() {
   }, [data, error]);
 
   return (
-    <Router>
-      <GlobalStyle />
-      <AppThemeProvider>
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/dashboard" />
-          </Route>
-          <Route exact path="/login" component={LoginPage} />
-          <SidebarProvider>
-            <Layout>
-              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
-              <PrivateRoute
-                exact
-                path="/transactions"
-                component={TransactionPage}
-              />
-            </Layout>
-          </SidebarProvider>
-        </Switch>
-      </AppThemeProvider>
-    </Router>
+    <ErrorBoundary FallbackComponent={BlueScreen}>
+      <Router>
+        <GlobalStyle />
+        <AppThemeProvider>
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/dashboard" />
+            </Route>
+            <Route exact path="/login" component={LoginPage} />
+            <SidebarProvider>
+              <Layout>
+                <PrivateRoute
+                  exact
+                  path="/dashboard"
+                  component={DashboardPage}
+                />
+                <PrivateRoute
+                  exact
+                  path="/transactions"
+                  component={TransactionPage}
+                />
+              </Layout>
+            </SidebarProvider>
+          </Switch>
+        </AppThemeProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
