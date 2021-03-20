@@ -8,10 +8,12 @@ import { useGetTransactionsQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
 import Table from '@Components/Table';
 import SelectTypeFilter from '@Components/Table/Toolbar/SelectTypeFilter';
+import TableSkeleton from '@Components/Table/TableSkeleton';
+import TransactionTypeCell from './components/TransactionTypeCell';
 
 function TransactionPage() {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-  const { data, error } = useGetTransactionsQuery();
+  const { data, error, loading } = useGetTransactionsQuery();
 
   const COLUMNS: Column<Record<string, unknown>>[] = [
     {
@@ -47,6 +49,9 @@ function TransactionPage() {
     {
       Header: 'Type',
       accessor: 'type',
+      Cell: ({ value }: Cell<Transaction>) => {
+        return <TransactionTypeCell type={value} />;
+      },
       Filter: SelectTypeFilter,
       filter: 'includes',
     },
@@ -65,13 +70,17 @@ function TransactionPage() {
     }
   }, [data]);
 
+  if (loading) {
+    return <TableSkeleton columns={6} rows={8} />;
+  }
+
   if (error) {
     console.log(error);
   }
   return (
     <>
       <TableContainer>
-        <Table data={transactions} columns={tableColumns} />
+        {data ? <Table data={transactions} columns={tableColumns} /> : null}
       </TableContainer>
     </>
   );

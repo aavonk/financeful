@@ -57,7 +57,7 @@ export const TableBody = styled.tbody`
 
 export const TableCell = styled.td`
   display: table-cell;
-  padding: 16px;
+  padding: 0.75rem;
   font-size: 0.825rem;
   text-align: left;
   font-weight: 400;
@@ -65,7 +65,7 @@ export const TableCell = styled.td`
   border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   letter-spacing: 0.01071em;
   vertical-align: inherit;
-
+  white-space: nowrap;
   & .number {
     font-weight: 600;
     text-align: right;

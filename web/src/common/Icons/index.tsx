@@ -15,12 +15,19 @@ import {
 } from 'react-icons/bs';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
-import { FiLogOut } from 'react-icons/fi';
+import { FiLogOut, FiArrowUpCircle, FiArrowDownCircle } from 'react-icons/fi';
 import { MdSchedule, MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 
+export const UpArrowCircle = ({ ...props }) => {
+  return <FiArrowUpCircle {...props} aria-hidden="true" />;
+};
+export const DownArrowCircle = ({ ...props }) => {
+  return <FiArrowDownCircle {...props} aria-hidden="true" />;
+};
 export const UpArrow = ({ ...props }) => {
   return <BsArrowUpShort {...props} aria-hidden="true" />;
 };
+
 export const DownArrow = ({ ...props }) => {
   return <BsArrowDownShort {...props} aria-hidden="true" />;
 };
