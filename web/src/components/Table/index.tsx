@@ -90,7 +90,9 @@ function Table<T extends Record<string, unknown>>({
               return (
                 <TableRow
                   {...row.getRowProps()}
-                  onClick={() => console.log(row.original)}
+                  onClick={() => {
+                    throw new Error('Test');
+                  }}
                 >
                   {row.cells.map((cell) => {
                     return (

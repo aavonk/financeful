@@ -11,11 +11,12 @@ import SelectTypeFilter from '@Components/Table/Toolbar/SelectTypeFilter';
 import TableSkeleton from '@Components/Table/TableSkeleton';
 import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
+import { ErrorBoundary, useErrorHandler } from 'react-error-boundary';
 
 function TransactionPage() {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-  const { data, error, loading } = useGetTransactionsQuery();
-
+  const { data, error, loading, refetch } = useGetTransactionsQuery();
+  useErrorHandler(error);
   const COLUMNS: Column<Record<string, unknown>>[] = [
     {
       Header: 'Date',
@@ -75,14 +76,12 @@ function TransactionPage() {
     return <TableSkeleton columns={6} rows={8} />;
   }
 
-  if (error) {
-    return <TableError />;
-  }
   return (
     <>
       <TableContainer>
-        {/* <Table data={transactions} columns={tableColumns} /> */}
-        <TableError />
+        <ErrorBoundary FallbackComponent={TableError} onReset={() => refetch()}>
+          <Table data={transactions} columns={tableColumns} />
+        </ErrorBoundary>
       </TableContainer>
     </>
   );
