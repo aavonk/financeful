@@ -1,6 +1,7 @@
 import { ToolbarRoot, ActionsContainer } from './style';
 import Searchbox from './Searchbox';
 import { TableInstance } from 'react-table';
+import Button from '@Common/Button';
 
 type ToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>;
@@ -19,6 +20,9 @@ function Toolbar<T extends Record<string, unknown>>({
         ))}
       <ActionsContainer>
         <Searchbox instance={instance} />
+        <Button variant="primary" onClick={() => alert('hi')}>
+          Add Transaction
+        </Button>
       </ActionsContainer>
     </ToolbarRoot>
   );

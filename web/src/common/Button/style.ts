@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 
 type ButtonProps = {
-  outline?: boolean;
   fullWidth?: boolean;
   margin?: string;
   variant: string;
@@ -23,25 +22,34 @@ export const StyledButton = styled.button<ButtonProps>`
   transition: background-color 0.2s ease-in-out;
   color: ${(props) => props.theme.colors.textPrimary};
   margin: ${(props) => (props.margin ? props.margin : '0')};
-  background-color: ${(props) =>
-    props.outline ? 'transparent' : props.theme.colors.primary};
-  border: ${(props) =>
-    props.outline ? '1px solid ' + props.theme.colors.primary : 'transparent'};
 
-  &:hover,
-  :focus {
-    border: ${(props) =>
-      props.outline
-        ? '1px solid ' + props.theme.colors.primary
-        : 'transparent'};
-    background-color: ${(props) =>
-      props.outline ? 'rgba(30, 136, 229, 0.08)' : '#007dcb'};
-    /*  */
-  }
   &:disabled {
     opacity: 0.5;
     cursor: auto;
   }
+
+  ${({ variant }) =>
+    variant === 'primary' &&
+    css`
+      background-color: ${({ theme }) => theme.colors.primary};
+
+      &:hover,
+      :focus {
+        background-color: rgb(21, 95, 160);
+      }
+    `};
+
+  ${({ variant }) =>
+    variant === 'outline' &&
+    css`
+      background-color: transparent;
+      border: 1px solid ${({ theme }) => theme.colors.primary};
+
+      &:hover,
+      :focus {
+        background-color: rgba(30, 136, 229, 0.08);
+      }
+    `};
 
   ${({ variant }) =>
     variant === 'dark' &&
@@ -49,7 +57,8 @@ export const StyledButton = styled.button<ButtonProps>`
       background-color: ${({ theme }) => theme.colors.darkTwo};
       color: ${({ theme }) => theme.colors.textPrimary};
 
-      &:hover {
+      &:hover,
+      :focus {
         background-color: ${({ theme }) => theme.colors.darkThree};
       }
     `}
