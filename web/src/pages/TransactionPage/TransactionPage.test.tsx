@@ -1,4 +1,4 @@
-import { render, act, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/react-testing';
 import TransactionPage from './index';
 import ThemeProvider from '@Context/AppThemeProvider';
@@ -52,11 +52,8 @@ test('Successfully fetches and displays transactions', async () => {
   );
 
   const { getByText } = render(component);
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  });
 
-  expect(getByText(/good food/i)).toBeInTheDocument();
+  waitFor(() => expect(getByText(/good food/i)).toBeInTheDocument());
 });
 
 test('Component catches GraphQlError error and displays error UI', async () => {
@@ -76,12 +73,11 @@ test('Component catches GraphQlError error and displays error UI', async () => {
   );
   const { getByText } = render(component);
 
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  });
-  expect(
-    getByText(/we ran into trouble loading transactions/i),
-  ).toBeInTheDocument();
+  waitFor(() =>
+    expect(
+      getByText(/we ran into trouble loading transactions/i),
+    ).toBeInTheDocument(),
+  );
 });
 
 test('Component catches Network error and displays error UI', async () => {
@@ -101,10 +97,9 @@ test('Component catches Network error and displays error UI', async () => {
   );
   const { getByText } = render(component);
 
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  });
-  expect(
-    getByText(/we ran into trouble loading transactions/i),
-  ).toBeInTheDocument();
+  waitFor(() =>
+    expect(
+      getByText(/we ran into trouble loading transactions/i),
+    ).toBeInTheDocument(),
+  );
 });
