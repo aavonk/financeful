@@ -65,7 +65,10 @@ export const TableCell = styled.td`
   border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   letter-spacing: 0.01071em;
   vertical-align: inherit;
+  max-width: 200px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   & .number {
     font-weight: 600;
     text-align: right;

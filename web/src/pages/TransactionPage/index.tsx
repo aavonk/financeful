@@ -28,6 +28,12 @@ function TransactionPage() {
       disableFilters: true,
     },
     {
+      Header: 'Account',
+      accessor: 'account.accountName',
+      Filter: SelectTypeFilter,
+      disableFilters: true,
+    },
+    {
       Header: 'Payee',
       accessor: 'payee',
       Filter: SelectTypeFilter,
