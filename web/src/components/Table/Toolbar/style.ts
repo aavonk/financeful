@@ -15,8 +15,8 @@ export const SearchContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 9px;
   padding: 0 0.25rem;
-  /* margin-right: 1.25rem;
-  margin-left: 1.25rem; */
+  margin-right: 1.25rem;
+  /* margin-left: 1.25rem; */
   & > svg {
     margin-right: 0.75rem;
     height: 1.25rem;
@@ -66,13 +66,42 @@ export const TabContainer = styled(FlexRow)`
   }
 `;
 
-export const TabItem = styled.div`
+export const TabLabel = styled.span`
+  font-size: 1rem;
+  line-height: 27px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  & :focus-visible {
+    color: ${({ theme }) => theme.colors.textPrimary};
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 0.8rem;
+  }
+`;
+export const Indicator = styled.div`
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 9px;
+  width: 50%;
+`;
+
+export const TabItem = styled.button`
   padding: 0 0.675rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background-color: transparent;
+  font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  }
+  & :focus, :focus-visible  {
+     & > span {
+       color: ${({ theme }) => theme.colors.textPrimary}
+     }
+  }
   ${({ active }: { active?: boolean }) =>
     active &&
     css`
@@ -85,24 +114,6 @@ export const TabItem = styled.div`
         transition: color 0.2s ease-in;
       }
     `}
-`;
-
-export const Indicator = styled.div`
-  height: 3px;
-  margin-top: 12px;
-  border-radius: 9px;
-  width: 50%;
-`;
-
-export const TabLabel = styled.span`
-  font-size: 1rem;
-  line-height: 27px;
-  font-weight: 500;
-  white-space: nowrap;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  @media ${({ theme }) => theme.device.mobile} {
-    font-size: 0.8rem;
-  }
 `;
 
 export const ToolbarRoot = styled.div`
