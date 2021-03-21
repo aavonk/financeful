@@ -14,7 +14,7 @@ import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
-import { BlueScreen, ViewError } from '@Components/ErrorViews';
+import { BlueScreen, ViewError, DefaultView } from '@Components/ErrorViews';
 import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
 
@@ -52,7 +52,7 @@ function Routes() {
                   path="/dashboard"
                   component={DashboardPage}
                 />
-                <ErrorBoundary FallbackComponent={ViewError}>
+                <ErrorBoundary FallbackComponent={DefaultView}>
                   <PrivateRoute
                     exact
                     path="/transactions"

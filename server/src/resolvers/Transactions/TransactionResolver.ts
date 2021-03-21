@@ -17,6 +17,20 @@ export class TransactionResolver {
       where: {
         userId: user.id,
       },
+      include: {
+        account: {
+          select: {
+            accountName: true,
+            id: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
   }
 
@@ -30,6 +44,20 @@ export class TransactionResolver {
     const transaction = await prisma.transaction.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        account: {
+          select: {
+            accountName: true,
+            id: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 
@@ -60,6 +88,21 @@ export class TransactionResolver {
         date: new Date(input.date),
         type: input.type,
         accountId: input.accountId,
+        categoryId: input.categoryId,
+      },
+      include: {
+        account: {
+          select: {
+            accountName: true,
+            id: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
     return transaction;
@@ -101,6 +144,20 @@ export class TransactionResolver {
     const transaction = await prisma.transaction.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        account: {
+          select: {
+            accountName: true,
+            id: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 

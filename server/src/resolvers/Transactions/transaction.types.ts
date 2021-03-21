@@ -15,7 +15,7 @@ export class TransactionInput {
   description?: string;
 
   @Field(() => String, { nullable: true })
-  category?: string;
+  categoryId?: string;
 
   @Field(() => String)
   type: string;
@@ -39,8 +39,8 @@ export class Updates {
   description?: string;
 
   @Field(() => String, { nullable: true })
-  category?: string;
+  type?: string;
 
   @Field(() => String, { nullable: true })
-  type?: string;
+  categoryId?: string;
 }

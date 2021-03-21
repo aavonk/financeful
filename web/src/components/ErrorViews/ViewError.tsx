@@ -2,7 +2,7 @@ import { FallbackProps } from 'react-error-boundary';
 import Button from '@Common/Button';
 import { Emoji, Heading, Description, Container } from './style';
 
-interface Props extends FallbackProps {
+interface Props {
   heading?: string;
   subheading?: string;
   reload?: boolean;
