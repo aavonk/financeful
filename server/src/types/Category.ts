@@ -1,16 +1,16 @@
-import { Field, ObjectType, ID, Int } from 'type-graphql';
+import { Field, ObjectType, ID } from 'type-graphql';
 import { User } from './User';
 
 @ObjectType()
 export class Category {
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Field(() => User, { nullable: true })
   user?: User;
 
-  @Field(() => Int)
-  userId: number;
+  @Field(() => ID)
+  userId: string;
 
   @Field(() => String)
   name: string;
