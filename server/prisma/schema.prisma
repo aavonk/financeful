@@ -11,27 +11,47 @@ generator client {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  firstName   String        @db.VarChar(40)
-  displayName String        @db.VarChar(80)
-  email       String        @unique
-  password    String
-  avatar      String?
-  transaction Transaction[]
-  createdAt   DateTime      @default(now())
+  id           String        @id @default(cuid())
+  firstName    String        @db.VarChar(40)
+  displayName  String        @db.VarChar(80)
+  email        String        @unique
+  password     String
+  avatar       String?
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  categories   Category[]
+  account      Account[]
 }
 
-
-
 model Transaction {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   user        User     @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      String
   payee       String
   description String?
   amount      Int
   category    String?
   type        String
   date        DateTime
+  account     Account  @relation(fields: [accountId], references: [id])
+  accountId   String
+}
 
+model Category {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  name   String @db.VarChar(100)
+}
+
+model Account {
+  id          String        @id @default(cuid())
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
+  accountName String
+  accountType String
+  isAsset     Boolean
+  isLiability Boolean
+  balance     Int
+  transaction Transaction[]
 }

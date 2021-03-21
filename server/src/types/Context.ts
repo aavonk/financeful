@@ -4,6 +4,6 @@ import { ExpressContext } from 'apollo-server-express';
 export interface Context extends ExpressContext {
   prisma: PrismaClient;
   user: {
-    id: number;
+    id: string;
   };
 }

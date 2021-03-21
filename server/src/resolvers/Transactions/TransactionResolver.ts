@@ -24,7 +24,7 @@ export class TransactionResolver {
   @Authorized()
   @Query(() => Transaction, { nullable: true })
   async getTransaction(
-    @Arg('id') id: number,
+    @Arg('id') id: string,
     @Ctx() { user, prisma }: Context,
   ): Promise<Transaction | null> {
     const transaction = await prisma.transaction.findUnique({
@@ -59,6 +59,7 @@ export class TransactionResolver {
         description: input.description,
         date: new Date(input.date),
         type: input.type,
+        accountId: input.accountId,
       },
     });
     return transaction;
@@ -68,7 +69,7 @@ export class TransactionResolver {
   @Authorized()
   @Mutation(() => String)
   async deleteTransaction(
-    @Arg('id') id: number,
+    @Arg('id') id: string,
     @Ctx() { user, prisma }: Context,
   ): Promise<string> {
     const transaction = await prisma.transaction.findUnique({
@@ -93,7 +94,7 @@ export class TransactionResolver {
   @Authorized()
   @Mutation(() => Transaction)
   async updateTransaction(
-    @Arg('id') id: number,
+    @Arg('id') id: string,
     @Arg('input') input: Updates,
     @Ctx() { prisma, user }: Context,
   ): Promise<Transaction> {

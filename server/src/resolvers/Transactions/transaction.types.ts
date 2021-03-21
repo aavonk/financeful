@@ -19,6 +19,9 @@ export class TransactionInput {
 
   @Field(() => String)
   type: string;
+
+  @Field(() => String)
+  accountId: string;
 }
 
 @InputType()

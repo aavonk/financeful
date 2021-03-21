@@ -1,16 +1,17 @@
 import { Field, ObjectType, ID, Int } from 'type-graphql';
 import { User } from './User';
+import { Account } from './Account';
 
 @ObjectType()
 export class Transaction {
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Field(() => User, { nullable: true })
   user?: User;
 
   @Field(() => Int)
-  userId: number;
+  userId: string;
 
   @Field(() => String)
   payee: string;
@@ -29,4 +30,10 @@ export class Transaction {
 
   @Field(() => Date)
   date: Date;
+
+  @Field(() => ID)
+  accountId: string;
+
+  @Field(() => Account, { nullable: true })
+  account?: Account;
 }
