@@ -4,6 +4,7 @@ type ButtonProps = {
   $small?: boolean;
   $grey?: boolean;
   $active?: boolean;
+  $blue?: boolean;
 };
 export const StyledButton = styled.button<ButtonProps>`
   cursor: pointer;
@@ -25,7 +26,9 @@ export const StyledButton = styled.button<ButtonProps>`
   width: 48px;
   &:hover {
     background-color: ${({ theme }) => theme.effects.buttonHover};
+    color: ${({ theme }) => theme.colors.primary};
   }
+
   &:focus {
     background-color: ${({ theme }) => theme.effects.buttonHover};
   }
@@ -44,11 +47,17 @@ export const StyledButton = styled.button<ButtonProps>`
   ${(props) =>
     props.$grey &&
     css`
-      color: ${({ theme }) => theme.colors.textSecondary} !important;
+      color: ${({ theme }) => theme.colors.textSecondary};
     `}
       ${(props) =>
     props.$active &&
     css`
       background-color: ${({ theme }) => theme.effects.buttonHover};
     `}
+
+    ${(props) =>
+    props.$blue &&
+    css`
+      color: ${({ theme }) => theme.colors.primary};
+    `};
 `;

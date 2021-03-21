@@ -21,7 +21,7 @@ const theme: DefaultTheme = {
   },
 
   effects: {
-    buttonHover: 'rgba(255, 255, 255, 0.1)',
+    buttonHover: 'rgba(29, 161, 242, 0.1)',
     dangerHover: 'rgba(224, 36, 94, 0.2)',
   },
   elevation: {
