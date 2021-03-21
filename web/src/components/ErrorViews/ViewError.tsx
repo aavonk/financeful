@@ -1,14 +1,15 @@
+import { FallbackProps } from 'react-error-boundary';
 import Button from '@Common/Button';
 import { Emoji, Heading, Description, Container } from './style';
 
-type Props = {
+interface Props extends FallbackProps {
   heading?: string;
   subheading?: string;
   reload?: boolean;
   emoji?: string;
   whiteText?: boolean;
   reloadFunction?: () => void;
-};
+}
 function ViewError(props: Props) {
   const {
     heading = 'Something went wrong',
