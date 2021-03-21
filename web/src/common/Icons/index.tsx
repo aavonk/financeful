@@ -16,7 +16,16 @@ import {
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
 import { FiLogOut, FiArrowUpCircle, FiArrowDownCircle } from 'react-icons/fi';
-import { MdSchedule, MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
+import {
+  MdSchedule,
+  MdCheckBoxOutlineBlank,
+  MdCheckBox,
+  MdClose,
+} from 'react-icons/md';
+
+export const CloseIcon = ({ ...props }) => {
+  return <MdClose {...props} aria-hidden="true" />;
+};
 
 export const UpArrowCircle = ({ ...props }) => {
   return <FiArrowUpCircle {...props} aria-hidden="true" />;
