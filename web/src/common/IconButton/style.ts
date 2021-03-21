@@ -43,6 +43,11 @@ export const StyledButton = styled.button<ButtonProps>`
       width: 32px;
       font-size: 0.95rem;
       padding: 0;
+
+      & > svg {
+        width: 1.5em;
+        height: 1.5em;
+      }
     `}
   ${(props) =>
     props.$grey &&
