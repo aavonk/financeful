@@ -20,7 +20,7 @@ function TableSkeleton({ rows, columns }: Props) {
 
   return (
     <Paper>
-      <TableRoot>
+      <TableRoot aria-disabled="true" aria-label="Loading transactions">
         <TableHead>
           <TableRow>
             {colsArray.map((col, index) => (

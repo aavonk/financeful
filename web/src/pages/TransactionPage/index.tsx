@@ -16,7 +16,7 @@ import { ErrorBoundary, useErrorHandler } from 'react-error-boundary';
 function TransactionPage() {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const { data, error, loading, refetch } = useGetTransactionsQuery();
-  useErrorHandler(error);
+  const handleError = useErrorHandler();
   const COLUMNS: Column<Record<string, unknown>>[] = [
     {
       Header: 'Date',
@@ -75,11 +75,14 @@ function TransactionPage() {
   if (loading) {
     return <TableSkeleton columns={6} rows={8} />;
   }
+  if (error) {
+    return <TableError error={error} />;
+  }
 
   return (
     <>
       <TableContainer>
-        <ErrorBoundary FallbackComponent={TableError} onReset={() => refetch()}>
+        <ErrorBoundary FallbackComponent={TableError}>
           <Table data={transactions} columns={tableColumns} />
         </ErrorBoundary>
       </TableContainer>
