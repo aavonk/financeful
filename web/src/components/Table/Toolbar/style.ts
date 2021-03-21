@@ -8,15 +8,14 @@ export const ActionsContainer = styled(FlexRow)`
 
 export const SearchContainer = styled.div`
   position: relative;
-  /* min-width: 340px;
-  max-width: 380px; */
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 9px;
   padding: 0 0.25rem;
   margin-right: 1.25rem;
-  /* margin-left: 1.25rem; */
+  height: 2.5rem;
+
   & > svg {
     margin-right: 0.75rem;
     height: 1.25rem;

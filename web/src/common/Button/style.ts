@@ -10,15 +10,16 @@ export const StyledButton = styled.button<ButtonProps>`
   min-width: 64px;
   font-weight: 500;
   line-height: 1.75;
-  border-radius: 9px;
+  border-radius: 4px;
   letter-spacing: 0.02857em;
+  box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
   position: relative;
   outline: 0;
   align-items: center;
   justify-content: center;
-  padding: 5px 15px;
+  padding: 6px 16px;
   transition: background-color 0.2s ease-in-out;
   color: ${(props) => props.theme.colors.textPrimary};
   margin: ${(props) => (props.margin ? props.margin : '0')};
