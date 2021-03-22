@@ -3,20 +3,17 @@ import * as React from 'react';
 import {
   StyledUnderlineInput,
   StyledLabel,
-  CheckboxContainer,
-  CheckInput,
-  CheckboxLabel,
-  CheckboxFilled,
+  BorderedLabel,
+  TransparentInput,
+  TransparentSelect,
 } from './style';
-
-import { CheckFilled, CheckOutline } from '@Common/Icons';
 
 type InputTypes = {
   disabled?: boolean;
   id?: string;
   children: React.ReactNode;
   htmlFor?: string;
-  type: 'text' | 'password';
+  type: 'text' | 'password' | 'date';
   placeholder?: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
@@ -42,51 +39,47 @@ export function UnderlineInput(props: InputTypes) {
   );
 }
 
-// type CheckboxProps = {}
-//   ref?: React.Ref<HTMLInputElement>
-// }
-//@ts-ignore
-// const IndeterminateCheckbox = React.forwardRef<React.Ref | null>(
-//   //@ts-ignore
-//   ({ indeterminate, ...rest }, ref) => {
-//     const defaultRef = React.useRef();
-//     const resolvedRef = ref || defaultRef;
-
-//     React.useEffect(() => {
-//       //@ts-ignore
-//       resolvedRef.current.indeterminate = indeterminate;
-//     }, [resolvedRef, indeterminate]);
-
-//     return (
-//       <>
-//         <CheckboxContainer>
-//           <CheckboxLabel>
-//             <CheckInput type="checkbox" ref={resolvedRef} {...rest} />
-//           </CheckboxLabel>
-//           {checked ? <CheckboxFilled /> : <CheckOutline />}
-//         </CheckboxContainer>
-//       </>
-//     );
-//   },
-// );
-
-export function Checkbox() {
-  const [checked, setChecked] = React.useState(false);
-  return (
-    <CheckboxContainer>
-      <CheckboxLabel>
-        <CheckInput
-          type="checkbox"
-          aria-label="checkbox"
-          checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
+export const BorderedInput = React.forwardRef<HTMLInputElement, InputTypes>(
+  (props, ref) => {
+    return (
+      <BorderedLabel htmlFor={props.id}>
+        {props.children}
+        <TransparentInput
+          type={props.type}
+          id={props.id}
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={props.onChange}
+          autoFocus={props.autoFocus}
+          disabled={props.disabled}
+          ref={ref}
         />
-        {checked ? (
-          <CheckboxFilled focusable="false" aria-hidden="true" />
-        ) : (
-          <CheckOutline focusable="false" aria-hidden="true" />
-        )}
-      </CheckboxLabel>
-    </CheckboxContainer>
+      </BorderedLabel>
+    );
+  },
+);
+
+type SelectProps = {
+  label: string;
+  children: React.DetailedHTMLProps<
+    React.OptionHTMLAttributes<HTMLOptionElement>,
+    HTMLOptionElement
+  >[];
+  value: string;
+  defaultValue?: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+};
+export function BorderedSelect(props: SelectProps) {
+  return (
+    <BorderedLabel>
+      {props.label}
+      <TransparentSelect
+        value={props.value}
+        onChange={props.onChange}
+        defaultValue={props.defaultValue}
+      >
+        {props.children}
+      </TransparentSelect>
+    </BorderedLabel>
   );
 }

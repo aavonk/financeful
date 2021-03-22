@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { theme } from '@Constants/theme';
-import { MdCheckBox } from 'react-icons/md';
 
 type LabelProps = {
   disabled?: boolean;
@@ -42,51 +41,48 @@ export const StyledUnderlineInput = styled.input<InputProps>`
   color: ${theme.colors.textPrimary};
 `;
 
-export const CheckboxContainer = styled.span`
-  color: rgba(255, 255, 255, 0.7);
-  padding: 9px;
-  flex: 0 0 auto;
-  overflow: visible;
-  font-size: 1.5rem;
-  text-align: center;
-  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  border-radius: 50%;
-  border: 0;
-  cursor: pointer;
-  margin: 0;
-  display: inline-flex;
-  outline: 0;
+export const BorderedLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 12px;
+  font-weight: 400;
+  /* font-size: 0.875rem; */
+  font-size: 1rem;
+  padding-left: 4px;
+  letter-spacing: -0.4px;
+  color: ${theme.colors.textSecondary};
   position: relative;
-  align-items: center;
-  vertical-align: middle;
-  justify-content: center;
-  background-color: transparent;
-  &:hover {
-    background-color: rgba(30, 136, 229, 0.08);
+  border: 1px solid ${theme.colors.darkThree};
+  border-radius: 4px;
+  transition: border-color 125ms ease-in, color 125ms ease-in;
+  &:focus-within {
+    border-color: ${theme.colors.primary};
+    color: ${theme.colors.primary};
   }
 `;
-
-export const CheckboxLabel = styled.span`
+export const TransparentInput = styled.input`
+  flex: 1 0 auto;
+  background: transparent;
+  font-weight: 500;
   width: 100%;
-  display: flex;
-  align-items: inherit;
-  justify-content: inherit;
+  font-size: 1rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 2px;
+  box-shadow: none;
+  color: ${theme.colors.textPrimary};
 `;
 
-export const CheckInput = styled.input`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+export const TransparentSelect = styled.select`
+  flex: 1 0 auto;
+  background: transparent;
+  font-weight: 500;
   width: 100%;
-  cursor: inherit;
-  margin: 0;
-  opacity: 0;
-  padding: 0;
-  z-index: 1;
-`;
-
-export const CheckboxFilled = styled(MdCheckBox)`
-  color: #1e88e5;
-  fill: #1e88e5;
+  font-size: 1rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 2px;
+  box-shadow: none;
+  color: ${theme.colors.textPrimary};
 `;
