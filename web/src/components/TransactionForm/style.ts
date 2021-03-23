@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  DialogOverlay,
-  DialogContent,
-  DialogContentProps,
-} from '@reach/dialog';
+import { DialogOverlay, DialogContent } from '@reach/dialog';
 
 export const Overlay = styled(DialogOverlay)`
   background: rgba(91, 112, 131, 0.35);
@@ -69,4 +65,19 @@ export const Body = styled.div`
   padding: 0.825rem 1rem 3rem 0.825rem;
   /* overflow-y: auto;
   max-height: 80vh; */
+`;
+
+export const Footer = styled.div`
+  height: 53px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  z-index: 2;
+  position: sticky;
+  bottom: 0;
+  background-color: ${({ theme }) => theme.colors.darkTwo};
+  border-top: 1px solid ${({ theme }) => theme.colors.darkThree};
+  padding: 0 1rem;
 `;

@@ -6,6 +6,8 @@ import {
   BorderedLabel,
   TransparentInput,
   TransparentSelect,
+  Prefix,
+  StyledError,
 } from './style';
 
 type InputTypes = {
@@ -20,6 +22,8 @@ type InputTypes = {
   ) => void;
   value: string;
   autoFocus?: boolean;
+  withPrefix?: boolean;
+  prefix?: string;
 };
 
 export function UnderlineInput(props: InputTypes) {
@@ -44,16 +48,19 @@ export const BorderedInput = React.forwardRef<HTMLInputElement, InputTypes>(
     return (
       <BorderedLabel htmlFor={props.id}>
         {props.children}
-        <TransparentInput
-          type={props.type}
-          id={props.id}
-          placeholder={props.placeholder}
-          value={props.value}
-          onChange={props.onChange}
-          autoFocus={props.autoFocus}
-          disabled={props.disabled}
-          ref={ref}
-        />
+        <div style={{ display: 'flex', alignItems: 'stretch' }}>
+          {props.withPrefix && <Prefix>{props.prefix}</Prefix>}
+          <TransparentInput
+            type={props.type}
+            id={props.id}
+            placeholder={props.placeholder}
+            value={props.value}
+            onChange={props.onChange}
+            autoFocus={props.autoFocus}
+            disabled={props.disabled}
+            ref={ref}
+          />
+        </div>
       </BorderedLabel>
     );
   },
@@ -67,7 +74,9 @@ type SelectProps = {
   >[];
   value: string;
   defaultValue?: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
+  ) => void;
 };
 export function BorderedSelect(props: SelectProps) {
   return (
@@ -82,4 +91,12 @@ export function BorderedSelect(props: SelectProps) {
       </TransparentSelect>
     </BorderedLabel>
   );
+}
+
+type ErrorProps = {
+  children: string | null;
+};
+
+export function ErrorMessage({ children }: ErrorProps) {
+  return <StyledError>{children}</StyledError>;
 }

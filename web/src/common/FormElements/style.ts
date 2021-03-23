@@ -66,7 +66,7 @@ export const TransparentInput = styled.input`
   background: transparent;
   font-weight: 500;
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding-top: 4px;
   padding-bottom: 4px;
   margin-top: 2px;
@@ -79,10 +79,33 @@ export const TransparentSelect = styled.select`
   background: transparent;
   font-weight: 500;
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding-top: 4px;
   padding-bottom: 4px;
   margin-top: 2px;
   box-shadow: none;
   color: ${theme.colors.textPrimary};
+  cursor: pointer;
+
+  & > option {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+  }
+`;
+
+export const Prefix = styled.span`
+  display: flex;
+  align-items: center;
+  padding-right: 0.375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  font-size: 1rem;
+  text-align: center;
+  white-space: nowrap;
+`;
+
+export const StyledError = styled.div`
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.textError};
 `;
