@@ -51,7 +51,7 @@ export const BorderedLabel = styled.label`
   font-size: 1rem;
   padding-left: 4px;
   letter-spacing: -0.4px;
-  color: ${theme.colors.textSecondary};
+  color: ${theme.colors.textGrey};
   position: relative;
   border: 1px solid ${theme.colors.darkThree};
   border-radius: 4px;

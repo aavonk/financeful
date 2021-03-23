@@ -33,7 +33,7 @@ export const StyledButton = styled.button<ButtonProps>`
     variant === 'primary' &&
     css`
       background-color: ${({ theme }) => theme.colors.primary};
-
+      color: #000000;
       &:hover,
       :focus {
         background-color: rgb(21, 95, 160);
