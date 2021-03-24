@@ -1,9 +1,8 @@
 import { ToolbarRoot, ActionsContainer } from './style';
-import Searchbox from './Searchbox';
 import { TableInstance } from 'react-table';
-import Button from '@Common/Button';
-import { useMediaQuery } from '@Hooks/useMediaQuery';
+// import { useFetchCategoriesQuery } from '@Generated/graphql'
 import TransactionForm from '@Components/TransactionForm';
+import Searchbox from './Searchbox';
 
 type ToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>;
@@ -13,7 +12,6 @@ function Toolbar<T extends Record<string, unknown>>({
   instance,
 }: ToolbarProps<T>) {
   const { allColumns } = instance;
-  const smallDevice = useMediaQuery('(max-width: 605px)');
   return (
     <ToolbarRoot>
       {allColumns
@@ -23,10 +21,6 @@ function Toolbar<T extends Record<string, unknown>>({
         ))}
       <ActionsContainer>
         <Searchbox instance={instance} />
-
-        {/* <Button variant="primary" onClick={() => alert('hi')}>
-          {smallDevice ? 'New' : 'Add Transaction'}
-        </Button> */}
         <TransactionForm />
       </ActionsContainer>
     </ToolbarRoot>

@@ -100,7 +100,7 @@ function TransactionForm() {
 
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
-
+  //TODO: Make sure each field is trimmed
   return (
     <div>
       <Button onClick={open} variant="primary">

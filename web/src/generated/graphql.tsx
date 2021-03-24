@@ -1,10 +1,14 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -24,7 +28,6 @@ export type Query = {
   getCategories: Array<Category>;
 };
 
-
 export type QueryGetTransactionArgs = {
   id: Scalars['String'];
 };
@@ -40,7 +43,6 @@ export type User = {
   createdAt: Scalars['DateTime'];
   token?: Maybe<Scalars['String']>;
 };
-
 
 export type Transaction = {
   __typename?: 'Transaction';
@@ -92,44 +94,36 @@ export type Mutation = {
   deleteCategory: Scalars['String'];
 };
 
-
 export type MutationLoginArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
 };
 
-
 export type MutationRegisterArgs = {
   input: RegisterInput;
 };
-
 
 export type MutationCreateTransactionArgs = {
   input: TransactionInput;
 };
 
-
 export type MutationDeleteTransactionArgs = {
   id: Scalars['String'];
 };
-
 
 export type MutationUpdateTransactionArgs = {
   input: Updates;
   id: Scalars['String'];
 };
 
-
 export type MutationCreateCategoryArgs = {
   name: Scalars['String'];
 };
-
 
 export type MutationUpdateCategoryArgs = {
   categoryId: Scalars['String'];
   name: Scalars['String'];
 };
-
 
 export type MutationDeleteCategoryArgs = {
   categoryId: Scalars['String'];
@@ -166,72 +160,100 @@ export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
 
-
-export type LoginMutation = (
-  { __typename?: 'Mutation' }
-  & { login: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'displayName' | 'firstName' | 'token' | 'avatar' | 'email' | 'createdAt'>
-  ) }
-);
+export type LoginMutation = { __typename?: 'Mutation' } & {
+  login: { __typename?: 'User' } & Pick<
+    User,
+    | 'id'
+    | 'displayName'
+    | 'firstName'
+    | 'token'
+    | 'avatar'
+    | 'email'
+    | 'createdAt'
+  >;
+};
 
 export type RegisterMutationVariables = Exact<{
   input: RegisterInput;
 }>;
 
+export type RegisterMutation = { __typename?: 'Mutation' } & {
+  register: { __typename?: 'User' } & Pick<
+    User,
+    | 'id'
+    | 'email'
+    | 'displayName'
+    | 'firstName'
+    | 'token'
+    | 'avatar'
+    | 'createdAt'
+  >;
+};
 
-export type RegisterMutation = (
-  { __typename?: 'Mutation' }
-  & { register: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'displayName' | 'firstName' | 'token' | 'avatar' | 'createdAt'>
-  ) }
-);
+export type FetchCategoriesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type FetchUserQueryVariables = Exact<{ [key: string]: never; }>;
+export type FetchCategoriesQuery = { __typename?: 'Query' } & {
+  getCategories: Array<
+    { __typename?: 'Category' } & Pick<Category, 'id' | 'name'>
+  >;
+};
 
+export type FetchUserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type FetchUserQuery = (
-  { __typename?: 'Query' }
-  & { getCurrentUser: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'>
-  ) }
-);
+export type FetchUserQuery = { __typename?: 'Query' } & {
+  getCurrentUser: { __typename?: 'User' } & Pick<
+    User,
+    'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'
+  >;
+};
 
-export type GetTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTransactionsQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type GetTransactionsQuery = (
-  { __typename?: 'Query' }
-  & { getTransactions?: Maybe<Array<(
-    { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
-    & { category?: Maybe<(
-      { __typename?: 'Category' }
-      & Pick<Category, 'id' | 'name'>
-    )>, account?: Maybe<(
-      { __typename?: 'Account' }
-      & Pick<Account, 'accountName' | 'id'>
-    )> }
-  )>> }
-);
-
+export type GetTransactionsQuery = { __typename?: 'Query' } & {
+  getTransactions?: Maybe<
+    Array<
+      { __typename?: 'Transaction' } & Pick<
+        Transaction,
+        | 'id'
+        | 'userId'
+        | 'payee'
+        | 'description'
+        | 'amount'
+        | 'type'
+        | 'date'
+        | 'accountId'
+        | 'isCashIn'
+        | 'isCashOut'
+        | 'isUncategorized'
+      > & {
+          category?: Maybe<
+            { __typename?: 'Category' } & Pick<Category, 'id' | 'name'>
+          >;
+          account?: Maybe<
+            { __typename?: 'Account' } & Pick<Account, 'accountName' | 'id'>
+          >;
+        }
+    >
+  >;
+};
 
 export const LoginDocument = gql`
-    mutation Login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
-    id
-    displayName
-    firstName
-    token
-    avatar
-    email
-    createdAt
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      id
+      displayName
+      firstName
+      token
+      avatar
+      email
+      createdAt
+    }
   }
-}
-    `;
-export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+`;
+export type LoginMutationFn = Apollo.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
 
 /**
  * __useLoginMutation__
@@ -251,27 +273,41 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  *   },
  * });
  */
-export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-      }
+export function useLoginMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    options,
+  );
+}
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
 export const RegisterDocument = gql`
-    mutation Register($input: RegisterInput!) {
-  register(input: $input) {
-    id
-    email
-    displayName
-    firstName
-    token
-    avatar
-    createdAt
+  mutation Register($input: RegisterInput!) {
+    register(input: $input) {
+      id
+      email
+      displayName
+      firstName
+      token
+      avatar
+      createdAt
+    }
   }
-}
-    `;
-export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+`;
+export type RegisterMutationFn = Apollo.MutationFunction<
+  RegisterMutation,
+  RegisterMutationVariables
+>;
 
 /**
  * __useRegisterMutation__
@@ -290,25 +326,94 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *   },
  * });
  */
-export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
-      }
+export function useRegisterMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RegisterMutation,
+    RegisterMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(
+    RegisterDocument,
+    options,
+  );
+}
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
-export const FetchUserDocument = gql`
-    query fetchUser {
-  getCurrentUser {
-    id
-    firstName
-    displayName
-    email
-    avatar
-    createdAt
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<
+  RegisterMutation,
+  RegisterMutationVariables
+>;
+export const FetchCategoriesDocument = gql`
+  query fetchCategories {
+    getCategories {
+      id
+      name
+    }
   }
+`;
+
+/**
+ * __useFetchCategoriesQuery__
+ *
+ * To run a query within a React component, call `useFetchCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFetchCategoriesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    FetchCategoriesQuery,
+    FetchCategoriesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FetchCategoriesQuery, FetchCategoriesQueryVariables>(
+    FetchCategoriesDocument,
+    options,
+  );
 }
-    `;
+export function useFetchCategoriesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchCategoriesQuery,
+    FetchCategoriesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    FetchCategoriesQuery,
+    FetchCategoriesQueryVariables
+  >(FetchCategoriesDocument, options);
+}
+export type FetchCategoriesQueryHookResult = ReturnType<
+  typeof useFetchCategoriesQuery
+>;
+export type FetchCategoriesLazyQueryHookResult = ReturnType<
+  typeof useFetchCategoriesLazyQuery
+>;
+export type FetchCategoriesQueryResult = Apollo.QueryResult<
+  FetchCategoriesQuery,
+  FetchCategoriesQueryVariables
+>;
+export const FetchUserDocument = gql`
+  query fetchUser {
+    getCurrentUser {
+      id
+      firstName
+      displayName
+      email
+      avatar
+      createdAt
+    }
+  }
+`;
 
 /**
  * __useFetchUserQuery__
@@ -325,42 +430,63 @@ export const FetchUserDocument = gql`
  *   },
  * });
  */
-export function useFetchUserQuery(baseOptions?: Apollo.QueryHookOptions<FetchUserQuery, FetchUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchUserQuery, FetchUserQueryVariables>(FetchUserDocument, options);
-      }
-export function useFetchUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchUserQuery, FetchUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchUserQuery, FetchUserQueryVariables>(FetchUserDocument, options);
-        }
-export type FetchUserQueryHookResult = ReturnType<typeof useFetchUserQuery>;
-export type FetchUserLazyQueryHookResult = ReturnType<typeof useFetchUserLazyQuery>;
-export type FetchUserQueryResult = Apollo.QueryResult<FetchUserQuery, FetchUserQueryVariables>;
-export const GetTransactionsDocument = gql`
-    query GetTransactions {
-  getTransactions {
-    id
-    userId
-    payee
-    description
-    amount
-    category {
-      id
-      name
-    }
-    type
-    date
-    accountId
-    account {
-      accountName
-      id
-    }
-    isCashIn
-    isCashOut
-    isUncategorized
-  }
+export function useFetchUserQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    FetchUserQuery,
+    FetchUserQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FetchUserQuery, FetchUserQueryVariables>(
+    FetchUserDocument,
+    options,
+  );
 }
-    `;
+export function useFetchUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchUserQuery,
+    FetchUserQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FetchUserQuery, FetchUserQueryVariables>(
+    FetchUserDocument,
+    options,
+  );
+}
+export type FetchUserQueryHookResult = ReturnType<typeof useFetchUserQuery>;
+export type FetchUserLazyQueryHookResult = ReturnType<
+  typeof useFetchUserLazyQuery
+>;
+export type FetchUserQueryResult = Apollo.QueryResult<
+  FetchUserQuery,
+  FetchUserQueryVariables
+>;
+export const GetTransactionsDocument = gql`
+  query GetTransactions {
+    getTransactions {
+      id
+      userId
+      payee
+      description
+      amount
+      category {
+        id
+        name
+      }
+      type
+      date
+      accountId
+      account {
+        accountName
+        id
+      }
+      isCashIn
+      isCashOut
+      isUncategorized
+    }
+  }
+`;
 
 /**
  * __useGetTransactionsQuery__
@@ -377,14 +503,37 @@ export const GetTransactionsDocument = gql`
  *   },
  * });
  */
-export function useGetTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<GetTransactionsQuery, GetTransactionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTransactionsQuery, GetTransactionsQueryVariables>(GetTransactionsDocument, options);
-      }
-export function useGetTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTransactionsQuery, GetTransactionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTransactionsQuery, GetTransactionsQueryVariables>(GetTransactionsDocument, options);
-        }
-export type GetTransactionsQueryHookResult = ReturnType<typeof useGetTransactionsQuery>;
-export type GetTransactionsLazyQueryHookResult = ReturnType<typeof useGetTransactionsLazyQuery>;
-export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery, GetTransactionsQueryVariables>;
+export function useGetTransactionsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetTransactionsQuery,
+    GetTransactionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTransactionsQuery, GetTransactionsQueryVariables>(
+    GetTransactionsDocument,
+    options,
+  );
+}
+export function useGetTransactionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetTransactionsQuery,
+    GetTransactionsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetTransactionsQuery,
+    GetTransactionsQueryVariables
+  >(GetTransactionsDocument, options);
+}
+export type GetTransactionsQueryHookResult = ReturnType<
+  typeof useGetTransactionsQuery
+>;
+export type GetTransactionsLazyQueryHookResult = ReturnType<
+  typeof useGetTransactionsLazyQuery
+>;
+export type GetTransactionsQueryResult = Apollo.QueryResult<
+  GetTransactionsQuery,
+  GetTransactionsQueryVariables
+>;
