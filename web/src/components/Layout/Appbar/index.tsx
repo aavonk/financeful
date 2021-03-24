@@ -1,6 +1,6 @@
+import { Dispatch, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
-import { useSidebar } from '@Context/sidebar/sidebarContext';
 import { MenuIcon, ScheduleIcon } from '@Common/Icons';
 import Badge from '@Common/Badge';
 import IconButton from '@Common/IconButton';
@@ -14,21 +14,23 @@ import {
   AppbarActions,
 } from './style';
 
-function Appbar() {
+type Props = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+function Appbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
   const { pathname } = useLocation();
   const mobileDevice = useMediaQuery('(max-width: 500px)');
-  const {
-    state: { isOpen },
-    dispatch,
-  } = useSidebar();
+
   return (
     <>
-      <AppbarRoot $open={isOpen}>
+      <AppbarRoot $open={isSidebarOpen}>
         <AppbarContainer>
           <AppbarMenu>
             <IconButton
               grey
-              onClick={() => dispatch({ type: 'TOGGLE' })}
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               data-testid="toggle-button"
               aria-label="toggle-sidebar"
               ariaText="Toggle sidebar"

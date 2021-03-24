@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import AppThemeProvider from '@Context/AppThemeProvider';
-import SidebarProvider from '@Context/sidebar/SidebarProvider';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
@@ -45,22 +44,16 @@ function Routes() {
               <Redirect to="/dashboard" />
             </Route>
             <Route exact path="/login" component={LoginPage} />
-            <SidebarProvider>
-              <Layout>
+            <Layout>
+              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
+              <ErrorBoundary FallbackComponent={DefaultView}>
                 <PrivateRoute
                   exact
-                  path="/dashboard"
-                  component={DashboardPage}
+                  path="/transactions"
+                  component={TransactionPage}
                 />
-                <ErrorBoundary FallbackComponent={DefaultView}>
-                  <PrivateRoute
-                    exact
-                    path="/transactions"
-                    component={TransactionPage}
-                  />
-                </ErrorBoundary>
-              </Layout>
-            </SidebarProvider>
+              </ErrorBoundary>
+            </Layout>
           </Switch>
         </AppThemeProvider>
       </Router>

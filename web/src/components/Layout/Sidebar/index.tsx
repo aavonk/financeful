@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import {
   SidebarRoot,
   SidebarBrand,
@@ -17,7 +18,11 @@ import {
 } from '@Common/Icons';
 import Tooltip from '@Common/Tooltip';
 import IconButton from '@Common/IconButton';
-import { useSidebar } from '@Context/sidebar/sidebarContext';
+
+type Props = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
+};
 
 const items = [
   {
@@ -54,14 +59,9 @@ const items = [
   },
 ];
 
-function Sidebar() {
-  const {
-    state: { isOpen },
-    dispatch,
-  } = useSidebar();
-
+function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
   return (
-    <SidebarRoot $open={isOpen} data-testid="sidebar">
+    <SidebarRoot $open={isSidebarOpen} data-testid="sidebar">
       <SidebarBrand>
         <Logo>
           <IconSvg />
@@ -69,7 +69,7 @@ function Sidebar() {
         </Logo>
         <span>
           <IconButton
-            onClick={() => dispatch({ type: 'CLOSE' })}
+            onClick={() => setIsSidebarOpen(false)}
             ariaText="Close sidebar"
           >
             <ChevronLeftIcon />
