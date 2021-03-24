@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
-import AppThemeProvider from '@Context/AppThemeProvider';
+import AppThemeProvider from '@Context/theme';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
