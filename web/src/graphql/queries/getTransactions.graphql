@@ -16,5 +16,8 @@ query GetTransactions {
       accountName
       id
     }
+    isCashIn
+    isCashOut
+    isUncategorized
   }
 }

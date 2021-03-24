@@ -24,25 +24,28 @@ model User {
 }
 
 model Transaction {
-  id          String   @id @default(cuid())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
-  payee       String
-  description String?
-  amount      Int
-  category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  String?
-  type        String
-  date        DateTime
-  account     Account  @relation(fields: [accountId], references: [id])
-  accountId   String
+  id              String    @id @default(cuid())
+  user            User      @relation(fields: [userId], references: [id])
+  userId          String
+  payee           String
+  description     String?
+  amount          Int
+  category        Category? @relation(fields: [categoryId], references: [id])
+  categoryId      String?
+  type            String
+  date            DateTime
+  account         Account   @relation(fields: [accountId], references: [id])
+  accountId       String
+  isCashIn        Boolean   @default(false)
+  isCashOut       Boolean   @default(true)
+  isUncategorized Boolean   @default(true)
 }
 
 model Category {
-  id     String @id @default(cuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-  name   String @db.VarChar(100)
+  id          String        @id @default(cuid())
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
+  name        String        @db.VarChar(100)
   transaction Transaction[]
 }
 

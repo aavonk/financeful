@@ -55,6 +55,9 @@ export type Transaction = {
   date: Scalars['DateTime'];
   accountId: Scalars['ID'];
   account?: Maybe<Account>;
+  isCashIn?: Maybe<Scalars['Boolean']>;
+  isCashOut?: Maybe<Scalars['Boolean']>;
+  isUncategorized?: Maybe<Scalars['Boolean']>;
 };
 
 export type Category = {
@@ -203,7 +206,7 @@ export type GetTransactionsQuery = (
   { __typename?: 'Query' }
   & { getTransactions?: Maybe<Array<(
     { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId'>
+    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
     & { category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'id' | 'name'>
@@ -352,6 +355,9 @@ export const GetTransactionsDocument = gql`
       accountName
       id
     }
+    isCashIn
+    isCashOut
+    isUncategorized
   }
 }
     `;

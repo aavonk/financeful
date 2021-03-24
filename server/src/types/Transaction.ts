@@ -37,4 +37,13 @@ export class Transaction {
 
   @Field(() => Account, { nullable: true })
   account?: Account;
+
+  @Field(() => Boolean, {nullable: true})
+  isCashIn?: boolean
+
+  @Field(() => Boolean, {nullable: true})
+  isCashOut?: boolean
+
+  @Field(() => Boolean, {nullable: true})
+  isUncategorized?: boolean
 }

@@ -79,33 +79,56 @@ export class TransactionResolver {
     @Arg('input') input: TransactionInput,
     @Ctx() { prisma, user }: Context,
   ): Promise<Transaction> {
-    const transaction = await prisma.transaction.create({
-      data: {
-        userId: user.id,
-        payee: input.payee,
-        amount: input.amount,
-        description: input.description,
-        date: new Date(input.date),
-        type: input.type,
-        accountId: input.accountId,
-        categoryId: input.categoryId,
+    let date = new Date();
+
+    const account = await prisma.account.update({
+      where: {
+        id: input.accountId,
       },
-      include: {
-        account: {
-          select: {
-            accountName: true,
-            id: true,
+      data: {
+        balance:
+          input.type === 'EXPENSE'
+            ? { decrement: input.amount }
+            : { increment: input.amount },
+        transaction: {
+          create: {
+            userId: user.id,
+            payee: input.payee,
+            amount: input.amount,
+            description: input.description,
+            date,
+            type: input.type,
+            categoryId: input.categoryId,
+            isCashIn: input.type === 'INCOME',
+            isCashOut: input.type === 'EXPENSE',
+            isUncategorized: !input.categoryId,
           },
         },
-        category: {
-          select: {
-            id: true,
-            name: true,
+      },
+      select: {
+        transaction: {
+          where: {
+            date,
+          },
+          include: {
+            category: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+            account: {
+              select: {
+                accountName: true,
+                id: true,
+              },
+            },
           },
         },
       },
     });
-    return transaction;
+
+    return account.transaction[0];
   }
 
   // ------ DELETE TRANSACTION ------ //
@@ -125,11 +148,25 @@ export class TransactionResolver {
       throw new AuthenticationError('Unauthorized to perform this action');
     }
 
-    await prisma.transaction.delete({
+    const updateAccount = prisma.account.update({
+      where: {
+        id: transaction.accountId,
+      },
+      data: {
+        balance:
+          transaction.type === 'EXPENSE'
+            ? { increment: transaction.amount }
+            : { decrement: transaction.amount },
+      },
+    });
+
+    const deleteTransaction = prisma.transaction.delete({
       where: {
         id: transaction.id,
       },
     });
+
+    await prisma.$transaction([updateAccount, deleteTransaction]);
     return 'Successfully removed';
   }
 
@@ -168,6 +205,18 @@ export class TransactionResolver {
     if (transaction?.userId !== user.id) {
       throw new AuthenticationError('Unauthorized to perform this action');
     }
+
+    //TODO: Check if the amount has changed (e.g. input.amount !== transaction.amount )
+    // and if it has changed, then we need to update the account balance accordingly.
+
+    // const updatedAccount = await prisma.account.update({
+    //   where: {
+    //     id: transaction.accountId
+    //   },
+    //   data: {
+    //     balance: input.amount !== transaction.amount ?
+    //   }
+    // })
 
     const updatedTransaction = await prisma.transaction.update({
       where: {
