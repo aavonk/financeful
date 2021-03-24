@@ -1,4 +1,4 @@
-import { State, Action } from './types';
+import { State, Action } from './authContext';
 
 export function authReducer(state: State, action: Action) {
   switch (action.type) {
