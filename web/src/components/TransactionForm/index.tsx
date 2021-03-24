@@ -1,10 +1,11 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable prettier/prettier */
 import { useState, useRef } from 'react';
 import { Overlay, Content, Header, Title, Body, Footer } from './style';
 import '@reach/dialog/styles.css';
 import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
-
 import {
   BorderedInput,
   BorderedSelect,
@@ -12,6 +13,8 @@ import {
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
+import { useMediaQuery } from '@Hooks/useMediaQuery';
+import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
 
 interface TransactionFields {
   date: string;
@@ -23,8 +26,56 @@ interface TransactionFields {
   category: string;
 }
 
+const initialValue = {
+  date: '',
+  account: '',
+  type: '',
+  payee: '',
+  description: '',
+  amount: '',
+  category: '',
+};
+
+const validations = {
+  date: {
+    required: {
+      value: true,
+      message: 'Required',
+    },
+  },
+  account: {
+    required: {
+      value: true,
+      message: 'Which account?',
+    },
+  },
+  type: {
+    required: {
+      value: true,
+      message: 'Income or Expense?',
+    },
+  },
+  payee: {
+    required: {
+      value: true,
+      message: 'Please add a payee',
+    },
+  },
+  amount: {
+    required: {
+      value: true,
+      message: 'Please add an amount',
+    },
+    custom: {
+      isValid: (value: string) => isValidCurrencyFormat(value),
+      message: 'Must be in $1,000.00 format',
+    },
+  },
+};
+
 function TransactionForm() {
-  const [showDialog, setShowDialog] = useState(true); // Change back to false
+  const smallDevice = useMediaQuery('(max-width: 605px)');
+  const [showDialog, setShowDialog] = useState(false);
   const initialRef = useRef<HTMLInputElement>(null);
   const {
     values,
@@ -32,55 +83,13 @@ function TransactionForm() {
     handleSubmit,
     errors,
   } = useForm<TransactionFields>({
-    initialValue: {
-      date: '',
-      account: '',
-      type: '',
-      payee: '',
-      description: '',
-      amount: '',
-      category: '',
-    },
-    validations: {
-      date: {
-        required: {
-          value: true,
-          message: 'Required',
-        },
-      },
-      account: {
-        required: {
-          value: true,
-          message: 'Which account?',
-        },
-      },
-      type: {
-        required: {
-          value: true,
-          message: 'Income or Expense?',
-        },
-      },
-      payee: {
-        required: {
-          value: true,
-          message: 'Please add a payee',
-        },
-      },
-      amount: {
-        required: {
-          value: true,
-          message: 'Please add an amount',
-        },
-        custom: {
-          isValid: (value: string) => value.length > 8,
-          message: 'Testing validation',
-        },
-      },
-    },
+    initialValue,
+    validations,
     onSubmit: () => {
       const newValues = {
         ...values,
         accountId: 'testingaccountid',
+        amount: parseFloat(values.amount) * 100,
         category: {
           id: 123456,
         },
@@ -94,7 +103,9 @@ function TransactionForm() {
 
   return (
     <div>
-      <button onClick={open}>Open dialog</button>
+      <Button onClick={open} variant="primary">
+        {smallDevice ? 'New' : 'New Transaction'}
+      </Button>
       <Overlay
         isOpen={showDialog}
         onDismiss={close}

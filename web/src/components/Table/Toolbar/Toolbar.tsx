@@ -3,6 +3,8 @@ import Searchbox from './Searchbox';
 import { TableInstance } from 'react-table';
 import Button from '@Common/Button';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
+import TransactionForm from '@Components/TransactionForm';
+
 type ToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>;
 };
@@ -22,9 +24,10 @@ function Toolbar<T extends Record<string, unknown>>({
       <ActionsContainer>
         <Searchbox instance={instance} />
 
-        <Button variant="primary" onClick={() => alert('hi')}>
+        {/* <Button variant="primary" onClick={() => alert('hi')}>
           {smallDevice ? 'New' : 'Add Transaction'}
-        </Button>
+        </Button> */}
+        <TransactionForm />
       </ActionsContainer>
     </ToolbarRoot>
   );
