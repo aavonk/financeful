@@ -10,11 +10,11 @@ import { Body, Footer } from './style';
 import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
 import Button from '@Common/Button';
 import { TransactionFields } from './index';
-import { Category } from '@Generated/graphql';
+import { Category, Account } from '@Generated/graphql';
 
 const initialValue = {
   date: '',
-  account: '',
+  accountId: '',
   type: '',
   payee: '',
   description: '',
@@ -29,7 +29,7 @@ const validations = {
       message: 'Required',
     },
   },
-  account: {
+  accountId: {
     required: {
       value: true,
       message: 'Which account?',
@@ -63,9 +63,15 @@ type Props = {
   initialRef: React.RefObject<HTMLInputElement>;
   onFormSubmit: (values: TransactionFields) => void;
   categories: Category[] | undefined;
+  accounts: Account[] | undefined;
 };
 
-function Form({ initialRef, onFormSubmit, categories = [] }: Props) {
+function Form({
+  initialRef,
+  onFormSubmit,
+  categories = [],
+  accounts = [],
+}: Props) {
   const {
     values,
     handleChange,
@@ -94,17 +100,19 @@ function Form({ initialRef, onFormSubmit, categories = [] }: Props) {
             </Col>
             <Col width="37.5%">
               <BorderedSelect
-                value={values.account}
-                onChange={handleChange('account')}
+                value={values.accountId}
+                onChange={handleChange('accountId')}
                 label="Account"
               >
                 <option value="" disabled></option>
-                <option value="option 1">Option</option>
-                <option value=" option 2">Option</option>
-                <option value="option 3">Option</option>
+                {accounts.map((acct) => (
+                  <option key={acct.id} value={acct.id}>
+                    {acct.accountName}
+                  </option>
+                ))}
               </BorderedSelect>
               <ErrorMessage>
-                {errors.account ? errors.account : null}
+                {errors.accountId ? errors.accountId : null}
               </ErrorMessage>
             </Col>
             <Col width="37.5%">

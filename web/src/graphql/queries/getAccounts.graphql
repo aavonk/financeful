@@ -1,0 +1,6 @@
+query fetchAccounts {
+  getAccounts {
+    id
+    accountName
+  }
+}

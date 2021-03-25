@@ -7,11 +7,14 @@ import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import Form from './Form';
 // import { Transaction, Category, Account } from '@Generated/graphql';
-import { useFetchCategoriesQuery } from '@Generated/graphql';
+import {
+  useFetchCategoriesQuery,
+  useFetchAccountsQuery,
+} from '@Generated/graphql';
 
 export interface TransactionFields {
   date: string;
-  account: string;
+  accountId: string;
   type: string;
   payee: string;
   description: string;
@@ -21,6 +24,7 @@ export interface TransactionFields {
 
 function TransactionForm() {
   const { data, loading, error } = useFetchCategoriesQuery();
+  const accounts = useFetchAccountsQuery();
   const [showDialog, setShowDialog] = useState(false);
   const initialRef = useRef<HTMLInputElement>(null);
   const smallDevice = useMediaQuery('(max-width: 605px)');
@@ -32,14 +36,13 @@ function TransactionForm() {
     //: Partial<Transaction>
     const newValues = {
       ...values,
-      accountId: 'testingaccountid',
+      userId: 'some userId',
       amount: parseFloat(values.amount) * 100,
-      userId: 'asbcds',
     };
     console.log(newValues);
   };
 
-  if (error) {
+  if (error || accounts.error) {
     //Dispatch an alert
     //Stil return a button, but with a different style so its not usable
     console.log(error);
@@ -47,7 +50,11 @@ function TransactionForm() {
   //TODO: Make sure each field is trimmed
   return (
     <div>
-      <Button onClick={open} variant="primary" disabled={loading}>
+      <Button
+        onClick={open}
+        variant="primary"
+        disabled={loading || accounts.loading}
+      >
         {smallDevice ? 'New' : 'New Transaction'}
       </Button>
       <Overlay
@@ -66,6 +73,7 @@ function TransactionForm() {
             initialRef={initialRef}
             onFormSubmit={onFormSubmit}
             categories={data?.getCategories}
+            accounts={accounts.data?.getAccounts}
           />
         </Content>
       </Overlay>
