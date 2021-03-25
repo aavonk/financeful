@@ -67,12 +67,7 @@ type Props = {
   accounts: Account[] | undefined;
 };
 
-function Form({
-  initialRef,
-  onFormSubmit,
-  categories = [],
-  accounts = [],
-}: Props) {
+function Form({ onFormSubmit, categories = [], accounts = [] }: Props) {
   const [transDate, setTransDate] = React.useState(new Date());
   const {
     values,

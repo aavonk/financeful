@@ -5,8 +5,8 @@ import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
+import { useAuth } from '@Context/auth/authContext';
 import Form from './Form';
-// import { Transaction, Category, Account } from '@Generated/graphql';
 import {
   useFetchCategoriesQuery,
   useFetchAccountsQuery,
@@ -28,7 +28,9 @@ function TransactionForm() {
   const [showDialog, setShowDialog] = useState(false);
   const initialRef = useRef<HTMLInputElement>(null);
   const smallDevice = useMediaQuery('(max-width: 605px)');
-
+  const {
+    state: { user },
+  } = useAuth();
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
@@ -36,8 +38,10 @@ function TransactionForm() {
     //: Partial<Transaction>
     const newValues = {
       ...values,
-      userId: 'some userId',
-      amount: parseFloat(values.amount) * 100,
+      userId: user?.id,
+      // replace the possible commas in the amount or the math won't be right
+      // e.g. 1,000.00 will be parsed to 100 rather than 1000
+      amount: parseFloat(values.amount.replace(/,/g, '')) * 100,
     };
     console.log(newValues);
   };
