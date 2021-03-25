@@ -68,10 +68,11 @@ export const BorderedInput = React.forwardRef<HTMLInputElement, InputTypes>(
 
 type SelectProps = {
   label: string;
-  children: React.DetailedHTMLProps<
-    React.OptionHTMLAttributes<HTMLOptionElement>,
-    HTMLOptionElement
-  >[];
+  // children: React.DetailedHTMLProps<
+  //   React.OptionHTMLAttributes<HTMLOptionElement>,
+  //   HTMLOptionElement
+  // >[];
+  children: React.ReactNode;
   value: string;
   defaultValue?: string;
   onChange: (

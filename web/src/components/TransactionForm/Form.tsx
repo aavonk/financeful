@@ -9,16 +9,9 @@ import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from './style';
 import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
 import Button from '@Common/Button';
+import { TransactionFields } from './index';
+import { Category } from '@Generated/graphql';
 
-interface TransactionFields {
-  date: string;
-  account: string;
-  type: string;
-  payee: string;
-  description: string;
-  amount: string;
-  category: string;
-}
 const initialValue = {
   date: '',
   account: '',
@@ -26,7 +19,7 @@ const initialValue = {
   payee: '',
   description: '',
   amount: '',
-  category: '',
+  categoryId: '',
 };
 
 const validations = {
@@ -68,8 +61,11 @@ const validations = {
 
 type Props = {
   initialRef: React.RefObject<HTMLInputElement>;
+  onFormSubmit: (values: TransactionFields) => void;
+  categories: Category[] | undefined;
 };
-function Form({ initialRef }: Props) {
+
+function Form({ initialRef, onFormSubmit, categories = [] }: Props) {
   const {
     values,
     handleChange,
@@ -78,17 +74,7 @@ function Form({ initialRef }: Props) {
   } = useForm<TransactionFields>({
     initialValue,
     validations,
-    onSubmit: () => {
-      const newValues = {
-        ...values,
-        accountId: 'testingaccountid',
-        amount: parseFloat(values.amount) * 100,
-        category: {
-          id: 123456,
-        },
-      };
-      console.log(newValues);
-    },
+    onSubmit: () => onFormSubmit(values),
   });
   return (
     <>
@@ -174,18 +160,16 @@ function Form({ initialRef }: Props) {
             </Col>
             <Col width="50%">
               <BorderedSelect
-                value={values.category}
-                onChange={handleChange('category')}
+                value={values.categoryId}
+                onChange={handleChange('categoryId')}
                 label="Category"
               >
                 <option value="" disabled></option>
-                <option value="category">Category 1</option>
-                <option value="category">Category 1</option>
-                <option value="category">Category 1</option>
-                <option value="category">Category 1</option>
-                <option value="category">Category 1</option>
-                <option value="category">Category 1</option>
-                <option value="category">Category 1</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
               </BorderedSelect>
             </Col>
           </Row>
