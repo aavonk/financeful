@@ -93,7 +93,7 @@ function Form({
               <BorderedDatePicker
                 selected={transDate}
                 onChange={(date: Date) => setTransDate(date)}
-                label="Date"
+                label="Date *"
               />
 
               <ErrorMessage>{errors.date ? errors.date : null}</ErrorMessage>
@@ -102,7 +102,7 @@ function Form({
               <BorderedSelect
                 value={values.accountId}
                 onChange={handleChange('accountId')}
-                label="Account"
+                label="Account *"
               >
                 <option value="" disabled></option>
                 {accounts.map((acct) => (
@@ -119,7 +119,7 @@ function Form({
               <BorderedSelect
                 value={values.type}
                 onChange={handleChange('type')}
-                label="Type"
+                label="Type *"
               >
                 <option value="" disabled></option>
                 <option value="INCOME">Income</option>
@@ -135,7 +135,7 @@ function Form({
                 type="text"
                 onChange={handleChange('payee')}
               >
-                Payee
+                Payee *
               </BorderedInput>
               <ErrorMessage>{errors.payee ? errors.payee : null}</ErrorMessage>
             </Col>
@@ -160,7 +160,7 @@ function Form({
                 withPrefix
                 prefix="$"
               >
-                Amount
+                Amount *
               </BorderedInput>
               <ErrorMessage>
                 {errors.amount ? errors.amount : null}

@@ -23,7 +23,7 @@ export const DatePickerStyles = styled.div`
   }
   & .fin {
     background: ${({ theme }) => theme.colors.darkTwo};
-    border: 1px solid ${({ theme }) => theme.colors.darkThree};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
     font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont,
       'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
       'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -32,7 +32,7 @@ export const DatePickerStyles = styled.div`
       border-bottom-color: ${({ theme }) => theme.colors.darkTwo};
 
       &::before {
-        border-bottom-color: ${({ theme }) => theme.colors.darkThree};
+        border-bottom-color: ${({ theme }) => theme.colors.primary};
       }
     }
     & > button.react-datepicker__navigation.react-datepicker__navigation--next {

@@ -20,11 +20,13 @@ export const Content = styled(DialogContent)`
   border-radius: 1rem;
   max-height: 90vh;
   min-width: 600px;
+  max-width: 600px;
   padding: 0;
   overflow-y: auto;
 
   @media (max-width: 705px) {
     width: 100vw;
+    max-width: 100vw;
     max-height: 100vh;
     height: 100vh;
     border-radius: 0;
