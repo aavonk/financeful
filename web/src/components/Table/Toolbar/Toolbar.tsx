@@ -1,6 +1,5 @@
 import { ToolbarRoot, ActionsContainer } from './style';
 import { TableInstance } from 'react-table';
-// import { useFetchCategoriesQuery } from '@Generated/graphql'
 import TransactionForm from '@Components/TransactionForm';
 import Searchbox from './Searchbox';
 
