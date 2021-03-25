@@ -13,6 +13,7 @@ declare module 'styled-components' {
       primaryDarkest: string;
       paper: string;
       textPrimary: string;
+      textPrimaryInversed: string;
       textGrey: string;
       textGreyMuted: string;
       textSecondary: string;

@@ -13,7 +13,7 @@ import {
 } from '@Generated/graphql';
 
 export interface TransactionFields {
-  date: string;
+  date: Date;
   accountId: string;
   type: string;
   payee: string;

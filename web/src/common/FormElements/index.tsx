@@ -1,4 +1,7 @@
 /* eslint-disable react/display-name */
+import DatePicker from 'react-datepicker';
+import { DatePickerStyles } from '@Globals/datepicker';
+
 import * as React from 'react';
 import {
   StyledUnderlineInput,
@@ -101,3 +104,29 @@ type ErrorProps = {
 export function ErrorMessage({ children }: ErrorProps) {
   return <StyledError>{children}</StyledError>;
 }
+
+type DateProps = {
+  selected: Date | null;
+  label: string;
+  onChange: (
+    date: Date,
+    event: React.SyntheticEvent<any, Event> | undefined,
+  ) => void;
+};
+export const BorderedDatePicker = React.forwardRef<HTMLLabelElement, DateProps>(
+  (props, ref) => {
+    return (
+      <BorderedLabel ref={ref}>
+        {props.label}
+        <DatePickerStyles>
+          <DatePicker
+            selected={props.selected}
+            onChange={props.onChange}
+            calendarClassName="fin"
+            className="fin--input"
+          />
+        </DatePickerStyles>
+      </BorderedLabel>
+    );
+  },
+);

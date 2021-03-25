@@ -13,6 +13,7 @@ const theme: DefaultTheme = {
     primaryDarkest: '#0d34ff',
     paper: '#202020',
     textPrimary: '#fff',
+    textPrimaryInversed: '#000000',
     textGrey: '#D7D7D7',
     textGreyMuted: '#9699a8',
     textSecondary: '#717579',

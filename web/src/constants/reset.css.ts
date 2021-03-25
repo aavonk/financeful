@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-appearance: none;
     -moz-appearance: none;
   }
+
   html {
     display: flex;
     min-height: 100%;

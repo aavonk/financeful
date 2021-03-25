@@ -3,6 +3,7 @@ import {
   BorderedInput,
   BorderedSelect,
   ErrorMessage,
+  BorderedDatePicker,
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
@@ -13,7 +14,7 @@ import { TransactionFields } from './index';
 import { Category, Account } from '@Generated/graphql';
 
 const initialValue = {
-  date: '',
+  date: new Date(),
   accountId: '',
   type: '',
   payee: '',
@@ -72,6 +73,7 @@ function Form({
   categories = [],
   accounts = [],
 }: Props) {
+  const [transDate, setTransDate] = React.useState(new Date());
   const {
     values,
     handleChange,
@@ -80,7 +82,7 @@ function Form({
   } = useForm<TransactionFields>({
     initialValue,
     validations,
-    onSubmit: () => onFormSubmit(values),
+    onSubmit: () => onFormSubmit({ ...values, date: transDate }),
   });
   return (
     <>
@@ -88,14 +90,12 @@ function Form({
         <Body>
           <Row>
             <Col width="25%">
-              <BorderedInput
-                value={values.date}
-                type="text"
-                onChange={handleChange('date')}
-                ref={initialRef}
-              >
-                Date
-              </BorderedInput>
+              <BorderedDatePicker
+                selected={transDate}
+                onChange={(date: Date) => setTransDate(date)}
+                label="Date"
+              />
+
               <ErrorMessage>{errors.date ? errors.date : null}</ErrorMessage>
             </Col>
             <Col width="37.5%">
