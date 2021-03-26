@@ -26,7 +26,6 @@ function TransactionForm() {
   const { data, loading, error } = useFetchCategoriesQuery();
   const accounts = useFetchAccountsQuery();
   const [showDialog, setShowDialog] = useState(false);
-  const initialRef = useRef<HTMLInputElement>(null);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const {
     state: { user },
@@ -61,11 +60,7 @@ function TransactionForm() {
       >
         {smallDevice ? 'New' : 'New Transaction'}
       </Button>
-      <Overlay
-        isOpen={showDialog}
-        onDismiss={close}
-        initialFocusRef={initialRef}
-      >
+      <Overlay isOpen={showDialog} onDismiss={close}>
         <Content aria-label="Add transaction form">
           <Header>
             <IconButton blue small onClick={close} ariaText="Close">
@@ -74,7 +69,6 @@ function TransactionForm() {
             <Title>Add transaction</Title>
           </Header>
           <Form
-            initialRef={initialRef}
             onFormSubmit={onFormSubmit}
             categories={data?.getCategories}
             accounts={accounts.data?.getAccounts}

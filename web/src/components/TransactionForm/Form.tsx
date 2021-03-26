@@ -61,7 +61,6 @@ const validations = {
 };
 
 type Props = {
-  initialRef: React.RefObject<HTMLInputElement>;
   onFormSubmit: (values: TransactionFields) => void;
   categories: Category[] | undefined;
   accounts: Account[] | undefined;

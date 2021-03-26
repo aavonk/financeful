@@ -7,10 +7,8 @@ export const isValidCurrencyFormat = (input: string) => {
   }
 
   if (!format.test(input)) {
-    console.log({ input });
     return false;
   }
-  console.log({ testCase });
-  console.log({ input });
+
   return true;
 };

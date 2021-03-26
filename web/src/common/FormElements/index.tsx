@@ -103,7 +103,7 @@ type ErrorProps = {
 };
 
 export function ErrorMessage({ children }: ErrorProps) {
-  return <StyledError>{children}</StyledError>;
+  return <StyledError role="alert">{children}</StyledError>;
 }
 
 type DateProps = {
