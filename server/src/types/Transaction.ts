@@ -1,6 +1,7 @@
 import { Field, ObjectType, ID, Int } from 'type-graphql';
 import { User } from './User';
 import { Account } from './Account';
+import { Category } from './Category';
 
 @ObjectType()
 export class Transaction {
@@ -10,7 +11,7 @@ export class Transaction {
   @Field(() => User, { nullable: true })
   user?: User;
 
-  @Field(() => Int)
+  @Field(() => String)
   userId: string;
 
   @Field(() => String)
@@ -22,8 +23,8 @@ export class Transaction {
   @Field(() => Int)
   amount: number;
 
-  @Field(() => String, { nullable: true })
-  category?: string | null;
+  @Field(() => Category, { nullable: true })
+  category?: Category | null;
 
   @Field(() => String)
   type: string;
@@ -36,4 +37,13 @@ export class Transaction {
 
   @Field(() => Account, { nullable: true })
   account?: Account;
+
+  @Field(() => Boolean, {nullable: true})
+  isCashIn?: boolean
+
+  @Field(() => Boolean, {nullable: true})
+  isCashOut?: boolean
+
+  @Field(() => Boolean, {nullable: true})
+  isUncategorized?: boolean
 }

@@ -1,0 +1,22 @@
+mutation addTransaction($input: TransactionInput!) {
+  createTransaction(input: $input) {
+    id
+    userId
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+  }
+}

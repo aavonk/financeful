@@ -9,20 +9,20 @@ export class Account {
   @Field(() => User, { nullable: true })
   user?: User;
 
-  @Field(() => ID)
-  userId: string;
+  @Field(() => ID, { nullable: true })
+  userId?: string;
 
-  @Field(() => String)
-  accountName: string;
+  @Field(() => String, { nullable: true })
+  accountName?: string;
 
-  @Field(() => String)
-  accountType: String;
+  @Field(() => String, { nullable: true })
+  accountType?: String;
 
-  @Field(() => Boolean)
-  isAsset: boolean;
+  @Field(() => Boolean, { nullable: true })
+  isAsset?: boolean;
 
-  @Field(() => Boolean)
-  isLiability: Boolean;
+  @Field(() => Boolean, { nullable: true })
+  isLiability?: Boolean;
 
   @Field(() => Int, { nullable: true })
   balance?: number;

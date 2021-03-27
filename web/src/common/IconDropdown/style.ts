@@ -27,13 +27,16 @@ export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
   width: 48px;
   &:hover {
     background-color: ${({ theme }) => theme.effects.buttonHover};
+    color: ${({ theme }) => theme.colors.primary};
   }
   &:focus {
     background-color: ${({ theme }) => theme.effects.buttonHover};
+    color: ${({ theme }) => theme.colors.primary};
   }
 
   &[aria-expanded='true'] {
     background-color: ${({ theme }) => theme.effects.buttonHover};
+    color: ${({ theme }) => theme.colors.primary};
   }
   ${(props) =>
     props.$small &&
@@ -46,7 +49,7 @@ export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
   ${(props) =>
     props.$grey &&
     css`
-      color: ${({ theme }) => theme.colors.textSecondary} !important;
+      color: ${({ theme }) => theme.colors.textSecondary};
     `}
       ${(props) =>
     props.$active &&

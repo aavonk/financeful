@@ -5,8 +5,19 @@ query GetTransactions {
     payee
     description
     amount
-    category
+    category {
+      id
+      name
+    }
     type
     date
+    accountId
+    account {
+      accountName
+      id
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
   }
 }

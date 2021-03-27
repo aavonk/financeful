@@ -6,17 +6,18 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
-import AppThemeProvider from '@Context/AppThemeProvider';
-import SidebarProvider from '@Context/sidebar/SidebarProvider';
+import AppThemeProvider from '@Context/theme';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
-import { BlueScreen, ViewError } from '@Components/ErrorViews';
+import { BlueScreen, DefaultView } from '@Components/ErrorViews';
 import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
+import { AlertProvider } from '@Context/alert/alertContext';
+import Alerts from '@Common/Alerts';
 
 function Routes() {
   const { data, error } = useFetchUserQuery();
@@ -40,19 +41,20 @@ function Routes() {
       <Router>
         <GlobalStyle />
         <AppThemeProvider>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/dashboard" />
-            </Route>
-            <Route exact path="/login" component={LoginPage} />
-            <SidebarProvider>
+          <AlertProvider>
+            <Alerts />
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/dashboard" />
+              </Route>
+              <Route exact path="/login" component={LoginPage} />
               <Layout>
                 <PrivateRoute
                   exact
                   path="/dashboard"
                   component={DashboardPage}
                 />
-                <ErrorBoundary FallbackComponent={ViewError}>
+                <ErrorBoundary FallbackComponent={DefaultView}>
                   <PrivateRoute
                     exact
                     path="/transactions"
@@ -60,8 +62,8 @@ function Routes() {
                   />
                 </ErrorBoundary>
               </Layout>
-            </SidebarProvider>
-          </Switch>
+            </Switch>
+          </AlertProvider>
         </AppThemeProvider>
       </Router>
     </ErrorBoundary>

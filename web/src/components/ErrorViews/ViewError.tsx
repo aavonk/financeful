@@ -2,7 +2,7 @@ import { FallbackProps } from 'react-error-boundary';
 import Button from '@Common/Button';
 import { Emoji, Heading, Description, Container } from './style';
 
-interface Props extends FallbackProps {
+interface Props {
   heading?: string;
   subheading?: string;
   reload?: boolean;
@@ -13,7 +13,7 @@ interface Props extends FallbackProps {
 function ViewError(props: Props) {
   const {
     heading = 'Something went wrong',
-    subheading = ' You may not have internet connection, or Financeful is just having ahiccup. If you think something has gone wrong, please contact us.',
+    subheading = ' You may not have internet connection, or Financeful is just having a hiccup. If you think something has gone wrong, please contact us.',
     emoji = '😤',
     reload,
     reloadFunction,

@@ -9,8 +9,8 @@ export class Category {
   @Field(() => User, { nullable: true })
   user?: User;
 
-  @Field(() => ID)
-  userId: string;
+  @Field(() => ID, { nullable: true })
+  userId?: string;
 
   @Field(() => String)
   name: string;

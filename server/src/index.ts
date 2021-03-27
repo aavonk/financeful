@@ -8,6 +8,8 @@ import { AuthResolver } from './resolvers/AuthResolver';
 import { UserResolver } from './resolvers/Users/UserResolver';
 import { TransactionResolver } from './resolvers/Transactions/TransactionResolver';
 import { CategoryResolver } from './resolvers/Categories/CategoryResolver';
+import { AccountResolver } from './resolvers/Accounts/AccountResolver';
+
 const prisma = new PrismaClient();
 
 const main = async () => {
@@ -20,6 +22,7 @@ const main = async () => {
         UserResolver,
         TransactionResolver,
         CategoryResolver,
+        AccountResolver,
       ],
       authChecker: customAuthChecker,
     }),

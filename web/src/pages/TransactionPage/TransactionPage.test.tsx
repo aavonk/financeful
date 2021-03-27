@@ -1,20 +1,24 @@
 import { render, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/react-testing';
 import TransactionPage from './index';
-import ThemeProvider from '@Context/AppThemeProvider';
+import ThemeProvider from '@Context/theme';
 import { GetTransactionsDocument, Transaction } from '@Generated/graphql';
 import { GraphQLError } from 'graphql';
 
 const TRANSACTIONS: Transaction[] = [
   {
     id: '5',
-    category: 'Dining',
+    category: {
+      id: 'asdfa',
+      name: 'Category',
+    },
     date: '2020-01-01T06:00:00.000Z',
     description: 'Good food',
     amount: 50000,
     payee: 'Some Restaurant',
-    userId: 1000001,
+    userId: '1000001',
     type: 'EXPENSE',
+    accountId: 'asdfsdfsasdf',
   },
 ];
 

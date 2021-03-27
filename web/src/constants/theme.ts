@@ -13,7 +13,8 @@ const theme: DefaultTheme = {
     primaryDarkest: '#0d34ff',
     paper: '#202020',
     textPrimary: '#fff',
-    textGrey: '#a6b0cf',
+    textPrimaryInversed: '#000000',
+    textGrey: '#D7D7D7',
     textGreyMuted: '#9699a8',
     textSecondary: '#717579',
     textError: 'rgb(224, 36, 94)',
@@ -21,7 +22,7 @@ const theme: DefaultTheme = {
   },
 
   effects: {
-    buttonHover: 'rgba(255, 255, 255, 0.1)',
+    buttonHover: 'rgba(29, 161, 242, 0.1)',
     dangerHover: 'rgba(224, 36, 94, 0.2)',
   },
   elevation: {

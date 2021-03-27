@@ -114,6 +114,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
 
     if (options?.onSubmit) {
       options.onSubmit();
+      setValues((options?.initialValue || {}) as T);
     }
   };
 
@@ -121,6 +122,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     values,
     handleChange,
     handleSubmit,
+
     errors,
   };
 };

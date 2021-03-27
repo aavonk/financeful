@@ -1,5 +1,5 @@
 import TableError from './TableError';
 import ViewError from './ViewError';
 import BlueScreen from './BlueScreen';
-
-export { TableError, ViewError, BlueScreen };
+import DefaultView from './DefaultView';
+export { TableError, ViewError, BlueScreen, DefaultView };
