@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Category, Account } from '@Generated/graphql';
 import AppThemeProvider from '@Context/theme';
 import Form from './Form';
