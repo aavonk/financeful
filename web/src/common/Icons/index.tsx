@@ -15,13 +15,32 @@ import {
 } from 'react-icons/bs';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
-import { FiLogOut, FiArrowUpCircle, FiArrowDownCircle } from 'react-icons/fi';
+import {
+  FiLogOut,
+  FiArrowUpCircle,
+  FiArrowDownCircle,
+  FiCheckCircle,
+} from 'react-icons/fi';
 import {
   MdSchedule,
   MdCheckBoxOutlineBlank,
   MdCheckBox,
   MdClose,
+  MdErrorOutline,
+  MdInfoOutline,
 } from 'react-icons/md';
+
+export const InfoIcon = ({ ...props }) => {
+  return <MdInfoOutline {...props} aria-hidden="true" />;
+};
+
+export const ErrorIcon = ({ ...props }) => {
+  return <MdErrorOutline {...props} aria-hidden="true" />;
+};
+
+export const CheckCircleIcon = ({ ...props }) => {
+  return <FiCheckCircle {...props} aria-hidden="true" />;
+};
 
 export const CloseIcon = ({ ...props }) => {
   return <MdClose {...props} aria-hidden="true" />;

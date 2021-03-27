@@ -11,6 +11,7 @@ import {
   useFetchCategoriesQuery,
   useFetchAccountsQuery,
 } from '@Generated/graphql';
+import { useAlert } from '@Context/alert/alertContext';
 
 export interface TransactionFields {
   date: Date;
@@ -27,6 +28,7 @@ function TransactionForm() {
   const accounts = useFetchAccountsQuery();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
+  const { showAlert } = useAlert();
   const {
     state: { user },
   } = useAuth();
@@ -43,6 +45,7 @@ function TransactionForm() {
       amount: parseFloat(values.amount.replace(/,/g, '')) * 100,
     };
     console.log(newValues);
+    showAlert('Hello from alert!', 'info');
   };
 
   if (error || accounts.error) {

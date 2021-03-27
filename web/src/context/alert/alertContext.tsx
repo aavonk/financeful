@@ -1,22 +1,28 @@
-import { createContext, useContext, ReactNode, useReducer } from 'react';
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useReducer,
+  useCallback,
+} from 'react';
+import { v4 as uuid } from 'uuid';
 
-type Alert = {
+export type IAlert = {
   message: string;
   type: 'error' | 'info' | 'success';
   id: string;
 };
 
-type State = [] | Alert[];
+type State = [] | IAlert[];
 
 type Action =
-  | { type: 'SET_ALERT'; payload: Alert }
+  | { type: 'SET_ALERT'; payload: IAlert }
   | { type: 'REMOVE_ALERT'; payload: string };
 
-type Dispatch = (action: Action) => void;
-
 type Context = {
-  state: State;
-  dispatch: Dispatch;
+  alerts: State;
+  // dispatch: Dispatch;
+  showAlert: (message: string, type: IAlert['type'], timeout?: number) => void;
 };
 
 type AlertProviderProps = {
@@ -39,7 +45,23 @@ function alertReducer(state: State, action: Action) {
 function AlertProvider({ children }: AlertProviderProps) {
   const [state, dispatch] = useReducer(alertReducer, []);
 
-  const value = { state, dispatch };
+  const showAlert = useCallback(
+    (message: string, type: IAlert['type'], timeout = 3000) => {
+      const id = uuid();
+
+      dispatch({
+        type: 'SET_ALERT',
+        payload: { message, type, id },
+      });
+
+      setTimeout(() => {
+        dispatch({ type: 'REMOVE_ALERT', payload: id });
+      }, timeout);
+    },
+    [],
+  );
+  const value = { alerts: state, showAlert };
+
   return (
     <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
   );

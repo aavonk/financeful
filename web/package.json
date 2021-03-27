@@ -40,6 +40,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-table": "^7.0.29",
     "@types/styled-components": "^5.1.7",
+    "@types/uuid": "^8.3.0",
     "@types/webpack": "^4.41.26",
     "@types/webpack-dev-server": "^3.11.2",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
@@ -96,7 +97,8 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-table": "^7.6.3",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "uuid": "^8.3.2"
   },
   "resolutions": {
     "styled-components": "^5"

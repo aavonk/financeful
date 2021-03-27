@@ -16,6 +16,8 @@ import Layout from '@Components/Layout';
 import { BlueScreen, DefaultView } from '@Components/ErrorViews';
 import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
+import { AlertProvider } from '@Context/alert/alertContext';
+import Alerts from '@Common/Alerts';
 
 function Routes() {
   const { data, error } = useFetchUserQuery();
@@ -39,22 +41,29 @@ function Routes() {
       <Router>
         <GlobalStyle />
         <AppThemeProvider>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/dashboard" />
-            </Route>
-            <Route exact path="/login" component={LoginPage} />
-            <Layout>
-              <PrivateRoute exact path="/dashboard" component={DashboardPage} />
-              <ErrorBoundary FallbackComponent={DefaultView}>
+          <AlertProvider>
+            <Alerts />
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/dashboard" />
+              </Route>
+              <Route exact path="/login" component={LoginPage} />
+              <Layout>
                 <PrivateRoute
                   exact
-                  path="/transactions"
-                  component={TransactionPage}
+                  path="/dashboard"
+                  component={DashboardPage}
                 />
-              </ErrorBoundary>
-            </Layout>
-          </Switch>
+                <ErrorBoundary FallbackComponent={DefaultView}>
+                  <PrivateRoute
+                    exact
+                    path="/transactions"
+                    component={TransactionPage}
+                  />
+                </ErrorBoundary>
+              </Layout>
+            </Switch>
+          </AlertProvider>
         </AppThemeProvider>
       </Router>
     </ErrorBoundary>
