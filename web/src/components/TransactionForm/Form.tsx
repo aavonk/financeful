@@ -100,7 +100,11 @@ function Form({ onFormSubmit, categories = [], accounts = [] }: Props) {
               >
                 <option value="" disabled></option>
                 {accounts.map((acct) => (
-                  <option key={acct.id} value={acct.id}>
+                  <option
+                    key={acct.id}
+                    value={acct.id}
+                    data-testid="acct-option"
+                  >
                     {acct.accountName}
                   </option>
                 ))}
@@ -168,7 +172,11 @@ function Form({ onFormSubmit, categories = [], accounts = [] }: Props) {
               >
                 <option value="" disabled></option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option
+                    key={cat.id}
+                    value={cat.id}
+                    data-testid="category-option"
+                  >
                     {cat.name}
                   </option>
                 ))}
