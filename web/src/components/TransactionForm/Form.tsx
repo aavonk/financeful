@@ -64,9 +64,15 @@ type Props = {
   onFormSubmit: (values: TransactionFields) => void;
   categories: Category[] | undefined;
   accounts: Account[] | undefined;
+  isSubmitting: boolean;
 };
 
-function Form({ onFormSubmit, categories = [], accounts = [] }: Props) {
+function Form({
+  onFormSubmit,
+  categories = [],
+  accounts = [],
+  isSubmitting,
+}: Props) {
   const [transDate, setTransDate] = React.useState(new Date());
   const {
     values,
@@ -185,7 +191,7 @@ function Form({ onFormSubmit, categories = [], accounts = [] }: Props) {
           </Row>
         </Body>
         <Footer>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
             Save
           </Button>
         </Footer>

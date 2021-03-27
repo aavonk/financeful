@@ -47,6 +47,7 @@ const setup = () => {
       onFormSubmit={onFormSubmit}
       categories={CATEGORIES}
       accounts={ACCOUNTS}
+      isSubmitting={false}
     />,
   );
 

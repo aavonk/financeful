@@ -145,7 +145,7 @@ export type RegisterInput = {
 
 export type TransactionInput = {
   payee: Scalars['String'];
-  date: Scalars['String'];
+  date: Scalars['DateTime'];
   amount: Scalars['Int'];
   description?: Maybe<Scalars['String']>;
   categoryId?: Maybe<Scalars['String']>;
@@ -161,6 +161,26 @@ export type Updates = {
   type?: Maybe<Scalars['String']>;
   categoryId?: Maybe<Scalars['String']>;
 };
+
+export type AddTransactionMutationVariables = Exact<{
+  input: TransactionInput;
+}>;
+
+
+export type AddTransactionMutation = (
+  { __typename?: 'Mutation' }
+  & { createTransaction: (
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  ) }
+);
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -255,6 +275,56 @@ export type GetTransactionsQuery = (
 );
 
 
+export const AddTransactionDocument = gql`
+    mutation addTransaction($input: TransactionInput!) {
+  createTransaction(input: $input) {
+    id
+    userId
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+  }
+}
+    `;
+export type AddTransactionMutationFn = Apollo.MutationFunction<AddTransactionMutation, AddTransactionMutationVariables>;
+
+/**
+ * __useAddTransactionMutation__
+ *
+ * To run a mutation, you first call `useAddTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addTransactionMutation, { data, loading, error }] = useAddTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddTransactionMutation(baseOptions?: Apollo.MutationHookOptions<AddTransactionMutation, AddTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddTransactionMutation, AddTransactionMutationVariables>(AddTransactionDocument, options);
+      }
+export type AddTransactionMutationHookResult = ReturnType<typeof useAddTransactionMutation>;
+export type AddTransactionMutationResult = Apollo.MutationResult<AddTransactionMutation>;
+export type AddTransactionMutationOptions = Apollo.BaseMutationOptions<AddTransactionMutation, AddTransactionMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

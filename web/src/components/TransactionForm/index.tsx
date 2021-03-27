@@ -5,12 +5,15 @@ import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
-import { useAuth } from '@Context/auth/authContext';
 import Form from './Form';
 import FormLoader from './FormLoader';
-import { useFetchAccountsAndCategoriesQuery } from '@Generated/graphql';
+import {
+  useFetchAccountsAndCategoriesQuery,
+  useAddTransactionMutation,
+} from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
+import Progressbar from '@Common/Progressbar';
 
 export interface TransactionFields {
   date: Date;
@@ -24,26 +27,33 @@ export interface TransactionFields {
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
+  const [addTransactionMutation, submitting] = useAddTransactionMutation();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
-  const {
-    state: { user },
-  } = useAuth();
+
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
-  const onFormSubmit = (values: TransactionFields) => {
+  const onFormSubmit = async (values: TransactionFields) => {
     //: Partial<Transaction>
     const newValues = {
       ...values,
-      userId: user?.id,
       // replace the possible commas in the amount or the math won't be right
       // e.g. 1,000.00 will be parsed to 100 rather than 1000
       amount: parseFloat(values.amount.replace(/,/g, '')) * 100,
     };
-    console.log(newValues);
-    showAlert('Hello from alert!', 'info');
+    const response = await addTransactionMutation({
+      variables: { input: newValues },
+    });
+
+    if (response.data?.createTransaction) {
+      console.log(response.data.createTransaction);
+      showAlert('Transaction successfully added', 'info');
+    }
+    if (response.errors) {
+      showAlert('There was an error creating your transaction', 'error', 5000);
+    }
   };
 
   //TODO: Make sure each field is trimmed
@@ -60,11 +70,13 @@ function TransactionForm() {
             </IconButton>
             <Title>Add transaction</Title>
           </Header>
+          {submitting.loading && <Progressbar />}
           {data && (
             <Form
               onFormSubmit={onFormSubmit}
               categories={data.getCategories}
               accounts={data.getAccounts}
+              isSubmitting={submitting.loading}
             />
           )}
           {loading && <FormLoader />}

@@ -79,8 +79,6 @@ export class TransactionResolver {
     @Arg('input') input: TransactionInput,
     @Ctx() { prisma, user }: Context,
   ): Promise<Transaction> {
-    let date = new Date();
-
     const account = await prisma.account.update({
       where: {
         id: input.accountId,
@@ -96,9 +94,9 @@ export class TransactionResolver {
             payee: input.payee,
             amount: input.amount,
             description: input.description,
-            date,
+            date: input.date,
             type: input.type,
-            categoryId: input.categoryId,
+            categoryId: input.categoryId ? input.categoryId : null,
             isCashIn: input.type === 'INCOME',
             isCashOut: input.type === 'EXPENSE',
             isUncategorized: !input.categoryId,
@@ -108,7 +106,7 @@ export class TransactionResolver {
       select: {
         transaction: {
           where: {
-            date,
+            date: input.date,
           },
           include: {
             category: {

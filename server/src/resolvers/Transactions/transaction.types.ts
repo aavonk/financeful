@@ -5,8 +5,8 @@ export class TransactionInput {
   @Field(() => String)
   payee: string;
 
-  @Field(() => String)
-  date: string;
+  @Field(() => Date)
+  date: Date;
 
   @Field(() => Int)
   amount: number;
