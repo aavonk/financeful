@@ -200,6 +200,20 @@ export type FetchAccountsQuery = (
   )> }
 );
 
+export type FetchAccountsAndCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FetchAccountsAndCategoriesQuery = (
+  { __typename?: 'Query' }
+  & { getAccounts: Array<(
+    { __typename?: 'Account' }
+    & Pick<Account, 'id' | 'accountName'>
+  )>, getCategories: Array<(
+    { __typename?: 'Category' }
+    & Pick<Category, 'id' | 'name'>
+  )> }
+);
+
 export type FetchCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -355,6 +369,45 @@ export function useFetchAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type FetchAccountsQueryHookResult = ReturnType<typeof useFetchAccountsQuery>;
 export type FetchAccountsLazyQueryHookResult = ReturnType<typeof useFetchAccountsLazyQuery>;
 export type FetchAccountsQueryResult = Apollo.QueryResult<FetchAccountsQuery, FetchAccountsQueryVariables>;
+export const FetchAccountsAndCategoriesDocument = gql`
+    query fetchAccountsAndCategories {
+  getAccounts {
+    id
+    accountName
+  }
+  getCategories {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useFetchAccountsAndCategoriesQuery__
+ *
+ * To run a query within a React component, call `useFetchAccountsAndCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchAccountsAndCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchAccountsAndCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFetchAccountsAndCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<FetchAccountsAndCategoriesQuery, FetchAccountsAndCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchAccountsAndCategoriesQuery, FetchAccountsAndCategoriesQueryVariables>(FetchAccountsAndCategoriesDocument, options);
+      }
+export function useFetchAccountsAndCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchAccountsAndCategoriesQuery, FetchAccountsAndCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchAccountsAndCategoriesQuery, FetchAccountsAndCategoriesQueryVariables>(FetchAccountsAndCategoriesDocument, options);
+        }
+export type FetchAccountsAndCategoriesQueryHookResult = ReturnType<typeof useFetchAccountsAndCategoriesQuery>;
+export type FetchAccountsAndCategoriesLazyQueryHookResult = ReturnType<typeof useFetchAccountsAndCategoriesLazyQuery>;
+export type FetchAccountsAndCategoriesQueryResult = Apollo.QueryResult<FetchAccountsAndCategoriesQuery, FetchAccountsAndCategoriesQueryVariables>;
 export const FetchCategoriesDocument = gql`
     query fetchCategories {
   getCategories {

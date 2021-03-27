@@ -1,0 +1,10 @@
+query fetchAccountsAndCategories {
+  getAccounts {
+    id
+    accountName
+  }
+  getCategories {
+    id
+    name
+  }
+}
