@@ -1,5 +1,5 @@
 import '@reach/dialog/styles.css';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Overlay, Content, Header, Title } from './style';
 import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
@@ -7,11 +7,10 @@ import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import { useAuth } from '@Context/auth/authContext';
 import Form from './Form';
-import {
-  useFetchCategoriesQuery,
-  useFetchAccountsQuery,
-} from '@Generated/graphql';
+import FormLoader from './FormLoader';
+import { useFetchAccountsAndCategoriesQuery } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
+import { ViewError } from '@Components/ErrorViews';
 
 export interface TransactionFields {
   date: Date;
@@ -24,8 +23,7 @@ export interface TransactionFields {
 }
 
 function TransactionForm() {
-  const { data, loading, error } = useFetchCategoriesQuery();
-  const accounts = useFetchAccountsQuery();
+  const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
@@ -48,19 +46,10 @@ function TransactionForm() {
     showAlert('Hello from alert!', 'info');
   };
 
-  if (error || accounts.error) {
-    //Dispatch an alert
-    //Stil return a button, but with a different style so its not usable
-    console.log(error);
-  }
   //TODO: Make sure each field is trimmed
   return (
     <div>
-      <Button
-        onClick={open}
-        variant="primary"
-        disabled={loading || accounts.loading}
-      >
+      <Button onClick={open} variant="primary">
         {smallDevice ? 'New' : 'New Transaction'}
       </Button>
       <Overlay isOpen={showDialog} onDismiss={close}>
@@ -71,11 +60,22 @@ function TransactionForm() {
             </IconButton>
             <Title>Add transaction</Title>
           </Header>
-          <Form
-            onFormSubmit={onFormSubmit}
-            categories={data?.getCategories}
-            accounts={accounts.data?.getAccounts}
-          />
+          {data && (
+            <Form
+              onFormSubmit={onFormSubmit}
+              categories={data.getCategories}
+              accounts={data.getAccounts}
+            />
+          )}
+          {loading && <FormLoader />}
+          {error && (
+            <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+              <ViewError
+                reload
+                subheading="We ran into trouble loading your accounts and categories. If you think something has gone wrong, please contact us."
+              />
+            </div>
+          )}
         </Content>
       </Overlay>
     </div>
