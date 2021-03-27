@@ -54,7 +54,7 @@ export type Transaction = {
   category?: Maybe<Category>;
   type: Scalars['String'];
   date: Scalars['DateTime'];
-  accountId: Scalars['ID'];
+  accountId?: Maybe<Scalars['ID']>;
   account?: Maybe<Account>;
   isCashIn?: Maybe<Scalars['Boolean']>;
   isCashOut?: Maybe<Scalars['Boolean']>;

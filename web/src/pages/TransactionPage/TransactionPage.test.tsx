@@ -4,6 +4,7 @@ import TransactionPage from './index';
 import ThemeProvider from '@Context/theme';
 import { GetTransactionsDocument, Transaction } from '@Generated/graphql';
 import { GraphQLError } from 'graphql';
+import { TransactionProvider } from '@Context/transactions/transactionContext';
 
 const TRANSACTIONS: Transaction[] = [
   {
@@ -26,7 +27,9 @@ test('Renders the table loading state', async () => {
   const component = (
     <MockedProvider mocks={[]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <TransactionProvider>
+          <TransactionPage />
+        </TransactionProvider>
       </ThemeProvider>
     </MockedProvider>
   );
@@ -50,7 +53,9 @@ test('Successfully fetches and displays transactions', async () => {
   const component = (
     <MockedProvider mocks={[transactionsMock]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <TransactionProvider>
+          <TransactionPage />
+        </TransactionProvider>
       </ThemeProvider>
     </MockedProvider>
   );
@@ -71,7 +76,9 @@ test('Component catches GraphQlError error and displays error UI', async () => {
   const component = (
     <MockedProvider mocks={[errorMock]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <TransactionProvider>
+          <TransactionPage />
+        </TransactionProvider>
       </ThemeProvider>
     </MockedProvider>
   );
@@ -95,7 +102,9 @@ test('Component catches Network error and displays error UI', async () => {
   const component = (
     <MockedProvider mocks={[errorMock]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <TransactionProvider>
+          <TransactionPage />
+        </TransactionProvider>
       </ThemeProvider>
     </MockedProvider>
   );

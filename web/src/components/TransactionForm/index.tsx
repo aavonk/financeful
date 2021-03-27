@@ -14,6 +14,7 @@ import {
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
 import Progressbar from '@Common/Progressbar';
+import { useTransactions } from '@Context/transactions/transactionContext';
 
 export interface TransactionFields {
   date: Date;
@@ -28,6 +29,7 @@ export interface TransactionFields {
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const [addTransactionMutation, submitting] = useAddTransactionMutation();
+  const { dispatch } = useTransactions();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
@@ -36,7 +38,6 @@ function TransactionForm() {
   const close = () => setShowDialog(false);
 
   const onFormSubmit = async (values: TransactionFields) => {
-    //: Partial<Transaction>
     const newValues = {
       ...values,
       // replace the possible commas in the amount or the math won't be right
@@ -48,7 +49,10 @@ function TransactionForm() {
     });
 
     if (response.data?.createTransaction) {
-      console.log(response.data.createTransaction);
+      dispatch({
+        type: 'ADD_TRANSACTION',
+        payload: response.data.createTransaction,
+      });
       showAlert('Transaction successfully added', 'info');
     }
     if (response.errors) {

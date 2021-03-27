@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import * as React from 'react';
+import { useEffect, useCallback, useState, useMemo } from 'react';
 import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
@@ -12,10 +12,13 @@ import TableSkeleton from '@Components/Table/TableSkeleton';
 import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-
+import { useTransactions } from '@Context/transactions/transactionContext';
 function TransactionPage() {
-  const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const { data, error, loading } = useGetTransactionsQuery();
+  const {
+    state: { transactions },
+    dispatch,
+  } = useTransactions();
 
   const COLUMNS: Column<Record<string, unknown>>[] = [
     {
@@ -70,11 +73,14 @@ function TransactionPage() {
       disableFilters: true,
     },
   ];
-  const tableColumns = React.useMemo(() => COLUMNS, []);
+  const tableColumns = useMemo(() => COLUMNS, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (data?.getTransactions) {
-      setTransactions(data.getTransactions);
+      dispatch({
+        type: 'FETCH_SUCCESS',
+        payload: data.getTransactions,
+      });
     }
   }, [data]);
 
