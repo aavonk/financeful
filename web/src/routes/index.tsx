@@ -17,6 +17,7 @@ import { BlueScreen, DefaultView } from '@Components/ErrorViews';
 import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
 import { AlertProvider } from '@Context/alert/alertContext';
+
 import Alerts from '@Common/Alerts';
 
 function Routes() {

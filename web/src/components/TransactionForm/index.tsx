@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@reach/dialog/styles.css';
 import { useState } from 'react';
 import { Overlay, Content, Header, Title } from './style';
@@ -10,6 +11,7 @@ import FormLoader from './FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
+  GetTransactionsDocument,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
@@ -36,7 +38,6 @@ function TransactionForm() {
   const close = () => setShowDialog(false);
 
   const onFormSubmit = async (values: TransactionFields) => {
-    //: Partial<Transaction>
     const newValues = {
       ...values,
       // replace the possible commas in the amount or the math won't be right
@@ -45,10 +46,22 @@ function TransactionForm() {
     };
     const response = await addTransactionMutation({
       variables: { input: newValues },
+      update: (cache, { data: createTransaction }) => {
+        cache.modify({
+          fields: {
+            getTransactions: (existingFieldData) => {
+              const newTransactionRef = cache.writeQuery({
+                data: createTransaction,
+                query: GetTransactionsDocument,
+              });
+              return [newTransactionRef, ...existingFieldData];
+            },
+          },
+        });
+      },
     });
 
     if (response.data?.createTransaction) {
-      console.log(response.data.createTransaction);
       showAlert('Transaction successfully added', 'info');
     }
     if (response.errors) {

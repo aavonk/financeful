@@ -17,6 +17,9 @@ export class TransactionResolver {
       where: {
         userId: user.id,
       },
+      orderBy: {
+        date: 'desc',
+      },
       include: {
         account: {
           select: {

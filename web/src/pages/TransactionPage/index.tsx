@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import * as React from 'react';
+import { useMemo } from 'react';
 import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
@@ -12,9 +12,9 @@ import TableSkeleton from '@Components/Table/TableSkeleton';
 import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
+import NoTransactions from './components/NoTransactions';
 
 function TransactionPage() {
-  const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const { data, error, loading } = useGetTransactionsQuery();
 
   const COLUMNS: Column<Record<string, unknown>>[] = [
@@ -70,26 +70,25 @@ function TransactionPage() {
       disableFilters: true,
     },
   ];
-  const tableColumns = React.useMemo(() => COLUMNS, []);
-
-  React.useEffect(() => {
-    if (data?.getTransactions) {
-      setTransactions(data.getTransactions);
-    }
-  }, [data]);
+  const tableColumns = useMemo(() => COLUMNS, []);
 
   if (loading) {
     return <TableSkeleton columns={6} rows={8} />;
   }
+
   if (error) {
     return <TableError error={error} />;
+  }
+
+  if (!data?.getTransactions?.length) {
+    return <NoTransactions />;
   }
 
   return (
     <>
       <TableContainer>
         <ErrorBoundary FallbackComponent={TableError}>
-          <Table data={transactions} columns={tableColumns} />
+          <Table data={data.getTransactions} columns={tableColumns} />
         </ErrorBoundary>
       </TableContainer>
     </>
