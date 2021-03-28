@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { useEffect, useCallback, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
@@ -12,13 +12,10 @@ import TableSkeleton from '@Components/Table/TableSkeleton';
 import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useTransactions } from '@Context/transactions/transactionContext';
+import NoTransactions from './components/NoTransactions';
+
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();
-  const {
-    state: { transactions },
-    dispatch,
-  } = useTransactions();
 
   const COLUMNS: Column<Record<string, unknown>>[] = [
     {
@@ -75,27 +72,23 @@ function TransactionPage() {
   ];
   const tableColumns = useMemo(() => COLUMNS, []);
 
-  useEffect(() => {
-    if (data?.getTransactions) {
-      dispatch({
-        type: 'FETCH_SUCCESS',
-        payload: data.getTransactions,
-      });
-    }
-  }, [data]);
-
   if (loading) {
     return <TableSkeleton columns={6} rows={8} />;
   }
+
   if (error) {
     return <TableError error={error} />;
+  }
+
+  if (!data?.getTransactions?.length) {
+    return <NoTransactions />;
   }
 
   return (
     <>
       <TableContainer>
         <ErrorBoundary FallbackComponent={TableError}>
-          <Table data={transactions} columns={tableColumns} />
+          <Table data={data.getTransactions} columns={tableColumns} />
         </ErrorBoundary>
       </TableContainer>
     </>

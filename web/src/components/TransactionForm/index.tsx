@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@reach/dialog/styles.css';
 import { useState } from 'react';
 import { Overlay, Content, Header, Title } from './style';
@@ -10,6 +11,8 @@ import FormLoader from './FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
+  GetTransactionsDocument,
+  GetTransactionsQuery,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
@@ -29,7 +32,6 @@ export interface TransactionFields {
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const [addTransactionMutation, submitting] = useAddTransactionMutation();
-  const { dispatch } = useTransactions();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
@@ -46,13 +48,22 @@ function TransactionForm() {
     };
     const response = await addTransactionMutation({
       variables: { input: newValues },
+      update: (cache, { data: createTransaction }) => {
+        cache.modify({
+          fields: {
+            getTransactions: (existingFieldData) => {
+              const newTransactionRef = cache.writeQuery({
+                data: createTransaction,
+                query: GetTransactionsDocument,
+              });
+              return [newTransactionRef, ...existingFieldData];
+            },
+          },
+        });
+      },
     });
 
     if (response.data?.createTransaction) {
-      dispatch({
-        type: 'ADD_TRANSACTION',
-        payload: response.data.createTransaction,
-      });
       showAlert('Transaction successfully added', 'info');
     }
     if (response.errors) {
