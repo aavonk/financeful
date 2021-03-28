@@ -78,6 +78,7 @@ function Form({
     values,
     handleChange,
     handleSubmit,
+    handleTrim,
     errors,
   } = useForm<TransactionFields>({
     initialValue,
@@ -138,6 +139,7 @@ function Form({
                 value={values.payee}
                 type="text"
                 onChange={handleChange('payee')}
+                onBlur={handleTrim('payee')}
               >
                 Payee *
               </BorderedInput>
@@ -150,6 +152,7 @@ function Form({
                 value={values.description}
                 type="text"
                 onChange={handleChange('description')}
+                onBlur={handleTrim('description')}
               >
                 Description
               </BorderedInput>
@@ -161,6 +164,7 @@ function Form({
                 value={values.amount}
                 type="text"
                 onChange={handleChange('amount')}
+                onBlur={handleTrim('amount')}
                 withPrefix
                 prefix="$"
               >

@@ -72,6 +72,17 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     });
   };
 
+  const handleTrim = <S extends unknown>(key: keyof T) => (
+    e: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const trimmedValue = e.target.value.trim();
+
+    setValues({
+      ...values,
+      [key]: trimmedValue,
+    });
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validations = options?.validations;
@@ -122,7 +133,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     values,
     handleChange,
     handleSubmit,
-
+    handleTrim,
     errors,
   };
 };

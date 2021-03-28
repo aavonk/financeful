@@ -24,6 +24,7 @@ type InputTypes = {
   onChange: (
     e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
   ) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   autoFocus?: boolean;
   withPrefix?: boolean;
@@ -62,6 +63,7 @@ export const BorderedInput = React.forwardRef<HTMLInputElement, InputTypes>(
             onChange={props.onChange}
             autoFocus={props.autoFocus}
             disabled={props.disabled}
+            onBlur={props.onBlur}
             ref={ref}
           />
         </div>

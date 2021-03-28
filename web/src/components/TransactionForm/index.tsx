@@ -49,7 +49,7 @@ function TransactionForm() {
       update: (cache, { data: createTransaction }) => {
         cache.modify({
           fields: {
-            getTransactions: (existingFieldData) => {
+            getTransactions: (existingFieldData = []) => {
               const newTransactionRef = cache.writeQuery({
                 data: createTransaction,
                 query: GetTransactionsDocument,
