@@ -12,12 +12,10 @@ import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
   GetTransactionsDocument,
-  GetTransactionsQuery,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
 import Progressbar from '@Common/Progressbar';
-import { useTransactions } from '@Context/transactions/transactionContext';
 
 export interface TransactionFields {
   date: Date;
