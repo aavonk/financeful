@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import { MockedProvider, MockedResponse } from '@apollo/react-testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import TransactionPage from './index';
 import ThemeProvider from '@Context/theme';
 import { GetTransactionsDocument, Transaction } from '@Generated/graphql';
