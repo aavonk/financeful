@@ -69,7 +69,6 @@ function TransactionForm() {
     }
   };
 
-  //TODO: Make sure each field is trimmed
   return (
     <div>
       <Button onClick={open} variant="primary">
