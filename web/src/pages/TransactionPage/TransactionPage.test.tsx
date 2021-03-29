@@ -67,7 +67,7 @@ test('Successfully fetches and displays transactions', async () => {
     </MockedProvider>
   );
 
-  const { getByText, getByRole } = render(component);
+  const { getByText } = render(component);
 
   await waitFor(() => {
     expect(getByText(/good food/i)).toBeInTheDocument();
