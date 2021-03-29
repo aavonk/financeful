@@ -2,6 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import TransactionPage from './index';
 import ThemeProvider from '@Context/theme';
+import { AlertProvider } from '@Context/alert/alertContext';
 import { GetTransactionsDocument, Transaction } from '@Generated/graphql';
 import { GraphQLError } from 'graphql';
 
@@ -19,6 +20,13 @@ const TRANSACTIONS: Transaction[] = [
     userId: '1000001',
     type: 'EXPENSE',
     accountId: 'asdfsdfsasdf',
+    account: {
+      accountName: 'Primary Checking',
+      id: '234kl2lkldf',
+    },
+    isCashIn: false,
+    isCashOut: true,
+    isUncategorized: false,
   },
 ];
 
@@ -26,7 +34,9 @@ test('Renders the table loading state', async () => {
   const component = (
     <MockedProvider mocks={[]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <AlertProvider>
+          <TransactionPage />
+        </AlertProvider>
       </ThemeProvider>
     </MockedProvider>
   );
@@ -50,14 +60,18 @@ test('Successfully fetches and displays transactions', async () => {
   const component = (
     <MockedProvider mocks={[transactionsMock]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <AlertProvider>
+          <TransactionPage />
+        </AlertProvider>
       </ThemeProvider>
     </MockedProvider>
   );
 
   const { getByText } = render(component);
 
-  waitFor(() => expect(getByText(/good food/i)).toBeInTheDocument());
+  await waitFor(() => {
+    expect(getByText(/good food/i)).toBeInTheDocument();
+  });
 });
 
 test('Component catches GraphQlError error and displays error UI', async () => {
@@ -71,13 +85,15 @@ test('Component catches GraphQlError error and displays error UI', async () => {
   const component = (
     <MockedProvider mocks={[errorMock]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <AlertProvider>
+          <TransactionPage />
+        </AlertProvider>
       </ThemeProvider>
     </MockedProvider>
   );
   const { getByText } = render(component);
 
-  waitFor(() =>
+  await waitFor(() =>
     expect(
       getByText(/we ran into trouble loading transactions/i),
     ).toBeInTheDocument(),
@@ -95,13 +111,15 @@ test('Component catches Network error and displays error UI', async () => {
   const component = (
     <MockedProvider mocks={[errorMock]} addTypename={false}>
       <ThemeProvider>
-        <TransactionPage />
+        <AlertProvider>
+          <TransactionPage />
+        </AlertProvider>
       </ThemeProvider>
     </MockedProvider>
   );
   const { getByText } = render(component);
 
-  waitFor(() =>
+  await waitFor(() =>
     expect(
       getByText(/we ran into trouble loading transactions/i),
     ).toBeInTheDocument(),

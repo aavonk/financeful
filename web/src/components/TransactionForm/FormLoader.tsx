@@ -5,7 +5,7 @@ import { Body } from './style';
 function FormLoader() {
   return (
     <>
-      <Body>
+      <Body aria-disabled="true" aria-label="Loading">
         <Row>
           <Col width="25%">
             <Skeleton height="50px" width="100%" />
