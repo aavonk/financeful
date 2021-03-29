@@ -1,20 +1,10 @@
-import {
-  render,
-  fireEvent,
-  waitFor,
-  screen,
-  getByLabelText,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import TransactionForm, { TransactionFields } from './index';
+import TransactionForm from './index';
 import ThemeProvider from '@Context/theme';
 import { AlertProvider } from '@Context/alert/alertContext';
-import {
-  FetchAccountsAndCategoriesDocument,
-  Transaction,
-  AddTransactionDocument,
-} from '@Generated/graphql';
+import { FetchAccountsAndCategoriesDocument } from '@Generated/graphql';
 import { GraphQLError } from 'graphql';
 import MockDate from 'mockdate';
 
@@ -94,114 +84,109 @@ describe('The new transaction modal', () => {
   });
 });
 
-// describe('The possible states while fetching accounts & categories', () => {
-//   const fetchMock: MockedResponse = {
-//     request: {
-//       query: FetchAccountsAndCategoriesDocument,
-//     },
-//     result: {
-//       data: {
-//         getAccounts: ACCOUNTS,
-//         getCategories: CATEGORIES,
-//       },
-//     },
-//   };
-//   it('Should show the loading state when fetching accounts/categories', async () => {
-//     const { getByLabelText, openButton } = setup([fetchMock]);
-//     fireEvent.click(openButton);
-//     expect(getByLabelText(/loading/i)).toBeInTheDocument();
-//   });
+describe('The possible states while fetching accounts & categories', () => {
+  const fetchMock: MockedResponse = {
+    request: {
+      query: FetchAccountsAndCategoriesDocument,
+    },
+    result: {
+      data: {
+        getAccounts: ACCOUNTS,
+        getCategories: CATEGORIES,
+      },
+    },
+  };
+  it('Should show the loading state when fetching accounts/categories', async () => {
+    const { getByLabelText, openButton } = setup([fetchMock]);
+    fireEvent.click(openButton);
+    expect(getByLabelText(/loading/i)).toBeInTheDocument();
+  });
 
-//   it('Should render the results from the request', async () => {
-//     const { openButton, getByText } = setup([fetchMock]);
+  it('Should render the results from the request', async () => {
+    const { openButton, getByText } = setup([fetchMock]);
 
-//     fireEvent.click(openButton);
+    fireEvent.click(openButton);
 
-//     await waitFor(() => {
-//       expect(getByText(ACCOUNTS[0].accountName)).toBeInTheDocument();
-//       expect(getByText(ACCOUNTS[1].accountName)).toBeInTheDocument();
-//       expect(getByText(ACCOUNTS[2].accountName)).toBeInTheDocument();
-//       expect(getByText(CATEGORIES[0].name)).toBeInTheDocument();
-//       expect(getByText(CATEGORIES[1].name)).toBeInTheDocument();
-//       expect(getByText(CATEGORIES[2].name)).toBeInTheDocument();
-//     });
-//   });
+    await waitFor(() => {
+      expect(getByText(ACCOUNTS[0].accountName)).toBeInTheDocument();
+      expect(getByText(ACCOUNTS[1].accountName)).toBeInTheDocument();
+      expect(getByText(ACCOUNTS[2].accountName)).toBeInTheDocument();
+      expect(getByText(CATEGORIES[0].name)).toBeInTheDocument();
+      expect(getByText(CATEGORIES[1].name)).toBeInTheDocument();
+      expect(getByText(CATEGORIES[2].name)).toBeInTheDocument();
+    });
+  });
 
-//   it('Should render Error UI When there is a GraphQL Error', async () => {
-//     const errorMock: MockedResponse = {
-//       request: {
-//         query: FetchAccountsAndCategoriesDocument,
-//       },
-//       error: new GraphQLError('Uh oh! An error occurred'),
-//     };
+  it('Should render Error UI When there is a GraphQL Error', async () => {
+    const errorMock: MockedResponse = {
+      request: {
+        query: FetchAccountsAndCategoriesDocument,
+      },
+      error: new GraphQLError('Uh oh! An error occurred'),
+    };
 
-//     const { getByText, openButton } = setup([errorMock]);
+    const { getByText, openButton } = setup([errorMock]);
 
-//     fireEvent.click(openButton);
+    fireEvent.click(openButton);
 
-//     await waitFor(() => {
-//       expect(
-//         getByText(/we ran into trouble loading your accounts/i),
-//       ).toBeInTheDocument();
-//     });
-//   });
+    await waitFor(() => {
+      expect(
+        getByText(/we ran into trouble loading your accounts/i),
+      ).toBeInTheDocument();
+    });
+  });
 
-//   it('Should render the error UI when there is a Network Error', async () => {
-//     const errorMock: MockedResponse = {
-//       request: {
-//         query: FetchAccountsAndCategoriesDocument,
-//       },
-//       error: new Error('This is an error 😈'),
-//     };
+  it('Should render the error UI when there is a Network Error', async () => {
+    const errorMock: MockedResponse = {
+      request: {
+        query: FetchAccountsAndCategoriesDocument,
+      },
+      error: new Error('This is an error 😈'),
+    };
 
-//     const { openButton, getByText } = setup([errorMock]);
+    const { openButton, getByText } = setup([errorMock]);
 
-//     fireEvent.click(openButton);
+    fireEvent.click(openButton);
 
-//     await waitFor(() => {
-//       expect(
-//         getByText(/we ran into trouble loading your accounts/i),
-//       ).toBeInTheDocument();
-//     });
-//   });
-// });
+    await waitFor(() => {
+      expect(
+        getByText(/we ran into trouble loading your accounts/i),
+      ).toBeInTheDocument();
+    });
+  });
+});
 
 // describe('Add Transaction Mutation', () => {
-//   const newTransaction: TransactionFields = {
-//     accountId: ACCOUNTS[0].id,
-//     categoryId: '',
-//     amount: '1212',
-//     date: new Date(),
-//     description: 'hey',
+//   const newTransaction: TransactionInput = {
 //     payee: 'payee',
+//     date: new Date(),
+//     amount: 1212,
+//     description: 'hey',
+//     categoryId: CATEGORIES[0].id,
 //     type: 'EXPENSE',
+//     accountId: ACCOUNTS[0].id,
 //   };
 
-//   const returnedTransaction = {
-//     // id: 'asdfasdfasfdasfd',
-//     // userId: 'asdfsdf234sdf',
-//     // payee: 'payee',
-//     // description: 'hey',
-//     // amount: 1212,
-//     // category: null,
-//     // type: 'EXPENSE',
-//     // date: new Date(),
-//     // accountId: ACCOUNTS[0].id,
-//     // // account: {
-//     // //   accountName: ACCOUNTS[0].accountName,
-//     // //   id: ACCOUNTS[0].id,
-//     // // },
-//     // isCashIn: false,
-//     // isCashOut: true,
-//     // isUncategorized: true,
-//     // __typename: 'Transaction',
+//   const returnedTransaction: Transaction = {
+//     id: 'asdfasdfasfdasfd',
+//     userId: 'asdfsdf234sdf',
+//     payee: newTransaction.payee,
+//     description: newTransaction.description,
+//     amount: newTransaction.amount,
+//     category: {
+//       id: CATEGORIES[0].id,
+//       name: CATEGORIES[0].name,
+//     },
+//     type: newTransaction.type,
+//     date: '2021-03-26T05:00:00.000Z',
 //     accountId: ACCOUNTS[0].id,
-//     category: null,
-//     amount: 1212,
-//     date: new Date(),
-//     description: 'hey',
-//     payee: 'payee',
-//     type: 'EXPENSE',
+//     account: {
+//       accountName: ACCOUNTS[0].accountName,
+//       id: ACCOUNTS[0].id,
+//     },
+//     isCashIn: false,
+//     isCashOut: true,
+//     isUncategorized: true,
 //   };
 
 //   const fetchMock: MockedResponse = {
@@ -246,9 +231,11 @@ describe('The new transaction modal', () => {
 //     const amountInput = getByLabelText(/Amount/);
 //     const payeeInput = getByLabelText(/Payee/);
 //     const descriptionInput = getByLabelText(/Description/);
+//     const categorySelect = getByLabelText(/Category/);
 
 //     userEvent.selectOptions(accountSelect, ACCOUNTS[0].id);
 //     userEvent.selectOptions(transactionTypeSelect, newTransaction.type);
+//     userEvent.selectOptions(categorySelect, CATEGORIES[0].id);
 
 //     fireEvent.change(payeeInput, {
 //       target: { value: newTransaction.payee },
@@ -261,8 +248,8 @@ describe('The new transaction modal', () => {
 //       target: { value: '12.12' },
 //     });
 
+//     screen.debug();
 //     const submitButton = getByRole('button', { name: /save/i });
-
 //     fireEvent.click(submitButton);
 
 //     await waitFor(() => {
@@ -270,7 +257,5 @@ describe('The new transaction modal', () => {
 //         getByRole('alert', { name: /Transaction successfully added/i }),
 //       ).toBeInTheDocument();
 //     });
-
-//     screen.debug();
 //   });
 // });
