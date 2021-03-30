@@ -26,6 +26,7 @@ function NotificationsMenu() {
       icon={<NotificationsIcon />}
       id="notifications"
       items={notifications}
+      ariaText="notifications"
     />
   );
 }

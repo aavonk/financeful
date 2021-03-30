@@ -18,6 +18,7 @@ function ActionsMenu() {
         icon={<VerticalMenuIcon />}
         items={items}
         id="actions-menu"
+        ariaText="Actions"
       />
     </>
   );

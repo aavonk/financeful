@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Menu } from '@reach/menu-button';
+import VisuallyHidden from '@reach/visually-hidden';
 import '@reach/menu-button/styles.css';
 import Badge from '@Common/Badge';
 import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';
@@ -16,6 +17,7 @@ type Props = {
   badgeContent?: string | number;
   id: string;
   items: DropdownItems;
+  ariaText: string;
 };
 
 /* children : [
@@ -28,17 +30,26 @@ type Props = {
 
 */
 
-function IconDropdown({ icon, withBadge, badgeContent, items, id }: Props) {
+function IconDropdown({
+  icon,
+  withBadge,
+  badgeContent,
+  items,
+  id,
+  ariaText,
+}: Props) {
   return (
     <Menu>
       {withBadge && badgeContent ? (
         <Badge badgeContent={badgeContent}>
           <StyledMenuButton $grey id={id}>
+            <VisuallyHidden>{ariaText}</VisuallyHidden>
             {icon}
           </StyledMenuButton>
         </Badge>
       ) : (
         <StyledMenuButton $grey id={id}>
+          <VisuallyHidden>{ariaText}</VisuallyHidden>
           {icon}
         </StyledMenuButton>
       )}
