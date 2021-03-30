@@ -36,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 100vw;
     overscroll-behavior-y: none;
     -webkit-overflow-scrolling: touch;
-    
+    overflow-x: hidden;
   }
  
   #root {

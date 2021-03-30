@@ -2,13 +2,15 @@ import '@reach/menu-button/styles.css';
 import { Menu } from '@reach/menu-button';
 import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';
 
-type Props = {
+export type DropdownItems = Array<{ label: string; onSelect: () => void }>;
+
+type DropdownProps = {
   selected: string;
   id: string;
-  items: Array<{ label: string; onSelect: () => void }>;
+  items: DropdownItems;
 };
 
-function Dropdown({ selected, items, id }: Props) {
+function Dropdown({ selected, items, id }: DropdownProps) {
   return (
     <Menu>
       <StyledMenuButton id={id}>{selected}</StyledMenuButton>

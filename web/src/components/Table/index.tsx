@@ -6,12 +6,14 @@ import {
   TableOptions,
   useGlobalFilter,
   useFilters,
+  usePagination,
 } from 'react-table';
 import Paper from '@Common/Paper';
 import { UpArrow, DownArrow } from '@Common/Icons';
 import Toolbar from './Toolbar/Toolbar';
-
+import TablePagination from './Pagination/';
 import {
+  TablePaper,
   TableRoot,
   TableHead,
   TableRow,
@@ -34,19 +36,20 @@ function Table<T extends Record<string, unknown>>({
     useGlobalFilter,
     useFilters,
     useSortBy,
+    usePagination,
   );
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
   } = instance;
 
   return (
     <>
       <Toolbar instance={instance} />
-      <Paper>
+      <TablePaper>
         <TableRoot {...getTableProps()}>
           <TableHead>
             {headerGroups.map((headerGroup) => (
@@ -85,7 +88,7 @@ function Table<T extends Record<string, unknown>>({
             ))}
           </TableHead>
           <TableBody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <TableRow {...row.getRowProps()}>
@@ -101,7 +104,8 @@ function Table<T extends Record<string, unknown>>({
             })}
           </TableBody>
         </TableRoot>
-      </Paper>
+      </TablePaper>
+      <TablePagination instance={instance} />
     </>
   );
 }
