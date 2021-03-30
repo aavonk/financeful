@@ -5,11 +5,16 @@ import ViewError from './ViewError';
 function TableError({ error }: { error: Error }) {
   return (
     <Paper minHeight="300px" flex center>
-      <ViewError heading="We ran into trouble loading transactions" reload />
+      <ViewError
+        heading="Oops! There seems to be a problem"
+        subheading="Try refreshing the page to see if that helps. If you think there is a problem, please contact us."
+        emoji="😡"
+        reload
+      />
 
       {__DEV__ && (
         <pre>
-          error.message
+          {error.message}
           {error.stack}
         </pre>
       )}

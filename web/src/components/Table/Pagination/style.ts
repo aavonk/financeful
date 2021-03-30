@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -25,4 +25,9 @@ export const Actions = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+`;
+
+export const Text = styled.p`
+  font-size: 1rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
 `;

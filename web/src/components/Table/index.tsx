@@ -8,7 +8,6 @@ import {
   useFilters,
   usePagination,
 } from 'react-table';
-import Paper from '@Common/Paper';
 import { UpArrow, DownArrow } from '@Common/Icons';
 import Toolbar from './Toolbar/Toolbar';
 import TablePagination from './Pagination/';
