@@ -26,3 +26,8 @@ export const Actions = styled.div`
   flex-direction: row;
   justify-content: flex-end;
 `;
+
+export const Text = styled.p`
+  font-size: 1rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
+`;

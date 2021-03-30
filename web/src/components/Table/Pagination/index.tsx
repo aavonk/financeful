@@ -1,5 +1,11 @@
 import { TableInstance } from 'react-table';
-import { Container, PageCountWrapper, ActionsWrapper, Actions } from './style';
+import {
+  Container,
+  PageCountWrapper,
+  ActionsWrapper,
+  Actions,
+  Text,
+} from './style';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
 
 function TablePagination<T extends Record<string, unknown>>({
@@ -21,9 +27,9 @@ function TablePagination<T extends Record<string, unknown>>({
   return (
     <Container>
       <PageCountWrapper>
-        <div>
+        <Text>
           Viewing page {pageIndex + 1} of {pageOptions.length}
-        </div>
+        </Text>
       </PageCountWrapper>
       <ActionsWrapper>
         <Actions>
