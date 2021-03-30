@@ -23,7 +23,7 @@ const StyledMenuItem = styled(MenuItem)`
   }
 
   & > span > svg {
-    margin-right: 0.35rem;
+    margin-right: 0.75rem;
     vertical-align: middle;
   }
 `;

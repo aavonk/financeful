@@ -78,7 +78,7 @@ export const StyledMenuItem = styled(MenuItem)`
   }
 
   & > i > svg {
-    margin-right: 0.35rem;
+    margin-right: 0.75rem;
     vertical-align: middle;
   }
 `;

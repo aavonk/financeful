@@ -1,5 +1,5 @@
 import IconDropdown, { DropdownItems } from '@Common/IconDropdown';
-import { VerticalMenuIcon } from '@Common/Icons';
+import { VerticalMenuIcon, InfoIcon, ErrorIcon } from '@Common/Icons';
 import { AlignRight } from './style';
 
 function ActionsMenu() {
@@ -7,10 +7,12 @@ function ActionsMenu() {
     {
       label: 'Delete transaction',
       onSelect: () => console.log('ok'),
+      icon: <ErrorIcon />,
     },
     {
       label: 'Edit details',
       onSelect: () => console.log('ok'),
+      icon: <InfoIcon />,
     },
   ];
   return (
