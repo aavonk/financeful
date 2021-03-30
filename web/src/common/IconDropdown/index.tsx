@@ -62,7 +62,7 @@ function IconDropdown({
           <StyledMenuItem
             key={index}
             onSelect={child.onSelect}
-            iconVariant={child.iconVariant}
+            $iconVariant={child.iconVariant}
           >
             {child.icon ? (
               <>

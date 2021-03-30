@@ -69,7 +69,7 @@ export const StyledMenuList = styled(MenuList)`
 `;
 
 export const StyledMenuItem = styled(MenuItem)<{
-  iconVariant?: 'danger' | 'muted';
+  $iconVariant?: 'danger' | 'muted';
 }>`
   font-size: inherit;
   &:hover {
@@ -85,15 +85,15 @@ export const StyledMenuItem = styled(MenuItem)<{
     vertical-align: middle;
   }
 
-  ${({ iconVariant }) =>
-    iconVariant === 'danger' &&
+  ${({ $iconVariant }) =>
+    $iconVariant === 'danger' &&
     css`
       & > i > svg {
         color: ${({ theme }) => theme.colors.textError};
       }
     `}
-  ${({ iconVariant }) =>
-    iconVariant === 'muted' &&
+  ${({ $iconVariant }) =>
+    $iconVariant === 'muted' &&
     css`
       & > i > svg {
         color: ${({ theme }) => theme.colors.textSecondary};
