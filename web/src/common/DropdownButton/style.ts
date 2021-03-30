@@ -39,13 +39,14 @@ export const StyledMenuButton = styled(MenuButton)`
 export const StyledMenuList = styled(MenuList)`
   background: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 0.25rem;
-  font-size: 1rem;
+  font-size: 0.938rem;
   text-align: left;
   box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
     rgb(136 153 166 / 15%) 0px 0px 3px 1px;
 `;
 
 export const StyledMenuItem = styled(MenuItem)`
+  font-size: inherit;
   &:hover {
     background-color: ${({ theme }) => theme.colors.darkThree};
   }

@@ -8,11 +8,13 @@ function ActionsMenu() {
       label: 'Delete transaction',
       onSelect: () => console.log('ok'),
       icon: <ErrorIcon />,
+      iconVariant: 'danger',
     },
     {
       label: 'Edit details',
       onSelect: () => console.log('ok'),
       icon: <InfoIcon />,
+      iconVariant: 'muted',
     },
   ];
   return (

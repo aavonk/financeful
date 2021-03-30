@@ -62,13 +62,16 @@ export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
 export const StyledMenuList = styled(MenuList)`
   background: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 0.25rem;
-  font-size: 1rem;
+  font-size: 0.938rem;
   text-align: left;
   box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
     rgb(136 153 166 / 15%) 0px 0px 3px 1px;
 `;
 
-export const StyledMenuItem = styled(MenuItem)`
+export const StyledMenuItem = styled(MenuItem)<{
+  iconVariant?: 'danger' | 'muted';
+}>`
+  font-size: inherit;
   &:hover {
     background-color: ${({ theme }) => theme.colors.darkThree};
   }
@@ -81,4 +84,19 @@ export const StyledMenuItem = styled(MenuItem)`
     margin-right: 0.75rem;
     vertical-align: middle;
   }
+
+  ${({ iconVariant }) =>
+    iconVariant === 'danger' &&
+    css`
+      & > i > svg {
+        color: ${({ theme }) => theme.colors.textError};
+      }
+    `}
+  ${({ iconVariant }) =>
+    iconVariant === 'muted' &&
+    css`
+      & > i > svg {
+        color: ${({ theme }) => theme.colors.textSecondary};
+      }
+    `}
 `;

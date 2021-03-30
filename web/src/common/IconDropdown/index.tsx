@@ -7,6 +7,7 @@ import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';
 
 export type DropdownItems = Array<{
   icon?: React.ReactNode;
+  iconVariant?: 'danger' | 'muted';
   label: string;
   onSelect: () => void;
 }>;
@@ -58,7 +59,11 @@ function IconDropdown({
 
       <StyledMenuList>
         {items.map((child, index) => (
-          <StyledMenuItem key={index} onSelect={child.onSelect}>
+          <StyledMenuItem
+            key={index}
+            onSelect={child.onSelect}
+            iconVariant={child.iconVariant}
+          >
             {child.icon ? (
               <>
                 <i>{child.icon}</i>
