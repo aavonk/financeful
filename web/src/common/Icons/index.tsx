@@ -12,6 +12,7 @@ import {
   BsSearch,
   BsArrowUpShort,
   BsArrowDownShort,
+  BsThreeDotsVertical,
 } from 'react-icons/bs';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
@@ -29,6 +30,10 @@ import {
   MdErrorOutline,
   MdInfoOutline,
 } from 'react-icons/md';
+
+export const VerticalMenuIcon = ({ ...props }) => {
+  return <BsThreeDotsVertical {...props} aria-hidden="true" />;
+};
 
 export const InfoIcon = ({ ...props }) => {
   return <MdInfoOutline {...props} aria-hidden="true" />;

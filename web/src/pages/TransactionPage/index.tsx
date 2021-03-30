@@ -13,6 +13,7 @@ import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from './components/NoTransactions';
+import ActionsMenu from '@Components/Table/ActionsMenu';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();
@@ -68,6 +69,10 @@ function TransactionPage() {
         accessor: 'category.name',
         Filter: SelectTypeFilter,
         disableFilters: true,
+      },
+      {
+        Header: 'Actions',
+        Cell: () => <ActionsMenu />,
       },
     ],
     [],

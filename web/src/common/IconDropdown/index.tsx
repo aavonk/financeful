@@ -4,16 +4,18 @@ import '@reach/menu-button/styles.css';
 import Badge from '@Common/Badge';
 import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';
 
+export type DropdownItems = Array<{
+  icon?: React.ReactNode;
+  label: string;
+  onSelect: () => void;
+}>;
+
 type Props = {
   icon: React.ReactNode;
   withBadge?: boolean;
   badgeContent?: string | number;
   id: string;
-  items: Array<{
-    icon?: React.ReactNode;
-    label: string;
-    onSelect: () => void;
-  }>;
+  items: DropdownItems;
 };
 
 /* children : [
