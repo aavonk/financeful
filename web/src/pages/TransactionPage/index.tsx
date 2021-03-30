@@ -16,61 +16,62 @@ import NoTransactions from './components/NoTransactions';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();
-
-  const COLUMNS: Column<Record<string, unknown>>[] = [
-    {
-      Header: 'Date',
-      accessor: 'date',
-      Cell: ({ value }: Cell<Transaction>) => {
-        return <span>{format(new Date(value), 'MMM do y')}</span>;
+  const columns = useMemo<Column<Record<string, unknown>>[]>(
+    () => [
+      {
+        Header: 'Date',
+        accessor: 'date',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <span>{format(new Date(value), 'MMM do y')}</span>;
+        },
+        Filter: SelectTypeFilter,
+        disableFilters: true,
       },
-      Filter: SelectTypeFilter,
-      disableFilters: true,
-    },
-    {
-      Header: 'Account',
-      accessor: 'account.accountName',
-      Filter: SelectTypeFilter,
-      disableFilters: true,
-    },
-    {
-      Header: 'Payee',
-      accessor: 'payee',
-      Filter: SelectTypeFilter,
-      disableFilters: true,
-    },
-    {
-      Header: 'Description',
-      accessor: 'description',
-      Filter: SelectTypeFilter,
-      disableFilters: true,
-    },
-    {
-      Header: () => <span className="align-right">Amount</span>,
-      accessor: 'amount',
-      Cell: ({ value }: Cell<Transaction>) => {
-        return <div className="number">{parseMoney(value)}</div>;
+      {
+        Header: 'Account',
+        accessor: 'account.accountName',
+        Filter: SelectTypeFilter,
+        disableFilters: true,
       },
-      Filter: SelectTypeFilter,
-      disableFilters: true,
-    },
-    {
-      Header: 'Type',
-      accessor: 'type',
-      Cell: ({ value }: Cell<Transaction>) => {
-        return <TransactionTypeCell type={value} />;
+      {
+        Header: 'Payee',
+        accessor: 'payee',
+        Filter: SelectTypeFilter,
+        disableFilters: true,
       },
-      Filter: SelectTypeFilter,
-      filter: 'includes',
-    },
-    {
-      Header: 'Category',
-      accessor: 'category.name',
-      Filter: SelectTypeFilter,
-      disableFilters: true,
-    },
-  ];
-  const tableColumns = useMemo(() => COLUMNS, []);
+      {
+        Header: 'Description',
+        accessor: 'description',
+        Filter: SelectTypeFilter,
+        disableFilters: true,
+      },
+      {
+        Header: () => <span className="align-right">Amount</span>,
+        accessor: 'amount',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <div className="number">{parseMoney(value)}</div>;
+        },
+        Filter: SelectTypeFilter,
+        disableFilters: true,
+      },
+      {
+        Header: 'Type',
+        accessor: 'type',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <TransactionTypeCell type={value} />;
+        },
+        Filter: SelectTypeFilter,
+        filter: 'includes',
+      },
+      {
+        Header: 'Category',
+        accessor: 'category.name',
+        Filter: SelectTypeFilter,
+        disableFilters: true,
+      },
+    ],
+    [],
+  );
 
   if (loading) {
     return <TableSkeleton columns={6} rows={8} />;
@@ -88,7 +89,7 @@ function TransactionPage() {
     <>
       <TableContainer>
         <ErrorBoundary FallbackComponent={TableError}>
-          <Table data={data.getTransactions} columns={tableColumns} />
+          <Table data={data.getTransactions} columns={columns} />
         </ErrorBoundary>
       </TableContainer>
     </>
