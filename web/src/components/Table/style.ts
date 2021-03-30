@@ -83,3 +83,9 @@ export const TableCell = styled.td`
     text-align: right;
   }
 `;
+
+export const AlignRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;

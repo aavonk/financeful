@@ -1,5 +1,6 @@
 import IconDropdown, { DropdownItems } from '@Common/IconDropdown';
 import { VerticalMenuIcon } from '@Common/Icons';
+import { AlignRight } from './style';
 
 function ActionsMenu() {
   const items: DropdownItems = [
@@ -13,14 +14,15 @@ function ActionsMenu() {
     },
   ];
   return (
-    <>
+    <AlignRight>
       <IconDropdown
         icon={<VerticalMenuIcon />}
         items={items}
         id="actions-menu"
         ariaText="Actions"
+        variant="small"
       />
-    </>
+    </AlignRight>
   );
 }
 

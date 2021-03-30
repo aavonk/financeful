@@ -18,6 +18,7 @@ type Props = {
   id: string;
   items: DropdownItems;
   ariaText: string;
+  variant?: 'small';
 };
 
 /* children : [
@@ -37,18 +38,19 @@ function IconDropdown({
   items,
   id,
   ariaText,
+  variant,
 }: Props) {
   return (
     <Menu>
       {withBadge && badgeContent ? (
         <Badge badgeContent={badgeContent}>
-          <StyledMenuButton $grey id={id}>
+          <StyledMenuButton $grey id={id} variant={variant}>
             <VisuallyHidden>{ariaText}</VisuallyHidden>
             {icon}
           </StyledMenuButton>
         </Badge>
       ) : (
-        <StyledMenuButton $grey id={id}>
+        <StyledMenuButton $grey id={id} variant={variant}>
           <VisuallyHidden>{ariaText}</VisuallyHidden>
           {icon}
         </StyledMenuButton>

@@ -2,9 +2,9 @@ import styled, { css } from 'styled-components';
 import { MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 
 type ButtonProps = {
-  $small?: boolean;
   $grey?: boolean;
   $active?: boolean;
+  variant?: 'small';
 };
 
 export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
@@ -38,32 +38,34 @@ export const StyledMenuButton = styled(MenuButton)<ButtonProps>`
     background-color: ${({ theme }) => theme.effects.buttonHover};
     color: ${({ theme }) => theme.colors.primary};
   }
-  ${(props) =>
-    props.$small &&
-    css`
-      height: 32px;
-      width: 32px;
-      font-size: 0.95rem;
-      padding: 0;
-    `}
+
   ${(props) =>
     props.$grey &&
     css`
       color: ${({ theme }) => theme.colors.textSecondary};
     `}
-      ${(props) =>
+  ${(props) =>
     props.$active &&
     css`
       background-color: ${({ theme }) => theme.effects.buttonHover};
+    `}
+  ${({ variant }) =>
+    variant === 'small' &&
+    css`
+      height: 35px;
+      width: 35px;
+      font-size: 1.2rem;
+      padding: 2px;
     `}
 `;
 
 export const StyledMenuList = styled(MenuList)`
   background: ${({ theme }) => theme.colors.darkTwo};
-  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
   font-size: 1rem;
   text-align: left;
+  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
+    rgb(136 153 166 / 15%) 0px 0px 3px 1px;
 `;
 
 export const StyledMenuItem = styled(MenuItem)`
