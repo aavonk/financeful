@@ -1,4 +1,13 @@
 import styled from 'styled-components';
+import { StyledPaper } from '@Common/Paper';
+
+export const TablePaper = styled(StyledPaper)`
+  max-height: 450px;
+
+  @media ${({ theme }) => theme.device.desktop} {
+    max-height: 100%;
+  }
+`;
 
 export const TableRoot = styled.table`
   width: 100%;

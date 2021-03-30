@@ -3,11 +3,12 @@ import styled, { css } from 'styled-components';
 
 type Props = {
   minHeight?: string;
+  maxHeight?: string;
   flex?: boolean;
   center?: boolean;
   children: React.ReactNode;
 };
-const StyledPaper = styled.div<Props>`
+export const StyledPaper = styled.div<Props>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
@@ -15,6 +16,7 @@ const StyledPaper = styled.div<Props>`
   border-radius: 9px;
   overflow-x: auto;
   min-height: ${({ minHeight }) => minHeight || '0'};
+  max-height: ${({ maxHeight }) => maxHeight || '100%'};
 
   ${({ flex, center }) =>
     flex &&
@@ -50,9 +52,14 @@ const StyledPaper = styled.div<Props>`
   }
 `;
 
-function Paper({ children, minHeight, flex, center }: Props) {
+function Paper({ children, minHeight, maxHeight, flex, center }: Props) {
   return (
-    <StyledPaper minHeight={minHeight} flex={flex} center={center}>
+    <StyledPaper
+      minHeight={minHeight}
+      flex={flex}
+      center={center}
+      maxHeight={maxHeight}
+    >
       {children}
     </StyledPaper>
   );
