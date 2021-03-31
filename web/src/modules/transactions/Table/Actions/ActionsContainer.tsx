@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Transaction, useDeleteTransactionMutation } from '@Generated/graphql';
 import ActionsMenu from './ActionsMenu';
+import { EditFormController } from '@Modules/transactions/Forms/EditTransactionForm';
 import { useAlert } from '@Context/alert/alertContext';
 
 function ActionsContainer({ transaction }: { transaction: Transaction }) {
@@ -37,11 +38,20 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
     }
   };
 
-  const onEdit = () => {
-    console.log('hi');
-  };
-
-  return <ActionsMenu onDelete={onDelete} onEdit={onEdit} />;
+  return (
+    <>
+      <ActionsMenu
+        onDelete={onDelete}
+        onEditClick={() => setShowEditForm(true)}
+      />
+      <EditFormController
+        transaction={transaction}
+        closeModal={() => setShowEditForm(false)}
+        isOpen={showEditForm}
+        onFormSubmit={() => console.log('submit')}
+      />
+    </>
+  );
 }
 
 export default ActionsContainer;

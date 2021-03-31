@@ -4,10 +4,10 @@ import { AlignRight } from '../style';
 
 type Props = {
   onDelete: () => void;
-  onEdit: () => void;
+  onEditClick: () => void;
 };
 
-function ActionsMenu({ onDelete, onEdit }: Props) {
+function ActionsMenu({ onDelete, onEditClick }: Props) {
   const possibleActions: DropdownItems = [
     {
       label: 'Delete transaction',
@@ -19,7 +19,7 @@ function ActionsMenu({ onDelete, onEdit }: Props) {
       label: 'Edit details',
       icon: <InfoIcon />,
       iconVariant: 'muted',
-      onSelect: () => onEdit(),
+      onSelect: () => onEditClick(),
     },
   ];
   return (

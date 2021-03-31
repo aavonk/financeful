@@ -7,7 +7,7 @@ import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import Form from './Form';
-import FormLoader from './FormLoader';
+import FormLoader from '../FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
@@ -16,16 +16,7 @@ import {
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
 import Progressbar from '@Common/Progressbar';
-
-export interface TransactionFields {
-  date: Date;
-  accountId: string;
-  type: string;
-  payee: string;
-  description: string;
-  amount: string;
-  categoryId: string;
-}
+import { TransactionFields } from '../types';
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();

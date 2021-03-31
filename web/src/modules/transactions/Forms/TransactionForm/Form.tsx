@@ -10,7 +10,7 @@ import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
 import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
 import Button from '@Common/Button';
-import { TransactionFields } from './index';
+import { TransactionFields } from '../types';
 import { Category, Account } from '@Generated/graphql';
 
 const initialValue = {

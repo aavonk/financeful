@@ -1,6 +1,6 @@
 import Skeleton from '@Common/Skeleton';
 import { Row, Col } from '@Globals/index';
-import { Body } from '../style';
+import { Body } from './style';
 
 function FormLoader() {
   return (
