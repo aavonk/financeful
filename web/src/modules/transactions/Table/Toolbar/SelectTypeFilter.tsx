@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FilterProps } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { TabContainer, TabItem, TabLabel, Indicator } from './style';
-import { formatTransactionType } from '@Lib/formatTransactionType';
+import { formatTransactionType } from '@Lib/money-utils';
 
 function SelectTypeFilter({
   column: { setFilter, preFilteredRows, id },

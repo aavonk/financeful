@@ -11,7 +11,7 @@ import {
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
+import { isValidCurrencyFormat } from '@Lib/money-utils';
 import { TransactionFields } from '../types';
 import FormLoader from '../FormLoader';
 

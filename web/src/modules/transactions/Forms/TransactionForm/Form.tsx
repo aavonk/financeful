@@ -8,7 +8,7 @@ import {
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
-import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
+import { isValidCurrencyFormat } from '@Lib/money-utils';
 import Button from '@Common/Button';
 import { TransactionFields } from '../types';
 import { Category, Account } from '@Generated/graphql';

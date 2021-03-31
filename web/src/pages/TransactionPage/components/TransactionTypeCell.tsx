@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { UpArrowCircle, DownArrowCircle } from '@Common/Icons';
-import { formatTransactionType } from '@Lib/formatTransactionType';
+import { formatTransactionType } from '@Lib/money-utils';
 import { FlexRow } from '@Globals/index';
 
 type Props = {
