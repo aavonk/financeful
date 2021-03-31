@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@reach/dialog/styles.css';
 import { useState } from 'react';
-import { Overlay, Content, Header, Title } from './style';
+import { Overlay, Content, Header, Title } from '../style';
 import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';

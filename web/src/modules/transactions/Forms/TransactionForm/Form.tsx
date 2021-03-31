@@ -7,7 +7,7 @@ import {
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { Body, Footer } from './style';
+import { Body, Footer } from '../style';
 import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
 import Button from '@Common/Button';
 import { TransactionFields } from './index';
