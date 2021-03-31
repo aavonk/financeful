@@ -12,6 +12,7 @@ import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
   GetTransactionsDocument,
+  TransactionInput,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
@@ -28,15 +29,9 @@ function TransactionForm() {
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
-  const onFormSubmit = async (values: TransactionFields) => {
-    const newValues = {
-      ...values,
-      // replace the possible commas in the amount or the math won't be right
-      // e.g. 1,000.00 will be parsed to 100 rather than 1000
-      amount: parseFloat(values.amount.replace(/,/g, '')) * 100,
-    };
+  const onFormSubmit = async (values: TransactionInput) => {
     const response = await addTransactionMutation({
-      variables: { input: newValues },
+      variables: { input: values },
       update: (cache, { data: createTransaction }) => {
         cache.modify({
           fields: {

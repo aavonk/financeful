@@ -22,11 +22,23 @@ export const formatTransactionType = (type: string) => {
   }
 };
 
-export const formatMoneyFromCentsToDollars = (cents: number) => {
+export const formatMoneyFromCentsToDollars = (
+  cents: number,
+  withDollarSign = true,
+) => {
   const dollars = cents / 100;
-
-  return dollars.toLocaleString('en-US', {
+  const originalString = dollars.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
   });
+
+  if (withDollarSign) {
+    return originalString;
+  }
+
+  return originalString.slice(1);
+};
+
+export const convertInputAmountToCents = (amount: string) => {
+  return parseFloat(amount.replace(/,/g, '')) * 100;
 };

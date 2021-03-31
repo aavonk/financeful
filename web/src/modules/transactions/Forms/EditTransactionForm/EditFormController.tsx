@@ -1,8 +1,8 @@
 import {
   Transaction,
   useFetchAccountsAndCategoriesQuery,
+  TransactionInput,
 } from '@Generated/graphql';
-import { TransactionFields } from '../types';
 import { useAlert } from '@Context/alert/alertContext';
 import EditForm from './EditForm';
 
@@ -10,7 +10,7 @@ type Props = {
   transaction: Transaction;
   isOpen: boolean;
   closeModal: () => void;
-  onFormSubmit: (values: TransactionFields) => void;
+  onFormSubmit: (values: TransactionInput) => void;
 };
 
 function EditFormController({

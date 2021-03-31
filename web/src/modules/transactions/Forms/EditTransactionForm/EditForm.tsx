@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import IconButton from '@Common/IconButton';
+import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
-import { Transaction, Category, Account } from '@Generated/graphql';
+import {
+  Transaction,
+  Category,
+  Account,
+  TransactionInput,
+} from '@Generated/graphql';
 import { Overlay, Content, Header, Title, Body, Footer } from '../style';
 import {
   BorderedInput,
@@ -11,7 +17,11 @@ import {
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { isValidCurrencyFormat } from '@Lib/money-utils';
+import {
+  isValidCurrencyFormat,
+  formatMoneyFromCentsToDollars,
+  convertInputAmountToCents,
+} from '@Lib/money-utils';
 import { TransactionFields } from '../types';
 import FormLoader from '../FormLoader';
 
@@ -21,7 +31,7 @@ type Props = {
   accounts: Account[] | undefined;
   isOpen: boolean;
   closeModal: () => void;
-  onFormSubmit: (values: TransactionFields) => void;
+  onFormSubmit: (values: TransactionInput) => void;
   isFetching: boolean;
 };
 
@@ -79,7 +89,7 @@ function EditForm({
     categoryId: transaction.category?.id ? transaction.category.id : '',
     type: transaction.type,
     payee: transaction.payee,
-    amount: transaction.amount.toString(),
+    amount: formatMoneyFromCentsToDollars(transaction.amount, false),
   };
   const {
     values,
@@ -90,8 +100,15 @@ function EditForm({
   } = useForm<TransactionFields>({
     initialValue,
     validations,
-    onSubmit: () => onFormSubmit(values),
+    onSubmit: () =>
+      onFormSubmit({
+        ...values,
+        date: transDate,
+        amount: convertInputAmountToCents(values.amount),
+      }),
   });
+
+  //TODO: Disable button when submitting and add progress bar
   return (
     <Overlay isOpen={isOpen} onDismiss={closeModal}>
       <Content aria-label="Add transaction form">
@@ -217,7 +234,11 @@ function EditForm({
                 </Col>
               </Row>
             </Body>
-            <Footer></Footer>
+            <Footer>
+              <Button type="submit" variant="primary">
+                Save
+              </Button>
+            </Footer>
           </form>
         )}
       </Content>
