@@ -2,8 +2,8 @@ import { ReactElement } from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Category, Account } from '@Generated/graphql';
 import AppThemeProvider from '@Context/theme';
-import Form from './Form';
-import { TransactionFields } from '.';
+import Form from '../Form';
+import { TransactionFields } from '..';
 import userEvent from '@testing-library/user-event';
 import MockDate from 'mockdate';
 beforeEach(() => {
