@@ -13,7 +13,7 @@ import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from './components/NoTransactions';
-import ActionsMenu from '@Components/Table/ActionsMenu';
+import TableActions from '@Components/Table/Actions';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();
@@ -72,7 +72,9 @@ function TransactionPage() {
       },
       {
         Header: 'Actions',
-        Cell: () => <ActionsMenu />,
+        Cell: ({ row }: Cell<Transaction>) => (
+          <TableActions transaction={row.original} />
+        ),
       },
     ],
     [],
