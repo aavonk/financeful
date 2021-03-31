@@ -6,14 +6,14 @@ import { Transaction } from '@Generated/graphql';
 import { parseMoney } from '@Lib/parseMoney';
 import { useGetTransactionsQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
-import Table from '@Components/Table';
-import SelectTypeFilter from '@Components/Table/Toolbar/SelectTypeFilter';
-import TableSkeleton from '@Components/Table/TableSkeleton';
+import Table from '@Modules/transactions/Table';
+import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
+import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
+import TableActions from '@Modules/transactions/Table/Actions';
 import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from './components/NoTransactions';
-import TableActions from '@Components/Table/Actions';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();

@@ -28,6 +28,7 @@ const config: webpack.Configuration = {
       '@Globals': path.resolve(__dirname, 'src/globals'),
       '@Generated': path.resolve(__dirname, 'src/generated'),
       '@Lib': path.resolve(__dirname, 'src/lib'),
+      '@Modules': path.resolve(__dirname, 'src/modules'),
     },
   },
 

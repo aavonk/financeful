@@ -26,7 +26,8 @@
       "@Constants/*": ["./src/constants/*"],
       "@Globals/*": ["./src/globals/*"],
       "@Generated/*": ["./src/generated/*"],
-      "@Lib/*": ["./src/lib/*"]
+      "@Lib/*": ["./src/lib/*"],
+      "@Modules/*": ["./src/modules/*"]
     }
   },
   "include": ["src"],

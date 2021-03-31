@@ -10,7 +10,8 @@
         "root": ["./src"],
         "alias": {
           "@Components": "./src/components",
-          "@Common": "./src/common"
+          "@Common": "./src/common",
+          "@Modules": "./src/modules"
         }
       }
     ]
