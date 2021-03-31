@@ -22,5 +22,6 @@ module.exports = {
     '@Globals/(.*)': '<rootDir>/src/globals/$1',
     '@Generated/(.*)': '<rootDir>/src/generated/$1',
     '@Lib/(.*)': '<rootDir>/src/lib/$1',
+    '@Modules/(.*)': '<rootDir>/src/modules/$1',
   },
 };
