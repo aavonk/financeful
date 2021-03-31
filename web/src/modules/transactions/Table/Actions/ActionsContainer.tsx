@@ -42,10 +42,6 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
     }
   };
 
-  const onEditTransaction = (values: TransactionInput) => {
-    console.log(values);
-  };
-
   return (
     <>
       <ActionsMenu
@@ -56,7 +52,6 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
         transaction={transaction}
         closeModal={() => setShowEditForm(false)}
         isOpen={showEditForm}
-        onFormSubmit={onEditTransaction}
       />
     </>
   );

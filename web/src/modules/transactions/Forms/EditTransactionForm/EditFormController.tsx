@@ -10,15 +10,9 @@ type Props = {
   transaction: Transaction;
   isOpen: boolean;
   closeModal: () => void;
-  onFormSubmit: (values: TransactionInput) => void;
 };
 
-function EditFormController({
-  transaction,
-  isOpen,
-  closeModal,
-  onFormSubmit,
-}: Props) {
+function EditFormController({ transaction, isOpen, closeModal }: Props) {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const { showAlert } = useAlert();
 
@@ -28,12 +22,19 @@ function EditFormController({
     }
     showAlert('Oops! We ran into an error. Try again', 'error', 7000);
   }
+
+  // Submit the updates and close the modal and set alert!
+
+  const handleEdit = (values: TransactionInput) => {
+    console.log(values);
+  };
+
   return (
     <EditForm
       isOpen={isOpen}
       closeModal={closeModal}
       transaction={transaction}
-      onFormSubmit={onFormSubmit}
+      onFormSubmit={handleEdit}
       categories={data?.getCategories}
       accounts={data?.getAccounts}
       isFetching={loading}
