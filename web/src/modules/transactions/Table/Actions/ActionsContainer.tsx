@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Transaction, useDeleteTransactionMutation } from '@Generated/graphql';
 import ActionsMenu from './ActionsMenu';
 import { useAlert } from '@Context/alert/alertContext';
 
 function ActionsContainer({ transaction }: { transaction: Transaction }) {
+  const [showEditForm, setShowEditForm] = useState(false);
   const [deleteTransactionMutation] = useDeleteTransactionMutation();
   const { showAlert } = useAlert();
   const { id } = transaction;
