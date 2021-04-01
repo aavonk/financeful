@@ -35,7 +35,7 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
           id: transaction.id,
         },
       });
-      //TODO: update account balance
+      closeModal();
       showAlert('Transaction updated', 'info');
     } catch (err) {
       showAlert(
