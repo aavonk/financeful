@@ -1,7 +1,8 @@
 import {
   Transaction,
-  useFetchAccountsAndCategoriesQuery,
   TransactionInput,
+  useFetchAccountsAndCategoriesQuery,
+  useUpdateTransactionMutation,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import EditForm from './EditForm';
@@ -14,6 +15,7 @@ type Props = {
 
 function EditFormController({ transaction, isOpen, closeModal }: Props) {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
+  const [updateTransaction] = useUpdateTransactionMutation();
   const { showAlert } = useAlert();
 
   if (error) {
@@ -25,8 +27,24 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
 
   // Submit the updates and close the modal and set alert!
 
-  const handleEdit = (values: TransactionInput) => {
-    console.log(values);
+  const handleEdit = async (values: TransactionInput) => {
+    try {
+      await updateTransaction({
+        variables: {
+          input: values,
+          id: transaction.id,
+        },
+      });
+      //TODO: update account balance
+      showAlert('Transaction updated', 'info');
+    } catch (err) {
+      showAlert(
+        'There was an error updating your transaction. Try again',
+        'error',
+        7000,
+      );
+      console.error(err.message);
+    }
   };
 
   return (

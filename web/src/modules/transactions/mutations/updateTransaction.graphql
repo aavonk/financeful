@@ -1,0 +1,22 @@
+mutation UpdateTransaction($input: TransactionInput!, $id: String!) {
+  updateTransaction(input: $input, id: $id) {
+    id
+    userId
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+  }
+}

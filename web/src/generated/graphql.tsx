@@ -116,7 +116,7 @@ export type MutationDeleteTransactionArgs = {
 
 
 export type MutationUpdateTransactionArgs = {
-  input: Updates;
+  input: TransactionInput;
   id: Scalars['String'];
 };
 
@@ -151,15 +151,6 @@ export type TransactionInput = {
   categoryId?: Maybe<Scalars['String']>;
   type: Scalars['String'];
   accountId: Scalars['String'];
-};
-
-export type Updates = {
-  payee?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  categoryId?: Maybe<Scalars['String']>;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -228,6 +219,27 @@ export type DeleteTransactionMutationVariables = Exact<{
 export type DeleteTransactionMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'deleteTransaction'>
+);
+
+export type UpdateTransactionMutationVariables = Exact<{
+  input: TransactionInput;
+  id: Scalars['String'];
+}>;
+
+
+export type UpdateTransactionMutation = (
+  { __typename?: 'Mutation' }
+  & { updateTransaction: (
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  ) }
 );
 
 export type FetchAccountsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -484,6 +496,57 @@ export function useDeleteTransactionMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteTransactionMutationHookResult = ReturnType<typeof useDeleteTransactionMutation>;
 export type DeleteTransactionMutationResult = Apollo.MutationResult<DeleteTransactionMutation>;
 export type DeleteTransactionMutationOptions = Apollo.BaseMutationOptions<DeleteTransactionMutation, DeleteTransactionMutationVariables>;
+export const UpdateTransactionDocument = gql`
+    mutation UpdateTransaction($input: TransactionInput!, $id: String!) {
+  updateTransaction(input: $input, id: $id) {
+    id
+    userId
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+  }
+}
+    `;
+export type UpdateTransactionMutationFn = Apollo.MutationFunction<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+
+/**
+ * __useUpdateTransactionMutation__
+ *
+ * To run a mutation, you first call `useUpdateTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTransactionMutation, { data, loading, error }] = useUpdateTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTransactionMutation, UpdateTransactionMutationVariables>(UpdateTransactionDocument, options);
+      }
+export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
+export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
+export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
 export const FetchAccountsDocument = gql`
     query fetchAccounts {
   getAccounts {
