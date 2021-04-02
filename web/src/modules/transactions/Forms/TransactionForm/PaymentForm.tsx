@@ -70,7 +70,7 @@ type Props = {
   isSubmitting: boolean;
 };
 
-function Form({
+function PaymentForm({
   onFormSubmit,
   categories = [],
   accounts = [],
@@ -212,4 +212,4 @@ function Form({
   );
 }
 
-export default Form;
+export default PaymentForm;

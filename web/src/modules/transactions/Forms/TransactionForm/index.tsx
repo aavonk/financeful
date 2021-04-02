@@ -6,7 +6,7 @@ import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
-import Form from './Form';
+import PaymentForm from './PaymentForm';
 import FormLoader from '../FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
@@ -69,7 +69,7 @@ function TransactionForm() {
           </Header>
           {submitting.loading && <Progressbar />}
           {data && (
-            <Form
+            <PaymentForm
               onFormSubmit={onFormSubmit}
               categories={data.getCategories}
               accounts={data.getAccounts}
