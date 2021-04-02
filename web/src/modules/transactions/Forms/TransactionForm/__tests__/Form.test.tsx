@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { Category, Account } from '@Generated/graphql';
+import { Category, Account, TransactionInput } from '@Generated/graphql';
 import AppThemeProvider from '@Context/theme';
 import Form from '../Form';
 import { TransactionFields } from '../../types';
@@ -145,14 +145,14 @@ describe('Submit the form', () => {
 
     fireEvent.click(submitButton);
 
-    const expectedResult: TransactionFields = {
+    const expectedResult: TransactionInput = {
       date: new Date(),
       payee: 'Some payee',
       description: 'Some description',
       accountId: ACCOUNTS[0].id,
       categoryId: CATEGORIES[0].id,
       type: 'EXPENSE',
-      amount: '100.00',
+      amount: 10000,
     };
     await waitFor(() => {
       expect(onFormSubmit).toHaveBeenCalledWith(expectedResult);
