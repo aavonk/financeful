@@ -25,7 +25,7 @@ function Alerts() {
   return (
     <>
       {alerts.map((alert: IAlert) => (
-        <AlertRoot key={alert.id} type={alert.type} role="alert">
+        <AlertRoot key={alert.id} $type={alert.type} role="alert">
           <AlertIcon>{renderIcon(alert.type)}</AlertIcon>
           <AlertMessage>{alert.message}</AlertMessage>
         </AlertRoot>

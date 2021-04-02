@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { IAlert } from '@Context/alert/alertContext';
 
-export const AlertRoot = styled.div<{ type: IAlert['type'] }>`
+export const AlertRoot = styled.div<{ $type: IAlert['type'] }>`
   position: fixed;
   left: 50%;
   right: auto;
@@ -21,17 +21,17 @@ export const AlertRoot = styled.div<{ type: IAlert['type'] }>`
   letter-spacing: 0.01071em;
   box-shadow: ${({ theme }) => theme.elevation.two};
   ${(props) =>
-    props.type === 'error' &&
+    props.$type === 'error' &&
     css`
       background-color: #f44336 !important;
     `}
   ${(props) =>
-    props.type === 'info' &&
+    props.$type === 'info' &&
     css`
       background-color: #2195f3 !important;
     `}
       ${(props) =>
-    props.type === 'success' &&
+    props.$type === 'success' &&
     css`
       background-color: #4caf50 !important;
     `}
