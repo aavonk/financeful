@@ -3,7 +3,6 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Category, Account, TransactionInput } from '@Generated/graphql';
 import AppThemeProvider from '@Context/theme';
 import Form from '../Form';
-import { TransactionFields } from '../../types';
 import userEvent from '@testing-library/user-event';
 import MockDate from 'mockdate';
 beforeEach(() => {
