@@ -22,15 +22,12 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended', // Make this the last element so prettier config overrides other formatting rules
   ],
   rules: {
-    // 'no-unused-vars': [
-    //   'error',
-    //   { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
-    // ],
     'prettier/prettier': [
       'error',
       { endOfLine: 'auto' },
@@ -39,6 +36,8 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',

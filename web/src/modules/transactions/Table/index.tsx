@@ -10,7 +10,7 @@ import {
 } from 'react-table';
 import { UpArrow, DownArrow } from '@Common/Icons';
 import Toolbar from './Toolbar/Toolbar';
-import TablePagination from './Pagination/';
+import TablePagination from './Pagination';
 import {
   TablePaper,
   TableRoot,

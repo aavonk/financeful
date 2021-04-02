@@ -3,17 +3,17 @@ import { useMemo } from 'react';
 import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
-import { parseMoney } from '@Lib/parseMoney';
+import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { useGetTransactionsQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
-import Table from '@Components/Table';
-import SelectTypeFilter from '@Components/Table/Toolbar/SelectTypeFilter';
-import TableSkeleton from '@Components/Table/TableSkeleton';
+import Table from '@Modules/transactions/Table';
+import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
+import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
+import TableActions from '@Modules/transactions/Table/Actions';
 import TransactionTypeCell from './components/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from './components/NoTransactions';
-import ActionsMenu from '@Components/Table/ActionsMenu';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();
@@ -50,7 +50,9 @@ function TransactionPage() {
         Header: () => <span className="align-right">Amount</span>,
         accessor: 'amount',
         Cell: ({ value }: Cell<Transaction>) => {
-          return <div className="number">{parseMoney(value)}</div>;
+          return (
+            <div className="number">{formatMoneyFromCentsToDollars(value)}</div>
+          );
         },
         Filter: SelectTypeFilter,
         disableFilters: true,
@@ -72,7 +74,9 @@ function TransactionPage() {
       },
       {
         Header: 'Actions',
-        Cell: () => <ActionsMenu />,
+        Cell: ({ row }: Cell<Transaction>) => (
+          <TableActions transaction={row.original} />
+        ),
       },
     ],
     [],

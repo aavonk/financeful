@@ -7,7 +7,8 @@ import Avatar from '@Common/Avatar';
 
 const StyledMenuList = styled(MenuList)`
   background: ${({ theme }) => theme.colors.darkTwo};
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
+    rgb(136 153 166 / 15%) 0px 0px 3px 1px;
   border-radius: 0.25rem;
   font-size: 1rem;
   text-align: left;
@@ -22,7 +23,7 @@ const StyledMenuItem = styled(MenuItem)`
   }
 
   & > span > svg {
-    margin-right: 0.35rem;
+    margin-right: 0.75rem;
     vertical-align: middle;
   }
 `;

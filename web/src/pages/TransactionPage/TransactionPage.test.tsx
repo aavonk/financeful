@@ -94,9 +94,7 @@ test('Component catches GraphQlError error and displays error UI', async () => {
   const { getByText } = render(component);
 
   await waitFor(() =>
-    expect(
-      getByText(/we ran into trouble loading transactions/i),
-    ).toBeInTheDocument(),
+    expect(getByText(/Oops! There seems to be a problem/i)).toBeInTheDocument(),
   );
 });
 
@@ -120,8 +118,6 @@ test('Component catches Network error and displays error UI', async () => {
   const { getByText } = render(component);
 
   await waitFor(() =>
-    expect(
-      getByText(/we ran into trouble loading transactions/i),
-    ).toBeInTheDocument(),
+    expect(getByText(/Oops! There seems to be a problem/i)).toBeInTheDocument(),
   );
 });

@@ -7,11 +7,14 @@ import {
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { Body, Footer } from './style';
-import { isValidCurrencyFormat } from '@Lib/isValidCurrency';
+import { Body, Footer } from '../style';
+import {
+  isValidCurrencyFormat,
+  convertInputAmountToCents,
+} from '@Lib/money-utils';
 import Button from '@Common/Button';
-import { TransactionFields } from './index';
-import { Category, Account } from '@Generated/graphql';
+import { TransactionFields } from '../types';
+import { Category, Account, TransactionInput } from '@Generated/graphql';
 
 const initialValue = {
   date: new Date(),
@@ -61,7 +64,7 @@ const validations = {
 };
 
 type Props = {
-  onFormSubmit: (values: TransactionFields) => void;
+  onFormSubmit: (values: TransactionInput) => void;
   categories: Category[] | undefined;
   accounts: Account[] | undefined;
   isSubmitting: boolean;
@@ -83,7 +86,12 @@ function Form({
   } = useForm<TransactionFields>({
     initialValue,
     validations,
-    onSubmit: () => onFormSubmit({ ...values, date: transDate }),
+    onSubmit: () =>
+      onFormSubmit({
+        ...values,
+        date: transDate,
+        amount: convertInputAmountToCents(values.amount),
+      }),
   });
   return (
     <>

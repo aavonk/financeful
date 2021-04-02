@@ -1,6 +1,6 @@
 import React from 'react';
 import Paper from '@Common/Paper';
-import TransactionForm from '@Components/TransactionForm';
+import TransactionForm from '@Modules/transactions/Forms/TransactionForm';
 import { EmptyContainer } from '../style';
 import { ViewError } from '@Components/ErrorViews';
 const NoTransactions: React.FC = () => {

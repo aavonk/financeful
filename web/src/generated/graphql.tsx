@@ -116,7 +116,7 @@ export type MutationDeleteTransactionArgs = {
 
 
 export type MutationUpdateTransactionArgs = {
-  input: Updates;
+  input: TransactionInput;
   id: Scalars['String'];
 };
 
@@ -153,35 +153,6 @@ export type TransactionInput = {
   accountId: Scalars['String'];
 };
 
-export type Updates = {
-  payee?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['String']>;
-  amount?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  categoryId?: Maybe<Scalars['String']>;
-};
-
-export type AddTransactionMutationVariables = Exact<{
-  input: TransactionInput;
-}>;
-
-
-export type AddTransactionMutation = (
-  { __typename?: 'Mutation' }
-  & { createTransaction: (
-    { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
-    & { category?: Maybe<(
-      { __typename?: 'Category' }
-      & Pick<Category, 'id' | 'name'>
-    )>, account?: Maybe<(
-      { __typename?: 'Account' }
-      & Pick<Account, 'id' | 'accountName'>
-    )> }
-  ) }
-);
-
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -206,6 +177,68 @@ export type RegisterMutation = (
   & { register: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'email' | 'displayName' | 'firstName' | 'token' | 'avatar' | 'createdAt'>
+  ) }
+);
+
+export type FetchUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FetchUserQuery = (
+  { __typename?: 'Query' }
+  & { getCurrentUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'>
+  ) }
+);
+
+export type AddTransactionMutationVariables = Exact<{
+  input: TransactionInput;
+}>;
+
+
+export type AddTransactionMutation = (
+  { __typename?: 'Mutation' }
+  & { createTransaction: (
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  ) }
+);
+
+export type DeleteTransactionMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteTransactionMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteTransaction'>
+);
+
+export type UpdateTransactionMutationVariables = Exact<{
+  input: TransactionInput;
+  id: Scalars['String'];
+}>;
+
+
+export type UpdateTransactionMutation = (
+  { __typename?: 'Mutation' }
+  & { updateTransaction: (
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
   ) }
 );
 
@@ -245,17 +278,6 @@ export type FetchCategoriesQuery = (
   )> }
 );
 
-export type FetchUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FetchUserQuery = (
-  { __typename?: 'Query' }
-  & { getCurrentUser: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'>
-  ) }
-);
-
 export type GetTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -275,56 +297,6 @@ export type GetTransactionsQuery = (
 );
 
 
-export const AddTransactionDocument = gql`
-    mutation addTransaction($input: TransactionInput!) {
-  createTransaction(input: $input) {
-    id
-    userId
-    payee
-    description
-    amount
-    category {
-      id
-      name
-    }
-    type
-    date
-    account {
-      id
-      accountName
-    }
-    isCashIn
-    isCashOut
-    isUncategorized
-  }
-}
-    `;
-export type AddTransactionMutationFn = Apollo.MutationFunction<AddTransactionMutation, AddTransactionMutationVariables>;
-
-/**
- * __useAddTransactionMutation__
- *
- * To run a mutation, you first call `useAddTransactionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddTransactionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addTransactionMutation, { data, loading, error }] = useAddTransactionMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAddTransactionMutation(baseOptions?: Apollo.MutationHookOptions<AddTransactionMutation, AddTransactionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddTransactionMutation, AddTransactionMutationVariables>(AddTransactionDocument, options);
-      }
-export type AddTransactionMutationHookResult = ReturnType<typeof useAddTransactionMutation>;
-export type AddTransactionMutationResult = Apollo.MutationResult<AddTransactionMutation>;
-export type AddTransactionMutationOptions = Apollo.BaseMutationOptions<AddTransactionMutation, AddTransactionMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -404,6 +376,177 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const FetchUserDocument = gql`
+    query fetchUser {
+  getCurrentUser {
+    id
+    firstName
+    displayName
+    email
+    avatar
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useFetchUserQuery__
+ *
+ * To run a query within a React component, call `useFetchUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFetchUserQuery(baseOptions?: Apollo.QueryHookOptions<FetchUserQuery, FetchUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchUserQuery, FetchUserQueryVariables>(FetchUserDocument, options);
+      }
+export function useFetchUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchUserQuery, FetchUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchUserQuery, FetchUserQueryVariables>(FetchUserDocument, options);
+        }
+export type FetchUserQueryHookResult = ReturnType<typeof useFetchUserQuery>;
+export type FetchUserLazyQueryHookResult = ReturnType<typeof useFetchUserLazyQuery>;
+export type FetchUserQueryResult = Apollo.QueryResult<FetchUserQuery, FetchUserQueryVariables>;
+export const AddTransactionDocument = gql`
+    mutation addTransaction($input: TransactionInput!) {
+  createTransaction(input: $input) {
+    id
+    userId
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+  }
+}
+    `;
+export type AddTransactionMutationFn = Apollo.MutationFunction<AddTransactionMutation, AddTransactionMutationVariables>;
+
+/**
+ * __useAddTransactionMutation__
+ *
+ * To run a mutation, you first call `useAddTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addTransactionMutation, { data, loading, error }] = useAddTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddTransactionMutation(baseOptions?: Apollo.MutationHookOptions<AddTransactionMutation, AddTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddTransactionMutation, AddTransactionMutationVariables>(AddTransactionDocument, options);
+      }
+export type AddTransactionMutationHookResult = ReturnType<typeof useAddTransactionMutation>;
+export type AddTransactionMutationResult = Apollo.MutationResult<AddTransactionMutation>;
+export type AddTransactionMutationOptions = Apollo.BaseMutationOptions<AddTransactionMutation, AddTransactionMutationVariables>;
+export const DeleteTransactionDocument = gql`
+    mutation deleteTransaction($id: String!) {
+  deleteTransaction(id: $id)
+}
+    `;
+export type DeleteTransactionMutationFn = Apollo.MutationFunction<DeleteTransactionMutation, DeleteTransactionMutationVariables>;
+
+/**
+ * __useDeleteTransactionMutation__
+ *
+ * To run a mutation, you first call `useDeleteTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTransactionMutation, { data, loading, error }] = useDeleteTransactionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteTransactionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTransactionMutation, DeleteTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTransactionMutation, DeleteTransactionMutationVariables>(DeleteTransactionDocument, options);
+      }
+export type DeleteTransactionMutationHookResult = ReturnType<typeof useDeleteTransactionMutation>;
+export type DeleteTransactionMutationResult = Apollo.MutationResult<DeleteTransactionMutation>;
+export type DeleteTransactionMutationOptions = Apollo.BaseMutationOptions<DeleteTransactionMutation, DeleteTransactionMutationVariables>;
+export const UpdateTransactionDocument = gql`
+    mutation UpdateTransaction($input: TransactionInput!, $id: String!) {
+  updateTransaction(input: $input, id: $id) {
+    id
+    userId
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+  }
+}
+    `;
+export type UpdateTransactionMutationFn = Apollo.MutationFunction<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+
+/**
+ * __useUpdateTransactionMutation__
+ *
+ * To run a mutation, you first call `useUpdateTransactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTransactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTransactionMutation, { data, loading, error }] = useUpdateTransactionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTransactionMutation, UpdateTransactionMutationVariables>(UpdateTransactionDocument, options);
+      }
+export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
+export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
+export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
 export const FetchAccountsDocument = gql`
     query fetchAccounts {
   getAccounts {
@@ -513,45 +656,6 @@ export function useFetchCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type FetchCategoriesQueryHookResult = ReturnType<typeof useFetchCategoriesQuery>;
 export type FetchCategoriesLazyQueryHookResult = ReturnType<typeof useFetchCategoriesLazyQuery>;
 export type FetchCategoriesQueryResult = Apollo.QueryResult<FetchCategoriesQuery, FetchCategoriesQueryVariables>;
-export const FetchUserDocument = gql`
-    query fetchUser {
-  getCurrentUser {
-    id
-    firstName
-    displayName
-    email
-    avatar
-    createdAt
-  }
-}
-    `;
-
-/**
- * __useFetchUserQuery__
- *
- * To run a query within a React component, call `useFetchUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useFetchUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFetchUserQuery({
- *   variables: {
- *   },
- * });
- */
-export function useFetchUserQuery(baseOptions?: Apollo.QueryHookOptions<FetchUserQuery, FetchUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchUserQuery, FetchUserQueryVariables>(FetchUserDocument, options);
-      }
-export function useFetchUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchUserQuery, FetchUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchUserQuery, FetchUserQueryVariables>(FetchUserDocument, options);
-        }
-export type FetchUserQueryHookResult = ReturnType<typeof useFetchUserQuery>;
-export type FetchUserLazyQueryHookResult = ReturnType<typeof useFetchUserLazyQuery>;
-export type FetchUserQueryResult = Apollo.QueryResult<FetchUserQuery, FetchUserQueryVariables>;
 export const GetTransactionsDocument = gql`
     query GetTransactions {
   getTransactions {

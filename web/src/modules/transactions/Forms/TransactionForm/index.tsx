@@ -1,31 +1,22 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@reach/dialog/styles.css';
 import { useState } from 'react';
-import { Overlay, Content, Header, Title } from './style';
+import { Overlay, Content, Header, Title } from '../style';
 import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import Form from './Form';
-import FormLoader from './FormLoader';
+import FormLoader from '../FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
   GetTransactionsDocument,
+  TransactionInput,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
 import Progressbar from '@Common/Progressbar';
-
-export interface TransactionFields {
-  date: Date;
-  accountId: string;
-  type: string;
-  payee: string;
-  description: string;
-  amount: string;
-  categoryId: string;
-}
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
@@ -37,15 +28,9 @@ function TransactionForm() {
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
-  const onFormSubmit = async (values: TransactionFields) => {
-    const newValues = {
-      ...values,
-      // replace the possible commas in the amount or the math won't be right
-      // e.g. 1,000.00 will be parsed to 100 rather than 1000
-      amount: parseFloat(values.amount.replace(/,/g, '')) * 100,
-    };
+  const onFormSubmit = async (values: TransactionInput) => {
     const response = await addTransactionMutation({
-      variables: { input: newValues },
+      variables: { input: values },
       update: (cache, { data: createTransaction }) => {
         cache.modify({
           fields: {

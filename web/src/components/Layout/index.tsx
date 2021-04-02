@@ -5,7 +5,7 @@ import PageContainer from '@Components/Layout/PageContainer';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const tabletAndDown = useMediaQuery('(max-width: 768px)');
 
   useEffect(() => {
