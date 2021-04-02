@@ -60,7 +60,7 @@ function Toast({ type, message }: AlertProps) {
   };
 
   return (
-    <AlertRoot $type={type} role="alert">
+    <AlertRoot $type={type} role="alert" data-testid="toast">
       <AlertIcon>{renderIcon(type)}</AlertIcon>
       <AlertMessage>{message}</AlertMessage>
     </AlertRoot>

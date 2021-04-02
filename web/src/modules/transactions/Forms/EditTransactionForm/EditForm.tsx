@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
+import Progressbar from '@Common/Progressbar';
 import { CloseIcon } from '@Common/Icons';
 import {
   Transaction,
@@ -33,6 +34,7 @@ type Props = {
   closeModal: () => void;
   onFormSubmit: (values: TransactionInput) => void;
   isFetching: boolean;
+  isSubmitting: boolean;
 };
 
 const validations = {
@@ -80,6 +82,7 @@ function EditForm({
   closeModal,
   onFormSubmit,
   isFetching,
+  isSubmitting,
 }: Props) {
   const [transDate, setTransDate] = useState(new Date(transaction.date));
   const initialValue = {
@@ -118,6 +121,7 @@ function EditForm({
           </IconButton>
           <Title>Edit transaction</Title>
         </Header>
+        {isSubmitting && <Progressbar />}
         {isFetching ? (
           <FormLoader />
         ) : (
