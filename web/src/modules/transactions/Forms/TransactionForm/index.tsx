@@ -17,7 +17,6 @@ import {
 import { useAlert } from '@Context/alert/alertContext';
 import { ViewError } from '@Components/ErrorViews';
 import Progressbar from '@Common/Progressbar';
-import { TransactionFields } from '../types';
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();

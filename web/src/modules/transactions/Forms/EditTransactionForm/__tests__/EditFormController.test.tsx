@@ -1,11 +1,5 @@
 import { ReactElement } from 'react';
-import {
-  render,
-  waitFor,
-  screen,
-  fireEvent,
-  findByText,
-} from '@testing-library/react';
+import { render, waitFor, fireEvent } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import AppThemeProvider from '@Context/theme';
 import { AlertProvider } from '@Context/alert/alertContext';
