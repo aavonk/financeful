@@ -86,7 +86,7 @@ export class TransactionResolver {
       data: {
         userId: user.id,
         payee: input.payee,
-        amount: input.amount,
+        amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
         description: input.description,
         date: input.date,
         type: input.type,
@@ -94,6 +94,7 @@ export class TransactionResolver {
         categoryId: input.categoryId ? input.categoryId : null,
         isCashIn: input.type === 'INCOME',
         isCashOut: input.type === 'EXPENSE',
+        isTransfer: false,
         isUncategorized: !input.categoryId,
       },
       include: {

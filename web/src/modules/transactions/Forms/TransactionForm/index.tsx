@@ -17,7 +17,7 @@ import TransferForm from './TransferForm';
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
-  const [addTransactionMutation, submitting] = useAddTransactionMutation();
+  const [addTransaction, submitting] = useAddTransactionMutation();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
@@ -26,7 +26,7 @@ function TransactionForm() {
   const close = () => setShowDialog(false);
 
   const onPaymentSubmit = async (values: TransactionInput) => {
-    const response = await addTransactionMutation({
+    const response = await addTransaction({
       variables: { input: values },
       update: (cache, { data: createTransaction }) => {
         cache.modify({
@@ -71,7 +71,11 @@ function TransactionForm() {
               />
             </Form.Payment>
             <Form.Transfer>
-              <TransferForm accounts={data?.getAccounts} isSubmitting={false} />
+              <TransferForm
+                accounts={data?.getAccounts}
+                isSubmitting={false}
+                categories={data?.getCategories}
+              />
               {/* Remember to change isSubmitting prop */}
             </Form.Transfer>
             <Form.ErrorView />

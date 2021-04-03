@@ -58,6 +58,7 @@ export type Transaction = {
   account?: Maybe<Account>;
   isCashIn?: Maybe<Scalars['Boolean']>;
   isCashOut?: Maybe<Scalars['Boolean']>;
+  isTransfer?: Maybe<Scalars['Boolean']>;
   isUncategorized?: Maybe<Scalars['Boolean']>;
 };
 

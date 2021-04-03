@@ -18,10 +18,15 @@ import Progressbar from '@Common/Progressbar';
 
 interface FormProps {
   accounts: Account[] | undefined;
+  categories: Category[] | undefined;
   isSubmitting: boolean;
 }
 
-function TransferForm({ accounts = [], isSubmitting }: FormProps) {
+function TransferForm({
+  accounts = [],
+  categories = [],
+  isSubmitting,
+}: FormProps) {
   const [transferDate, setTransferDate] = React.useState(new Date());
   const [fromAccount, setFromAccount] = React.useState('');
   return (
@@ -72,6 +77,24 @@ function TransferForm({ accounts = [], isSubmitting }: FormProps) {
               {accounts.map((account: Account) => (
                 <option key={account.id} value={account.id}>
                   {account.accountName}
+                </option>
+              ))}
+            </BorderedSelect>
+          </Row>
+          <Row>
+            <BorderedSelect
+              value=""
+              onChange={() => console.log('as')}
+              label="Category"
+            >
+              <option value="" disabled></option>
+              {categories.map((cat: Category) => (
+                <option
+                  key={cat.id}
+                  value={cat.id}
+                  data-testid="category-option"
+                >
+                  {cat.name}
                 </option>
               ))}
             </BorderedSelect>

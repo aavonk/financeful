@@ -1,7 +1,6 @@
 query GetTransactions {
   getTransactions {
     id
-    userId
     payee
     description
     amount
