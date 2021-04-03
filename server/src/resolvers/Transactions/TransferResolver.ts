@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { Resolver, Authorized, Mutation, Ctx, Arg } from 'type-graphql';
+import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { Transaction } from '../../types/Transaction';
 import { Account } from '../../types/Account';
 import { Context } from '../../types/Context';
@@ -9,7 +10,6 @@ import { TransferInput } from './transaction.types';
 export class TransferResolver {
   @Authorized()
   @Mutation(() => [Transaction, Transaction])
-  // @Mutation(() => [Account])
   async createTransfer(
     @Arg('input') input: TransferInput,
     @Ctx() { user, prisma }: Context,
@@ -99,5 +99,68 @@ export class TransferResolver {
     ]);
 
     return results;
+  }
+
+  @Authorized()
+  @Mutation(() => [Transaction, Transaction])
+  async updateTransfer(
+    @Arg('transferId') transferId: string,
+    @Arg('input') input: TransferInput,
+    @Ctx() context: Context,
+  ): Promise<Transaction[]> {
+    //delete the transactions with the incoming transferId and create a new Transfer
+    const { prisma } = context;
+    await prisma.transaction.deleteMany({
+      where: {
+        transferId: transferId,
+      },
+    });
+
+    const transactions = await this.createTransfer(input, context);
+
+    if (!transactions || transactions.length === 0) {
+      throw new Error('Unable to create new transfer');
+    }
+
+    return transactions;
+  }
+
+  @Authorized()
+  @Mutation(() => String)
+  async deleteTransfer(
+    @Arg('transferId') transferId: string,
+    @Ctx() { user, prisma }: Context,
+  ): Promise<string> {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId: user.id,
+        transferId,
+      },
+    });
+
+    if (!transactions || !transactions.length) {
+      throw new UserInputError('No transactions found', {
+        transferId: 'Not valid',
+      });
+    }
+
+    const transactionUser = transactions.map(
+      (transaction) => transaction.userId,
+    )[0];
+
+    if (user.id !== transactionUser) {
+      throw new AuthenticationError(
+        'You are unauthorized to perform this action',
+      );
+    }
+
+    await prisma.transaction.deleteMany({
+      where: {
+        userId: user.id,
+        transferId,
+      },
+    });
+
+    return 'Successfully Deleted Transfer';
   }
 }
