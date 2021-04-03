@@ -13,6 +13,8 @@ import {
   convertInputAmountToCents,
 } from '@Lib/money-utils';
 import Button from '@Common/Button';
+import Progressbar from '@Common/Progressbar';
+
 import { TransactionFields } from '../types';
 import { Category, Account, TransactionInput } from '@Generated/graphql';
 
@@ -95,6 +97,7 @@ function PaymentForm({
   });
   return (
     <>
+      {isSubmitting && <Progressbar />}
       <form onSubmit={handleSubmit}>
         <Body>
           <Row>

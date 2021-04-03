@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@reach/dialog/styles.css';
 import { useState } from 'react';
-import { Overlay, Content, Header, Title } from '../style';
-import IconButton from '@Common/IconButton';
+import { Overlay, Content } from '../style';
 import Button from '@Common/Button';
-import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import PaymentForm from './PaymentForm';
-import FormLoader from '../FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
   useAddTransactionMutation,
@@ -15,8 +12,8 @@ import {
   TransactionInput,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
-import { ViewError } from '@Components/ErrorViews';
-import Progressbar from '@Common/Progressbar';
+import { Form } from './FormProvider';
+import TransferForm from './TransferForm';
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
@@ -28,7 +25,7 @@ function TransactionForm() {
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
-  const onFormSubmit = async (values: TransactionInput) => {
+  const onPaymentSubmit = async (values: TransactionInput) => {
     const response = await addTransactionMutation({
       variables: { input: values },
       update: (cache, { data: createTransaction }) => {
@@ -61,30 +58,24 @@ function TransactionForm() {
       </Button>
       <Overlay isOpen={showDialog} onDismiss={close}>
         <Content aria-label="Add transaction form">
-          <Header>
-            <IconButton blue small onClick={close} ariaText="Close">
-              <CloseIcon />
-            </IconButton>
-            <Title>Add transaction</Title>
-          </Header>
-          {submitting.loading && <Progressbar />}
-          {data && (
-            <PaymentForm
-              onFormSubmit={onFormSubmit}
-              categories={data.getCategories}
-              accounts={data.getAccounts}
-              isSubmitting={submitting.loading}
-            />
-          )}
-          {loading && <FormLoader />}
-          {error && (
-            <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-              <ViewError
-                reload
-                subheading="We ran into trouble loading your accounts and categories. If you think something has gone wrong, please contact us."
+          <Form isFetchingData={loading} fetchError={error}>
+            <Form.Title onClose={close} />
+            <Form.Loader />
+            <Form.Toggle />
+            <Form.Payment>
+              <PaymentForm
+                onFormSubmit={onPaymentSubmit}
+                categories={data?.getCategories}
+                accounts={data?.getAccounts}
+                isSubmitting={submitting.loading}
               />
-            </div>
-          )}
+            </Form.Payment>
+            <Form.Transfer>
+              <TransferForm accounts={data?.getAccounts} isSubmitting={false} />
+              {/* Remember to change isSubmitting prop */}
+            </Form.Transfer>
+            <Form.ErrorView />
+          </Form>
         </Content>
       </Overlay>
     </div>
