@@ -28,11 +28,7 @@ module.exports = {
     'plugin:prettier/recommended', // Make this the last element so prettier config overrides other formatting rules
   ],
   rules: {
-    'prettier/prettier': [
-      'error',
-      { endOfLine: 'auto' },
-      { usePrettierrc: true },
-    ],
+    'prettier/prettier': ['warn', { usePrettierrc: true }],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
