@@ -39,9 +39,16 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
     }
   };
 
+  const handleEditRouting = () => {
+    console.log(transaction);
+    if (transaction.isTransfer) return;
+
+    setShowEditForm(true);
+  };
+
   return (
     <>
-      <ActionsMenu onDelete={onDelete} onEditClick={() => setShowEditForm(true)} />
+      <ActionsMenu onDelete={onDelete} onEditClick={handleEditRouting} />
       <EditFormController
         transaction={transaction}
         closeModal={() => setShowEditForm(false)}
