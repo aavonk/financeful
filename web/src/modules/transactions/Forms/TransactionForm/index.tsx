@@ -15,10 +15,13 @@ import {
 import { useAlert } from '@Context/alert/alertContext';
 import { Form } from './FormProvider';
 import TransferForm from './TransferForm';
+import { useCreateTransfer } from '../../mutations/useCreateTransfer';
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const [addTransaction, submitting] = useAddTransactionMutation();
+  const { mutate: createTransfer, loading: submittingTransfer } = useCreateTransfer();
+
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
@@ -52,8 +55,16 @@ function TransactionForm() {
     }
   };
 
-  const onTransferSubmit = (values: TransferInput) => {
-    console.log(values);
+  const onTransferSubmit = async (values: TransferInput) => {
+    const response = await createTransfer({ variables: { input: values } });
+
+    if (response.errors) {
+      showAlert('There was an error creating your transfer', 'error', 5000);
+    }
+
+    if (response.data?.createTransfer) {
+      showAlert('Transfer successfully added', 'info');
+    }
   };
 
   return (

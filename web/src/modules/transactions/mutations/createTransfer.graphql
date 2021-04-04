@@ -1,0 +1,23 @@
+mutation CreateTransfer($input: TransferInput!) {
+  createTransfer(input: $input) {
+    id
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isTransfer
+    isUncategorized
+    transferId
+  }
+}

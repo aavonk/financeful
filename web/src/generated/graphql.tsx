@@ -241,6 +241,26 @@ export type AddTransactionMutation = (
   ) }
 );
 
+export type CreateTransferMutationVariables = Exact<{
+  input: TransferInput;
+}>;
+
+
+export type CreateTransferMutation = (
+  { __typename?: 'Mutation' }
+  & { createTransfer: Array<(
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isTransfer' | 'isUncategorized' | 'transferId'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  )> }
+);
+
 export type DeleteTransactionMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -495,6 +515,57 @@ export function useAddTransactionMutation(baseOptions?: Apollo.MutationHookOptio
 export type AddTransactionMutationHookResult = ReturnType<typeof useAddTransactionMutation>;
 export type AddTransactionMutationResult = Apollo.MutationResult<AddTransactionMutation>;
 export type AddTransactionMutationOptions = Apollo.BaseMutationOptions<AddTransactionMutation, AddTransactionMutationVariables>;
+export const CreateTransferDocument = gql`
+    mutation CreateTransfer($input: TransferInput!) {
+  createTransfer(input: $input) {
+    id
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isTransfer
+    isUncategorized
+    transferId
+  }
+}
+    `;
+export type CreateTransferMutationFn = Apollo.MutationFunction<CreateTransferMutation, CreateTransferMutationVariables>;
+
+/**
+ * __useCreateTransferMutation__
+ *
+ * To run a mutation, you first call `useCreateTransferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTransferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTransferMutation, { data, loading, error }] = useCreateTransferMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTransferMutation(baseOptions?: Apollo.MutationHookOptions<CreateTransferMutation, CreateTransferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTransferMutation, CreateTransferMutationVariables>(CreateTransferDocument, options);
+      }
+export type CreateTransferMutationHookResult = ReturnType<typeof useCreateTransferMutation>;
+export type CreateTransferMutationResult = Apollo.MutationResult<CreateTransferMutation>;
+export type CreateTransferMutationOptions = Apollo.BaseMutationOptions<CreateTransferMutation, CreateTransferMutationVariables>;
 export const DeleteTransactionDocument = gql`
     mutation deleteTransaction($id: String!) {
   deleteTransaction(id: $id)
