@@ -5,10 +5,7 @@ import {
   ErrorMessage,
   BorderedDatePicker,
 } from '@Common/FormElements';
-import {
-  isValidCurrencyFormat,
-  convertInputAmountToCents,
-} from '@Lib/money-utils';
+import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-utils';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
@@ -22,13 +19,28 @@ interface FormProps {
   isSubmitting: boolean;
 }
 
-function TransferForm({
-  accounts = [],
-  categories = [],
-  isSubmitting,
-}: FormProps) {
+interface FormFields {
+  amount: string;
+  fromAccount: string;
+  toAccount: string;
+  description: string;
+  categoryId: string;
+}
+const initialState = {
+  amount: '',
+  fromAccount: '',
+  toAccount: '',
+  categoryId: '',
+  description: '',
+};
+
+function TransferForm({ accounts = [], categories = [], isSubmitting }: FormProps) {
   const [transferDate, setTransferDate] = React.useState(new Date());
   const [fromAccount, setFromAccount] = React.useState('');
+
+  const { values, handleChange, handleSubmit, handleTrim, errors } = useForm<FormFields>({
+    initialValue: initialState,
+  });
   return (
     <>
       {isSubmitting && <Progressbar />}
@@ -82,29 +94,17 @@ function TransferForm({
             </BorderedSelect>
           </Row>
           <Row>
-            <BorderedSelect
-              value=""
-              onChange={() => console.log('as')}
-              label="Category"
-            >
+            <BorderedSelect value="" onChange={() => console.log('as')} label="Category">
               <option value="" disabled></option>
               {categories.map((cat: Category) => (
-                <option
-                  key={cat.id}
-                  value={cat.id}
-                  data-testid="category-option"
-                >
+                <option key={cat.id} value={cat.id} data-testid="category-option">
                   {cat.name}
                 </option>
               ))}
             </BorderedSelect>
           </Row>
           <Row>
-            <BorderedInput
-              type="text"
-              value="hi"
-              onChange={() => console.log('as')}
-            >
+            <BorderedInput type="text" value="hi" onChange={() => console.log('as')}>
               Description
             </BorderedInput>
           </Row>

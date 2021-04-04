@@ -4,7 +4,6 @@ import React, {
   createContext,
   useMemo,
   useCallback,
-  useEffect,
 } from 'react';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
