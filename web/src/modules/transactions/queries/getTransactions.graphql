@@ -18,5 +18,7 @@ query GetTransactions {
     isCashIn
     isCashOut
     isUncategorized
+    isTransfer
+    transferId
   }
 }
