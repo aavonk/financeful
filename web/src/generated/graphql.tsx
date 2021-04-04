@@ -335,7 +335,7 @@ export type GetTransactionsQuery = (
   { __typename?: 'Query' }
   & { getTransactions?: Maybe<Array<(
     { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized' | 'isTransfer' | 'transferId'>
     & { category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'id' | 'name'>
@@ -778,6 +778,8 @@ export const GetTransactionsDocument = gql`
     isCashIn
     isCashOut
     isUncategorized
+    isTransfer
+    transferId
   }
 }
     `;
