@@ -9,7 +9,7 @@ import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-uti
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
-import { Category, Account } from '@Generated/graphql';
+import { Category, Account, TransferInput } from '@Generated/graphql';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
 
@@ -17,6 +17,7 @@ interface FormProps {
   accounts: Account[] | undefined;
   categories: Category[] | undefined;
   isSubmitting: boolean;
+  onFormSubmit: (values: TransferInput) => void;
 }
 
 interface FormFields {
@@ -34,17 +35,56 @@ const initialState = {
   description: '',
 };
 
-function TransferForm({ accounts = [], categories = [], isSubmitting }: FormProps) {
+const formValidations = {
+  amount: {
+    required: {
+      value: true,
+      message: 'Please add an amount',
+    },
+    custom: {
+      isValid: (value: string) => isValidCurrencyFormat(value),
+      message: 'Must be in $1,000.00 format',
+    },
+  },
+  fromAccount: {
+    required: {
+      value: true,
+      message: 'This field is required',
+    },
+  },
+  toAccount: {
+    required: {
+      value: true,
+      message: 'This field is required',
+    },
+  },
+};
+
+function TransferForm({
+  accounts = [],
+  categories = [],
+  isSubmitting,
+  onFormSubmit,
+}: FormProps) {
   const [transferDate, setTransferDate] = React.useState(new Date());
-  const [fromAccount, setFromAccount] = React.useState('');
 
   const { values, handleChange, handleSubmit, handleTrim, errors } = useForm<FormFields>({
     initialValue: initialState,
+    validations: formValidations,
+    onSubmit: () => {
+      const formattedValues: TransferInput = {
+        ...values,
+        amount: convertInputAmountToCents(values.amount),
+        date: transferDate,
+      };
+
+      onFormSubmit(formattedValues);
+    },
   });
   return (
     <>
       {isSubmitting && <Progressbar />}
-      <form>
+      <form onSubmit={handleSubmit}>
         <Body>
           <Row>
             <Col width="50%">
@@ -54,21 +94,22 @@ function TransferForm({ accounts = [], categories = [], isSubmitting }: FormProp
                 label="Date *"
               />
             </Col>
-            {/* Dont forget to add Error messages */}
             <Col width="50%">
               <BorderedInput
                 type="text"
-                value="100.00"
-                onChange={() => console.log('df')}
+                value={values.amount}
+                onChange={handleChange('amount')}
+                onBlur={handleTrim('amount')}
               >
                 Amount
               </BorderedInput>
+              {errors?.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
             </Col>
           </Row>
           <Row>
             <BorderedSelect
-              value=""
-              onChange={() => console.log('asf')}
+              value={values.fromAccount}
+              onChange={handleChange('fromAccount')}
               label="From Account *"
             >
               <option disabled value=""></option>
@@ -78,11 +119,12 @@ function TransferForm({ accounts = [], categories = [], isSubmitting }: FormProp
                 </option>
               ))}
             </BorderedSelect>
+            {errors?.fromAccount && <ErrorMessage>{errors.fromAccount}</ErrorMessage>}
           </Row>
           <Row>
             <BorderedSelect
-              value=""
-              onChange={() => console.log('asf')}
+              value={values.toAccount}
+              onChange={handleChange('toAccount')}
               label="To Account *"
             >
               <option disabled value=""></option>
@@ -92,9 +134,14 @@ function TransferForm({ accounts = [], categories = [], isSubmitting }: FormProp
                 </option>
               ))}
             </BorderedSelect>
+            {errors?.toAccount && <ErrorMessage>{errors.toAccount}</ErrorMessage>}
           </Row>
           <Row>
-            <BorderedSelect value="" onChange={() => console.log('as')} label="Category">
+            <BorderedSelect
+              value={values.categoryId}
+              onChange={handleChange('categoryId')}
+              label="Category"
+            >
               <option value="" disabled></option>
               {categories.map((cat: Category) => (
                 <option key={cat.id} value={cat.id} data-testid="category-option">
@@ -104,7 +151,12 @@ function TransferForm({ accounts = [], categories = [], isSubmitting }: FormProp
             </BorderedSelect>
           </Row>
           <Row>
-            <BorderedInput type="text" value="hi" onChange={() => console.log('as')}>
+            <BorderedInput
+              type="text"
+              value={values.description}
+              onChange={handleChange('description')}
+              onBlur={handleTrim('description')}
+            >
               Description
             </BorderedInput>
           </Row>

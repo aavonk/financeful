@@ -58,8 +58,9 @@ export type Transaction = {
   account?: Maybe<Account>;
   isCashIn?: Maybe<Scalars['Boolean']>;
   isCashOut?: Maybe<Scalars['Boolean']>;
-  isTransfer?: Maybe<Scalars['Boolean']>;
   isUncategorized?: Maybe<Scalars['Boolean']>;
+  isTransfer?: Maybe<Scalars['Boolean']>;
+  transferId?: Maybe<Scalars['String']>;
 };
 
 export type Category = {
@@ -89,6 +90,9 @@ export type Mutation = {
   createTransaction: Transaction;
   deleteTransaction: Scalars['String'];
   updateTransaction: Transaction;
+  createTransfer: Array<Transaction>;
+  updateTransfer: Array<Transaction>;
+  deleteTransfer: Scalars['String'];
   createCategory: Category;
   updateCategory: Category;
   deleteCategory: Scalars['String'];
@@ -122,6 +126,22 @@ export type MutationUpdateTransactionArgs = {
 };
 
 
+export type MutationCreateTransferArgs = {
+  input: TransferInput;
+};
+
+
+export type MutationUpdateTransferArgs = {
+  input: TransferInput;
+  transferId: Scalars['String'];
+};
+
+
+export type MutationDeleteTransferArgs = {
+  transferId: Scalars['String'];
+};
+
+
 export type MutationCreateCategoryArgs = {
   name: Scalars['String'];
 };
@@ -152,6 +172,15 @@ export type TransactionInput = {
   categoryId?: Maybe<Scalars['String']>;
   type: Scalars['String'];
   accountId: Scalars['String'];
+};
+
+export type TransferInput = {
+  date: Scalars['DateTime'];
+  amount: Scalars['Int'];
+  fromAccount: Scalars['ID'];
+  toAccount: Scalars['ID'];
+  description?: Maybe<Scalars['String']>;
+  categoryId?: Maybe<Scalars['ID']>;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -286,7 +315,7 @@ export type GetTransactionsQuery = (
   { __typename?: 'Query' }
   & { getTransactions?: Maybe<Array<(
     { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
     & { category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'id' | 'name'>
@@ -661,7 +690,6 @@ export const GetTransactionsDocument = gql`
     query GetTransactions {
   getTransactions {
     id
-    userId
     payee
     description
     amount

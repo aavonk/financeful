@@ -8,10 +8,7 @@ import {
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
-import {
-  isValidCurrencyFormat,
-  convertInputAmountToCents,
-} from '@Lib/money-utils';
+import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-utils';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
 
@@ -118,18 +115,12 @@ function PaymentForm({
               >
                 <option value="" disabled></option>
                 {accounts.map((acct) => (
-                  <option
-                    key={acct.id}
-                    value={acct.id}
-                    data-testid="acct-option"
-                  >
+                  <option key={acct.id} value={acct.id} data-testid="acct-option">
                     {acct.accountName}
                   </option>
                 ))}
               </BorderedSelect>
-              <ErrorMessage>
-                {errors.accountId ? errors.accountId : null}
-              </ErrorMessage>
+              <ErrorMessage>{errors.accountId ? errors.accountId : null}</ErrorMessage>
             </Col>
             <Col width="37.5%">
               <BorderedSelect
@@ -181,9 +172,7 @@ function PaymentForm({
               >
                 Amount *
               </BorderedInput>
-              <ErrorMessage>
-                {errors.amount ? errors.amount : null}
-              </ErrorMessage>
+              <ErrorMessage>{errors.amount ? errors.amount : null}</ErrorMessage>
             </Col>
             <Col width="50%">
               <BorderedSelect
@@ -193,11 +182,7 @@ function PaymentForm({
               >
                 <option value="" disabled></option>
                 {categories.map((cat) => (
-                  <option
-                    key={cat.id}
-                    value={cat.id}
-                    data-testid="category-option"
-                  >
+                  <option key={cat.id} value={cat.id} data-testid="category-option">
                     {cat.name}
                   </option>
                 ))}

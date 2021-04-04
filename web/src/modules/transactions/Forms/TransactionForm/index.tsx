@@ -10,6 +10,7 @@ import {
   useAddTransactionMutation,
   GetTransactionsDocument,
   TransactionInput,
+  TransferInput,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { Form } from './FormProvider';
@@ -51,6 +52,10 @@ function TransactionForm() {
     }
   };
 
+  const onTransferSubmit = (values: TransferInput) => {
+    console.log(values);
+  };
+
   return (
     <div>
       <Button onClick={open} variant="primary">
@@ -72,6 +77,7 @@ function TransactionForm() {
             </Form.Payment>
             <Form.Transfer>
               <TransferForm
+                onFormSubmit={onTransferSubmit}
                 accounts={data?.getAccounts}
                 isSubmitting={false}
                 categories={data?.getCategories}
