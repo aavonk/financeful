@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Switch, { ReactSwitchProps } from 'react-switch';
 import { theme } from '@Constants/theme';
 
-interface ToggleProps {
+interface ToggleProps extends ReactSwitchProps {
   ariaLabel: string;
   uncheckedLabel: string;
   checkedLabel: string;
@@ -25,17 +25,18 @@ const ToggleLabel = styled.div<LabelProps>`
   margin-left: ${({ $left }) => ($left ? '40px' : '0')};
 `;
 
-function ToggleSwitch({ ariaLabel, uncheckedLabel, checkedLabel }: ToggleProps) {
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = (nextChecked: boolean) => {
-    setChecked(nextChecked);
-  };
+function ToggleSwitch({
+  ariaLabel,
+  uncheckedLabel,
+  checkedLabel,
+  checked,
+  onChange,
+}: ToggleProps) {
   return (
     <Switch
       checked={checked}
-      onChange={handleChange}
-      onColor={theme.colors.darkTwo}
+      onChange={onChange}
+      onColor="#323d4d"
       offColor="#242c37"
       onHandleColor={theme.colors.primary}
       height={20}

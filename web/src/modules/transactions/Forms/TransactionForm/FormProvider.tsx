@@ -1,17 +1,12 @@
-import React, {
-  useState,
-  useContext,
-  createContext,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useState, useContext, createContext, useMemo, useCallback } from 'react';
+import { ApolloError } from '@apollo/client';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
+import ToggleSwitch from '@Common/ToggleSwitch';
 
-import { Header, Title as StyledTitle } from '../style';
+import { Header, Title as StyledTitle, HeaderLeft, HeaderRight } from '../style';
 import FormLoader from '../FormLoader';
 import { ViewError } from '@Components/ErrorViews';
-import { ApolloError } from '@apollo/client';
 
 interface ContextType {
   showPayment: boolean;
@@ -25,9 +20,7 @@ const FormContext = createContext<ContextType | undefined>(undefined);
 function useFormContext() {
   const context = useContext(FormContext);
   if (!context) {
-    throw new Error(
-      'useFormContext must be used withing TransactionForm Provider',
-    );
+    throw new Error('useFormContext must be used withing TransactionForm Provider');
   }
   return context;
 }
@@ -36,7 +29,6 @@ interface StaticComponents {
   Title: React.FC<TitleProps>;
   Payment: React.FC;
   Transfer: React.FC;
-  Toggle: React.FC;
   Loader: React.FC;
   ErrorView: React.FC;
 }
@@ -71,16 +63,25 @@ interface TitleProps {
   onClose: () => void;
 }
 const Title: React.FC<TitleProps> = ({ onClose }) => {
-  const { showPayment } = useFormContext();
+  const { showPayment, toggle } = useFormContext();
 
   return (
     <Header>
-      <IconButton blue small onClick={onClose} ariaText="Close">
-        <CloseIcon />
-      </IconButton>
-      <StyledTitle>
-        {showPayment ? 'Add transaction' : 'Add transfer'}
-      </StyledTitle>
+      <HeaderLeft>
+        <IconButton blue small onClick={onClose} ariaText="Close">
+          <CloseIcon />
+        </IconButton>
+        <StyledTitle>{showPayment ? 'Add transaction' : 'Add transfer'}</StyledTitle>
+      </HeaderLeft>
+      <HeaderRight>
+        <ToggleSwitch
+          ariaLabel={showPayment ? 'Show transfer' : 'Show transaction'}
+          checked={!showPayment}
+          onChange={toggle}
+          uncheckedLabel="Transfer"
+          checkedLabel="Transaction"
+        />
+      </HeaderRight>
     </Header>
   );
 };
@@ -136,23 +137,9 @@ const Transfer: React.FC = ({ children }) => {
 
 //------------------------------------------------------------------------------
 
-const Toggle: React.FC = () => {
-  const { showPayment, toggle, loading } = useFormContext();
-
-  if (loading) {
-    return null;
-  }
-  return (
-    <button onClick={toggle}>
-      {showPayment ? 'Add transfer' : 'Add payment'}
-    </button>
-  );
-};
-
 Form.Title = Title;
 Form.Payment = Payment;
 Form.Transfer = Transfer;
-Form.Toggle = Toggle;
 Form.Loader = Loader;
 Form.ErrorView = ErrorView;
 

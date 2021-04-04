@@ -39,16 +39,28 @@ export const Header = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 100%;
   z-index: 2;
   position: sticky;
   top: 0;
+  padding: 0 0.825rem;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   & > button {
     margin-left: 1rem;
   }
+`;
+
+export const HeaderLeft = styled.div`
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const HeaderRight = styled.div`
+  flex: 0 0 auto;
 `;
 
 export const Title = styled.h2`

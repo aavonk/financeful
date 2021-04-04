@@ -66,7 +66,6 @@ function TransactionForm() {
           <Form isFetchingData={loading} fetchError={error}>
             <Form.Title onClose={close} />
             <Form.Loader />
-            <Form.Toggle />
             <Form.Payment>
               <PaymentForm
                 onFormSubmit={onPaymentSubmit}

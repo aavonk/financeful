@@ -1,14 +1,12 @@
-import ToggleSwitch from '@Common/ToggleSwitch';
-
 function DashboardPage() {
   return (
     <>
       <div>Dashboard page yay</div>;
-      <ToggleSwitch
+      {/* <ToggleSwitch
         ariaLabel="Testing Switch"
         uncheckedLabel="Transfer"
         checkedLabel="Transaction"
-      />
+      /> */}
     </>
   );
 }
