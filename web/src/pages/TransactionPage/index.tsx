@@ -50,9 +50,7 @@ function TransactionPage() {
         Header: () => <span className="align-right">Amount</span>,
         accessor: 'amount',
         Cell: ({ value }: Cell<Transaction>) => {
-          return (
-            <div className="number">{formatMoneyFromCentsToDollars(value)}</div>
-          );
+          return <div className="number">{formatMoneyFromCentsToDollars(value)}</div>;
         },
         Filter: SelectTypeFilter,
         disableFilters: true,
@@ -74,9 +72,7 @@ function TransactionPage() {
       },
       {
         Header: 'Actions',
-        Cell: ({ row }: Cell<Transaction>) => (
-          <TableActions transaction={row.original} />
-        ),
+        Cell: ({ row }: Cell<Transaction>) => <TableActions transaction={row.original} />,
       },
     ],
     [],

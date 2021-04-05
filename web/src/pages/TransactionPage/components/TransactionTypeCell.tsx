@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
-import { UpArrowCircle, DownArrowCircle } from '@Common/Icons';
+import { UpArrowCircle, DownArrowCircle, RepeatingArrow } from '@Common/Icons';
 import { formatTransactionType } from '@Lib/money-utils';
 import { FlexRow } from '@Globals/index';
 
-type Props = {
-  type: string;
+type TransactionTypes = {
+  type: 'INCOME' | 'EXPENSE' | 'TRANSFER';
 };
 
-const ArrowContainer = styled.span<{ type?: string }>`
+const ArrowContainer = styled.span<{ type?: TransactionTypes['type'] }>`
   height: 1.875rem;
   width: 1.875rem;
   font-size: 1rem;
@@ -32,13 +32,33 @@ const ArrowContainer = styled.span<{ type?: string }>`
       background-color: rgba(43, 193, 85, 0.08);
       color: #2bc155;
     `};
+  ${({ type }) =>
+    type === 'TRANSFER' &&
+    css`
+      background-color: rgba(30, 136, 229, 0.08);
+      color: ${({ theme }) => theme.colors.primary};
+    `};
 `;
+//
 
-function TransactionTypeCell({ type }: Props) {
+const renderIcon = (type: TransactionTypes['type']) => {
+  switch (type) {
+    case 'INCOME':
+      return <DownArrowCircle />;
+    case 'EXPENSE':
+      return <UpArrowCircle />;
+    case 'TRANSFER':
+      return <RepeatingArrow />;
+    default:
+      throw new Error('Unhandled transaction type in <TransactionTypeCell />');
+  }
+};
+
+function TransactionTypeCell({ type }: TransactionTypes) {
   return (
     <FlexRow>
       <ArrowContainer aria-hidden="true" type={type}>
-        {type === 'EXPENSE' ? <UpArrowCircle /> : <DownArrowCircle />}
+        {renderIcon(type)}
       </ArrowContainer>
       <span>{formatTransactionType(type)}</span>
     </FlexRow>
