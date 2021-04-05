@@ -2,9 +2,12 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   colors: {
-    background: '#161717',
-    darkOne: '#161717',
-    darkTwo: '#202020',
+    // background: '#161717',
+    background: '#0b0e11',
+    // darkOne: '#161717',
+    darkOne: '#0b0e11',
+    // darkTwo: '#202020',
+    darkTwo: '#151a21',
     darkThree: '#2B2B2B',
     // primary: '#00acff',
     // primary: '#0D34FF',

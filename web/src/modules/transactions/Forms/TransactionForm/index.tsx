@@ -1,26 +1,28 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '@reach/dialog/styles.css';
 import { useState } from 'react';
-import { Overlay, Content, Header, Title } from '../style';
-import IconButton from '@Common/IconButton';
+import { Overlay, Content } from '../style';
 import Button from '@Common/Button';
-import { CloseIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
-import Form from './Form';
-import FormLoader from '../FormLoader';
 import {
   useFetchAccountsAndCategoriesQuery,
-  useAddTransactionMutation,
-  GetTransactionsDocument,
   TransactionInput,
+  TransferInput,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
-import { ViewError } from '@Components/ErrorViews';
-import Progressbar from '@Common/Progressbar';
+import { Form } from './FormProvider';
+import PaymentForm from './PaymentForm';
+import TransferForm from './TransferForm';
+import { useCreateTransfer } from '../../mutations/useCreateTransfer';
+import { useCreateTransaction } from '../../mutations/useCreateTransaction';
 
 function TransactionForm() {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
-  const [addTransactionMutation, submitting] = useAddTransactionMutation();
+  const { mutate: createTransfer, loading: submittingTransfer } = useCreateTransfer();
+  const {
+    mutate: createTransaction,
+    loading: submittingTransaction,
+  } = useCreateTransaction();
   const [showDialog, setShowDialog] = useState(false);
   const smallDevice = useMediaQuery('(max-width: 605px)');
   const { showAlert } = useAlert();
@@ -28,29 +30,26 @@ function TransactionForm() {
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
 
-  const onFormSubmit = async (values: TransactionInput) => {
-    const response = await addTransactionMutation({
-      variables: { input: values },
-      update: (cache, { data: createTransaction }) => {
-        cache.modify({
-          fields: {
-            getTransactions: (existingFieldData = []) => {
-              const newTransactionRef = cache.writeQuery({
-                data: createTransaction,
-                query: GetTransactionsDocument,
-              });
-              return [newTransactionRef, ...existingFieldData];
-            },
-          },
-        });
-      },
-    });
+  const onPaymentSubmit = async (values: TransactionInput) => {
+    const response = await createTransaction({ variables: { input: values } });
 
     if (response.data?.createTransaction) {
       showAlert('Transaction successfully added', 'info');
     }
     if (response.errors) {
       showAlert('There was an error creating your transaction', 'error', 5000);
+    }
+  };
+
+  const onTransferSubmit = async (values: TransferInput) => {
+    const response = await createTransfer({ variables: { input: values } });
+
+    if (response.errors) {
+      showAlert('There was an error creating your transfer', 'error', 5000);
+    }
+
+    if (response.data?.createTransfer) {
+      showAlert('Transfer successfully added', 'info');
     }
   };
 
@@ -61,30 +60,27 @@ function TransactionForm() {
       </Button>
       <Overlay isOpen={showDialog} onDismiss={close}>
         <Content aria-label="Add transaction form">
-          <Header>
-            <IconButton blue small onClick={close} ariaText="Close">
-              <CloseIcon />
-            </IconButton>
-            <Title>Add transaction</Title>
-          </Header>
-          {submitting.loading && <Progressbar />}
-          {data && (
-            <Form
-              onFormSubmit={onFormSubmit}
-              categories={data.getCategories}
-              accounts={data.getAccounts}
-              isSubmitting={submitting.loading}
-            />
-          )}
-          {loading && <FormLoader />}
-          {error && (
-            <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-              <ViewError
-                reload
-                subheading="We ran into trouble loading your accounts and categories. If you think something has gone wrong, please contact us."
+          <Form isFetchingData={loading} fetchError={error}>
+            <Form.Title onClose={close} />
+            <Form.Loader />
+            <Form.Payment>
+              <PaymentForm
+                onFormSubmit={onPaymentSubmit}
+                categories={data?.getCategories}
+                accounts={data?.getAccounts}
+                isSubmitting={submittingTransaction}
               />
-            </div>
-          )}
+            </Form.Payment>
+            <Form.Transfer>
+              <TransferForm
+                onFormSubmit={onTransferSubmit}
+                accounts={data?.getAccounts}
+                isSubmitting={submittingTransfer}
+                categories={data?.getCategories}
+              />
+            </Form.Transfer>
+            <Form.ErrorView />
+          </Form>
         </Content>
       </Overlay>
     </div>

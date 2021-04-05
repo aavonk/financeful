@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Category, Account, TransactionInput } from '@Generated/graphql';
 import AppThemeProvider from '@Context/theme';
-import Form from '../Form';
+import PaymentForm from '../PaymentForm';
 import userEvent from '@testing-library/user-event';
 import MockDate from 'mockdate';
 beforeEach(() => {
@@ -42,7 +42,7 @@ const customRender = (ui: ReactElement) =>
 
 const setup = () => {
   const utils = customRender(
-    <Form
+    <PaymentForm
       onFormSubmit={onFormSubmit}
       categories={CATEGORIES}
       accounts={ACCOUNTS}

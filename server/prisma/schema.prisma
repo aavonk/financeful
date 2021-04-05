@@ -39,6 +39,8 @@ model Transaction {
   isCashIn        Boolean   @default(false)
   isCashOut       Boolean   @default(true)
   isUncategorized Boolean   @default(true)
+  isTransfer      Boolean   @default(false)
+  transferId      String?
 }
 
 model Category {

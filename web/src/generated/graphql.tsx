@@ -59,6 +59,8 @@ export type Transaction = {
   isCashIn?: Maybe<Scalars['Boolean']>;
   isCashOut?: Maybe<Scalars['Boolean']>;
   isUncategorized?: Maybe<Scalars['Boolean']>;
+  isTransfer?: Maybe<Scalars['Boolean']>;
+  transferId?: Maybe<Scalars['String']>;
 };
 
 export type Category = {
@@ -88,6 +90,9 @@ export type Mutation = {
   createTransaction: Transaction;
   deleteTransaction: Scalars['String'];
   updateTransaction: Transaction;
+  createTransfer: Array<Transaction>;
+  updateTransfer: Array<Transaction>;
+  deleteTransfer: Scalars['String'];
   createCategory: Category;
   updateCategory: Category;
   deleteCategory: Scalars['String'];
@@ -121,6 +126,22 @@ export type MutationUpdateTransactionArgs = {
 };
 
 
+export type MutationCreateTransferArgs = {
+  input: TransferInput;
+};
+
+
+export type MutationUpdateTransferArgs = {
+  input: TransferInput;
+  transferId: Scalars['String'];
+};
+
+
+export type MutationDeleteTransferArgs = {
+  transferId: Scalars['String'];
+};
+
+
 export type MutationCreateCategoryArgs = {
   name: Scalars['String'];
 };
@@ -151,6 +172,15 @@ export type TransactionInput = {
   categoryId?: Maybe<Scalars['String']>;
   type: Scalars['String'];
   accountId: Scalars['String'];
+};
+
+export type TransferInput = {
+  date: Scalars['DateTime'];
+  amount: Scalars['Int'];
+  fromAccount: Scalars['ID'];
+  toAccount: Scalars['ID'];
+  description?: Maybe<Scalars['String']>;
+  categoryId?: Maybe<Scalars['ID']>;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -209,6 +239,26 @@ export type AddTransactionMutation = (
       & Pick<Account, 'id' | 'accountName'>
     )> }
   ) }
+);
+
+export type CreateTransferMutationVariables = Exact<{
+  input: TransferInput;
+}>;
+
+
+export type CreateTransferMutation = (
+  { __typename?: 'Mutation' }
+  & { createTransfer: Array<(
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'isCashIn' | 'isCashOut' | 'isTransfer' | 'isUncategorized' | 'transferId'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  )> }
 );
 
 export type DeleteTransactionMutationVariables = Exact<{
@@ -285,7 +335,7 @@ export type GetTransactionsQuery = (
   { __typename?: 'Query' }
   & { getTransactions?: Maybe<Array<(
     { __typename?: 'Transaction' }
-    & Pick<Transaction, 'id' | 'userId' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized'>
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized' | 'isTransfer' | 'transferId'>
     & { category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'id' | 'name'>
@@ -465,6 +515,57 @@ export function useAddTransactionMutation(baseOptions?: Apollo.MutationHookOptio
 export type AddTransactionMutationHookResult = ReturnType<typeof useAddTransactionMutation>;
 export type AddTransactionMutationResult = Apollo.MutationResult<AddTransactionMutation>;
 export type AddTransactionMutationOptions = Apollo.BaseMutationOptions<AddTransactionMutation, AddTransactionMutationVariables>;
+export const CreateTransferDocument = gql`
+    mutation CreateTransfer($input: TransferInput!) {
+  createTransfer(input: $input) {
+    id
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isTransfer
+    isUncategorized
+    transferId
+  }
+}
+    `;
+export type CreateTransferMutationFn = Apollo.MutationFunction<CreateTransferMutation, CreateTransferMutationVariables>;
+
+/**
+ * __useCreateTransferMutation__
+ *
+ * To run a mutation, you first call `useCreateTransferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTransferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTransferMutation, { data, loading, error }] = useCreateTransferMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTransferMutation(baseOptions?: Apollo.MutationHookOptions<CreateTransferMutation, CreateTransferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTransferMutation, CreateTransferMutationVariables>(CreateTransferDocument, options);
+      }
+export type CreateTransferMutationHookResult = ReturnType<typeof useCreateTransferMutation>;
+export type CreateTransferMutationResult = Apollo.MutationResult<CreateTransferMutation>;
+export type CreateTransferMutationOptions = Apollo.BaseMutationOptions<CreateTransferMutation, CreateTransferMutationVariables>;
 export const DeleteTransactionDocument = gql`
     mutation deleteTransaction($id: String!) {
   deleteTransaction(id: $id)
@@ -660,7 +761,6 @@ export const GetTransactionsDocument = gql`
     query GetTransactions {
   getTransactions {
     id
-    userId
     payee
     description
     amount
@@ -678,6 +778,8 @@ export const GetTransactionsDocument = gql`
     isCashIn
     isCashOut
     isUncategorized
+    isTransfer
+    transferId
   }
 }
     `;

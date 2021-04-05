@@ -1,6 +1,6 @@
 export const accounts = [
   {
-    userId: "ckmjdfqgz000298qsf2omi8i6",
+    userId: "ckn24x0ap00059gqsikqa7w3a",
     accountName: "Primary Checking",
     accountType: "DEBIT",
     isAsset: true,
@@ -8,7 +8,7 @@ export const accounts = [
     balance: 20000
   },
   {
-    userId: "ckmjdfqgz000298qsf2omi8i6",
+    userId: "ckn24x0ap00059gqsikqa7w3a",
     accountName: "Primary Savings",
     accountType: "SAVINGS",
     isAsset: true,
@@ -16,7 +16,7 @@ export const accounts = [
     balance: 200000
   },
   {
-    userId: "ckmjdfqgz000298qsf2omi8i6",
+    userId: "ckn24x0ap00059gqsikqa7w3a",
     accountName: "Credit Card",
     accountType: "CREDIT",
     isAsset: false,

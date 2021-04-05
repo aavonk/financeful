@@ -21,10 +21,7 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
         update(cache) {
           cache.modify({
             fields: {
-              getTransactions(
-                existingTransactionsRef: Transaction[],
-                { readField },
-              ) {
+              getTransactions(existingTransactionsRef: Transaction[], { readField }) {
                 return existingTransactionsRef.filter(
                   (transactionRef) => id !== readField('id', transactionRef),
                 );
@@ -42,12 +39,16 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
     }
   };
 
+  const handleEditRouting = () => {
+    console.log(transaction);
+    if (transaction.isTransfer) return;
+
+    setShowEditForm(true);
+  };
+
   return (
     <>
-      <ActionsMenu
-        onDelete={onDelete}
-        onEditClick={() => setShowEditForm(true)}
-      />
+      <ActionsMenu onDelete={onDelete} onEditClick={handleEditRouting} />
       <EditFormController
         transaction={transaction}
         closeModal={() => setShowEditForm(false)}

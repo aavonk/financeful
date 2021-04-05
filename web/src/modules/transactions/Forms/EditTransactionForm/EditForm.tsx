@@ -3,13 +3,8 @@ import IconButton from '@Common/IconButton';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
 import { CloseIcon } from '@Common/Icons';
-import {
-  Transaction,
-  Category,
-  Account,
-  TransactionInput,
-} from '@Generated/graphql';
-import { Overlay, Content, Header, Title, Body, Footer } from '../style';
+import { Transaction, Category, Account, TransactionInput } from '@Generated/graphql';
+import { Overlay, Content, Header, HeaderLeft, Title, Body, Footer } from '../style';
 import {
   BorderedInput,
   BorderedSelect,
@@ -116,10 +111,12 @@ function EditForm({
     <Overlay isOpen={isOpen} onDismiss={closeModal}>
       <Content aria-label="Add transaction form">
         <Header>
-          <IconButton blue small onClick={closeModal} ariaText="Close">
-            <CloseIcon />
-          </IconButton>
-          <Title>Edit transaction</Title>
+          <HeaderLeft>
+            <IconButton blue small onClick={closeModal} ariaText="Close">
+              <CloseIcon />
+            </IconButton>
+            <Title>Edit transaction</Title>
+          </HeaderLeft>
         </Header>
         {isSubmitting && <Progressbar />}
         {isFetching ? (
@@ -135,9 +132,7 @@ function EditForm({
                     label="Date *"
                   />
 
-                  <ErrorMessage>
-                    {errors.date ? errors.date : null}
-                  </ErrorMessage>
+                  <ErrorMessage>{errors.date ? errors.date : null}</ErrorMessage>
                 </Col>
                 <Col width="37.5%">
                   <BorderedSelect
@@ -147,11 +142,7 @@ function EditForm({
                   >
                     <option value="" disabled></option>
                     {accounts.map((acct) => (
-                      <option
-                        key={acct.id}
-                        value={acct.id}
-                        data-testid="acct-option"
-                      >
+                      <option key={acct.id} value={acct.id} data-testid="acct-option">
                         {acct.accountName}
                       </option>
                     ))}
@@ -170,9 +161,7 @@ function EditForm({
                     <option value="INCOME">Income</option>
                     <option value="EXPENSE">Expense</option>
                   </BorderedSelect>
-                  <ErrorMessage>
-                    {errors.type ? errors.type : null}
-                  </ErrorMessage>
+                  <ErrorMessage>{errors.type ? errors.type : null}</ErrorMessage>
                 </Col>
               </Row>
               <Row>
@@ -185,9 +174,7 @@ function EditForm({
                   >
                     Payee *
                   </BorderedInput>
-                  <ErrorMessage>
-                    {errors.payee ? errors.payee : null}
-                  </ErrorMessage>
+                  <ErrorMessage>{errors.payee ? errors.payee : null}</ErrorMessage>
                 </Col>
               </Row>
               <Row>
@@ -214,9 +201,7 @@ function EditForm({
                   >
                     Amount *
                   </BorderedInput>
-                  <ErrorMessage>
-                    {errors.amount ? errors.amount : null}
-                  </ErrorMessage>
+                  <ErrorMessage>{errors.amount ? errors.amount : null}</ErrorMessage>
                 </Col>
                 <Col width="50%">
                   <BorderedSelect
@@ -226,11 +211,7 @@ function EditForm({
                   >
                     <option value="" disabled></option>
                     {categories.map((cat) => (
-                      <option
-                        key={cat.id}
-                        value={cat.id}
-                        data-testid="category-option"
-                      >
+                      <option key={cat.id} value={cat.id} data-testid="category-option">
                         {cat.name}
                       </option>
                     ))}

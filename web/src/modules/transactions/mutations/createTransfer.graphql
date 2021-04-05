@@ -1,5 +1,5 @@
-query GetTransactions {
-  getTransactions {
+mutation CreateTransfer($input: TransferInput!) {
+  createTransfer(input: $input) {
     id
     payee
     description
@@ -10,15 +10,14 @@ query GetTransactions {
     }
     type
     date
-    accountId
     account {
-      accountName
       id
+      accountName
     }
     isCashIn
     isCashOut
-    isUncategorized
     isTransfer
+    isUncategorized
     transferId
   }
 }

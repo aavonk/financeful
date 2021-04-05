@@ -46,4 +46,10 @@ export class Transaction {
 
   @Field(() => Boolean, { nullable: true })
   isUncategorized?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isTransfer?: boolean;
+
+  @Field(() => String, { nullable: true })
+  transferId?: string | null;
 }
