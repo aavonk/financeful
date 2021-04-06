@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FilterProps } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { TabContainer, TabItem, TabLabel, Indicator } from './style';
-import { formatTransactionType } from '@Lib/money-utils';
+import { capitalizeFirstLetter } from '@Lib/string-formating';
 
 function SelectTypeFilter({
   column: { setFilter, preFilteredRows, id },
@@ -42,7 +42,7 @@ function SelectTypeFilter({
             onClick={() => onMappedItemClick(item, index + 1)}
             active={activeTab === index + 1}
           >
-            <TabLabel>{formatTransactionType(item)}</TabLabel>
+            <TabLabel>{capitalizeFirstLetter(item)}</TabLabel>
             <Indicator />
           </TabItem>
         ))}
