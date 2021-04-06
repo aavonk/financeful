@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { UpArrowCircle, DownArrowCircle, RepeatingArrow } from '@Common/Icons';
-import { formatTransactionType } from '@Lib/money-utils';
+import { capitalizeFirstLetter } from '@Lib/string-formating';
 import { FlexRow } from '@Globals/index';
 
 type TransactionTypes = {
@@ -60,7 +60,7 @@ function TransactionTypeCell({ type }: TransactionTypes) {
       <ArrowContainer aria-hidden="true" type={type}>
         {renderIcon(type)}
       </ArrowContainer>
-      <span>{formatTransactionType(type)}</span>
+      <span>{capitalizeFirstLetter(type)}</span>
     </FlexRow>
   );
 }
