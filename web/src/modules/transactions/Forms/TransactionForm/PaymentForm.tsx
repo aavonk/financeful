@@ -8,7 +8,7 @@ import {
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
-import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-utils';
+import { convertInputAmountToCents } from '@Lib/money-utils';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
 import { TransactionFields } from '../types';
