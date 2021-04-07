@@ -1,6 +1,6 @@
+import React, { useState, useContext, createContext, useMemo } from 'react';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
-import React, { useState, useContext, createContext, useMemo, useCallback } from 'react';
 import FormLoader from '../FormLoader';
 import { Header, Title as StyledTitle, HeaderLeft } from '../style';
 
