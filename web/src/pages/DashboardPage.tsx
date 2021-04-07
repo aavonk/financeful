@@ -7,6 +7,7 @@ function DashboardPage() {
         In the backend, make sure that when making a transfer, the two accounts are not
         the same
       </p>
+      <p>Refactor Edit Forms to use compound component</p>
     </>
   );
 }

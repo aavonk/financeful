@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  Transaction,
-  useDeleteTransactionMutation,
-  TransactionInput,
-} from '@Generated/graphql';
+import { Transaction, useDeleteTransactionMutation } from '@Generated/graphql';
 import ActionsMenu from './ActionsMenu';
 import { EditFormController } from '@Modules/transactions/Forms/EditTransactionForm';
 import { useAlert } from '@Context/alert/alertContext';
@@ -41,7 +37,7 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
 
   const handleEditRouting = () => {
     console.log(transaction);
-    if (transaction.isTransfer) return;
+    // if (transaction.isTransfer) return;
 
     setShowEditForm(true);
   };
