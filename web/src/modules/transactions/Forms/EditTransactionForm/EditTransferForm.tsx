@@ -6,13 +6,14 @@ import {
   ErrorMessage,
   BorderedDatePicker,
 } from '@Common/FormElements';
-import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-utils';
+import { convertInputAmountToCents } from '@Lib/money-utils';
 import { useForm } from '@Hooks/useForm';
 import { Category, Account, TransferInput } from '@Generated/graphql';
 import { TransferFormFields } from '../types';
 import { transferFormValidations } from '../formValidations';
-import { Body } from '../style';
+import { Body, Footer } from '../style';
 import Progressbar from '@Common/Progressbar';
+import Button from '@Common/Button';
 
 interface FormProps {
   accounts: Account[] | undefined;
@@ -64,7 +65,66 @@ function EditTransferForm({ accounts = [], categories = [], isSubmitting }: Form
               {errors?.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
             </Col>
           </Row>
+          <Row>
+            <BorderedSelect
+              value={values.fromAccount}
+              onChange={handleChange('fromAccount')}
+              label="From Account *"
+            >
+              <option disabled value=""></option>
+              {accounts.map((account: Account) => (
+                <option key={account.id} value={account.id}>
+                  {account.accountName}
+                </option>
+              ))}
+            </BorderedSelect>
+            {errors?.fromAccount && <ErrorMessage>{errors.fromAccount}</ErrorMessage>}
+          </Row>
+          <Row>
+            <BorderedSelect
+              value={values.toAccount}
+              onChange={handleChange('toAccount')}
+              label="To Account *"
+            >
+              <option disabled value=""></option>
+              {accounts.map((account: Account) => (
+                <option key={account.id} value={account.id}>
+                  {account.accountName}
+                </option>
+              ))}
+            </BorderedSelect>
+            {errors?.toAccount && <ErrorMessage>{errors.toAccount}</ErrorMessage>}
+          </Row>
+          <Row>
+            <BorderedSelect
+              value={values.categoryId}
+              onChange={handleChange('categoryId')}
+              label="Category"
+            >
+              <option value="" disabled></option>
+              {categories.map((cat: Category) => (
+                <option key={cat.id} value={cat.id} data-testid="category-option">
+                  {cat.name}
+                </option>
+              ))}
+            </BorderedSelect>
+          </Row>
+          <Row>
+            <BorderedInput
+              type="text"
+              value={values.description}
+              onChange={handleChange('description')}
+              onBlur={handleTrim('description')}
+            >
+              Description
+            </BorderedInput>
+          </Row>
         </Body>
+        <Footer>
+          <Button type="submit" variant="primary">
+            Save
+          </Button>
+        </Footer>
         {/* TODO: Make sure to disable button when isSubmitting is true */}
       </form>
     </>
