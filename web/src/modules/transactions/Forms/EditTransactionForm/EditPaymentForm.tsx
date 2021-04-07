@@ -60,7 +60,6 @@ function EditPaymentForm({
       }),
   });
 
-  //TODO: Disable button when submitting and add progress bar
   return (
     <>
       {isSubmitting && <Progressbar />}

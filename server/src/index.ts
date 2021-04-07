@@ -4,12 +4,13 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { PrismaClient } from '@prisma/client';
 import { authChecker as customAuthChecker } from './lib/auth-checker';
-import { AuthResolver } from './resolvers/AuthResolver';
-import { UserResolver } from './resolvers/Users/UserResolver';
-import { TransactionResolver } from './resolvers/Transactions/TransactionResolver';
-import { TransferResolver } from './resolvers/Transactions/TransferResolver';
-import { CategoryResolver } from './resolvers/Categories/CategoryResolver';
-import { AccountResolver } from './resolvers/Accounts/AccountResolver';
+import { AuthResolver } from '@Modules/Auth/resolvers/AuthResolver';
+import { UserResolver } from '@Modules/Users/resolvers/UserResolver';
+import { TransactionResolver } from '@Modules/Transactions/resolvers/TransactionResolver';
+import { TransferResolver } from '@Modules/Transactions/resolvers/TransferResolver';
+import { AccountResolver } from '@Modules/Accounts/resolvers/AccountResolver';
+import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
+
 const prisma = new PrismaClient();
 
 const main = async () => {

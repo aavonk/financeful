@@ -1,6 +1,6 @@
 import { Resolver, Query, Authorized, Ctx } from 'type-graphql';
-import { User } from '../../types/User';
-import { Context } from '../../types/Context';
+import { User } from '../../../types/User';
+import { Context } from '../../../types/Context';
 
 @Resolver()
 export class UserResolver {

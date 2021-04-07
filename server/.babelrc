@@ -6,7 +6,8 @@
       {
         "root": ["./src"],
         "alias": {
-          "@Modules": "./src/modules"
+          "@Modules": "./src/modules",
+          "@Lib": "./src/lib"
         }
       }
     ],
