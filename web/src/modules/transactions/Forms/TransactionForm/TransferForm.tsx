@@ -5,7 +5,7 @@ import {
   ErrorMessage,
   BorderedDatePicker,
 } from '@Common/FormElements';
-import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-utils';
+import { convertInputAmountToCents } from '@Lib/money-utils';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { Body, Footer } from '../style';
