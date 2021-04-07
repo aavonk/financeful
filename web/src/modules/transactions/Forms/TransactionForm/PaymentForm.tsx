@@ -11,9 +11,9 @@ import { Body, Footer } from '../style';
 import { isValidCurrencyFormat, convertInputAmountToCents } from '@Lib/money-utils';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
-
 import { TransactionFields } from '../types';
 import { Category, Account, TransactionInput } from '@Generated/graphql';
+import { paymentFormValidations } from '../formValidations';
 
 const initialValue = {
   date: new Date(),
@@ -23,43 +23,6 @@ const initialValue = {
   description: '',
   amount: '',
   categoryId: '',
-};
-
-const validations = {
-  date: {
-    required: {
-      value: true,
-      message: 'Required',
-    },
-  },
-  accountId: {
-    required: {
-      value: true,
-      message: 'Which account?',
-    },
-  },
-  type: {
-    required: {
-      value: true,
-      message: 'Income or Expense?',
-    },
-  },
-  payee: {
-    required: {
-      value: true,
-      message: 'Please add a payee',
-    },
-  },
-  amount: {
-    required: {
-      value: true,
-      message: 'Please add an amount',
-    },
-    custom: {
-      isValid: (value: string) => isValidCurrencyFormat(value),
-      message: 'Must be in $1,000.00 format',
-    },
-  },
 };
 
 type Props = {
@@ -84,7 +47,7 @@ function PaymentForm({
     errors,
   } = useForm<TransactionFields>({
     initialValue,
-    validations,
+    validations: paymentFormValidations,
     onSubmit: () =>
       onFormSubmit({
         ...values,

@@ -12,6 +12,8 @@ import { Body, Footer } from '../style';
 import { Category, Account, TransferInput } from '@Generated/graphql';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
+import { TransferFormFields } from '../types';
+import { transferFormValidations } from '../formValidations';
 
 interface FormProps {
   accounts: Account[] | undefined;
@@ -20,44 +22,12 @@ interface FormProps {
   onFormSubmit: (values: TransferInput) => void;
 }
 
-interface FormFields {
-  amount: string;
-  fromAccount: string;
-  toAccount: string;
-  description: string;
-  categoryId: string;
-}
 const initialState = {
   amount: '',
   fromAccount: '',
   toAccount: '',
   categoryId: '',
   description: '',
-};
-
-const formValidations = {
-  amount: {
-    required: {
-      value: true,
-      message: 'Please add an amount',
-    },
-    custom: {
-      isValid: (value: string) => isValidCurrencyFormat(value),
-      message: 'Must be in $1,000.00 format',
-    },
-  },
-  fromAccount: {
-    required: {
-      value: true,
-      message: 'This field is required',
-    },
-  },
-  toAccount: {
-    required: {
-      value: true,
-      message: 'This field is required',
-    },
-  },
 };
 
 function TransferForm({
@@ -68,9 +38,15 @@ function TransferForm({
 }: FormProps) {
   const [transferDate, setTransferDate] = React.useState(new Date());
 
-  const { values, handleChange, handleSubmit, handleTrim, errors } = useForm<FormFields>({
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleTrim,
+    errors,
+  } = useForm<TransferFormFields>({
     initialValue: initialState,
-    validations: formValidations,
+    validations: transferFormValidations,
     onSubmit: () => {
       const formattedValues: TransferInput = {
         ...values,
