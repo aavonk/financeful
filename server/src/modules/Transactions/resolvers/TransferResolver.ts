@@ -11,93 +11,9 @@ export class TransferResolver {
   @Mutation(() => [Transaction, Transaction])
   async createTransfer(
     @Arg('input') input: TransferInput,
-    @Ctx() { user, prisma }: Context,
+    @Ctx() { user, transferService }: Context,
   ): Promise<Transaction[]> {
-    const accounts: Account[] = await prisma.account.findMany({
-      where: {
-        userId: user.id,
-      },
-    });
-
-    const accountLeaving = accounts.filter(
-      (account) => account.id === input.fromAccount,
-    )[0];
-    const accountArriving = accounts.filter(
-      (account) => account.id === input.toAccount,
-    )[0];
-
-    const transferIdentifier = nanoid();
-
-    const transactionWithMoneyLeaving = prisma.transaction.create({
-      data: {
-        date: input.date,
-        payee: `Transfer to ${accountArriving.accountName}`,
-        description: input.description || null,
-        amount: input.amount * -1,
-        type: 'TRANSFER',
-        accountId: accountLeaving.id,
-        userId: user.id,
-        categoryId: input.categoryId || null,
-        isCashIn: false,
-        isCashOut: true,
-        isTransfer: true,
-        isUncategorized: !input.categoryId,
-        transferId: transferIdentifier,
-      },
-      include: {
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-      },
-    });
-
-    const transactionWithMoneyArriving = prisma.transaction.create({
-      data: {
-        date: input.date,
-        payee: `Transfer from ${accountLeaving.accountName}`,
-        description: input.description || null,
-        amount: input.amount,
-        type: 'TRANSFER',
-        accountId: accountArriving.id,
-        userId: user.id,
-        categoryId: input.categoryId || null,
-        isCashIn: true,
-        isCashOut: false,
-        isTransfer: true,
-        isUncategorized: !input.categoryId,
-        transferId: transferIdentifier,
-      },
-      include: {
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-      },
-    });
-
-    const results = await prisma.$transaction([
-      transactionWithMoneyLeaving,
-      transactionWithMoneyArriving,
-    ]);
-
-    return results;
+    return await transferService.createTransfer(input, user.id);
   }
 
   @Authorized()
@@ -105,18 +21,13 @@ export class TransferResolver {
   async updateTransfer(
     @Arg('transferId') transferId: string,
     @Arg('input') input: TransferInput,
-    @Ctx() context: Context,
+    @Ctx() { user, transferService }: Context,
   ): Promise<Transaction[]> {
-    //delete the transactions with the incoming transferId and create a new Transfer
-    const { prisma } = context;
-    await prisma.transaction.deleteMany({
-      where: {
-        transferId: transferId,
-      },
-    });
-
-    const transactions = await this.createTransfer(input, context);
-
+    const transactions = await transferService.updateTransfer(
+      input,
+      transferId,
+      user.id,
+    );
     if (!transactions || transactions.length === 0) {
       throw new Error('Unable to create new transfer');
     }
@@ -142,7 +53,7 @@ export class TransferResolver {
     }
 
     const transactionUser = transactions.map(
-      (transaction) => transaction.userId,
+      (transaction: Transaction) => transaction.userId,
     )[0];
 
     if (user.id !== transactionUser) {

@@ -20,6 +20,9 @@ export class Transfer {
 
   @Field(() => String, { nullable: true })
   description?: string | null;
+
+  @Field(() => Int)
+  amount: number;
 }
 
 @InputType()
