@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Arg, Ctx, InputType, Field } from 'type-graphql';
 import { UserInputError } from 'apollo-server-express';
-import { User } from '../../../types/User';
-import { Context } from '../../../types/Context';
+import { User, Context } from '@Shared/types';
 import { hashpashword, generateToken, validatePassword } from '@Lib/auth';
 import { validateLoginInput, validateRegisterFields } from '@Lib/validators';
 

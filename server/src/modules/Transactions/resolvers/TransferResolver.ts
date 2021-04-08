@@ -1,10 +1,8 @@
 import { nanoid } from 'nanoid';
 import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
-import { Transaction } from '../../../types/Transaction';
-import { Account } from '../../../types/Account';
-import { Context } from '../../../types/Context';
-import { TransferInput } from '../types/transaction.types';
+import { Transaction, Account, Context } from '@Shared/types';
+import { TransferInput } from '../types/transfer.types';
 import { Transfer } from '../types/transfer.types';
 
 @Resolver()

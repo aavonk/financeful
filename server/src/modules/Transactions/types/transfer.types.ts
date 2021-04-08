@@ -1,9 +1,11 @@
-import { ObjectType, Field } from 'type-graphql';
-import { Account } from '../../../types/Account';
-import { Category } from '../../../types/Category';
+import { ObjectType, Field, ID, InputType, Int } from 'type-graphql';
+import { Account, Category } from '@Shared/types';
 
 @ObjectType()
 export class Transfer {
+  @Field(() => ID)
+  id: string;
+
   @Field(() => Date)
   date: Date;
 
@@ -18,4 +20,25 @@ export class Transfer {
 
   @Field(() => String, { nullable: true })
   description?: string | null;
+}
+
+@InputType()
+export class TransferInput {
+  @Field(() => Date)
+  date: Date;
+
+  @Field(() => Int)
+  amount: number;
+
+  @Field(() => ID)
+  fromAccount: string;
+
+  @Field(() => ID)
+  toAccount: string;
+
+  @Field(() => String, { nullable: true })
+  description?: string;
+
+  @Field(() => ID, { nullable: true })
+  categoryId?: string;
 }

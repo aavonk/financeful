@@ -1,8 +1,6 @@
 import { UserInputError } from 'apollo-server-express';
 import { Resolver, Authorized, Ctx, Query, Mutation, Arg } from 'type-graphql';
-import { Category } from '../../../types/Category';
-import { Context } from '../../../types/Context';
-// import {UserInputError} from 'apollo-server-express'
+import { Context, Category } from '@Shared/types';
 
 @Resolver()
 export class CategoryResolver {

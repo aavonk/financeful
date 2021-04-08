@@ -1,7 +1,6 @@
 import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
 import { AuthenticationError } from 'apollo-server-express';
-import { Transaction } from '../../../types/Transaction';
-import { Context } from '../../../types/Context';
+import { Context, Transaction } from '@Shared/types';
 import { TransactionInput } from '../types/transaction.types';
 
 @Resolver()

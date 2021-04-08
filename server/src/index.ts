@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
-import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { PrismaClient } from '@prisma/client';
 import { authChecker as customAuthChecker } from './lib/auth-checker';

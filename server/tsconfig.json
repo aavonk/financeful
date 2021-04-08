@@ -29,7 +29,7 @@
       "*": ["node_modules/*", "src/types/*"],
       "@Lib/*": ["./src/lib/*"],
       "@Modules/*": ["./src/modules/*"],
-      "@Types/*": ["./src/types/*"]
+      "@Shared/*": ["./src/shared/*"]
     }
   },
   "include": ["src/**/*", "./src/**/*.ts", "./src/**/*.tsx"]
