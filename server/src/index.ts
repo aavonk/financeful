@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, ApolloServerExpressConfig } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { PrismaClient } from '@prisma/client';
 import { authChecker as customAuthChecker } from './lib/auth-checker';
@@ -10,6 +10,7 @@ import { TransactionResolver } from '@Modules/Transactions/resolvers/Transaction
 import { TransferResolver } from '@Modules/Transactions/resolvers/TransferResolver';
 import { AccountResolver } from '@Modules/Accounts/resolvers/AccountResolver';
 import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
+import { TransferRepo } from '@Modules/Transactions/repos/TransferRepo';
 
 const prisma = new PrismaClient();
 
@@ -31,6 +32,7 @@ const main = async () => {
     context: ({ req }) => ({
       req,
       prisma,
+      transferService: new TransferRepo(prisma),
     }),
   });
 

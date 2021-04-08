@@ -1,10 +1,11 @@
 import { nanoid } from 'nanoid';
-import { Resolver, Authorized, Mutation, Ctx, Arg } from 'type-graphql';
+import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { Transaction } from '../../../types/Transaction';
 import { Account } from '../../../types/Account';
 import { Context } from '../../../types/Context';
 import { TransferInput } from '../types/transaction.types';
+import { Transfer } from '../types/transfer.types';
 
 @Resolver()
 export class TransferResolver {
@@ -129,14 +130,12 @@ export class TransferResolver {
   @Mutation(() => String)
   async deleteTransfer(
     @Arg('transferId') transferId: string,
-    @Ctx() { user, prisma }: Context,
+    @Ctx() { user, transferService }: Context,
   ): Promise<string> {
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        userId: user.id,
-        transferId,
-      },
-    });
+    const transactions = await transferService.getTransferTransactions(
+      transferId,
+      user.id,
+    );
 
     if (!transactions || !transactions.length) {
       throw new UserInputError('No transactions found', {
@@ -154,13 +153,19 @@ export class TransferResolver {
       );
     }
 
-    await prisma.transaction.deleteMany({
-      where: {
-        userId: user.id,
-        transferId,
-      },
-    });
+    await transferService.deleteTransfer(transferId, user.id);
 
     return 'Successfully Deleted Transfer';
+  }
+
+  @Authorized()
+  @Query(() => Transfer)
+  async getTransfer(
+    @Arg('id') id: string,
+    @Ctx() { transferService }: Context,
+  ): Promise<Transfer> {
+    const transfer: Transfer = await transferService.getTransfer(id);
+
+    return transfer;
   }
 }
