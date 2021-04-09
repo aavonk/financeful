@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { Row, Col } from '@Globals/index';
 import {
   BorderedInput,
@@ -6,9 +7,12 @@ import {
   ErrorMessage,
   BorderedDatePicker,
 } from '@Common/FormElements';
-import { convertInputAmountToCents } from '@Lib/money-utils';
+import {
+  convertInputAmountToCents,
+  formatMoneyFromCentsToDollars,
+} from '@Lib/money-utils';
 import { useForm } from '@Hooks/useForm';
-import { Category, Account, TransferInput } from '@Generated/graphql';
+import { Category, Account, TransferInput, Transfer } from '@Generated/graphql';
 import { TransferFormFields } from '../types';
 import { transferFormValidations } from '../formValidations';
 import { Body, Footer } from '../style';
@@ -18,17 +22,25 @@ import Button from '@Common/Button';
 interface FormProps {
   accounts: Account[] | undefined;
   categories: Category[] | undefined;
+  transfer: Transfer | undefined;
   isSubmitting: boolean;
 }
 
-function EditTransferForm({ accounts = [], categories = [], isSubmitting }: FormProps) {
+function EditTransferForm({
+  accounts = [],
+  categories = [],
+  isSubmitting,
+  transfer,
+}: FormProps) {
+  console.log(transfer);
+
   const [transferDate, setTransferDate] = useState(new Date());
   const initialValue: TransferFormFields = {
-    amount: '',
-    fromAccount: '',
-    toAccount: '',
-    categoryId: '',
-    description: '',
+    amount: transfer?.amount ? formatMoneyFromCentsToDollars(transfer.amount) : '',
+    fromAccount: transfer?.fromAccount?.id || '',
+    toAccount: transfer?.toAccount?.id || '',
+    categoryId: transfer?.category?.id || '',
+    description: transfer?.description || '',
   };
   const {
     values,

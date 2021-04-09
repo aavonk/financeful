@@ -108,10 +108,11 @@ export class TransferRepo implements ITransferRepo {
     )[0];
 
     const transferIdentifier: string = nanoid();
+    const transferDate = new Date(input.date)
 
     const expense = this.client.transaction.create({
       data: {
-        date: input.date,
+        date: transferDate,
         payee: `Transfer to ${accountEntering.accountName}`,
         description: input.description || null,
         amount: input.amount * -1,
@@ -143,7 +144,7 @@ export class TransferRepo implements ITransferRepo {
 
     const income = this.client.transaction.create({
       data: {
-        date: input.date,
+        date: transferDate,
         payee: `Transfer from ${accountLeaving.accountName}`,
         description: input.description || null,
         amount: input.amount,

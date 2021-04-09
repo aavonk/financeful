@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import {
   Transaction,
   TransactionInput,
   useFetchAccountsAndCategoriesQuery,
   useUpdateTransactionMutation,
+  useGetTransferLazyQuery,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import Toast from '@Common/Alerts/Toast';
@@ -23,9 +25,20 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
     updateTransaction,
     { loading: submittingPayment },
   ] = useUpdateTransactionMutation();
+  const [
+    getTransfer,
+    { data: transfer, loading: fetchingTransfer, error: transferError },
+  ] = useGetTransferLazyQuery();
   const { showAlert } = useAlert();
 
-  if (error) {
+  useEffect(() => {
+    if (isOpen && transaction.isTransfer) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      getTransfer({ variables: { id: transaction.transferId! } });
+    }
+  }, [getTransfer, isOpen, transaction.isTransfer, transaction.transferId]);
+
+  if (error || transferError) {
     if (isOpen) {
       closeModal();
     }
@@ -50,8 +63,11 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
 
   return (
     <Overlay isOpen={isOpen} onDismiss={closeModal}>
-      <Content>
-        <EditForm paymentType={transaction.type} isFetchingData={fetchingAccounts}>
+      <Content aria-label="Edit transaction">
+        <EditForm
+          paymentType={transaction.type}
+          isFetchingData={fetchingAccounts || fetchingTransfer}
+        >
           <EditForm.Loader />
           <EditForm.Title onClose={closeModal} />
           <EditForm.Transfer>
@@ -59,6 +75,7 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
               accounts={data?.getAccounts}
               categories={data?.getCategories}
               isSubmitting={true}
+              transfer={transfer?.getTransfer}
             />
           </EditForm.Transfer>
           <EditForm.Payment>

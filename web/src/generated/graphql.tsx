@@ -21,12 +21,18 @@ export type Query = {
   getCurrentUser: User;
   getTransactions?: Maybe<Array<Transaction>>;
   getTransaction?: Maybe<Transaction>;
-  getCategories: Array<Category>;
+  getTransfer: Transfer;
   getAccounts: Array<Account>;
+  getCategories: Array<Category>;
 };
 
 
 export type QueryGetTransactionArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetTransferArgs = {
   id: Scalars['String'];
 };
 
@@ -81,6 +87,17 @@ export type Account = {
   isAsset?: Maybe<Scalars['Boolean']>;
   isLiability?: Maybe<Scalars['Boolean']>;
   balance?: Maybe<Scalars['Int']>;
+};
+
+export type Transfer = {
+  __typename?: 'Transfer';
+  id: Scalars['ID'];
+  date: Scalars['DateTime'];
+  fromAccount: Account;
+  toAccount: Account;
+  category?: Maybe<Category>;
+  description?: Maybe<Scalars['String']>;
+  amount: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -344,6 +361,29 @@ export type GetTransactionsQuery = (
       & Pick<Account, 'accountName' | 'id'>
     )> }
   )>> }
+);
+
+export type GetTransferQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetTransferQuery = (
+  { __typename?: 'Query' }
+  & { getTransfer: (
+    { __typename?: 'Transfer' }
+    & Pick<Transfer, 'id' | 'date' | 'amount' | 'description'>
+    & { fromAccount: (
+      { __typename?: 'Account' }
+      & Pick<Account, 'accountName' | 'id'>
+    ), toAccount: (
+      { __typename?: 'Account' }
+      & Pick<Account, 'accountName' | 'id'>
+    ), category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'name' | 'id'>
+    )> }
+  ) }
 );
 
 
@@ -810,3 +850,53 @@ export function useGetTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetTransactionsQueryHookResult = ReturnType<typeof useGetTransactionsQuery>;
 export type GetTransactionsLazyQueryHookResult = ReturnType<typeof useGetTransactionsLazyQuery>;
 export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery, GetTransactionsQueryVariables>;
+export const GetTransferDocument = gql`
+    query GetTransfer($id: String!) {
+  getTransfer(id: $id) {
+    id
+    date
+    amount
+    description
+    fromAccount {
+      accountName
+      id
+    }
+    toAccount {
+      accountName
+      id
+    }
+    category {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTransferQuery__
+ *
+ * To run a query within a React component, call `useGetTransferQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTransferQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTransferQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTransferQuery(baseOptions: Apollo.QueryHookOptions<GetTransferQuery, GetTransferQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTransferQuery, GetTransferQueryVariables>(GetTransferDocument, options);
+      }
+export function useGetTransferLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTransferQuery, GetTransferQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTransferQuery, GetTransferQueryVariables>(GetTransferDocument, options);
+        }
+export type GetTransferQueryHookResult = ReturnType<typeof useGetTransferQuery>;
+export type GetTransferLazyQueryHookResult = ReturnType<typeof useGetTransferLazyQuery>;
+export type GetTransferQueryResult = Apollo.QueryResult<GetTransferQuery, GetTransferQueryVariables>;
