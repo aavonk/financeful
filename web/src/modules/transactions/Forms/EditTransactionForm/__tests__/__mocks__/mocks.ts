@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { MockedResponse } from '@apollo/client/testing';
 import {
   FetchAccountsAndCategoriesDocument,
   UpdateTransactionDocument,
+  GetTransferDocument,
   Transaction,
   TransactionInput,
+  Transfer,
 } from '@Generated/graphql';
 
 export const ACCOUNTS = [
@@ -56,6 +59,29 @@ export const transactionMock: Transaction = {
   isCashIn: false,
   isCashOut: true,
   isUncategorized: false,
+  isTransfer: false,
+  transferId: null,
+};
+
+export const transferMock: Transaction = {
+  ...transactionMock,
+  isTransfer: true,
+  type: 'TRANSFER',
+  transferId: 'abc123',
+  payee: 'Transfer to savings',
+};
+
+export const getTransferResponse: Transfer = {
+  date: transferMock.date,
+  amount: transferMock.amount,
+  fromAccount: ACCOUNTS[0],
+  toAccount: ACCOUNTS[1],
+  category: {
+    name: CATEGORIES[0].name,
+    id: CATEGORIES[0].id,
+  },
+  description: 'Hi there',
+  id: transferMock.transferId!,
 };
 
 const updates: TransactionInput = {
@@ -105,4 +131,16 @@ export const updateTransactionError: MockedResponse = {
     variables: { input: updates, id: transactionMock.id },
   },
   error: new Error('A scary error 🥵'),
+};
+
+export const fetchTransferSuccess: MockedResponse = {
+  request: {
+    query: GetTransferDocument,
+    variables: { id: transferMock.transferId },
+  },
+  result: {
+    data: {
+      getTransfer: getTransferResponse,
+    },
+  },
 };

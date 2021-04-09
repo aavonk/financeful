@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ReactElement } from 'react';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
@@ -8,8 +9,11 @@ import {
   CATEGORIES,
   ACCOUNTS,
   transactionMock,
+  transferMock,
   fetchAccountsAndCategoriesError,
   fetchAccountsAndCategoriesSuccess,
+  fetchTransferSuccess,
+  getTransferResponse,
   updateTransactionError,
   updateTransactionSuccess,
 } from './__mocks__/mocks';
@@ -144,6 +148,62 @@ describe('EditFormController handles update mutation', () => {
 
     await waitFor(() => {
       expect(closeModal).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('Which form displays based on transaction type', () => {
+  test('<EditPaymentForm /> is displayed when it is not a transfer', async () => {
+    const closeModal = jest.fn();
+    const { getByText } = setup(
+      [fetchAccountsAndCategoriesSuccess],
+      <EditFormController
+        isOpen={true}
+        closeModal={closeModal}
+        transaction={transactionMock}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(getByText(/edit transaction/i)).toBeInTheDocument();
+    });
+  });
+  test('<EditTransferForm /> is displayed when transaction is a transfer', async () => {
+    const closeModal = jest.fn();
+    const { getByText } = setup(
+      [fetchAccountsAndCategoriesSuccess, fetchTransferSuccess],
+      <EditFormController
+        isOpen={true}
+        closeModal={closeModal}
+        transaction={transferMock}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(getByText(/edit transfer/i)).toBeInTheDocument();
+    });
+  });
+});
+
+describe('The fetchTransfer query', () => {
+  test('[Success state] It displays the transfer in <EditTransferForm />', async () => {
+    const closeModal = jest.fn();
+    const { getByText, getByLabelText } = setup(
+      [fetchAccountsAndCategoriesSuccess, fetchTransferSuccess],
+      <EditFormController
+        isOpen={true}
+        closeModal={closeModal}
+        transaction={transferMock}
+      />,
+    );
+
+    const response = getTransferResponse;
+
+    await waitFor(() => {
+      expect(getByText(/edit transfer/i)).toBeInTheDocument();
+      expect(getByLabelText(/from account * /i)).toHaveValue(response.fromAccount.id!);
+      expect(getByLabelText(/to account * /i)).toHaveValue(response.toAccount.id!);
+      expect(getByText(response.category!.name!)).toBeInTheDocument();
     });
   });
 });

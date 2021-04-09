@@ -32,11 +32,9 @@ function EditTransferForm({
   isSubmitting,
   transfer,
 }: FormProps) {
-  console.log(transfer);
-
   const [transferDate, setTransferDate] = useState(new Date());
   const initialValue: TransferFormFields = {
-    amount: transfer?.amount ? formatMoneyFromCentsToDollars(transfer.amount) : '',
+    amount: transfer?.amount ? formatMoneyFromCentsToDollars(transfer.amount, false) : '',
     fromAccount: transfer?.fromAccount?.id || '',
     toAccount: transfer?.toAccount?.id || '',
     categoryId: transfer?.category?.id || '',
@@ -71,6 +69,8 @@ function EditTransferForm({
                 value={values.amount}
                 onChange={handleChange('amount')}
                 onBlur={handleTrim('amount')}
+                withPrefix
+                prefix="$"
               >
                 Amount
               </BorderedInput>
@@ -133,11 +133,10 @@ function EditTransferForm({
           </Row>
         </Body>
         <Footer>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
             Save
           </Button>
         </Footer>
-        {/* TODO: Make sure to disable button when isSubmitting is true */}
       </form>
     </>
   );

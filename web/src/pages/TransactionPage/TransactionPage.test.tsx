@@ -27,6 +27,8 @@ const TRANSACTIONS: Transaction[] = [
     isCashIn: false,
     isCashOut: true,
     isUncategorized: false,
+    isTransfer: false,
+    transferId: null,
   },
 ];
 
