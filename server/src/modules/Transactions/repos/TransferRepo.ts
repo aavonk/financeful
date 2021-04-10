@@ -13,12 +13,21 @@ export interface ITransferRepo {
     transferId: string,
     userId: string,
   ): Promise<Transaction[]>;
+  validateAccounts(input: TransferInput): boolean;
 }
 
 export class TransferRepo implements ITransferRepo {
   private client: PrismaClient;
   constructor(client: PrismaClient) {
     this.client = client;
+  }
+
+  public validateAccounts(input: TransferInput): boolean {
+    const { fromAccount, toAccount } = input;
+    if (fromAccount === toAccount) {
+      return false;
+    }
+    return true;
   }
 
   public async getTransfer(id: string): Promise<Transfer> {
@@ -108,7 +117,7 @@ export class TransferRepo implements ITransferRepo {
     )[0];
 
     const transferIdentifier: string = nanoid();
-    const transferDate = new Date(input.date)
+    const transferDate = new Date(input.date);
 
     const expense = this.client.transaction.create({
       data: {

@@ -1,37 +1,57 @@
 import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { Transaction, Context } from '@Shared/types';
-import { TransferInput } from '../types/transfer.types';
-import { Transfer } from '../types/transfer.types';
+import {
+  TransferInput,
+  Transfer,
+  TransferResult,
+} from '../types/transfer.types';
 
 @Resolver()
 export class TransferResolver {
   @Authorized()
-  @Mutation(() => [Transaction, Transaction])
+  @Mutation(() => TransferResult)
   async createTransfer(
     @Arg('input') input: TransferInput,
     @Ctx() { user, transferService }: Context,
-  ): Promise<Transaction[]> {
-    return await transferService.createTransfer(input, user.id);
+  ): Promise<TransferResult> {
+    if (!transferService.validateAccounts(input)) {
+      return {
+        error: {
+          message: 'A transfer must be between two different accounts.',
+        },
+      };
+    }
+    const transactions = await transferService.createTransfer(input, user.id);
+    return { transactions };
   }
 
   @Authorized()
-  @Mutation(() => [Transaction, Transaction])
+  @Mutation(() => TransferResult)
   async updateTransfer(
     @Arg('transferId') transferId: string,
     @Arg('input') input: TransferInput,
     @Ctx() { user, transferService }: Context,
-  ): Promise<Transaction[]> {
+  ): Promise<TransferResult> {
+    if (!transferService.validateAccounts(input)) {
+      return {
+        error: {
+          message: 'A transfer must be between two different accounts.',
+        },
+      };
+    }
+
     const transactions = await transferService.updateTransfer(
       input,
       transferId,
       user.id,
     );
+
     if (!transactions || transactions.length === 0) {
       throw new Error('Unable to create new transfer');
     }
 
-    return transactions;
+    return { transactions };
   }
 
   @Authorized()
