@@ -309,6 +309,27 @@ export type UpdateTransactionMutation = (
   ) }
 );
 
+export type UpdateTransferMutationVariables = Exact<{
+  input: TransferInput;
+  transferId: Scalars['String'];
+}>;
+
+
+export type UpdateTransferMutation = (
+  { __typename?: 'Mutation' }
+  & { updateTransfer: Array<(
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized' | 'isTransfer' | 'transferId'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  )> }
+);
+
 export type FetchAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -688,6 +709,59 @@ export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
 export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
 export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+export const UpdateTransferDocument = gql`
+    mutation UpdateTransfer($input: TransferInput!, $transferId: String!) {
+  updateTransfer(input: $input, transferId: $transferId) {
+    id
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    accountId
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+    isTransfer
+    transferId
+  }
+}
+    `;
+export type UpdateTransferMutationFn = Apollo.MutationFunction<UpdateTransferMutation, UpdateTransferMutationVariables>;
+
+/**
+ * __useUpdateTransferMutation__
+ *
+ * To run a mutation, you first call `useUpdateTransferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTransferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTransferMutation, { data, loading, error }] = useUpdateTransferMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      transferId: // value for 'transferId'
+ *   },
+ * });
+ */
+export function useUpdateTransferMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTransferMutation, UpdateTransferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTransferMutation, UpdateTransferMutationVariables>(UpdateTransferDocument, options);
+      }
+export type UpdateTransferMutationHookResult = ReturnType<typeof useUpdateTransferMutation>;
+export type UpdateTransferMutationResult = Apollo.MutationResult<UpdateTransferMutation>;
+export type UpdateTransferMutationOptions = Apollo.BaseMutationOptions<UpdateTransferMutation, UpdateTransferMutationVariables>;
 export const FetchAccountsDocument = gql`
     query fetchAccounts {
   getAccounts {

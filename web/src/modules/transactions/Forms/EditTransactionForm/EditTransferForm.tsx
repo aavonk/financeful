@@ -24,6 +24,7 @@ interface FormProps {
   categories: Category[] | undefined;
   transfer: Transfer | undefined;
   isSubmitting: boolean;
+  onFormSubmit: (values: TransferInput, id: string) => void;
 }
 
 function EditTransferForm({
@@ -31,6 +32,7 @@ function EditTransferForm({
   categories = [],
   isSubmitting,
   transfer,
+  onFormSubmit,
 }: FormProps) {
   const [transferDate, setTransferDate] = useState(new Date());
   const initialValue: TransferFormFields = {
@@ -49,7 +51,23 @@ function EditTransferForm({
   } = useForm<TransferFormFields>({
     validations: transferFormValidations,
     initialValue,
+    onSubmit: () => {
+      onFormSubmit(
+        {
+          ...values,
+          date: transferDate,
+          amount: convertInputAmountToCents(values.amount),
+        },
+        transfer!.id,
+      );
+    },
   });
+
+  useEffect(() => {
+    if (transfer?.date) {
+      setTransferDate(new Date(transfer.date));
+    }
+  }, [transfer?.date]);
   return (
     <>
       {isSubmitting && <Progressbar />}
