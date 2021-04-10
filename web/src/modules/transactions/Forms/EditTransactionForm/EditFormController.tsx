@@ -67,7 +67,7 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
 
   const handleTransferEdit = async (values: TransferInput, id: string) => {
     try {
-      await updateTransfer({
+      const { data } = await updateTransfer({
         variables: { input: values, transferId: id },
         update(cache, { data }) {
           cache.modify({
@@ -87,8 +87,15 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
           });
         },
       });
-      closeModal();
-      showAlert('Transfer updated', 'info');
+
+      if (data?.updateTransfer.error) {
+        showAlert(data.updateTransfer.error.message, 'error', 7000);
+      }
+
+      if (data?.updateTransfer.transactions) {
+        closeModal();
+        showAlert('Transfer updated', 'info');
+      }
     } catch (err) {
       closeModal();
       showAlert('There was an error updating your transfer. Try again', 'error', 7000);

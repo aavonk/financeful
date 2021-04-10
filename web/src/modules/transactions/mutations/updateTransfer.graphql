@@ -1,24 +1,29 @@
 mutation UpdateTransfer($input: TransferInput!, $transferId: String!) {
   updateTransfer(input: $input, transferId: $transferId) {
-    id
-    payee
-    description
-    amount
-    category {
+    transactions {
       id
-      name
+      payee
+      description
+      amount
+      category {
+        id
+        name
+      }
+      type
+      date
+      accountId
+      account {
+        id
+        accountName
+      }
+      isCashIn
+      isCashOut
+      isUncategorized
+      isTransfer
+      transferId
     }
-    type
-    date
-    accountId
-    account {
-      id
-      accountName
+    error {
+      message
     }
-    isCashIn
-    isCashOut
-    isUncategorized
-    isTransfer
-    transferId
   }
 }
