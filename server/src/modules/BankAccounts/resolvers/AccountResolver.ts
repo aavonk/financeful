@@ -5,13 +5,8 @@ import { Account, Context } from '@Shared/types';
 export class AccountResolver {
   @Authorized()
   @Query(() => [Account])
-  async getAccounts(@Ctx() { prisma, user }: Context): Promise<Account[]> {
-    const accounts: Account[] = await prisma.account.findMany({
-      where: {
-        userId: user.id,
-      },
-    });
-
+  async getAccounts(@Ctx() { user, accountRepo }: Context): Promise<Account[]> {
+    const accounts = accountRepo.getAccounts(user.id);
     return accounts;
   }
 }
