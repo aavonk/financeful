@@ -1,15 +1,13 @@
 import { ToolbarRoot, ActionsContainer } from './style';
 import { TableInstance } from 'react-table';
-import TransactionForm from '../../Forms/TransactionForm';
+import TransactionForm from '../../Forms/TransactionForm/TransactionFormController';
 import Searchbox from './Searchbox';
 
 type ToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>;
 };
 
-function Toolbar<T extends Record<string, unknown>>({
-  instance,
-}: ToolbarProps<T>) {
+function Toolbar<T extends Record<string, unknown>>({ instance }: ToolbarProps<T>) {
   const { allColumns } = instance;
 
   return (

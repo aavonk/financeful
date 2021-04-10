@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import TransactionForm from '../index';
+import TransactionForm from '../TransactionFormController';
 import ThemeProvider from '@Context/theme';
 import { AlertProvider } from '@Context/alert/alertContext';
 import { FetchAccountsAndCategoriesDocument } from '@Generated/graphql';

@@ -1,18 +1,29 @@
 import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { Transaction, Context } from '@Shared/types';
-import { TransferInput } from '../types/transfer.types';
-import { Transfer } from '../types/transfer.types';
+import {
+  TransferInput,
+  Transfer,
+  TransferResult,
+} from '../types/transfer.types';
 
 @Resolver()
 export class TransferResolver {
   @Authorized()
-  @Mutation(() => [Transaction, Transaction])
+  @Mutation(() => TransferResult)
   async createTransfer(
     @Arg('input') input: TransferInput,
     @Ctx() { user, transferService }: Context,
-  ): Promise<Transaction[]> {
-    return await transferService.createTransfer(input, user.id);
+  ): Promise<TransferResult> {
+    if (!transferService.validateAccounts(input)) {
+      return {
+        error: {
+          message: 'To and From account must be different.',
+        },
+      };
+    }
+    const transactions = await transferService.createTransfer(input, user.id);
+    return { transactions };
   }
 
   @Authorized()

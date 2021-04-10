@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID, InputType, Int } from 'type-graphql';
-import { Account, Category } from '@Shared/types';
+import { Account, Category, Transaction } from '@Shared/types';
 
 @ObjectType()
 export class Transfer {
@@ -44,4 +44,19 @@ export class TransferInput {
 
   @Field(() => ID, { nullable: true })
   categoryId?: string;
+}
+
+@ObjectType()
+export class TransferError {
+  @Field(() => String)
+  message: String;
+}
+
+@ObjectType()
+export class TransferResult {
+  @Field(() => [Transaction, Transaction], { nullable: true })
+  transactions?: Transaction[];
+
+  @Field(() => TransferError, { nullable: true })
+  error?: TransferError;
 }
