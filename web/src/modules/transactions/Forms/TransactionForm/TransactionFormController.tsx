@@ -42,18 +42,20 @@ function TransactionFormController() {
   };
 
   const onTransferSubmit = async (values: TransferInput) => {
-    const { data, errors } = await createTransfer({ variables: { input: values } });
+    const { data: response, errors } = await createTransfer({
+      variables: { input: values },
+    });
 
     if (errors) {
       showAlert('There was an error creating your transfer', 'error', 5000);
     }
 
-    if (data?.createTransfer.transactions) {
+    if (response?.createTransfer.transactions) {
       showAlert('Transfer successfully added', 'info');
     }
 
-    if (data?.createTransfer.error) {
-      showAlert(data.createTransfer.error.message, 'error', 7000);
+    if (response?.createTransfer.error) {
+      showAlert(response.createTransfer.error.message, 'error', 7000);
     }
   };
 
