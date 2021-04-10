@@ -48,13 +48,11 @@ function TransferForm({
     initialValue: initialState,
     validations: transferFormValidations,
     onSubmit: () => {
-      const formattedValues: TransferInput = {
+      onFormSubmit({
         ...values,
         amount: convertInputAmountToCents(values.amount),
         date: transferDate,
-      };
-
-      onFormSubmit(formattedValues);
+      });
     },
   });
   return (

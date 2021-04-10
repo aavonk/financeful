@@ -15,7 +15,6 @@ import { EditForm } from './FormProvider';
 import { Overlay, Content } from '../style';
 import EditPaymentForm from './EditPaymentForm';
 import EditTransferForm from './EditTransferForm';
-import { useUpdateTransfer } from '../../mutations/useUpdateTransfer';
 
 type Props = {
   transaction: Transaction;
@@ -33,7 +32,6 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
     updateTransaction,
     { loading: submittingPayment },
   ] = useUpdateTransactionMutation();
-  // const { mutate: updateTransfer, loading: submittingTransfer } = useUpdateTransfer();
   const [updateTransfer, { loading: submittingTransfer }] = useUpdateTransferMutation();
   const { showAlert } = useAlert();
 

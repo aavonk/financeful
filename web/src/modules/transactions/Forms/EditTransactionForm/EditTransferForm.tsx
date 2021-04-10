@@ -58,6 +58,7 @@ function EditTransferForm({
           date: transferDate,
           amount: convertInputAmountToCents(values.amount),
         },
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         transfer!.id,
       );
     },
