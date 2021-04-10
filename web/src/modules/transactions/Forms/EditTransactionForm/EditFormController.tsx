@@ -4,7 +4,10 @@ import {
   TransactionInput,
   useFetchAccountsAndCategoriesQuery,
   useUpdateTransactionMutation,
+  useUpdateTransferMutation,
   useGetTransferLazyQuery,
+  TransferInput,
+  GetTransactionsDocument,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import Toast from '@Common/Alerts/Toast';
@@ -12,6 +15,7 @@ import { EditForm } from './FormProvider';
 import { Overlay, Content } from '../style';
 import EditPaymentForm from './EditPaymentForm';
 import EditTransferForm from './EditTransferForm';
+import { useUpdateTransfer } from '../../mutations/useUpdateTransfer';
 
 type Props = {
   transaction: Transaction;
@@ -22,13 +26,15 @@ type Props = {
 function EditFormController({ transaction, isOpen, closeModal }: Props) {
   const { data, loading: fetchingAccounts, error } = useFetchAccountsAndCategoriesQuery();
   const [
-    updateTransaction,
-    { loading: submittingPayment },
-  ] = useUpdateTransactionMutation();
-  const [
     getTransfer,
     { data: transfer, loading: fetchingTransfer, error: transferError },
   ] = useGetTransferLazyQuery();
+  const [
+    updateTransaction,
+    { loading: submittingPayment },
+  ] = useUpdateTransactionMutation();
+  // const { mutate: updateTransfer, loading: submittingTransfer } = useUpdateTransfer();
+  const [updateTransfer, { loading: submittingTransfer }] = useUpdateTransferMutation();
   const { showAlert } = useAlert();
 
   useEffect(() => {
@@ -45,7 +51,7 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
     return <Toast type="error" message="We ran into an error, please try again later" />;
   }
 
-  const handleEdit = async (values: TransactionInput) => {
+  const handlePaymentEdit = async (values: TransactionInput) => {
     try {
       await updateTransaction({
         variables: {
@@ -58,6 +64,36 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
     } catch (err) {
       closeModal();
       showAlert('There was an error updating your transaction. Try again', 'error', 7000);
+    }
+  };
+
+  const handleTransferEdit = async (values: TransferInput, id: string) => {
+    try {
+      await updateTransfer({
+        variables: { input: values, transferId: id },
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              getTransactions(existingTransactionsRef = [], { readField }) {
+                const filteredTransactions = existingTransactionsRef.filter(
+                  (transactionRef: Transaction) =>
+                    id !== readField('transferId', transactionRef),
+                );
+                const newTransactionsRef = cache.writeQuery({
+                  data: data?.updateTransfer,
+                  query: GetTransactionsDocument,
+                });
+                return [newTransactionsRef, ...filteredTransactions];
+              },
+            },
+          });
+        },
+      });
+      closeModal();
+      showAlert('Transfer updated', 'info');
+    } catch (err) {
+      closeModal();
+      showAlert('There was an error updating your transfer. Try again', 'error', 7000);
     }
   };
 
@@ -74,14 +110,15 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
             <EditTransferForm
               accounts={data?.getAccounts}
               categories={data?.getCategories}
-              isSubmitting={true}
+              isSubmitting={submittingTransfer}
               transfer={transfer?.getTransfer}
+              onFormSubmit={handleTransferEdit}
             />
           </EditForm.Transfer>
           <EditForm.Payment>
             <EditPaymentForm
               transaction={transaction}
-              onFormSubmit={handleEdit}
+              onFormSubmit={handlePaymentEdit}
               categories={data?.getCategories}
               accounts={data?.getAccounts}
               isSubmitting={submittingPayment}
