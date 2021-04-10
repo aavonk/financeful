@@ -9,7 +9,7 @@ import { TransactionResolver } from '@Modules/Transactions/resolvers/Transaction
 import { TransferResolver } from '@Modules/Transactions/resolvers/TransferResolver';
 import { AccountResolver } from '@Modules/BankAccounts/resolvers/AccountResolver';
 import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
-import { TransferRepo } from '@Modules/Transactions/repos/TransferRepo';
+import { TransferRepo } from '@Modules/Transactions/repos/implementations/transferRepo';
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
 import prisma from '@Shared/database/prisma';
 
@@ -31,7 +31,7 @@ const main = async () => {
     context: ({ req }) => ({
       req,
       prisma,
-      transferService: new TransferRepo(prisma),
+      transferRepo: new TransferRepo(),
       accountRepo: new AccountRepo(),
     }),
   });

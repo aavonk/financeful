@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { ExpressContext } from 'apollo-server-express';
-import { ITransferRepo } from '@Modules/Transactions/repos/TransferRepo';
+import { ITransferRepo } from '@Modules/Transactions/repos/transferRepo';
 import { IAccountRepo } from '@Modules/BankAccounts/repos/accountRepo';
 export interface Context extends ExpressContext {
   prisma: PrismaClient;
   user: {
     id: string;
   };
-  transferService: ITransferRepo;
+  transferRepo: ITransferRepo;
   accountRepo: IAccountRepo;
 }

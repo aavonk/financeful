@@ -13,16 +13,16 @@ export class TransferResolver {
   @Mutation(() => TransferResult)
   async createTransfer(
     @Arg('input') input: TransferInput,
-    @Ctx() { user, transferService }: Context,
+    @Ctx() { user, transferRepo }: Context,
   ): Promise<TransferResult> {
-    if (!transferService.validateAccounts(input)) {
+    if (!transferRepo.validateAccounts(input)) {
       return {
         error: {
           message: 'A transfer must be between two different accounts.',
         },
       };
     }
-    const transactions = await transferService.createTransfer(input, user.id);
+    const transactions = await transferRepo.createTransfer(input, user.id);
     return { transactions };
   }
 
@@ -31,9 +31,9 @@ export class TransferResolver {
   async updateTransfer(
     @Arg('transferId') transferId: string,
     @Arg('input') input: TransferInput,
-    @Ctx() { user, transferService }: Context,
+    @Ctx() { user, transferRepo }: Context,
   ): Promise<TransferResult> {
-    if (!transferService.validateAccounts(input)) {
+    if (!transferRepo.validateAccounts(input)) {
       return {
         error: {
           message: 'A transfer must be between two different accounts.',
@@ -41,7 +41,7 @@ export class TransferResolver {
       };
     }
 
-    const transactions = await transferService.updateTransfer(
+    const transactions = await transferRepo.updateTransfer(
       input,
       transferId,
       user.id,
@@ -58,9 +58,9 @@ export class TransferResolver {
   @Mutation(() => String)
   async deleteTransfer(
     @Arg('transferId') transferId: string,
-    @Ctx() { user, transferService }: Context,
+    @Ctx() { user, transferRepo }: Context,
   ): Promise<string> {
-    const transactions = await transferService.getTransferTransactions(
+    const transactions = await transferRepo.getTransferTransactions(
       transferId,
       user.id,
     );
@@ -81,7 +81,7 @@ export class TransferResolver {
       );
     }
 
-    await transferService.deleteTransfer(transferId, user.id);
+    await transferRepo.deleteTransfer(transferId, user.id);
 
     return 'Successfully Deleted Transfer';
   }
@@ -90,9 +90,9 @@ export class TransferResolver {
   @Query(() => Transfer)
   async getTransfer(
     @Arg('id') id: string,
-    @Ctx() { transferService }: Context,
+    @Ctx() { transferRepo }: Context,
   ): Promise<Transfer> {
-    const transfer: Transfer = await transferService.getTransfer(id);
+    const transfer: Transfer = await transferRepo.getTransfer(id);
 
     return transfer;
   }
