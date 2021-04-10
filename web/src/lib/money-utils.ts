@@ -13,19 +13,7 @@ export const isValidCurrencyFormat = (input: string) => {
   return true;
 };
 
-export const formatTransactionType = (type: string) => {
-  // console.log(type);
-  const expense = 'EXPENSE';
-  const income = 'INCOME';
-  if (type === expense || type === income) {
-    return type.charAt(0) + type.slice(1).toLowerCase();
-  }
-};
-
-export const formatMoneyFromCentsToDollars = (
-  cents: number,
-  withDollarSign = true,
-) => {
+export const formatMoneyFromCentsToDollars = (cents: number, withDollarSign = true) => {
   const dollars = cents / 100;
   const originalString = dollars.toLocaleString('en-US', {
     style: 'currency',

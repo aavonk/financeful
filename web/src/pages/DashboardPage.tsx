@@ -2,11 +2,12 @@ function DashboardPage() {
   return (
     <>
       <div>Dashboard page yay</div>;
-      {/* <ToggleSwitch
-        ariaLabel="Testing Switch"
-        uncheckedLabel="Transfer"
-        checkedLabel="Transaction"
-      /> */}
+      <p>
+        {' '}
+        In the backend, make sure that when making a transfer, the two accounts are not
+        the same
+      </p>
+      <p>Add query to get transfer to populate editTransferForm</p>
     </>
   );
 }

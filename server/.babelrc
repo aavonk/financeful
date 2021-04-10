@@ -1,3 +1,24 @@
 {
-  "presets": ["@babel/preset-env"]
+  "presets": ["@babel/preset-typescript", "@babel/preset-env"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "@Modules": "./src/modules",
+          "@Lib": "./src/lib",
+          "@Shared": "./src/shared"
+        }
+      }
+    ],
+    "babel-plugin-transform-typescript-metadata",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ]
 }

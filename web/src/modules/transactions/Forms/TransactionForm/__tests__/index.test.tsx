@@ -130,9 +130,7 @@ describe('The possible states while fetching accounts & categories', () => {
     fireEvent.click(openButton);
 
     await waitFor(() => {
-      expect(
-        getByText(/we ran into trouble loading your accounts/i),
-      ).toBeInTheDocument();
+      expect(getByText(/we ran into trouble loading your accounts/i)).toBeInTheDocument();
     });
   });
 
@@ -149,9 +147,7 @@ describe('The possible states while fetching accounts & categories', () => {
     fireEvent.click(openButton);
 
     await waitFor(() => {
-      expect(
-        getByText(/we ran into trouble loading your accounts/i),
-      ).toBeInTheDocument();
+      expect(getByText(/we ran into trouble loading your accounts/i)).toBeInTheDocument();
     });
   });
 });

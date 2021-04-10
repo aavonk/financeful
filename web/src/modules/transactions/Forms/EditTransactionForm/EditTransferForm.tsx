@@ -1,60 +1,74 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
+
+import { Row, Col } from '@Globals/index';
 import {
   BorderedInput,
   BorderedSelect,
   ErrorMessage,
   BorderedDatePicker,
 } from '@Common/FormElements';
-import { convertInputAmountToCents } from '@Lib/money-utils';
-import { Row, Col } from '@Globals/index';
+import {
+  convertInputAmountToCents,
+  formatMoneyFromCentsToDollars,
+} from '@Lib/money-utils';
 import { useForm } from '@Hooks/useForm';
-import { Body, Footer } from '../style';
-import { Category, Account, TransferInput } from '@Generated/graphql';
-import Button from '@Common/Button';
-import Progressbar from '@Common/Progressbar';
+import { Category, Account, TransferInput, Transfer } from '@Generated/graphql';
 import { TransferFormFields } from '../types';
 import { transferFormValidations } from '../formValidations';
+import { Body, Footer } from '../style';
+import Progressbar from '@Common/Progressbar';
+import Button from '@Common/Button';
 
 interface FormProps {
   accounts: Account[] | undefined;
   categories: Category[] | undefined;
+  transfer: Transfer | undefined;
   isSubmitting: boolean;
-  onFormSubmit: (values: TransferInput) => void;
+  onFormSubmit: (values: TransferInput, id: string) => void;
 }
 
-const initialState = {
-  amount: '',
-  fromAccount: '',
-  toAccount: '',
-  categoryId: '',
-  description: '',
-};
-
-function TransferForm({
+function EditTransferForm({
   accounts = [],
   categories = [],
   isSubmitting,
+  transfer,
   onFormSubmit,
 }: FormProps) {
-  const [transferDate, setTransferDate] = React.useState(new Date());
-
+  const [transferDate, setTransferDate] = useState(new Date());
+  const initialValue: TransferFormFields = {
+    amount: transfer?.amount ? formatMoneyFromCentsToDollars(transfer.amount, false) : '',
+    fromAccount: transfer?.fromAccount?.id || '',
+    toAccount: transfer?.toAccount?.id || '',
+    categoryId: transfer?.category?.id || '',
+    description: transfer?.description || '',
+  };
   const {
     values,
-    handleChange,
-    handleSubmit,
-    handleTrim,
     errors,
+    handleSubmit,
+    handleChange,
+    handleTrim,
   } = useForm<TransferFormFields>({
-    initialValue: initialState,
     validations: transferFormValidations,
+    initialValue,
     onSubmit: () => {
-      onFormSubmit({
-        ...values,
-        amount: convertInputAmountToCents(values.amount),
-        date: transferDate,
-      });
+      onFormSubmit(
+        {
+          ...values,
+          date: transferDate,
+          amount: convertInputAmountToCents(values.amount),
+        },
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        transfer!.id,
+      );
     },
   });
+
+  useEffect(() => {
+    if (transfer?.date) {
+      setTransferDate(new Date(transfer.date));
+    }
+  }, [transfer?.date]);
   return (
     <>
       {isSubmitting && <Progressbar />}
@@ -74,6 +88,8 @@ function TransferForm({
                 value={values.amount}
                 onChange={handleChange('amount')}
                 onBlur={handleTrim('amount')}
+                withPrefix
+                prefix="$"
               >
                 Amount
               </BorderedInput>
@@ -136,7 +152,7 @@ function TransferForm({
           </Row>
         </Body>
         <Footer>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" disabled={isSubmitting}>
             Save
           </Button>
         </Footer>
@@ -145,4 +161,4 @@ function TransferForm({
   );
 }
 
-export default TransferForm;
+export default EditTransferForm;

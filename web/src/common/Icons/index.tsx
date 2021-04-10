@@ -13,6 +13,7 @@ import {
   BsArrowUpShort,
   BsArrowDownShort,
   BsThreeDotsVertical,
+  BsArrowRepeat,
 } from 'react-icons/bs';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa';
@@ -54,6 +55,7 @@ export const CloseIcon = ({ ...props }) => {
 export const UpArrowCircle = ({ ...props }) => {
   return <FiArrowUpCircle {...props} aria-hidden="true" />;
 };
+
 export const DownArrowCircle = ({ ...props }) => {
   return <FiArrowDownCircle {...props} aria-hidden="true" />;
 };
@@ -63,6 +65,10 @@ export const UpArrow = ({ ...props }) => {
 
 export const DownArrow = ({ ...props }) => {
   return <BsArrowDownShort {...props} aria-hidden="true" />;
+};
+
+export const RepeatingArrow = ({ ...props }) => {
+  return <BsArrowRepeat {...props} aria-hidden="true" />;
 };
 
 export const CheckOutline = ({ ...props }) => {

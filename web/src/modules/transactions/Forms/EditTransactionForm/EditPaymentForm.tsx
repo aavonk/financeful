@@ -1,4 +1,7 @@
-import * as React from 'react';
+import { useState } from 'react';
+import Button from '@Common/Button';
+import { Transaction, Category, Account, TransactionInput } from '@Generated/graphql';
+import { Body, Footer } from '../style';
 import {
   BorderedInput,
   BorderedSelect,
@@ -7,42 +10,43 @@ import {
 } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { Body, Footer } from '../style';
-import { convertInputAmountToCents } from '@Lib/money-utils';
-import Button from '@Common/Button';
-import Progressbar from '@Common/Progressbar';
+import {
+  formatMoneyFromCentsToDollars,
+  convertInputAmountToCents,
+} from '@Lib/money-utils';
 import { TransactionFields } from '../types';
-import { Category, Account, TransactionInput } from '@Generated/graphql';
 import { paymentFormValidations } from '../formValidations';
-
-const initialValue = {
-  date: new Date(),
-  accountId: '',
-  type: '',
-  payee: '',
-  description: '',
-  amount: '',
-  categoryId: '',
-};
+import Progressbar from '@Common/Progressbar';
 
 type Props = {
-  onFormSubmit: (values: TransactionInput) => void;
+  transaction: Transaction;
   categories: Category[] | undefined;
   accounts: Account[] | undefined;
+  onFormSubmit: (values: TransactionInput) => void;
   isSubmitting: boolean;
 };
 
-function PaymentForm({
-  onFormSubmit,
+function EditPaymentForm({
+  transaction,
   categories = [],
   accounts = [],
+  onFormSubmit,
   isSubmitting,
 }: Props) {
-  const [transDate, setTransDate] = React.useState(new Date());
+  const [transDate, setTransDate] = useState(new Date(transaction.date));
+  const initialValue = {
+    date: new Date(transaction.date),
+    accountId: transaction.accountId ? transaction.accountId : '',
+    description: transaction.description ? transaction.description : '',
+    categoryId: transaction.category?.id ? transaction.category.id : '',
+    type: transaction.type,
+    payee: transaction.payee,
+    amount: formatMoneyFromCentsToDollars(transaction.amount, false),
+  };
   const {
     values,
-    handleChange,
     handleSubmit,
+    handleChange,
     handleTrim,
     errors,
   } = useForm<TransactionFields>({
@@ -55,6 +59,7 @@ function PaymentForm({
         amount: convertInputAmountToCents(values.amount),
       }),
   });
+
   return (
     <>
       {isSubmitting && <Progressbar />}
@@ -163,4 +168,4 @@ function PaymentForm({
   );
 }
 
-export default PaymentForm;
+export default EditPaymentForm;

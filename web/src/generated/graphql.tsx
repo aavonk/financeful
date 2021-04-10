@@ -21,12 +21,18 @@ export type Query = {
   getCurrentUser: User;
   getTransactions?: Maybe<Array<Transaction>>;
   getTransaction?: Maybe<Transaction>;
-  getCategories: Array<Category>;
+  getTransfer: Transfer;
   getAccounts: Array<Account>;
+  getCategories: Array<Category>;
 };
 
 
 export type QueryGetTransactionArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetTransferArgs = {
   id: Scalars['String'];
 };
 
@@ -81,6 +87,17 @@ export type Account = {
   isAsset?: Maybe<Scalars['Boolean']>;
   isLiability?: Maybe<Scalars['Boolean']>;
   balance?: Maybe<Scalars['Int']>;
+};
+
+export type Transfer = {
+  __typename?: 'Transfer';
+  id: Scalars['ID'];
+  date: Scalars['DateTime'];
+  fromAccount: Account;
+  toAccount: Account;
+  category?: Maybe<Category>;
+  description?: Maybe<Scalars['String']>;
+  amount: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -292,6 +309,27 @@ export type UpdateTransactionMutation = (
   ) }
 );
 
+export type UpdateTransferMutationVariables = Exact<{
+  input: TransferInput;
+  transferId: Scalars['String'];
+}>;
+
+
+export type UpdateTransferMutation = (
+  { __typename?: 'Mutation' }
+  & { updateTransfer: Array<(
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId' | 'isCashIn' | 'isCashOut' | 'isUncategorized' | 'isTransfer' | 'transferId'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name'>
+    )>, account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'id' | 'accountName'>
+    )> }
+  )> }
+);
+
 export type FetchAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -344,6 +382,29 @@ export type GetTransactionsQuery = (
       & Pick<Account, 'accountName' | 'id'>
     )> }
   )>> }
+);
+
+export type GetTransferQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetTransferQuery = (
+  { __typename?: 'Query' }
+  & { getTransfer: (
+    { __typename?: 'Transfer' }
+    & Pick<Transfer, 'id' | 'date' | 'amount' | 'description'>
+    & { fromAccount: (
+      { __typename?: 'Account' }
+      & Pick<Account, 'accountName' | 'id'>
+    ), toAccount: (
+      { __typename?: 'Account' }
+      & Pick<Account, 'accountName' | 'id'>
+    ), category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'name' | 'id'>
+    )> }
+  ) }
 );
 
 
@@ -648,6 +709,59 @@ export function useUpdateTransactionMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateTransactionMutationHookResult = ReturnType<typeof useUpdateTransactionMutation>;
 export type UpdateTransactionMutationResult = Apollo.MutationResult<UpdateTransactionMutation>;
 export type UpdateTransactionMutationOptions = Apollo.BaseMutationOptions<UpdateTransactionMutation, UpdateTransactionMutationVariables>;
+export const UpdateTransferDocument = gql`
+    mutation UpdateTransfer($input: TransferInput!, $transferId: String!) {
+  updateTransfer(input: $input, transferId: $transferId) {
+    id
+    payee
+    description
+    amount
+    category {
+      id
+      name
+    }
+    type
+    date
+    accountId
+    account {
+      id
+      accountName
+    }
+    isCashIn
+    isCashOut
+    isUncategorized
+    isTransfer
+    transferId
+  }
+}
+    `;
+export type UpdateTransferMutationFn = Apollo.MutationFunction<UpdateTransferMutation, UpdateTransferMutationVariables>;
+
+/**
+ * __useUpdateTransferMutation__
+ *
+ * To run a mutation, you first call `useUpdateTransferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTransferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTransferMutation, { data, loading, error }] = useUpdateTransferMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      transferId: // value for 'transferId'
+ *   },
+ * });
+ */
+export function useUpdateTransferMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTransferMutation, UpdateTransferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTransferMutation, UpdateTransferMutationVariables>(UpdateTransferDocument, options);
+      }
+export type UpdateTransferMutationHookResult = ReturnType<typeof useUpdateTransferMutation>;
+export type UpdateTransferMutationResult = Apollo.MutationResult<UpdateTransferMutation>;
+export type UpdateTransferMutationOptions = Apollo.BaseMutationOptions<UpdateTransferMutation, UpdateTransferMutationVariables>;
 export const FetchAccountsDocument = gql`
     query fetchAccounts {
   getAccounts {
@@ -810,3 +924,53 @@ export function useGetTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetTransactionsQueryHookResult = ReturnType<typeof useGetTransactionsQuery>;
 export type GetTransactionsLazyQueryHookResult = ReturnType<typeof useGetTransactionsLazyQuery>;
 export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery, GetTransactionsQueryVariables>;
+export const GetTransferDocument = gql`
+    query GetTransfer($id: String!) {
+  getTransfer(id: $id) {
+    id
+    date
+    amount
+    description
+    fromAccount {
+      accountName
+      id
+    }
+    toAccount {
+      accountName
+      id
+    }
+    category {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTransferQuery__
+ *
+ * To run a query within a React component, call `useGetTransferQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTransferQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTransferQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTransferQuery(baseOptions: Apollo.QueryHookOptions<GetTransferQuery, GetTransferQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTransferQuery, GetTransferQueryVariables>(GetTransferDocument, options);
+      }
+export function useGetTransferLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTransferQuery, GetTransferQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTransferQuery, GetTransferQueryVariables>(GetTransferDocument, options);
+        }
+export type GetTransferQueryHookResult = ReturnType<typeof useGetTransferQuery>;
+export type GetTransferLazyQueryHookResult = ReturnType<typeof useGetTransferLazyQuery>;
+export type GetTransferQueryResult = Apollo.QueryResult<GetTransferQuery, GetTransferQueryVariables>;

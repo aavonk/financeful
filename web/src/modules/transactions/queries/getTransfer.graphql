@@ -1,0 +1,20 @@
+query GetTransfer($id: String!) {
+  getTransfer(id: $id) {
+    id
+    date
+    amount
+    description
+    fromAccount {
+      accountName
+      id
+    }
+    toAccount {
+      accountName
+      id
+    }
+    category {
+      name
+      id
+    }
+  }
+}

@@ -7,3 +7,11 @@ export interface TransactionFields {
   amount: string;
   categoryId: string;
 }
+
+export interface TransferFormFields {
+  amount: string;
+  fromAccount: string;
+  toAccount: string;
+  description: string;
+  categoryId: string;
+}
