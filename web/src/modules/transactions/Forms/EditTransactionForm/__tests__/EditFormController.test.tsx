@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ReactElement } from 'react';
-import { render, waitFor, fireEvent, screen } from '@testing-library/react';
+import { render, waitFor, fireEvent } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import AppThemeProvider from '@Context/theme';
 import { AlertProvider } from '@Context/alert/alertContext';
