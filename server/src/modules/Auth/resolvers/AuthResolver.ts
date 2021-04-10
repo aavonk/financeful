@@ -25,43 +25,9 @@ export class AuthResolver {
   async login(
     @Arg('email', () => String) email: string,
     @Arg('password', () => String) password: string,
-    @Ctx() { prisma }: Context,
+    @Ctx() { authRepo }: Context,
   ): Promise<User> {
-    const { errors, valid } = validateLoginInput(email, password);
-
-    if (!valid) {
-      throw new UserInputError('Invalid Errors', { errors });
-    }
-
-    const user = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-    if (!user) {
-      throw new UserInputError('Invalid Credentials', {
-        errors: {
-          general: 'Invalid Credentials',
-        },
-      });
-    }
-
-    const match = await validatePassword(password, user.password);
-
-    if (!match) {
-      throw new UserInputError('Invalid Credentials', {
-        errors: {
-          general: 'Invalid Credentials',
-        },
-      });
-    }
-
-    const token = generateToken(user);
-
-    return {
-      ...user,
-      token,
-    };
+    return await authRepo.handleLogin(email, password);
   }
 
   @Mutation(() => User)

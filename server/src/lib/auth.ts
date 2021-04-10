@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../types/User';
+import { User } from '@Shared/types';
 
 export const hashpashword = async (password: string) => {
   return await bcrypt.hash(password, 12);

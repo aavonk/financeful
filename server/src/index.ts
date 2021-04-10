@@ -11,6 +11,7 @@ import { AccountResolver } from '@Modules/BankAccounts/resolvers/AccountResolver
 import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
 import { TransferRepo } from '@Modules/Transactions/repos/implementations/transferRepo';
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
+import { AuthRepo } from '@Modules/Auth/repos/implementations/authRepo';
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -33,6 +34,7 @@ const main = async () => {
       prisma,
       transferRepo: new TransferRepo(),
       accountRepo: new AccountRepo(),
+      authRepo: new AuthRepo(),
     }),
   });
 
