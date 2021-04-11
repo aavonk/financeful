@@ -2,17 +2,21 @@ import 'reflect-metadata';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
-import { PrismaClient } from '@prisma/client';
 import { authChecker as customAuthChecker } from './lib/auth-checker';
 import { AuthResolver } from '@Modules/Auth/resolvers/AuthResolver';
 import { UserResolver } from '@Modules/Users/resolvers/UserResolver';
 import { TransactionResolver } from '@Modules/Transactions/resolvers/TransactionResolver';
 import { TransferResolver } from '@Modules/Transactions/resolvers/TransferResolver';
-import { AccountResolver } from '@Modules/Accounts/resolvers/AccountResolver';
+import { AccountResolver } from '@Modules/BankAccounts/resolvers/AccountResolver';
 import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
-import { TransferRepo } from '@Modules/Transactions/repos/TransferRepo';
+import { TransferRepo } from '@Modules/Transactions/repos/implementations/transferRepo';
+import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
+import { AuthRepo } from '@Modules/Auth/repos/implementations/authRepo';
+import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
+import { TransactionRepo } from '@Modules/Transactions/repos/implementations/transactionRepo';
+import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
 
-const prisma = new PrismaClient();
+import prisma from '@Shared/database/prisma';
 
 const main = async () => {
   const app = express();
@@ -32,7 +36,12 @@ const main = async () => {
     context: ({ req }) => ({
       req,
       prisma,
-      transferService: new TransferRepo(prisma),
+      transferRepo: new TransferRepo(),
+      accountRepo: new AccountRepo(),
+      authRepo: new AuthRepo(),
+      categoryRepo: new CategoryRepo(),
+      transactionRepo: new TransactionRepo(),
+      userRepo: new UserRepo(),
     }),
   });
 

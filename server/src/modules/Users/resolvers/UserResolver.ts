@@ -5,12 +5,10 @@ import { User, Context } from '@Shared/types';
 export class UserResolver {
   @Authorized()
   @Query(() => User)
-  async getCurrentUser(@Ctx() { prisma, user }: Context): Promise<User | null> {
-    const currentUser = await prisma.user.findUnique({
-      where: {
-        id: user.id,
-      },
-    });
+  async getCurrentUser(
+    @Ctx() { user, userRepo }: Context,
+  ): Promise<User | null> {
+    const currentUser = await userRepo.findOne(user.id);
 
     if (!currentUser) {
       throw new Error('No user found by that Id');
