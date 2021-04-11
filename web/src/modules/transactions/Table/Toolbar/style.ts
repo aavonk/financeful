@@ -34,6 +34,21 @@ export const SearchInput = styled.input`
   box-shadow: none;
   color: ${({ theme }) => theme.colors.textPrimary};
   width: 100%;
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: ${({ theme }) => theme.colors.textSecondary};
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
 `;
 
 export const TabContainer = styled(FlexRow)`
@@ -96,9 +111,9 @@ export const TabItem = styled.button`
   font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
       sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   }
-  & :focus, :focus-visible  {
+  & :focus :focus-visible {
      & > span {
-       color: ${({ theme }) => theme.colors.textPrimary}
+       color: ${({ theme }) => theme.colors.textPrimary};
      }
   }
   ${({ active }: { active?: boolean }) =>

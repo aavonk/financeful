@@ -42,6 +42,7 @@ export const SidebarRoot = styled.div<{ $open: boolean }>`
       ${NavItem} {
         justify-content: flex-start;
         padding: 0 1.2rem;
+        border-radius: 12px;
         & > span {
           display: inline-flex;
         }
@@ -133,7 +134,6 @@ export const NavItem = styled(NavLink).attrs({ activeClassName })<{
   align-items: center;
   min-height: 50px;
   transition: background-color 0.2s ease-in;
-  border-radius: 12px;
   margin-top: 5px;
 
   & > span {
@@ -149,12 +149,13 @@ export const NavItem = styled(NavLink).attrs({ activeClassName })<{
   &.${activeClassName} {
     color: #fff;
     /* background-color: #0d34ff; */
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.darkFour};
   }
 
   &:hover,
   :focus {
     color: #fff;
+    background-color: ${({ theme }) => theme.colors.darkThree};
   }
 
   ${(props) =>

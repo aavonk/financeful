@@ -2,15 +2,11 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   colors: {
-    // background: '#161717',
     background: '#0b0e11',
-    // darkOne: '#161717',
     darkOne: '#0b0e11',
-    // darkTwo: '#202020',
     darkTwo: '#151a21',
-    darkThree: '#2B2B2B',
-    // primary: '#00acff',
-    // primary: '#0D34FF',
+    darkThree: '#242c37',
+    darkFour: '#323d4d',
     primary: '#1e88e5',
     primaryDark: '#007dcb',
     primaryDarkest: '#0d34ff',
@@ -19,11 +15,11 @@ const theme: DefaultTheme = {
     textPrimaryInversed: '#000000',
     textGrey: '#D7D7D7',
     textGreyMuted: '#9699a8',
-    textSecondary: '#717579',
+    // textSecondary: '#717579',
+    textSecondary: '#5d7292',
     textError: 'rgb(224, 36, 94)',
     tooltip: '#3E4954',
   },
-
   effects: {
     buttonHover: 'rgba(29, 161, 242, 0.1)',
     dangerHover: 'rgba(224, 36, 94, 0.2)',
