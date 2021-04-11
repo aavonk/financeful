@@ -3,6 +3,7 @@ import { ExpressContext } from 'apollo-server-express';
 import { ITransferRepo } from '@Modules/Transactions/repos/transferRepo';
 import { IAccountRepo } from '@Modules/BankAccounts/repos/accountRepo';
 import { IAuthRepo } from '@Modules/Auth/repos/authRepo';
+import { ICategoryRepo } from '@Modules/Transactions/repos/categoryRepo';
 
 export interface Context extends ExpressContext {
   prisma: PrismaClient;
@@ -12,4 +13,5 @@ export interface Context extends ExpressContext {
   transferRepo: ITransferRepo;
   accountRepo: IAccountRepo;
   authRepo: IAuthRepo;
+  categoryRepo: ICategoryRepo;
 }
