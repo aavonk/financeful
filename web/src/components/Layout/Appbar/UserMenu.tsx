@@ -1,5 +1,5 @@
 import '@reach/menu-button/styles.css';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button';
 import { ChevronDownIcon, LogoutIcon, WalletIcon } from '@Common/Icons';
@@ -76,6 +76,7 @@ function UserMenu() {
     state: { user },
     dispatch,
   } = useAuth();
+  const history = useHistory();
   return (
     <Menu>
       <StyledMenuButton id="user-actions">
@@ -87,11 +88,11 @@ function UserMenu() {
       </StyledMenuButton>
 
       <StyledMenuList>
-        <StyledMenuItem onSelect={() => console.log('wallet')}>
+        <StyledMenuItem onSelect={() => history.push('/my-wallet')}>
           <span aria-hidden="true">
             <WalletIcon />
           </span>
-          <Link to="/my-wallet">My Wallet</Link>
+          <span>My Wallet</span>
         </StyledMenuItem>
         <StyledMenuItem onSelect={() => dispatch({ type: 'LOGOUT' })}>
           <span aria-hidden="true">

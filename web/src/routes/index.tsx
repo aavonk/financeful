@@ -51,7 +51,7 @@ function Routes() {
                 <ErrorBoundary FallbackComponent={DefaultView}>
                   <PrivateRoute exact path="/transactions" component={TransactionPage} />
                 </ErrorBoundary>
-                <PrivateRoute exact path="my-wallet" component={MyWalletPage} />
+                <PrivateRoute exact path="/my-wallet" component={MyWalletPage} />
               </Layout>
             </Switch>
           </AlertProvider>
