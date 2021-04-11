@@ -13,7 +13,7 @@ import { TransferRepo } from '@Modules/Transactions/repos/implementations/transf
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
 import { AuthRepo } from '@Modules/Auth/repos/implementations/authRepo';
 import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
-
+import { TransactionRepo } from '@Modules/Transactions/repos/implementations/transactionRepo';
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -38,6 +38,7 @@ const main = async () => {
       accountRepo: new AccountRepo(),
       authRepo: new AuthRepo(),
       categoryRepo: new CategoryRepo(),
+      transactionRepo: new TransactionRepo(),
     }),
   });
 

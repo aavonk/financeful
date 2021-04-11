@@ -10,30 +10,9 @@ export class TransactionResolver {
   @Authorized()
   @Query(() => [Transaction], { nullable: true })
   async getTransactions(
-    @Ctx() { user, prisma }: Context,
+    @Ctx() { user, transactionRepo }: Context,
   ): Promise<Transaction[]> {
-    return await prisma.transaction.findMany({
-      where: {
-        userId: user.id,
-      },
-      orderBy: {
-        date: 'desc',
-      },
-      include: {
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
+    return await transactionRepo.findMany(user.id);
   }
 
   // ------ GET ONE TRANSACTION ------ //
@@ -41,27 +20,9 @@ export class TransactionResolver {
   @Query(() => Transaction, { nullable: true })
   async getTransaction(
     @Arg('id') id: string,
-    @Ctx() { user, prisma }: Context,
+    @Ctx() { user, transactionRepo }: Context,
   ): Promise<Transaction | null> {
-    const transaction = await prisma.transaction.findUnique({
-      where: {
-        id: id,
-      },
-      include: {
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
+    const transaction = await transactionRepo.findOne(id);
 
     if (!transaction) {
       throw new Error('No Transaction found by that ID');
@@ -79,38 +40,9 @@ export class TransactionResolver {
   @Mutation(() => Transaction)
   async createTransaction(
     @Arg('input') input: TransactionInput,
-    @Ctx() { prisma, user }: Context,
+    @Ctx() { user, transactionRepo }: Context,
   ): Promise<Transaction> {
-    const transaction = await prisma.transaction.create({
-      data: {
-        userId: user.id,
-        payee: input.payee,
-        amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
-        description: input.description,
-        date: input.date,
-        type: input.type,
-        accountId: input.accountId,
-        categoryId: input.categoryId ? input.categoryId : null,
-        isCashIn: input.type === 'INCOME',
-        isCashOut: input.type === 'EXPENSE',
-        isTransfer: false,
-        isUncategorized: !input.categoryId,
-      },
-      include: {
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-      },
-    });
+    const transaction = await transactionRepo.createOne(input, user.id);
 
     return transaction;
   }
@@ -120,23 +52,15 @@ export class TransactionResolver {
   @Mutation(() => String)
   async deleteTransaction(
     @Arg('id') id: string,
-    @Ctx() { user, prisma }: Context,
+    @Ctx() { user, transactionRepo }: Context,
   ): Promise<string> {
-    const transaction = await prisma.transaction.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    const transaction = await transactionRepo.findOne(id);
 
     if (transaction?.userId !== user.id) {
       throw new AuthenticationError('Unauthorized to perform this action');
     }
 
-    await prisma.transaction.delete({
-      where: {
-        id: transaction.id,
-      },
-    });
+    await transactionRepo.deleteOne(transaction.id);
 
     return 'Successfully removed';
   }
@@ -147,45 +71,22 @@ export class TransactionResolver {
   async updateTransaction(
     @Arg('id') id: string,
     @Arg('input') input: TransactionInput,
-    @Ctx() { prisma, user }: Context,
+    @Ctx() { user, transactionRepo }: Context,
   ): Promise<Transaction> {
-    const transaction = await prisma.transaction.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    const transaction = await transactionRepo.findOne(id);
 
     if (!transaction) {
       throw new Error('Unable to find transaction');
     }
 
-    if (!transaction || transaction?.userId !== user.id) {
+    if (transaction?.userId !== user.id) {
       throw new AuthenticationError('Unauthorized to perform this action');
     }
 
-    const updatedTransaction = await prisma.transaction.update({
-      where: {
-        id: transaction.id,
-      },
-      data: {
-        ...input,
-        categoryId: input.categoryId ? input.categoryId : null,
-      },
-      include: {
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
+    const updatedTransaction = await transactionRepo.updateOne(
+      transaction.id,
+      input,
+    );
 
     return updatedTransaction;
   }
