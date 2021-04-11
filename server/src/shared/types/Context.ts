@@ -5,6 +5,7 @@ import { IAccountRepo } from '@Modules/BankAccounts/repos/accountRepo';
 import { IAuthRepo } from '@Modules/Auth/repos/authRepo';
 import { ICategoryRepo } from '@Modules/Transactions/repos/categoryRepo';
 import { ITransactionRepo } from '@Modules/Transactions/repos/transactionRepo';
+import { IUserRepo } from '@Modules/Users/repos/userRepo';
 
 export interface Context extends ExpressContext {
   prisma: PrismaClient;
@@ -16,4 +17,5 @@ export interface Context extends ExpressContext {
   authRepo: IAuthRepo;
   categoryRepo: ICategoryRepo;
   transactionRepo: ITransactionRepo;
+  userRepo: IUserRepo;
 }

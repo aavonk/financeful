@@ -14,6 +14,8 @@ import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/account
 import { AuthRepo } from '@Modules/Auth/repos/implementations/authRepo';
 import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
 import { TransactionRepo } from '@Modules/Transactions/repos/implementations/transactionRepo';
+import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
+
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -39,6 +41,7 @@ const main = async () => {
       authRepo: new AuthRepo(),
       categoryRepo: new CategoryRepo(),
       transactionRepo: new TransactionRepo(),
+      userRepo: new UserRepo(),
     }),
   });
 
