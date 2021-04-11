@@ -1,16 +1,12 @@
 import * as React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import AppThemeProvider from '@Context/theme';
 import PrivateRoute from './PrivateRoute';
 import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
+import MyWalletPage from '@Pages/MyWalletPage';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
 import { BlueScreen, DefaultView } from '@Components/ErrorViews';
@@ -35,6 +31,7 @@ function Routes() {
     if (error) {
       dispatch({ type: 'AUTH_ERROR', payload: { err: 'Unauthenticated' } });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
 
   return (
@@ -50,18 +47,11 @@ function Routes() {
               </Route>
               <Route exact path="/login" component={LoginPage} />
               <Layout>
-                <PrivateRoute
-                  exact
-                  path="/dashboard"
-                  component={DashboardPage}
-                />
+                <PrivateRoute exact path="/dashboard" component={DashboardPage} />
                 <ErrorBoundary FallbackComponent={DefaultView}>
-                  <PrivateRoute
-                    exact
-                    path="/transactions"
-                    component={TransactionPage}
-                  />
+                  <PrivateRoute exact path="/transactions" component={TransactionPage} />
                 </ErrorBoundary>
+                <PrivateRoute exact path="my-wallet" component={MyWalletPage} />
               </Layout>
             </Switch>
           </AlertProvider>
