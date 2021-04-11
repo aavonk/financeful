@@ -3,6 +3,7 @@ import { DataSource } from '@Shared/core/DataSource';
 import { User } from '@Shared/types';
 import { IAuthRepo } from '../authRepo';
 import { authUtils } from './authUtils';
+import { RegisterInput } from '@Modules/Auth/resolvers/types';
 
 export class AuthRepo extends DataSource implements IAuthRepo {
   constructor() {
@@ -51,6 +52,46 @@ export class AuthRepo extends DataSource implements IAuthRepo {
 
     return {
       ...user,
+      token,
+    };
+  }
+
+  async handleRegister(input: RegisterInput): Promise<User> {
+    const { errors, valid } = authUtils.validateRegisterInput(input);
+
+    if (!valid) {
+      throw new UserInputError('Invalid information provided', { errors });
+    }
+
+    const existingUser = await this.findUserByEmail(input.email);
+
+    if (existingUser) {
+      throw new UserInputError(
+        'There is already an account associated with this email address',
+        {
+          errors: {
+            email: 'This email has an account',
+          },
+        },
+      );
+    }
+
+    const hashedPassword = await authUtils.hashPasword(input.password);
+    const firstName = input.displayName.split(' ')[0];
+
+    const newUser = await this.client.user.create({
+      data: {
+        email: input.email,
+        password: hashedPassword,
+        displayName: input.displayName,
+        firstName: firstName,
+      },
+    });
+
+    const token = authUtils.generateToken(newUser);
+
+    return {
+      ...newUser,
       token,
     };
   }

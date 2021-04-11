@@ -2,7 +2,7 @@ import { User } from '@Shared/types';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { InputFields, ValidationResponse, IAuthUtils } from '../authUtils';
-
+import { RegisterInput } from '../../resolvers/types';
 //TODO: Delete Lib/validators.ts
 
 class AuthUtils implements IAuthUtils {
@@ -42,12 +42,8 @@ class AuthUtils implements IAuthUtils {
     };
   }
 
-  validateRegisterInput(
-    displayName: string,
-    email: string,
-    password: string,
-    passwordConfirmation: any,
-  ): ValidationResponse {
+  validateRegisterInput(input: RegisterInput): ValidationResponse {
+    const { displayName, email, password, passwordConfirmation } = input;
     const errors: InputFields = {};
 
     if (displayName.trim() === '') {

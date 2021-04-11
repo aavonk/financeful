@@ -1,4 +1,5 @@
 import { User } from '@Shared/types';
+import { RegisterInput } from '../resolvers/types';
 
 export type InputFields = {
   displayName?: string;
@@ -19,12 +20,7 @@ export interface IAuthUtils {
   ): Promise<boolean>;
 
   validateLoginInput(email: string, password: string): ValidationResponse;
-  validateRegisterInput(
-    displayName: string,
-    email: string,
-    password: string,
-    passwordConfirmation: any,
-  ): ValidationResponse;
+  validateRegisterInput(input: RegisterInput): ValidationResponse;
   generateToken(user: User): string;
   hashPasword(password: string): Promise<string>;
 }
