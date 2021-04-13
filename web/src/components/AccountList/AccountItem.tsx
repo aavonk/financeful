@@ -1,9 +1,15 @@
+import * as React from 'react';
 import { Account } from '@Generated/graphql';
 import { AccountItemBox, ItemName, MenuContainer } from './style';
 import { capitalizeFirstLetter } from '@Lib/string-formating';
-import { VerticalMenuIcon } from '@Common/Icons';
-import IconDropdown from '@Common/IconDropdown';
-function AccountItem({ account }: { account: Account }) {
+import { IAccountActions } from './AccountActions';
+
+type Props = {
+  account: Account;
+  children: React.ReactElement<IAccountActions>;
+};
+
+function AccountItem({ account, children }: Props) {
   return (
     <AccountItemBox>
       {/* name */}
@@ -23,15 +29,7 @@ function AccountItem({ account }: { account: Account }) {
         <p>Current balance</p>
         <p>$1,345.78</p>
       </ItemName>
-      <MenuContainer>
-        <IconDropdown
-          icon={<VerticalMenuIcon />}
-          items={[]}
-          id="account-actions"
-          ariaText="Account Actions"
-          variant="small"
-        />
-      </MenuContainer>
+      <MenuContainer>{children}</MenuContainer>
     </AccountItemBox>
   );
 }

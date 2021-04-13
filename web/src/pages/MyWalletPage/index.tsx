@@ -5,6 +5,7 @@ import {
   AccountViewContainer,
 } from './style';
 import AccountList from '@Components/AccountList';
+import MutateAccountsController from '@Modules/wallet/MutateAccountsController';
 
 function MyWalletPage() {
   return (
@@ -12,7 +13,7 @@ function MyWalletPage() {
       <CardViewContainer>Cards container</CardViewContainer>
       <WidgetViewContainer> Widgets!</WidgetViewContainer>
       <AccountViewContainer>
-        <AccountList />
+        <MutateAccountsController />
       </AccountViewContainer>
     </GridContainer>
   );

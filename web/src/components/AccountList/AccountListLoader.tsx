@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import Skeleton from '@Common/Skeleton';
 import { AccountItemBox, ItemName, Container } from './style';
 
