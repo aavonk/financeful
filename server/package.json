@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "migrate": "yarn prisma migrate dev --preview-feature",
     "studio": "yarn prisma studio",
-    "seed:db": "yarn prisma seed db --preview-feature"
+    "seed:db": "yarn prisma db seed --preview-feature"
   },
   "keywords": [],
   "author": "Aaron von Kreisler",

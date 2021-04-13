@@ -52,13 +52,14 @@ model Category {
 }
 
 model Account {
-  id          String        @id @default(cuid())
-  user        User          @relation(fields: [userId], references: [id])
-  userId      String
-  accountName String
-  accountType String
-  isAsset     Boolean
-  isLiability Boolean
-  balance     Int
-  transaction Transaction[]
+  id              String        @id @default(cuid())
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String
+  accountName     String
+  accountType     String
+  isAsset         Boolean
+  isLiability     Boolean
+  startingBalance Int
+  bankName        String?
+  transaction     Transaction[]
 }
