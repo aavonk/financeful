@@ -22,7 +22,7 @@ const initialValue = {
 };
 
 function AddAccountForm({ onFormSubmit }: AddAccountProps) {
-  const { values, errors, handleChange } = useForm<FormState>({
+  const { values, handleChange } = useForm<FormState>({
     initialValue,
   });
   return (
