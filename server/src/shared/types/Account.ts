@@ -28,5 +28,5 @@ export class Account {
   startingBalance?: number;
 
   @Field(() => String, { nullable: true })
-  bankName?: string;
+  bankName?: string | null;
 }
