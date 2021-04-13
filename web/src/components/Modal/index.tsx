@@ -13,11 +13,15 @@ import {
   Content,
 } from './style';
 
-export function ModalRoot(props: DialogProps) {
-  const { children, isOpen, onDismiss, initialFocusRef } = props;
+interface ModalProps extends DialogProps {
+  ariaLabel: string;
+}
+
+export function ModalRoot(props: ModalProps) {
+  const { children, isOpen, onDismiss, initialFocusRef, ariaLabel } = props;
   return (
     <Overlay isOpen={isOpen} onDismis={onDismiss} initialFocusRef={initialFocusRef}>
-      <Content>{children}</Content>
+      <Content aria-label={ariaLabel}>{children}</Content>
     </Overlay>
   );
 }

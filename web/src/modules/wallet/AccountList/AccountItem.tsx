@@ -26,7 +26,7 @@ function AccountItem({ account, children }: Props) {
       </ItemName>
       <ItemName>
         <p>Current balance</p>
-        <p>{account.balance}</p>
+        {/* <p>{account.balance}</p> */}
       </ItemName>
       <MenuContainer>{children}</MenuContainer>
     </AccountItemBox>

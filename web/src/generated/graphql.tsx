@@ -86,7 +86,8 @@ export type Account = {
   accountType?: Maybe<Scalars['String']>;
   isAsset?: Maybe<Scalars['Boolean']>;
   isLiability?: Maybe<Scalars['Boolean']>;
-  balance?: Maybe<Scalars['Int']>;
+  startingBalance?: Maybe<Scalars['Int']>;
+  bankName?: Maybe<Scalars['String']>;
 };
 
 export type Transfer = {
@@ -447,7 +448,7 @@ export type GetAccountsQuery = (
   { __typename?: 'Query' }
   & { getAccounts: Array<(
     { __typename?: 'Account' }
-    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'balance'>
+    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'startingBalance' | 'bankName'>
   )> }
 );
 
@@ -1068,7 +1069,8 @@ export const GetAccountsDocument = gql`
     accountType
     isAsset
     isLiability
-    balance
+    startingBalance
+    bankName
   }
 }
     `;
