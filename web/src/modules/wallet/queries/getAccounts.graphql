@@ -1,0 +1,10 @@
+query GetAccounts {
+  getAccounts {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    balance
+  }
+}

@@ -1,23 +1,23 @@
 import Paper from '@Common/Paper';
 import { Container } from './style';
 import { Account } from '@Generated/graphql';
-import Header from './Header';
+import AccountListHeader from './AccountListHeader';
 import AccountItem from './AccountItem';
 import EmptyView from '@Components/EmptyViews/GeneralEmptyView';
 import AccountActions from './AccountActions';
 import { IAccountActions } from './AccountActions';
 
 type IAccountList = {
-  accounts: Account[];
+  accounts: Account[] | undefined;
 } & IAccountActions;
 
-function AccountList({ accounts, onEditClick, onDelete }: IAccountList) {
+function AccountList({ accounts = [], onEditClick, onDelete }: IAccountList) {
   return (
     <Paper>
       <Container>
-        <Header />
-        {accounts?.length > 0 ? (
-          accounts.map((account) => (
+        <AccountListHeader />
+        {accounts.length > 0 ? (
+          accounts.map((account: Account) => (
             <AccountItem key={account.id} account={account}>
               <AccountActions
                 onEditClick={onEditClick}

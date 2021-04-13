@@ -1,11 +1,10 @@
+import AccountActionsController from '@Modules/wallet/AccountActionsController';
 import {
   GridContainer,
   CardViewContainer,
   WidgetViewContainer,
   AccountViewContainer,
 } from './style';
-import AccountList from '@Components/AccountList';
-import MutateAccountsController from '@Modules/wallet/MutateAccountsController';
 
 function MyWalletPage() {
   return (
@@ -13,7 +12,8 @@ function MyWalletPage() {
       <CardViewContainer>Cards container</CardViewContainer>
       <WidgetViewContainer> Widgets!</WidgetViewContainer>
       <AccountViewContainer>
-        <MutateAccountsController />
+        {/* TODO: Add an error boundary surrounding mutateaccountscontroller */}
+        <AccountActionsController />
       </AccountViewContainer>
     </GridContainer>
   );
