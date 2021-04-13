@@ -31,14 +31,29 @@ Navigate to both /server and /web and install dependencies using `YARN` and run 
 ```
 $ cd server
 $ yarn install
-$ yarn dev
 ```
 
 ```
 $ cd web
 $ yarn install
+```
+
+### Run the dev servers
+To run the dev servers, cd into both the /server and /web directories and run ```yarn dev```;
+
+Ex:
+Server:
+```
+$ cd *your-path-to-financeful*/server
 $ yarn dev
 ```
+
+Client:
+```
+$ cd *your-path-to-financeful*/web
+$ yarn dev
+```
+
 
 ### Interact with the DB and GraphQL Schema
 
