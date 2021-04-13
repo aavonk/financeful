@@ -12,7 +12,7 @@ export const GridContainer = styled.div`
 
 export const CardViewContainer = styled.div`
   grid-area: cards;
-  background-color: yellow;
+  /* background-color: yellow; */
 `;
 
 export const WidgetViewContainer = styled.div`

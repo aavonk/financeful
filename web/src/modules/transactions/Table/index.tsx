@@ -24,11 +24,15 @@ import {
 export interface TableProperties<T extends Record<string, unknown>>
   extends TableOptions<T> {
   name?: string;
+  withPagination?: boolean;
+  withToolbar?: boolean;
 }
 
 function Table<T extends Record<string, unknown>>({
   data,
   columns,
+  withPagination = true,
+  withToolbar = true,
 }: TableProperties<T>) {
   const instance = useTable<T>(
     { columns, data },
@@ -37,17 +41,11 @@ function Table<T extends Record<string, unknown>>({
     useSortBy,
     usePagination,
   );
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-  } = instance;
+  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } = instance;
 
   return (
     <>
-      <Toolbar instance={instance} />
+      {withToolbar && <Toolbar instance={instance} />}
       <TablePaper>
         <TableRoot {...getTableProps()}>
           <TableHead>
@@ -104,7 +102,7 @@ function Table<T extends Record<string, unknown>>({
           </TableBody>
         </TableRoot>
       </TablePaper>
-      <TablePagination instance={instance} />
+      {withPagination && <TablePagination instance={instance} />}
     </>
   );
 }
