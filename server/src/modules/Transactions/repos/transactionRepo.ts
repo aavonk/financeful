@@ -6,5 +6,5 @@ export interface ITransactionRepo {
   findOne(id: string): Promise<Transaction | null>;
   createOne(input: TransactionInput, userId: string): Promise<Transaction>;
   deleteOne(id: string): Promise<void>;
-  updateOne(id: string, input: TransactionInput): Promise<Transaction>;
+  // updateOne(id: string, input: TransactionInput, userId: string): Promise<Transaction>;
 }

@@ -83,11 +83,10 @@ export class TransactionResolver {
       throw new AuthenticationError('Unauthorized to perform this action');
     }
 
-    const updatedTransaction = await transactionRepo.updateOne(
-      transaction.id,
-      input,
-    );
+    await transactionRepo.deleteOne(transaction.id);
 
-    return updatedTransaction;
+    const newTransaction = await transactionRepo.createOne(input, user.id);
+
+    return newTransaction;
   }
 }
