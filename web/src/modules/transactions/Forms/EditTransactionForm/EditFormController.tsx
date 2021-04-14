@@ -3,7 +3,6 @@ import {
   Transaction,
   TransactionInput,
   useFetchAccountsAndCategoriesQuery,
-  useUpdateTransactionMutation,
   useUpdateTransferMutation,
   useGetTransferLazyQuery,
   TransferInput,
@@ -15,7 +14,7 @@ import { EditForm } from './FormProvider';
 import { Overlay, Content } from '../style';
 import EditPaymentForm from './EditPaymentForm';
 import EditTransferForm from './EditTransferForm';
-
+import { useUpdateTransaction } from '@Modules/transactions/mutations/useUpdateTransaction';
 type Props = {
   transaction: Transaction;
   isOpen: boolean;
@@ -28,10 +27,11 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
     getTransfer,
     { data: transfer, loading: fetchingTransfer, error: transferError },
   ] = useGetTransferLazyQuery();
-  const [
-    updateTransaction,
-    { loading: submittingPayment },
-  ] = useUpdateTransactionMutation();
+  const {
+    mutate: updateTransaction,
+    loading: submittingPayment,
+  } = useUpdateTransaction();
+
   const [updateTransfer, { loading: submittingTransfer }] = useUpdateTransferMutation();
   const { showAlert } = useAlert();
 
