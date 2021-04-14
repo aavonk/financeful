@@ -25,7 +25,7 @@ export class Account {
   isLiability?: Boolean;
 
   @Field(() => Int, { nullable: true })
-  startingBalance?: number;
+  balance?: number;
 
   @Field(() => String, { nullable: true })
   bankName?: string | null;

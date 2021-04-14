@@ -11,14 +11,14 @@ type FormState = {
   accountName: string;
   bankName: string;
   type: string;
-  startingBalance: string;
+  balance: string;
 };
 
 const initialValue = {
   accountName: '',
   bankName: '',
   type: '',
-  startingBalance: '',
+  balance: '',
 };
 
 function AddAccountForm({ onFormSubmit }: AddAccountProps) {
@@ -49,8 +49,8 @@ function AddAccountForm({ onFormSubmit }: AddAccountProps) {
         <Col width="50%">
           <BorderedInput
             type="text"
-            value={values.startingBalance}
-            onChange={handleChange('startingBalance')}
+            value={values.balance}
+            onChange={handleChange('balance')}
             withPrefix
             prefix="$"
           >

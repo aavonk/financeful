@@ -5,7 +5,7 @@ query GetAccounts {
     accountType
     isAsset
     isLiability
-    startingBalance
+    balance
     bankName
   }
 }
