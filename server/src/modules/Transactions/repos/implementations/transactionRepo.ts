@@ -99,13 +99,17 @@ export class TransactionRepo extends DataSource implements ITransactionRepo {
     return newTransaction;
   }
 
-  public async deleteOne(id: string): Promise<void> {
+  public async deleteOne(id: string, userId: string): Promise<void> {
     const transaction = await this.client.transaction.findUnique({
       where: { id },
     });
 
     if (!transaction) {
       throw new Error('Unable to find transaction by that ID');
+    }
+
+    if (transaction.userId !== userId) {
+      throw new Error('Not authorized to perform this action');
     }
 
     const deleteTransaction = this.client.transaction.delete({
