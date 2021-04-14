@@ -59,7 +59,6 @@ export class TransactionRepo extends DataSource implements ITransactionRepo {
 
     let transactionDate = new Date(input.date);
     const { accountId, ...filteredInput } = input;
-    console.log({ input: input.amount });
 
     const updatedAccount = await this.client.account.update({
       where: {
