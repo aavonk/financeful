@@ -31,14 +31,30 @@ Navigate to both /server and /web and install dependencies using `YARN` and run 
 ```
 $ cd server
 $ yarn install
-$ yarn dev
 ```
 
 ```
 $ cd web
 $ yarn install
+```
+
+### Run the dev servers
+To run the dev servers, cd into both the /server and /web directories and run ```yarn dev```;
+
+Ex: 
+
+Server:
+```
+$ cd *your-path-to-financeful*/server
 $ yarn dev
 ```
+
+Client:
+```
+$ cd *your-path-to-financeful*/web
+$ yarn dev
+```
+
 
 ### Interact with the DB and GraphQL Schema
 
@@ -49,7 +65,7 @@ Once the development server is running, you can view the GraphQL schema at
 If you want to view the contents of the DB in a GUI, open a new shell window and run these commands:
 
 ```
-$ cd your-path-to-financeful/server
+$ cd *your-path-to-financeful*/server
 $ yarn studio
 ```
 
