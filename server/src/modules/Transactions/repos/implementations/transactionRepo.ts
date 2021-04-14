@@ -97,20 +97,6 @@ export class TransactionRepo extends DataSource implements ITransactionRepo {
     const newTransaction = updatedAccount.transaction[0];
 
     return newTransaction;
-    // const transaction = await this.client.transaction.create({
-    //   data: {
-    //     ...input,
-    //     userId,
-    //     categoryId: input.categoryId ? input.categoryId : null,
-    //     amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
-    //     isCashIn: input.type === 'INCOME',
-    //     isCashOut: input.type === 'EXPENSE',
-    //     isTransfer: false,
-    //     isUncategorized: !input.categoryId,
-    //   },
-    //   ...baseOptions,
-    // });
-    // return transaction;
   }
 
   public async deleteOne(id: string): Promise<void> {
@@ -125,11 +111,6 @@ export class TransactionRepo extends DataSource implements ITransactionRepo {
     const deleteTransaction = this.client.transaction.delete({
       where: { id },
     });
-    console.log(
-      transaction.isCashIn
-        ? { decrement: transaction.amount }
-        : { increment: transaction.amount * -1 },
-    );
 
     const updateAccount = this.client.account.update({
       where: {
@@ -141,38 +122,6 @@ export class TransactionRepo extends DataSource implements ITransactionRepo {
           : { increment: transaction.amount * -1 },
       },
     });
-
     await this.client.$transaction([deleteTransaction, updateAccount]);
   }
-
-  // public async updateOne(
-  //   id: string,
-  //   input: TransactionInput,
-  // ): Promise<Transaction> {
-  //   const options = this.createQueryOptions();
-
-  //   // TODO: Use a nested write to update account balance and transaction.
-
-  //   // const transaction: Transaction = await this.client.transaction.update({
-  //   //   where: {
-  //   //     id,
-  //   //   },
-  //   //   data: {
-  //   //     ...input,
-  //   //     categoryId: input.categoryId ? input.categoryId : null,
-  //   //     amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
-  //   //     isCashIn: input.type === 'INCOME',
-  //   //     isCashOut: input.type === 'EXPENSE',
-  //   //     isTransfer: false,
-  //   //     isUncategorized: !input.categoryId,
-  //   //   },
-  //   //   ...options,
-  //   // });
-
-  //   await this.deleteOne(id)
-
-  //   const transaction = await this.createOne(input)
-
-  //   return transaction;
-  // }
 }
