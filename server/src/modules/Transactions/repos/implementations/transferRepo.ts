@@ -85,14 +85,45 @@ export class TransferRepo extends DataSource implements ITransferRepo {
     return transactions;
   }
 
-  //TODO: Update account balances before deleting transactions!!!
   public async deleteTransfer(id: string, userId: string): Promise<void> {
-    await this.client.transaction.deleteMany({
+    const transactions = await this.getTransferTransactions(id, userId);
+
+    const expenseTransaction = transactions.filter((item) => item.isCashOut)[0];
+
+    const incomeTransaction = transactions.filter((item) => item.isCashIn)[0];
+
+    const reverseExpesnseFromAccount = this.client.account.update({
       where: {
-        transferId: id,
-        userId,
+        id: expenseTransaction.accountId,
+      },
+      data: {
+        balance: { increment: expenseTransaction.amount * -1 },
+        transaction: {
+          delete: {
+            id: expenseTransaction.id,
+          },
+        },
       },
     });
+
+    const reverseIncomeFromAccount = this.client.account.update({
+      where: {
+        id: incomeTransaction.accountId,
+      },
+      data: {
+        balance: { decrement: incomeTransaction.amount },
+        transaction: {
+          delete: {
+            id: incomeTransaction.id,
+          },
+        },
+      },
+    });
+
+    await this.client.$transaction([
+      reverseExpesnseFromAccount,
+      reverseIncomeFromAccount,
+    ]);
   }
 
   public async createTransfer(
