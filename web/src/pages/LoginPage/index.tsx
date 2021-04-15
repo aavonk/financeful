@@ -10,6 +10,7 @@ import { useForm } from '@Hooks/useForm';
 import { useLoginMutation } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
 import { Container, Brand, ErrorMessage } from './style';
+import Progressbar from '@Common/Progressbar';
 
 type User = {
   email: string;
@@ -39,10 +40,6 @@ function LoginPage() {
       submitHandler(values);
     },
   });
-
-  if (loading) {
-    console.log('LOADINGGGGG');
-  }
 
   const submitHandler = async (values: User) => {
     try {
@@ -87,6 +84,7 @@ function LoginPage() {
           </ErrorMessage>
         ))}
       <Card minWidth="400px">
+        {loading && <Progressbar />}
         <CardBody>
           <Brand>
             <h1>financeful</h1>
