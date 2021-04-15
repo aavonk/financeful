@@ -1,28 +1,46 @@
-import { useState } from 'react';
-import { ModalRoot, ModalActions, ModalBody, ModalTitle } from '@Components/Modal';
+import { useState, useRef } from 'react';
+import { CreateAccountInput } from '@Generated/graphql';
+import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
+import { useCreateAccount } from '../mutations/useCreateAccount';
+import { useAlert } from '@Context/alert/alertContext';
+
 import Button from '@Common/Button';
 import AddAccountForm from './AddAccountForm';
+import Progressbar from '@Common/Progressbar';
 
 function AddAccountFormController() {
   const [displayModal, setDisplayModal] = useState(false);
+  const { mutate: createAccount, loading } = useCreateAccount();
+  const { showAlert } = useAlert();
+
   const close = () => setDisplayModal(false);
 
-  const onFormSubmit = () => {
-    console.log('submit');
+  const onFormSubmit = async (values: CreateAccountInput) => {
+    try {
+      await createAccount({ variables: { input: values } });
+      showAlert('Successfully added account', 'info');
+    } catch (err) {
+      showAlert('We ran into an error. Try again', 'error', 7000);
+    }
   };
+  const accountNameInputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <>
       <Button variant="primary" onClick={() => setDisplayModal(true)}>
         Add account
       </Button>
-      <ModalRoot isOpen={displayModal} onDismiss={close} ariaLabel="Add an account">
+      <ModalRoot
+        isOpen={displayModal}
+        onDismiss={close}
+        ariaLabel="Add an account"
+        initialFocusRef={accountNameInputRef}
+      >
         <ModalTitle title="Add account" onClose={close} />
-        <ModalBody>
-          <AddAccountForm onFormSubmit={onFormSubmit} />
+        {loading && <Progressbar />}
+        <ModalBody overrideStyle={{ padding: '0.825rem 1rem 0 1rem' }}>
+          <AddAccountForm onFormSubmit={onFormSubmit} inputRef={accountNameInputRef} />
         </ModalBody>
-        <ModalActions>
-          <Button variant="primary">Save</Button>
-        </ModalActions>
       </ModalRoot>
     </>
   );

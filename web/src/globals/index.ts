@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const FlexRow = styled.div`
   display: flex;
@@ -19,10 +19,30 @@ export const Row = styled.div`
   flex-wrap: wrap;
   width: 100%;
 `;
-export const Col = styled.div<{ width: string }>`
+
+type ColProps = {
+  width: string;
+  paddingLeftOnly?: boolean;
+  paddingRightOnly?: boolean;
+};
+export const Col = styled.div<ColProps>`
   flex: 0 0 auto;
   width: ${(props) => props.width};
   padding-right: calc(1rem / 2);
   padding-left: calc(1rem / 2);
   margin-top: 0.5rem;
+
+  ${({ paddingLeftOnly }) =>
+    paddingLeftOnly &&
+    css`
+      padding-left: calc(1rem / 2);
+      padding-right: 0;
+    `}
+
+  ${({ paddingRightOnly }) =>
+    paddingRightOnly &&
+    css`
+      padding-right: calc(1rem / 2);
+      padding-left: 0;
+    `}
 `;

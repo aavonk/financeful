@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, CSSProperties } from 'react';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
 import { DialogProps } from '@reach/dialog';
@@ -20,7 +20,7 @@ interface ModalProps extends DialogProps {
 export function ModalRoot(props: ModalProps) {
   const { children, isOpen, onDismiss, initialFocusRef, ariaLabel } = props;
   return (
-    <Overlay isOpen={isOpen} onDismis={onDismiss} initialFocusRef={initialFocusRef}>
+    <Overlay isOpen={isOpen} onDismiss={onDismiss} initialFocusRef={initialFocusRef}>
       <Content aria-label={ariaLabel}>{children}</Content>
     </Overlay>
   );
@@ -51,8 +51,14 @@ export function ModalTitle({
   );
 }
 
-export function ModalBody({ children }: { children: ReactNode }) {
-  return <Body>{children}</Body>;
+export function ModalBody({
+  children,
+  overrideStyle,
+}: {
+  children: ReactNode;
+  overrideStyle?: CSSProperties;
+}) {
+  return <Body style={overrideStyle}>{children}</Body>;
 }
 
 export function ModalActions({ children }: { children: ReactNode }) {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { useState, ChangeEvent, FormEvent } from 'react';
 
 // Reference to this hook: https://felixgerschau.com/react-hooks-form-validation-typescript/
@@ -51,8 +52,6 @@ interface Validation {
 type ErrorRecord<T> = Record<keyof T, string>;
 type Validations<T extends {}> = Partial<Record<keyof T, Validation>>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
   validations?: Validations<T>;
   initialValue?: Partial<T>;

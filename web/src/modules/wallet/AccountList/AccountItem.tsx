@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ReactElement } from 'react';
 import { Account } from '@Generated/graphql';
 import { AccountItemBox, ItemName, MenuContainer } from './style';
-import { capitalizeFirstLetter } from '@Lib/string-formating';
+import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { IAccountActions } from './AccountActions';
 
 type Props = {
@@ -18,15 +19,15 @@ function AccountItem({ account, children }: Props) {
       </ItemName>
       <ItemName>
         <p>Bank</p>
-        <p>Todo - Add bank</p>
+        <p>{account.bankName ? account.bankName : ' '}</p>
       </ItemName>
       <ItemName>
         <p>Account type</p>
-        <p>{capitalizeFirstLetter(account.accountType!)}</p>
+        <p>{account.accountType}</p>
       </ItemName>
       <ItemName>
         <p>Current balance</p>
-        {/* <p>{account.balance}</p> */}
+        <p>{formatMoneyFromCentsToDollars(account.balance!)}</p>
       </ItemName>
       <MenuContainer>{children}</MenuContainer>
     </AccountItemBox>

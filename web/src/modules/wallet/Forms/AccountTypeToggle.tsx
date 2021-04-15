@@ -6,9 +6,10 @@ import { ACCOUNT_OPTIONS } from '@Constants/accountOptions';
 type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>) => void;
   value: string;
+  ariaDescribedBy: string;
 };
 
-const SmallButton = styled.button`
+const SmallButton = styled.div`
   position: absolute;
   bottom: 85%;
   right: 8px;
@@ -23,15 +24,21 @@ const SmallButton = styled.button`
   }
 `;
 
-function AccountTypeToggle({ value, onChange }: Props) {
+function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
   const [showSelect, setShowSelect] = useState(true);
   return (
     <>
-      <SmallButton onClick={() => setShowSelect(!showSelect)}>
+      <SmallButton onClick={() => setShowSelect(!showSelect)} aria-label="Add new type">
         {showSelect ? 'Add new' : 'Cancel'}
       </SmallButton>
       {showSelect ? (
-        <BorderedSelect label="Type" onChange={onChange} value={value}>
+        <BorderedSelect
+          label="Type"
+          onChange={onChange}
+          value={value}
+          ariaDescribedBy={ariaDescribedBy}
+          required
+        >
           <option value="" disabled>
             Select a type
           </option>
@@ -42,7 +49,13 @@ function AccountTypeToggle({ value, onChange }: Props) {
           ))}
         </BorderedSelect>
       ) : (
-        <BorderedInput onChange={onChange} value={value} type="text">
+        <BorderedInput
+          onChange={onChange}
+          value={value}
+          type="text"
+          ariaDescribedBy={ariaDescribedBy}
+          required
+        >
           New Type
         </BorderedInput>
       )}

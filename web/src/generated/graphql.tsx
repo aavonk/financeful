@@ -111,6 +111,7 @@ export type Mutation = {
   createTransfer: TransferResult;
   updateTransfer: TransferResult;
   deleteTransfer: Scalars['String'];
+  createAccount: Account;
   createCategory: Category;
   updateCategory: Category;
   deleteCategory: Scalars['String'];
@@ -157,6 +158,11 @@ export type MutationUpdateTransferArgs = {
 
 export type MutationDeleteTransferArgs = {
   transferId: Scalars['String'];
+};
+
+
+export type MutationCreateAccountArgs = {
+  input: CreateAccountInput;
 };
 
 
@@ -211,6 +217,20 @@ export type TransferInput = {
   description?: Maybe<Scalars['String']>;
   categoryId?: Maybe<Scalars['ID']>;
 };
+
+export type CreateAccountInput = {
+  accountName: Scalars['String'];
+  accountType: Scalars['String'];
+  balance: Scalars['Int'];
+  bankName?: Maybe<Scalars['String']>;
+  classification: AccountType;
+};
+
+/** Asset or liability */
+export enum AccountType {
+  Asset = 'asset',
+  Liability = 'liability'
+}
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -438,6 +458,19 @@ export type GetTransferQuery = (
       { __typename?: 'Category' }
       & Pick<Category, 'name' | 'id'>
     )> }
+  ) }
+);
+
+export type CreateAccountMutationVariables = Exact<{
+  input: CreateAccountInput;
+}>;
+
+
+export type CreateAccountMutation = (
+  { __typename?: 'Mutation' }
+  & { createAccount: (
+    { __typename?: 'Account' }
+    & Pick<Account, 'balance' | 'bankName' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability'>
   ) }
 );
 
@@ -1061,6 +1094,44 @@ export function useGetTransferLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetTransferQueryHookResult = ReturnType<typeof useGetTransferQuery>;
 export type GetTransferLazyQueryHookResult = ReturnType<typeof useGetTransferLazyQuery>;
 export type GetTransferQueryResult = Apollo.QueryResult<GetTransferQuery, GetTransferQueryVariables>;
+export const CreateAccountDocument = gql`
+    mutation CreateAccount($input: CreateAccountInput!) {
+  createAccount(input: $input) {
+    balance
+    bankName
+    accountName
+    accountType
+    isAsset
+    isLiability
+  }
+}
+    `;
+export type CreateAccountMutationFn = Apollo.MutationFunction<CreateAccountMutation, CreateAccountMutationVariables>;
+
+/**
+ * __useCreateAccountMutation__
+ *
+ * To run a mutation, you first call `useCreateAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAccountMutation, { data, loading, error }] = useCreateAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOptions<CreateAccountMutation, CreateAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAccountMutation, CreateAccountMutationVariables>(CreateAccountDocument, options);
+      }
+export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
+export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
+export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
 export const GetAccountsDocument = gql`
     query GetAccounts {
   getAccounts {
