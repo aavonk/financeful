@@ -12,7 +12,7 @@ type Props = {
 
 function AccountItem({ account, children }: Props) {
   return (
-    <AccountItemBox>
+    <AccountItemBox data-testid="account-item">
       <ItemName>
         <p>Nickname</p>
         <p>{account.accountName}</p>

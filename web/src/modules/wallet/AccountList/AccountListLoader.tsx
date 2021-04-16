@@ -7,7 +7,7 @@ function AccountListLoader() {
   const cols = new Array(4).fill(undefined).map((val, idx) => idx);
   return (
     <Paper>
-      <Container>
+      <Container aria-disabled="true" aria-label="Loading">
         {rows.map((row, index) => (
           <AccountItemBox key={index}>
             {cols.map((col, index) => (

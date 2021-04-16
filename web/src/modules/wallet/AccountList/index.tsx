@@ -11,12 +11,12 @@ type IAccountList = {
   accounts: Account[] | undefined;
 } & IAccountActions;
 
-function AccountList({ accounts = [], onEditClick, onDelete }: IAccountList) {
+function AccountList({ accounts, onEditClick, onDelete }: IAccountList) {
   return (
     <Paper>
       <Container>
         <AccountListHeader />
-        {accounts.length > 0 ? (
+        {accounts?.length ? (
           accounts.map((account: Account) => (
             <AccountItem key={account.id} account={account}>
               <AccountActions

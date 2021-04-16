@@ -38,6 +38,7 @@ function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
           value={value}
           ariaDescribedBy={ariaDescribedBy}
           required
+          data-testid="account-type-select"
         >
           <option value="" disabled>
             Select a type

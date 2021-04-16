@@ -89,6 +89,7 @@ type SelectProps = {
   ariaDescribedBy?: string;
   required?: boolean;
   id?: string;
+  'data-testid'?: string;
 };
 export function BorderedSelect(props: SelectProps) {
   return (
@@ -101,6 +102,7 @@ export function BorderedSelect(props: SelectProps) {
         aria-describedby={props.ariaDescribedBy}
         aria-required={props.required}
         id={props.id}
+        data-testid={props['data-testid']}
       >
         {props.children}
       </TransparentSelect>
