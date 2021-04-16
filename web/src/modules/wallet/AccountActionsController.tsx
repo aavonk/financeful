@@ -1,6 +1,8 @@
 import AccountList from '@Modules/wallet/AccountList';
 import AccountListLoader from '@Modules/wallet/AccountList/AccountListLoader';
 import { Account, useGetAccountsQuery } from '@Generated/graphql';
+import Toast from '@Common/Alerts/Toast';
+import AccountListError from './AccountList/AccountListError';
 
 function MutateAccountsController() {
   const {
@@ -20,9 +22,8 @@ function MutateAccountsController() {
     return <AccountListLoader />;
   }
 
-  //TODO: Error state handling
   if (accountsError) {
-    console.error(accountsError);
+    return <AccountListError />;
   }
   return (
     <AccountList
