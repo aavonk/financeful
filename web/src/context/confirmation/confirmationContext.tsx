@@ -1,13 +1,10 @@
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useRef,
-  useState,
-  ReactNode,
-} from 'react';
+import { createContext, useContext, useRef, useState, ReactNode } from 'react';
 
 import ConfirmationAlert from '@Components/Confirmation';
+
+/**
+ * Reference: https://codesandbox.io/s/neat-dialogs-3h5ou?from-embed=&file=/src/ConfirmationService.tsx
+ */
 
 interface ConfirmationOptions {
   title: string;
