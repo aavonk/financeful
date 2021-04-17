@@ -32,3 +32,28 @@ export const StyledActions = styled.div`
     margin-right: 20px;
   }
 `;
+
+export const PrimaryMessage = styled.div`
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+  justify-content: center;
+
+  & > h1 {
+    font-size: 1.625rem;
+    font-weight: 700;
+  }
+`;
+
+export const SecondaryMessage = styled.div`
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+  justify-content: center;
+
+  & > p {
+    font-size: 0.875rem;
+    color: ${({ theme }) => theme.colors.textSecondary};
+    text-align: center;
+  }
+`;

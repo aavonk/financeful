@@ -13,6 +13,7 @@ import { BlueScreen, DefaultView } from '@Components/ErrorViews';
 import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
 import { AlertProvider } from '@Context/alert/alertContext';
+import { ConfirmationProvider } from '@Context/confirmation/confirmationContext';
 
 import Alerts from '@Common/Alerts';
 
@@ -47,11 +48,17 @@ function Routes() {
               </Route>
               <Route exact path="/login" component={LoginPage} />
               <Layout>
-                <PrivateRoute exact path="/dashboard" component={DashboardPage} />
-                <ErrorBoundary FallbackComponent={DefaultView}>
-                  <PrivateRoute exact path="/transactions" component={TransactionPage} />
-                </ErrorBoundary>
-                <PrivateRoute exact path="/my-wallet" component={MyWalletPage} />
+                <ConfirmationProvider>
+                  <PrivateRoute exact path="/dashboard" component={DashboardPage} />
+                  <ErrorBoundary FallbackComponent={DefaultView}>
+                    <PrivateRoute
+                      exact
+                      path="/transactions"
+                      component={TransactionPage}
+                    />
+                  </ErrorBoundary>
+                  <PrivateRoute exact path="/my-wallet" component={MyWalletPage} />
+                </ConfirmationProvider>
               </Layout>
             </Switch>
           </AlertProvider>

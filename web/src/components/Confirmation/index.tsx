@@ -1,14 +1,10 @@
 import { useRef } from 'react';
 import {
-  AlertDialog,
   AlertDialogLabel,
   AlertDialogDescription,
-  AlertDialogOverlay,
   AlertDialogContent,
-  AlertDialogProps,
 } from '@reach/alert-dialog';
-
-import { AlertOverlay, StyledActions } from './style';
+import { AlertOverlay, StyledActions, PrimaryMessage, SecondaryMessage } from './style';
 import Button from '@Common/Button';
 
 type ConfirmationDialogProps = {
@@ -20,22 +16,46 @@ type ConfirmationDialogProps = {
   id?: string;
   /** The text content of the confirm button */
   confirmButtonText: string;
+  /** Is the dialog open */
+  isOpen: boolean;
+  /** The action to take when the confirm button is clicked */
+  onConfirmation: () => void;
+  /** The action to take when the cancel button is clicked */
+  onCancel: () => void;
 };
 
 function ConfirmationDialog(props: ConfirmationDialogProps) {
-  const { id, heading, message, confirmButtonText } = props;
+  const {
+    id,
+    heading,
+    message,
+    confirmButtonText,
+    onCancel,
+    onConfirmation,
+    isOpen,
+  } = props;
   const cancelRef = useRef<HTMLButtonElement | null>(null);
 
   return (
-    <AlertOverlay id={id} isOpen={true} leastDestructiveRef={cancelRef}>
+    <AlertOverlay id={id} isOpen={isOpen} leastDestructiveRef={cancelRef}>
       <AlertDialogContent>
-        <AlertDialogLabel>{heading}</AlertDialogLabel>
-        <AlertDialogDescription>{message}</AlertDialogDescription>
+        <AlertDialogLabel>
+          <PrimaryMessage>
+            <h1>{heading}</h1>
+          </PrimaryMessage>
+        </AlertDialogLabel>
+        <AlertDialogDescription>
+          <SecondaryMessage>
+            <p>{message}</p>
+          </SecondaryMessage>
+        </AlertDialogDescription>
         <StyledActions>
-          <Button variant="dark" ref={cancelRef}>
+          <Button variant="dark" ref={cancelRef} onClick={onCancel}>
             Cancel
           </Button>
-          <Button variant="danger">{confirmButtonText}</Button>
+          <Button variant="danger" onClick={onConfirmation}>
+            {confirmButtonText}
+          </Button>
         </StyledActions>
       </AlertDialogContent>
     </AlertOverlay>

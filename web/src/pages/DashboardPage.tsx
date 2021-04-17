@@ -1,5 +1,3 @@
-import ConfirmationDialog from '@Components/Confirmation';
-
 function DashboardPage() {
   return (
     <>
@@ -10,11 +8,6 @@ function DashboardPage() {
         the same
       </p>
       <p>Add query to get transfer to populate editTransferForm</p>
-      <ConfirmationDialog
-        heading="Heyo!"
-        message="Whats up fam"
-        confirmButtonText="Delete"
-      />
     </>
   );
 }
