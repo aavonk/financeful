@@ -78,6 +78,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.13",
     "@apollo/react-hooks": "^4.0.0",
+    "@reach/alert-dialog": "^0.15.0",
     "@reach/dialog": "^0.13.2",
     "@reach/menu-button": "^0.13.2",
     "@reach/visually-hidden": "^0.13.2",
