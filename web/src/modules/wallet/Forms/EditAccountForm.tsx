@@ -3,8 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import { BorderedInput, BorderedSelect, ErrorMessage } from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { CreateAccountInput, AccountType } from '@Generated/graphql';
-import { convertInputAmountToCents, isValidCurrencyFormat } from '@Lib/money-utils';
+import { EditAccountInput, AccountType } from '@Generated/graphql';
 import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
 
 import { Footer } from '@Components/Modal/style';
@@ -13,7 +12,7 @@ import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
 
 type EditAccountFormProps = {
-  onFormSubmit: () => void;
+  onFormSubmit: (accountId: string, values: EditAccountInput) => void;
   account: Account | null;
   isSubmitting: boolean;
   isOpen: boolean;
@@ -67,7 +66,8 @@ function EditAccountForm({
       },
     },
     onSubmit: () => {
-      alert('submit');
+      const typedClassification = values.classification as AccountType;
+      onFormSubmit(account!.id, { ...values, classification: typedClassification });
     },
   });
 
@@ -89,7 +89,7 @@ function EditAccountForm({
     >
       <ModalTitle title="Edit account" onClose={onDismiss} />
       {isSubmitting && <Progressbar />}
-      <ModalBody>
+      <ModalBody overrideStyle={{ padding: '0.825rem 1rem 0 1rem' }}>
         <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
           <Row>
             <BorderedInput

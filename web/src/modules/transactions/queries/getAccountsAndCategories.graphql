@@ -1,5 +1,5 @@
 query fetchAccountsAndCategories {
-  getAccounts {
+  getAccounts(filter: { isInactive: true }) {
     id
     accountName
   }

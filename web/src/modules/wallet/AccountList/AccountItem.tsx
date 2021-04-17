@@ -12,7 +12,7 @@ type Props = {
 
 function AccountItem({ account, children }: Props) {
   return (
-    <AccountItemBox data-testid="account-item">
+    <AccountItemBox data-testid="account-item" $inactive={account.isInactive!}>
       <ItemName>
         <p>Nickname</p>
         <p>{account.accountName}</p>

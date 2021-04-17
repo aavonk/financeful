@@ -1,29 +1,41 @@
-import { ErrorIcon, InfoIcon, VerticalMenuIcon } from '@Common/Icons';
+import { ErrorIcon, InfoIcon, VerticalMenuIcon, PlusIcon } from '@Common/Icons';
 import IconDropdown, { DropdownItems } from '@Common/IconDropdown';
 import { Account } from '@Generated/graphql';
 
 export type IAccountActions = {
   onEditClick: (account: Account) => void;
-  onDelete: (account: Account) => void;
+  onDeleteClick: (account: Account) => void;
+  onMarkInactiveClick: (account: Account) => void;
 };
 
 type Props = {
   account: Account;
 } & IAccountActions;
 
-function AccountActions({ onDelete, onEditClick, account }: Props) {
+function AccountActions({
+  onDeleteClick,
+  onEditClick,
+  onMarkInactiveClick,
+  account,
+}: Props) {
   const possibleActions: DropdownItems = [
     {
       label: 'Delete account',
       icon: <ErrorIcon />,
       iconVariant: 'danger',
-      onSelect: () => onDelete(account),
+      onSelect: () => onDeleteClick(account),
     },
     {
       label: 'Edit details',
       icon: <InfoIcon />,
       iconVariant: 'muted',
       onSelect: () => onEditClick(account),
+    },
+    {
+      label: `Mark ${!account.isInactive ? 'inactive' : 'active'}`,
+      icon: <PlusIcon />,
+      iconVariant: 'muted',
+      onSelect: () => onMarkInactiveClick(account),
     },
   ];
   return (

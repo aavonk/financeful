@@ -13,7 +13,7 @@ export class AccountRepo extends DataSource implements IAccountRepo {
   }
 
   async getOneAccount(id: string, userId: string): Promise<Account | null> {
-    return await this.client.account.findFirst({
+    return await this.accountModel.findFirst({
       where: {
         id,
         userId,
@@ -64,7 +64,7 @@ export class AccountRepo extends DataSource implements IAccountRepo {
       throw new Error('Unauthorized');
     }
     const { classification, ...inputData } = input;
-    return await this.client.account.update({
+    return await this.accountModel.update({
       where: {
         id: accountId,
       },
@@ -72,6 +72,60 @@ export class AccountRepo extends DataSource implements IAccountRepo {
         ...inputData,
         isAsset: classification === 'ASSET',
         isLiability: classification === 'LIABILITY',
+      },
+    });
+  }
+
+  async toggleAccountActiveStatus(
+    userId: string,
+    accountId: string,
+  ): Promise<Account> {
+    const accountToUpdate = await this.getOneAccount(accountId, userId);
+
+    if (!accountToUpdate) {
+      throw new Error('No account found by that ID');
+    }
+
+    if (accountToUpdate.userId !== userId) {
+      throw new Error('Unauthorized');
+    }
+
+    return await this.accountModel.update({
+      where: {
+        id: accountToUpdate.id,
+      },
+      data: {
+        isInactive: !accountToUpdate.isInactive,
+      },
+    });
+  }
+
+  async deleteAccount(userId: string, accountId: string): Promise<void> {
+    const accountToDelete = await this.getOneAccount(accountId, userId);
+
+    if (!accountToDelete) {
+      throw new Error('No account found by that ID');
+    }
+
+    if (accountToDelete.userId !== userId) {
+      throw new Error('Unauthorized');
+    }
+
+    await this.client.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        transactions: {
+          deleteMany: {
+            accountId: accountToDelete.id,
+          },
+        },
+        account: {
+          delete: {
+            id: accountToDelete.id,
+          },
+        },
       },
     });
   }

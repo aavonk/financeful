@@ -1,13 +1,34 @@
-import { Resolver, Authorized, Ctx, Arg, Query, Mutation } from 'type-graphql';
+import {
+  Resolver,
+  Authorized,
+  Ctx,
+  Arg,
+  Query,
+  Mutation,
+  ID,
+} from 'type-graphql';
 import { Account, Context } from '@Shared/types';
-import { CreateAccountInput, EditAccountInput } from '../types/account.types';
+import {
+  CreateAccountInput,
+  EditAccountInput,
+  AccountQueryFilters,
+} from '../types/account.types';
 
 @Resolver()
 export class AccountResolver {
   @Authorized()
   @Query(() => [Account])
-  async getAccounts(@Ctx() { user, accountRepo }: Context): Promise<Account[]> {
-    const accounts = accountRepo.getAccounts(user.id);
+  async getAccounts(
+    @Arg('filter', { nullable: true }) filter: AccountQueryFilters | null,
+    @Ctx() { user, accountRepo }: Context,
+  ): Promise<Account[]> {
+    const accounts = await accountRepo.getAccounts(user.id);
+
+    if (filter?.isInactive) {
+      return accounts.filter(
+        (account: Account) => account.isInactive === false,
+      );
+    }
     return accounts;
   }
 
@@ -28,5 +49,25 @@ export class AccountResolver {
     @Ctx() { accountRepo, user }: Context,
   ): Promise<Account> {
     return await accountRepo.editAccount(user.id, accountId, input);
+  }
+
+  @Authorized()
+  @Mutation(() => Account)
+  async toggleAccountActiveStatus(
+    @Arg('accountId') accountId: string,
+    @Ctx() { user, accountRepo }: Context,
+  ): Promise<Account> {
+    return await accountRepo.toggleAccountActiveStatus(user.id, accountId);
+  }
+
+  @Authorized()
+  @Mutation(() => ID)
+  async deleteAccount(
+    @Arg('accountId') accountId: string,
+    @Ctx() { user, accountRepo }: Context,
+  ): Promise<string> {
+    await accountRepo.deleteAccount(user.id, accountId);
+
+    return 'Successfully deleted account.';
   }
 }

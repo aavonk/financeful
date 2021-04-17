@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -37,11 +37,17 @@ export const Container = styled.div`
   min-height: 400px;
 `;
 
-export const AccountItemBox = styled.div`
+export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
   display: flex;
   flex-direction: row;
   flex: 0 0 100%;
   padding: 0.5rem 0;
+
+  ${({ $inactive }) =>
+    $inactive &&
+    css`
+      color: ${({ theme }) => theme.colors.textSecondary};
+    `}
 `;
 
 export const ItemName = styled.div`

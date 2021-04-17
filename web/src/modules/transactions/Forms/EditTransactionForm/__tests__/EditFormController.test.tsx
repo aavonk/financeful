@@ -95,6 +95,9 @@ describe('Edit Transaction Form fetchAccountsAndCategories query', () => {
 // that the alert has shown.
 
 describe('The update Transaction mutation', () => {
+  beforeEach(() => {
+    jest.setTimeout(10000);
+  });
   test('[Success state] It successfuly calls mutation and closes form', async () => {
     const closeModal = jest.fn();
     const { getByText, getByRole } = setup(

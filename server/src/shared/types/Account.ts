@@ -29,4 +29,7 @@ export class Account {
 
   @Field(() => String, { nullable: true })
   bankName?: string | null;
+
+  @Field(() => Boolean, { nullable: true })
+  isInactive?: boolean;
 }

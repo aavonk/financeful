@@ -1,0 +1,11 @@
+mutation EditAccount($accountId: String!, $input: EditAccountInput!) {
+  editAccount(accountId: $accountId, input: $input) {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    balance
+    bankName
+  }
+}

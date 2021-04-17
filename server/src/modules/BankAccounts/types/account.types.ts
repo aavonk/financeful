@@ -42,3 +42,9 @@ export class EditAccountInput {
   @Field(() => AccountClassification)
   classification: AccountClassification;
 }
+
+@InputType()
+export class AccountQueryFilters {
+  @Field(() => Boolean)
+  isInactive: boolean;
+}

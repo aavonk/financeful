@@ -64,7 +64,6 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
   useEffect(() => {
     if (options?.useEffectOnMount && options?.initialValue) {
       setValues(options.initialValue as T);
-      console.log('changing values');
     }
   }, [options?.initialValue, options?.useEffectOnMount]);
 

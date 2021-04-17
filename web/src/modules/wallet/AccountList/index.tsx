@@ -11,7 +11,12 @@ type IAccountList = {
   accounts: Account[] | undefined;
 } & IAccountActions;
 
-function AccountList({ accounts, onEditClick, onDelete }: IAccountList) {
+function AccountList({
+  accounts,
+  onEditClick,
+  onDeleteClick,
+  onMarkInactiveClick,
+}: IAccountList) {
   return (
     <Paper>
       <Container>
@@ -21,8 +26,9 @@ function AccountList({ accounts, onEditClick, onDelete }: IAccountList) {
             <AccountItem key={account.id} account={account}>
               <AccountActions
                 onEditClick={onEditClick}
-                onDelete={onDelete}
+                onDeleteClick={onDeleteClick}
                 account={account}
+                onMarkInactiveClick={onMarkInactiveClick}
               />
             </AccountItem>
           ))
