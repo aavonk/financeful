@@ -38,7 +38,7 @@ export const PrimaryMessage = styled.div`
   flex: 0 0 100%;
   align-items: center;
   justify-content: center;
-
+  margin-bottom: 12px;
   & > h1 {
     font-size: 1.625rem;
     font-weight: 700;

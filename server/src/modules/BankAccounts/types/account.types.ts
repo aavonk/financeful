@@ -27,3 +27,18 @@ export class CreateAccountInput {
   @Field(() => AccountClassification)
   classification: AccountClassification;
 }
+
+@InputType()
+export class EditAccountInput {
+  @Field(() => String)
+  accountName: string;
+
+  @Field(() => String)
+  accountType: string;
+
+  @Field(() => String, { nullable: true })
+  bankName?: string;
+
+  @Field(() => AccountClassification)
+  classification: AccountClassification;
+}
