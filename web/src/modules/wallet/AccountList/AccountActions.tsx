@@ -20,12 +20,6 @@ function AccountActions({
 }: Props) {
   const possibleActions: DropdownItems = [
     {
-      label: 'Delete account',
-      icon: <ErrorIcon />,
-      iconVariant: 'danger',
-      onSelect: () => onDeleteClick(account),
-    },
-    {
       label: 'Edit details',
       icon: <InfoIcon />,
       iconVariant: 'muted',
@@ -36,6 +30,12 @@ function AccountActions({
       icon: <PlusIcon />,
       iconVariant: 'muted',
       onSelect: () => onMarkInactiveClick(account),
+    },
+    {
+      label: 'Delete account',
+      icon: <ErrorIcon />,
+      iconVariant: 'danger',
+      onSelect: () => onDeleteClick(account),
     },
   ];
   return (
