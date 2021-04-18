@@ -14,7 +14,7 @@ import { useConfirmation } from '@Context/confirmation/confirmationContext';
 import { useAlert } from '@Context/alert/alertContext';
 import EditAccountForm from './Forms/EditAccountForm';
 
-function MutateAccountsController() {
+function AccountActionsController() {
   const [displayEditForm, setDisplayEditForm] = useState(false);
   const [accountToEdit, setAccountToEdit] = useState<Account | null>(null);
   const { showAlert } = useAlert();
@@ -128,4 +128,4 @@ function MutateAccountsController() {
   );
 }
 
-export default MutateAccountsController;
+export default AccountActionsController;

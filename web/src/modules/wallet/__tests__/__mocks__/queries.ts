@@ -12,6 +12,7 @@ export const ACCOUNTS: Account[] = [
     isLiability: true,
     balance: 0,
     bankName: 'Discover',
+    isInactive: false,
   },
   {
     __typename: 'Account',
@@ -22,6 +23,7 @@ export const ACCOUNTS: Account[] = [
     isLiability: false,
     balance: 20,
     bankName: 'Chase',
+    isInactive: false,
   },
 ];
 

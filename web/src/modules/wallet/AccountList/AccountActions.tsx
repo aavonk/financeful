@@ -41,11 +41,12 @@ function AccountActions({
   return (
     <>
       <IconDropdown
-        icon={<VerticalMenuIcon />}
+        icon={<VerticalMenuIcon data-testid="account-action-button" />}
         items={possibleActions}
         id="account-actions"
         ariaText="Account Actions"
         variant="small"
+        data-testid="account-action-menu"
       />
     </>
   );
