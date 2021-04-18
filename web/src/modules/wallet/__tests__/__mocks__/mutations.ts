@@ -18,6 +18,7 @@ export const newAccountInput: CreateAccountInput = {
   classification: 'asset' as AccountType,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { classification, ...responseData } = newAccountInput;
 
 export const newAccountResponse: Account = {

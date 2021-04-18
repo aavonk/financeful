@@ -2,7 +2,7 @@
 // This test will render the Accounts section of the MyWalet page and test the
 // UI updates, and network states.
 
-import { render, waitFor, screen, act } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import {
@@ -11,7 +11,6 @@ import {
   getAccountsGQLError,
   ACCOUNTS,
 } from './__mocks__/queries';
-import { editAccountSuccess, editAccountVariables } from './__mocks__/mutations';
 import { AlertProvider } from '@Context/alert/alertContext';
 import ThemeProvider from '@Context/theme';
 import { ConfirmationProvider } from '@Context/confirmation/confirmationContext';
