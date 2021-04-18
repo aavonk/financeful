@@ -2,25 +2,40 @@ import styled from 'styled-components';
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 0.6fr 1.4fr;
-  grid-template-rows: 0.6fr 1.4fr;
-  gap: 0px 0px;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px 0px;
   grid-template-areas:
-    'cards cards'
-    'widgets accounts';
+    'cards'
+    'accounts'
+    'accounts';
+
+  @media ${({ theme }) => theme.device.laptopAndUp} {
+    grid-template-columns: 0.6fr 1.4fr;
+    grid-template-rows: 0.6fr 1.4fr;
+    grid-template-areas:
+      'cards cards'
+      'widgets accounts';
+  }
 `;
 
-export const CardViewContainer = styled.div`
+export const CardViewContainer = styled.section`
   grid-area: cards;
-  /* background-color: yellow; */
+  /* Inner grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 `;
 
-export const WidgetViewContainer = styled.div`
+export const WidgetViewContainer = styled.section`
+  display: none;
   grid-area: widgets;
-  /* background-color: red; */
+
+  @media ${({ theme }) => theme.device.laptopAndUp} {
+    display: block;
+  }
 `;
 
-export const AccountViewContainer = styled.div`
+export const AccountViewContainer = styled.section`
   grid-area: accounts;
   /* background-color: blue; */
 `;

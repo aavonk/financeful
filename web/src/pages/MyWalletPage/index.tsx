@@ -1,4 +1,7 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import AccountActionsController from '@Modules/wallet/AccountActionsController';
+import AccountListError from '@Modules/wallet/AccountList/AccountListError';
+import CreditCardsContainer from '@Modules/wallet/CreditCardsContainer';
 import {
   GridContainer,
   CardViewContainer,
@@ -9,11 +12,14 @@ import {
 function MyWalletPage() {
   return (
     <GridContainer>
-      <CardViewContainer>Cards container</CardViewContainer>
+      <CardViewContainer>
+        <CreditCardsContainer />
+      </CardViewContainer>
       <WidgetViewContainer> Widgets!</WidgetViewContainer>
       <AccountViewContainer>
-        {/* TODO: Add an error boundary surrounding mutateaccountscontroller */}
-        <AccountActionsController />
+        <ErrorBoundary FallbackComponent={AccountListError}>
+          <AccountActionsController />
+        </ErrorBoundary>
       </AccountViewContainer>
     </GridContainer>
   );
