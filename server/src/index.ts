@@ -38,7 +38,7 @@ const main = async () => {
       prisma,
       transferRepo: new TransferRepo(),
       accountRepo: new AccountRepo(),
-      authRepo: new AuthRepo(),
+      authRepo: new AuthRepo(prisma),
       categoryRepo: new CategoryRepo(),
       transactionRepo: new TransactionRepo(),
       userRepo: new UserRepo(),
