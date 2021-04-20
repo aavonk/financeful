@@ -1,15 +1,62 @@
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import styled, { css } from 'styled-components';
+import { useGetAccountsQuery } from '@Generated/graphql';
 import CreditCard from '@Components/CreditCard';
 import CardLoader from '@Components/CreditCard/CardLoader';
-import { AnimatePresence, motion } from 'framer-motion';
 import AccountOverviewModal from './AccountOverview/Modal';
+import Toast from '@Common/Alerts/Toast';
+
+type GridProps = { shouldFlex?: boolean };
+
+const GridView = styled.div<GridProps>`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px 20px;
+  justify-items: center;
+
+  ${({ shouldFlex }) =>
+    shouldFlex &&
+    css`
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    `}
+`;
+
 function CreditCardsContainer() {
-  const arr = new Array(8).fill(undefined).map((val, idx) => idx);
+  const arr = new Array(4).fill(undefined).map((val, idx) => idx);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { data: accounts, loading: fetchingAccounts, error } = useGetAccountsQuery();
+
+  if (fetchingAccounts) {
+    return (
+      <GridView>
+        {arr.map((item, index) => (
+          <CardLoader key={index} />
+        ))}
+      </GridView>
+    );
+  }
+
+  if (error) {
+    return (
+      <Toast
+        type="error"
+        message="There was an error fetching your card data."
+        timeout={10000}
+      />
+    );
+  }
+
+  if (!accounts || !accounts.getAccounts) {
+    return null;
+  }
   return (
-    <>
+    <GridView shouldFlex={accounts.getAccounts.length < 4}>
       <AnimatePresence initial={true}>
-        {arr.slice(0, 4).map((item, index) => (
+        {accounts.getAccounts.slice(0, 4).map((account, index) => (
           <motion.div
             key={index}
             whileHover={{ scale: 1.1, zIndex: 20 }}
@@ -19,7 +66,7 @@ function CreditCardsContainer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={() => setDialogOpen(true)}
           >
-            <CardLoader />
+            <CreditCard account={account} />
           </motion.div>
         ))}
       </AnimatePresence>
@@ -28,7 +75,7 @@ function CreditCardsContainer() {
         <div> Area chart with 3-6 months baance history</div>
         <div>recent transactions</div>
       </AccountOverviewModal>
-    </>
+    </GridView>
   );
 }
 

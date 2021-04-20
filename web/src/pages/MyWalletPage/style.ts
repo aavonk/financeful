@@ -32,11 +32,12 @@ export const CardViewContainer = styled.section`
 
   @media (min-width: 768px) {
     grid-area: cards;
+    display: block;
     /* Inner grid */
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 10px 20px;
-    justify-items: center;
+    justify-items: center; */
   }
 `;
 

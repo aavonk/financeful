@@ -4,23 +4,12 @@ import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { Account } from '@Generated/graphql';
 import { Card, BankName, Data, Chip } from './style';
 
-const account: Account = {
-  __typename: 'Account',
-  id: 'wreqe',
-  accountName: 'Primary Checking',
-  accountType: 'DEBIT',
-  isAsset: true,
-  isLiability: false,
-  balance: 200148,
-  bankName: 'Chase',
-  isInactive: false,
-};
-
 type Props = {
   style?: CSSProperties;
+  account: Account;
 };
 
-function CreditCard({ style }: Props) {
+function CreditCard({ style, account }: Props) {
   return (
     <Card style={style}>
       <BankName>
