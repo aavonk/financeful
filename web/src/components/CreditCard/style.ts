@@ -25,8 +25,8 @@ export const BankName = styled.div`
   & > p {
     margin-top: 15px;
     margin-right: 30px;
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
     float: right;
     overflow: hidden;
     white-space: nowrap;
@@ -36,13 +36,14 @@ export const BankName = styled.div`
 
 export const Chip = styled.div`
   position: relative;
-  z-index: 1000;
-  width: 45px;
-  height: 35px;
+  z-index: 10;
+  width: 40px;
+  height: 30px;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 30px;
   background: #fffcb1;
+
   /* Old browsers */
   background: -moz-linear-gradient(-45deg, #fffcb1 0%, #b4a365 100%);
   /* FF3.6+ */
@@ -79,8 +80,8 @@ export const Chip = styled.div`
   & > .side {
     position: absolute;
     top: 8px;
-    width: 12px;
-    height: 24px;
+    width: 10px;
+    height: 22px;
     border: 1px solid #322d28;
     -webkit-box-shadow: 0 0 5px rgba(144, 133, 87, 0.25) inset,
       0 0 5px rgba(144, 133, 87, 0.25), 0 0 4px rgba(0, 0, 0, 0.1),
@@ -136,7 +137,7 @@ export const Chip = styled.div`
     right: 0;
     margin: 0 auto;
     width: 8.66666667px;
-    height: 12px;
+    height: 10px;
     border: 1px solid #322d28;
     -webkit-box-shadow: 0 0 5px rgba(144, 133, 87, 0.25) inset,
       0 0 5px rgba(144, 133, 87, 0.25), 0 0 4px rgba(0, 0, 0, 0.1),
@@ -189,6 +190,8 @@ export const Data = styled.div`
     /* z-index: 2; */
     letter-spacing: 1px;
     text-shadow: 1px 1px 1px #000;
+    font-size: 22px;
+    font-weight: 700;
   }
 
   & > .details {
@@ -196,13 +199,13 @@ export const Data = styled.div`
   }
 
   & > .details .label {
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 1px;
     text-shadow: 1px 1px 1px #000;
   }
 
   & > .details .date {
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 1px;
     text-shadow: 1px 1px 1px #000;
   }

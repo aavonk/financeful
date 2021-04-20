@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import CreditCard from '@Components/CreditCard';
+import CardLoader from '@Components/CreditCard/CardLoader';
 import { AnimatePresence, motion } from 'framer-motion';
 import AccountOverviewModal from './AccountOverview/Modal';
-
 function CreditCardsContainer() {
   const arr = new Array(8).fill(undefined).map((val, idx) => idx);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -12,7 +12,6 @@ function CreditCardsContainer() {
         {arr.slice(0, 4).map((item, index) => (
           <motion.div
             key={index}
-            // whileHover={selectedCard ? undefined : { scale: 1.1, zIndex: 20 }}
             whileHover={{ scale: 1.1, zIndex: 20 }}
             whileTap={{ scale: 0.9 }}
             style={{ cursor: 'pointer', height: 'fit-content' }}
@@ -20,7 +19,7 @@ function CreditCardsContainer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={() => setDialogOpen(true)}
           >
-            <CreditCard />
+            <CardLoader />
           </motion.div>
         ))}
       </AnimatePresence>

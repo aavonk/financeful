@@ -11,7 +11,7 @@ const account: Account = {
   accountType: 'DEBIT',
   isAsset: true,
   isLiability: false,
-  balance: 2000000,
+  balance: 200148,
   bankName: 'Chase',
   isInactive: false,
 };
