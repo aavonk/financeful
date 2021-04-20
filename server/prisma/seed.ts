@@ -3,13 +3,13 @@ import ask from 'prompt'
 import { PrismaClient } from '@prisma/client'
 import { AuthRepo } from '../src/modules/Auth/repos/implementations/authRepo'
 import { RegisterInput } from '../src/modules/Auth/resolvers/types'
-import { User, Account } from '../src/shared/types'
+import { User } from '../src/shared/types'
 import { categories } from './seed-data/categories'
 import { accounts } from './seed-data/accounts'
 
 const prisma = new PrismaClient()
 
-async function script(){
+async function main(){
   const schema = {
     properties: {
       name: {
@@ -66,8 +66,7 @@ async function script(){
   console.log(chalk.green('Creating awesomeness... hang tight \n \n'))
   console.log(chalk.blue('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n'))
 
-  console.log({name, email, password, passwordConfirmation})
-  const auth = new AuthRepo()
+  const auth = new AuthRepo(prisma)
 
   const values: RegisterInput = {displayName: name as string, email: email as string, password: password as string, passwordConfirmation: passwordConfirmation as string}
   const user: User = await auth.handleRegister(values)
@@ -89,7 +88,7 @@ async function script(){
 
 }
 
-script().catch(e => {
+main().catch(e => {
   console.log(e.message)
   process.exit(1)
 }).finally(() => {
