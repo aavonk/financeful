@@ -1,13 +1,18 @@
 import styled from 'styled-components';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-export const Card = styled.div`
+export const Card = styled(motion.div)<HTMLMotionProps<'div'>>`
   width: 280px;
   height: 175.84px;
-  background: ${({ theme }) => theme.colors.darkFour};
+  /* background: ${({ theme }) => theme.colors.darkTwo}; */
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-  /* border */
+  /* glass */
+  background: rgba(36, 44, 55, 0.28);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
 `;
 
 export const BankName = styled.div`
@@ -20,7 +25,7 @@ export const BankName = styled.div`
   & > p {
     margin-top: 15px;
     margin-right: 30px;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     float: right;
     overflow: hidden;
@@ -226,7 +231,7 @@ export const LinesUp = styled.div`
       center,
       ellipse cover,
       rgba(64, 49, 178, 0) 100%,
-      #23189a 100%
+      #2271d8 100%
     );
     /* FF3.6+ */
     background: -webkit-gradient(
@@ -236,37 +241,37 @@ export const LinesUp = styled.div`
       center center,
       100%,
       color-stop(0%, rgba(64, 49, 178, 0)),
-      color-stop(100%, #23189a)
+      color-stop(100%, #2271d8)
     );
     /* Chrome,Safari4+ */
     background: -webkit-radial-gradient(
       center,
       ellipse cover,
       rgba(64, 49, 178, 0) 100%,
-      #23189a 100%
+      #2271d8 100%
     );
     /* Chrome10+,Safari5.1+ */
     background: -o-radial-gradient(
       center,
       ellipse cover,
       rgba(64, 49, 178, 0) 44%,
-      #23189a 100%
+      #2271d8 100%
     );
     /* Opera 12+ */
     background: -ms-radial-gradient(
       center,
       ellipse cover,
       rgba(64, 49, 178, 0) 44%,
-      #23189a 100%
+      #2271d8 100%
     );
     /* IE10+ */
     background: radial-gradient(
       ellipse at center,
       rgba(64, 49, 178, 0) 44%,
-      #23189a 100%
+      #2271d8 100%
     );
     /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="rgba(64, 49, 178, 0)", endColorstr="#23189a", GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="rgba(64, 49, 178, 0)", endColorstr="#2271d8", GradientType=1);
     /* IE6-9 fallback on horizontal gradient */
   }
   :after {

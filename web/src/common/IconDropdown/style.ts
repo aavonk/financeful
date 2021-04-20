@@ -64,8 +64,8 @@ export const StyledMenuList = styled(MenuList)`
   border-radius: 0.25rem;
   font-size: 0.938rem;
   text-align: left;
-  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
-    rgb(136 153 166 / 15%) 0px 0px 3px 1px;
+  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px, rgb(136 153 166 / 15%) 0px 0px 3px 1px;
+  z-index: 100;
 `;
 
 export const StyledMenuItem = styled(MenuItem)<{

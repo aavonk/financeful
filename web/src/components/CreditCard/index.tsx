@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { CSSProperties } from 'react';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { Account } from '@Generated/graphql';
-import { Card, BankName, Data, Chip, LinesUp, LinesDown } from './style';
-import { motion, useTransform, useMotionValue, useCycle } from 'framer-motion';
+import { Card, BankName, Data, Chip } from './style';
 
 const account: Account = {
   __typename: 'Account',
@@ -17,44 +17,30 @@ const account: Account = {
 };
 
 type Props = {
-  layoutId: string;
+  style?: CSSProperties;
 };
 
-function CreditCard({ layoutId }: Props) {
-  const [animate, cycle] = useCycle({ scale: 1, rotate: 0 }, { scale: 1.25, rotate: 90 });
-
+function CreditCard({ style }: Props) {
   return (
-    <motion.div
-      layoutId={layoutId}
-      animate={animate}
-      onTap={() => cycle()}
-      // whileHover={{ scale: 1.2 }
-    >
-      <Card>
-        <BankName>
-          <span />
-          <p>{account.accountName}</p>
-        </BankName>
-        <Chip>
-          <div className="side left" />
-          <div className="side right" />
-          <div className="vertical top" />
-          <div className="vertical bottom" />
-        </Chip>
-        <Data>
-          <div className="pan" title="XXXX XXXX XXXX XXXX">
-            {' '}
-            Balance: {formatMoneyFromCentsToDollars(account.balance!)}
-          </div>
-          <div className="details">
-            <div className="label">Last used</div>
-            <div className="date">12/24/2021</div>
-          </div>
-        </Data>
-        <LinesUp />
-        <LinesDown />
-      </Card>
-    </motion.div>
+    <Card style={style}>
+      <BankName>
+        <span />
+        <p>{account.accountName}</p>
+      </BankName>
+      <Chip>
+        <div className="side left" />
+        <div className="side right" />
+        <div className="vertical top" />
+        <div className="vertical bottom" />
+      </Chip>
+      <Data>
+        <div className="pan"> {formatMoneyFromCentsToDollars(account.balance!)}</div>
+        <div className="details">
+          <div className="label">Last used</div>
+          <div className="date">12/24/2021</div>
+        </div>
+      </Data>
+    </Card>
   );
 }
 

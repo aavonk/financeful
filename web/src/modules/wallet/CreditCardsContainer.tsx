@@ -1,26 +1,34 @@
+import { useState } from 'react';
 import CreditCard from '@Components/CreditCard';
-import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
-import { CardGridItem } from './CreditCardList/style';
-function CreditCardsContainer() {
-  const arr = new Array(4).fill(undefined).map((val, idx) => idx);
+import { AnimatePresence, motion } from 'framer-motion';
+import AccountOverviewModal from './AccountOverview/Modal';
 
+function CreditCardsContainer() {
+  const arr = new Array(8).fill(undefined).map((val, idx) => idx);
+  const [dialogOpen, setDialogOpen] = useState(false);
   return (
     <>
-      <AnimateSharedLayout>
-        {arr.map((item, index) => (
-          <CardGridItem
-            key={item}
-            style={
-              index === 0
-                ? undefined
-                : { marginLeft: `${200 * index}px`, zIndex: 4 + index }
-            }
+      <AnimatePresence initial={true}>
+        {arr.slice(0, 4).map((item, index) => (
+          <motion.div
+            key={index}
+            // whileHover={selectedCard ? undefined : { scale: 1.1, zIndex: 20 }}
+            whileHover={{ scale: 1.1, zIndex: 20 }}
+            whileTap={{ scale: 0.9 }}
+            style={{ cursor: 'pointer', height: 'fit-content' }}
+            initial={{ opacity: 0, y: 50, scale: 0.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            onClick={() => setDialogOpen(true)}
           >
-            <CreditCard layoutId={item.toString()} />
-          </CardGridItem>
+            <CreditCard />
+          </motion.div>
         ))}
-        <AnimatePresence></AnimatePresence>
-      </AnimateSharedLayout>
+      </AnimatePresence>
+      <AccountOverviewModal isOpen={dialogOpen} onDismiss={() => setDialogOpen(false)}>
+        <div>Acocunt name and balance</div>
+        <div> Area chart with 3-6 months baance history</div>
+        <div>recent transactions</div>
+      </AccountOverviewModal>
     </>
   );
 }
