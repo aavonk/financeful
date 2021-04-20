@@ -1,11 +1,12 @@
-import { DataSource } from '@Shared/core/DataSource';
+import { IDataBase } from '@Shared/database/IDataBase';
 import { Transaction } from '@Shared/types';
 import { ITransactionRepo } from '../transactionRepo';
 import { TransactionInput } from '../../types/transaction.types';
 
-export class TransactionRepo extends DataSource implements ITransactionRepo {
-  constructor() {
-    super();
+export class TransactionRepo implements ITransactionRepo {
+  private client: IDataBase;
+  constructor(database: IDataBase) {
+    this.client = database;
   }
 
   private createQueryOptions(): any {

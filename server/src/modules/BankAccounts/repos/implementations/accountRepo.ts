@@ -1,5 +1,5 @@
+import { PrismaClient } from '@prisma/client';
 import { IAccountRepo } from '../accountRepo';
-import { DataSource } from '@Shared/core/DataSource';
 import { Account } from '@Shared/types/Account';
 import {
   CreateAccountInput,
@@ -7,9 +7,13 @@ import {
 } from '../../types/account.types';
 import { BankAccount } from '../../domain/bankAccount';
 
-export class AccountRepo extends DataSource implements IAccountRepo {
-  constructor() {
-    super();
+export class AccountRepo implements IAccountRepo {
+  private client: PrismaClient;
+  private accountModel: PrismaClient['account'];
+
+  constructor(database: PrismaClient) {
+    this.client = database;
+    this.accountModel = database.account;
   }
 
   async getOneAccount(id: string, userId: string): Promise<Account | null> {

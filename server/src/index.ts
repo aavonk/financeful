@@ -36,12 +36,12 @@ const main = async () => {
     context: ({ req }) => ({
       req,
       prisma,
-      transferRepo: new TransferRepo(),
-      accountRepo: new AccountRepo(),
+      transferRepo: new TransferRepo(prisma),
+      accountRepo: new AccountRepo(prisma),
       authRepo: new AuthRepo(prisma),
-      categoryRepo: new CategoryRepo(),
-      transactionRepo: new TransactionRepo(),
-      userRepo: new UserRepo(),
+      categoryRepo: new CategoryRepo(prisma),
+      transactionRepo: new TransactionRepo(prisma),
+      userRepo: new UserRepo(prisma),
     }),
   });
 

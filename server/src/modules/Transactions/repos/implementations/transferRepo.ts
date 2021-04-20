@@ -2,11 +2,12 @@ import { Account, Transaction } from '@Shared/types';
 import { Transfer, TransferInput } from '../../types/transfer.types';
 import { nanoid } from 'nanoid';
 import { ITransferRepo } from '../transferRepo';
-import { DataSource } from '@Shared/core/DataSource';
+import { IDataBase } from '@Shared/database/IDataBase';
 
-export class TransferRepo extends DataSource implements ITransferRepo {
-  constructor() {
-    super();
+export class TransferRepo implements ITransferRepo {
+  private client: IDataBase;
+  constructor(database: IDataBase) {
+    this.client = database;
   }
 
   private createQueryOptions(): any {
