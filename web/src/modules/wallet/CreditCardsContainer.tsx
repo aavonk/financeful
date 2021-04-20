@@ -12,8 +12,11 @@ type GridProps = { shouldFlex?: boolean };
 const GridView = styled.div<GridProps>`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 10px 20px;
-  justify-items: center;
+  gap: 10px 10px;
+  justify-items: start;
+  @media (min-width: 768px) {
+    justify-items: center;
+  }
 
   ${({ shouldFlex }) =>
     shouldFlex &&
@@ -28,7 +31,9 @@ const GridView = styled.div<GridProps>`
 function CreditCardsContainer() {
   const arr = new Array(4).fill(undefined).map((val, idx) => idx);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { data: accounts, loading: fetchingAccounts, error } = useGetAccountsQuery();
+  const { data: accounts, loading: fetchingAccounts, error } = useGetAccountsQuery({
+    variables: { filter: { isInactive: true } },
+  });
 
   if (fetchingAccounts) {
     return (

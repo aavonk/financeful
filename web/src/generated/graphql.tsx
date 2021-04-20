@@ -547,7 +547,9 @@ export type ToggleAccountActiveStatusMutation = (
   ) }
 );
 
-export type GetAccountsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAccountsQueryVariables = Exact<{
+  filter?: Maybe<AccountQueryFilters>;
+}>;
 
 
 export type GetAccountsQuery = (
@@ -1316,8 +1318,8 @@ export type ToggleAccountActiveStatusMutationHookResult = ReturnType<typeof useT
 export type ToggleAccountActiveStatusMutationResult = Apollo.MutationResult<ToggleAccountActiveStatusMutation>;
 export type ToggleAccountActiveStatusMutationOptions = Apollo.BaseMutationOptions<ToggleAccountActiveStatusMutation, ToggleAccountActiveStatusMutationVariables>;
 export const GetAccountsDocument = gql`
-    query GetAccounts {
-  getAccounts {
+    query GetAccounts($filter: AccountQueryFilters) {
+  getAccounts(filter: $filter) {
     id
     accountName
     accountType
@@ -1342,6 +1344,7 @@ export const GetAccountsDocument = gql`
  * @example
  * const { data, loading, error } = useGetAccountsQuery({
  *   variables: {
+ *      filter: // value for 'filter'
  *   },
  * });
  */
