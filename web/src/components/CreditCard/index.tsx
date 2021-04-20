@@ -28,11 +28,10 @@ function CreditCard({ style, account }: Props) {
         </Chip>
         <div className="pan"> {formatMoneyFromCentsToDollars(account.balance!)}</div>
       </AmountBar>
-
       <Data>
         <div className="details">
           <div className="label">Last used</div>
-          <div className="date">12/24/2021</div>
+          <div className="date">TODO</div>
         </div>
       </Data>
     </Card>
