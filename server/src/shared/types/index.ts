@@ -3,5 +3,15 @@ import { Category } from './Category';
 import { Context } from './Context';
 import { Transaction } from './Transaction';
 import { User } from './User';
+import { DailyBalance } from './DailyBalance';
+import { IDataBase } from '../database/IDataBase';
 
-export { Account, Category, Context, Transaction, User };
+export {
+  Account,
+  Category,
+  Context,
+  Transaction,
+  User,
+  DailyBalance,
+  IDataBase,
+};

@@ -19,8 +19,8 @@ export class AccountResolver {
   @Authorized()
   @Query(() => [Account])
   async getAccounts(
-    @Arg('filter', { nullable: true }) filter: AccountQueryFilters | null,
     @Ctx() { user, accountRepo }: Context,
+    @Arg('filter', { nullable: true }) filter?: AccountQueryFilters,
   ): Promise<Account[]> {
     const accounts = await accountRepo.getAccounts(user.id);
 
