@@ -3,9 +3,10 @@ import ask from 'prompt'
 import { PrismaClient } from '@prisma/client'
 import { AuthRepo } from '../src/modules/Auth/repos/implementations/authRepo'
 import { RegisterInput } from '../src/modules/Auth/resolvers/types'
-import { User } from '../src/shared/types'
+import { User, Account } from '../src/shared/types'
 import { categories } from './seed-data/categories'
 import { accounts } from './seed-data/accounts'
+import { generateBalanceObjects } from './seed-data/balances';
 
 const prisma = new PrismaClient()
 
@@ -74,10 +75,13 @@ async function main(){
   const bankAccounts = accounts.map((account) => ({...account, userId: user.id}));
   const newCategories = categories.map((cat) => ({...cat, userId: user.id }))
 
+  const acct: Account[] = []
+
   for (let account of bankAccounts) {
-    await prisma.account.create({
+    const newAccount = await prisma.account.create({
       data: account
     })
+    acct.push(newAccount)
   }
 
   for( let category of newCategories) {
@@ -86,6 +90,13 @@ async function main(){
     })
   }
 
+  const bankBalances = generateBalanceObjects().map((item) => ({ ...item, userId: user.id, accountId: acct[0].id }))
+
+  for (let balance of bankBalances) {
+    await prisma.dailyBalances.create({
+      data: balance
+    })
+  }
 }
 
 main().catch(e => {
