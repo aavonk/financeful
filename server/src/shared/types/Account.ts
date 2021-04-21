@@ -18,12 +18,6 @@ export class Account {
   @Field(() => String, { nullable: true })
   accountType?: String;
 
-  @Field(() => Boolean, { nullable: true })
-  isAsset?: boolean;
-
-  @Field(() => Boolean, { nullable: true })
-  isLiability?: Boolean;
-
   @Field(() => Int, { nullable: true })
   balance?: number;
 
@@ -31,5 +25,17 @@ export class Account {
   bankName?: string | null;
 
   @Field(() => Boolean, { nullable: true })
+  isAsset?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isLiability?: Boolean;
+
+  @Field(() => Boolean, { nullable: true })
   isInactive?: boolean;
+
+  @Field(() => Date, { nullable: true })
+  createdAt?: Date;
+
+  @Field(() => Date, { nullable: true })
+  updatedAt?: Date;
 }

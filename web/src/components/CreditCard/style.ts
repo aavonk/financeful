@@ -226,13 +226,13 @@ export const Data = styled.div`
   } */
 
   & > .details {
-    margin-top: 5px;
+    margin-top: 18px;
   }
 
   & > .details .label {
     font-size: 10px;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 1px #000;
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 
   & > .details .date {

@@ -89,11 +89,13 @@ export type Account = {
   userId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   accountType?: Maybe<Scalars['String']>;
-  isAsset?: Maybe<Scalars['Boolean']>;
-  isLiability?: Maybe<Scalars['Boolean']>;
   balance?: Maybe<Scalars['Int']>;
   bankName?: Maybe<Scalars['String']>;
+  isAsset?: Maybe<Scalars['Boolean']>;
+  isLiability?: Maybe<Scalars['Boolean']>;
   isInactive?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Transfer = {
@@ -556,7 +558,7 @@ export type GetAccountsQuery = (
   { __typename?: 'Query' }
   & { getAccounts: Array<(
     { __typename?: 'Account' }
-    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'isInactive' | 'balance' | 'bankName'>
+    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'isInactive' | 'balance' | 'bankName' | 'updatedAt'>
   )> }
 );
 
@@ -1328,6 +1330,7 @@ export const GetAccountsDocument = gql`
     isInactive
     balance
     bankName
+    updatedAt
   }
 }
     `;

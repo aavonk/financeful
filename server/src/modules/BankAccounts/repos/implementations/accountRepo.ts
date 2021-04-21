@@ -29,9 +29,7 @@ export class AccountRepo implements IAccountRepo {
       where: {
         userId,
       },
-      orderBy: {
-        accountName: 'asc',
-      },
+      orderBy: [{ updatedAt: 'desc' }, { accountName: 'asc' }],
     });
 
     return accounts;

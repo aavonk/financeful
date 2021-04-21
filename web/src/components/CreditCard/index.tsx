@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CSSProperties } from 'react';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
+import { formatDate } from '@Lib/date-formatting';
 import { Account } from '@Generated/graphql';
 import { Card, BankName, Data, Chip, AmountBar } from './style';
 
@@ -31,7 +32,7 @@ function CreditCard({ style, account }: Props) {
       <Data>
         <div className="details">
           <div className="label">Last used</div>
-          <div className="date">TODO</div>
+          <div className="date">{formatDate(account.updatedAt!, 'MMM do yyyy')}</div>
         </div>
       </Data>
     </Card>
