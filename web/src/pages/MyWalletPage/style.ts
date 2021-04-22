@@ -4,7 +4,7 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(3, 1fr);
-  gap: 20px 0px;
+  gap: 20px 20px;
   grid-template-areas:
     'accounts'
     'accounts'
@@ -20,6 +20,7 @@ export const GridContainer = styled.div`
   @media ${({ theme }) => theme.device.laptopAndUp} {
     grid-template-columns: 0.6fr 1.4fr;
     grid-template-rows: 0.6fr 1.4fr;
+    gap: 20px 40px;
     grid-template-areas:
       'cards cards'
       'widgets accounts';
