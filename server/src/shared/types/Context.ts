@@ -6,6 +6,7 @@ import { IAuthRepo } from '@Modules/Auth/repos/authRepo';
 import { ICategoryRepo } from '@Modules/Transactions/repos/categoryRepo';
 import { ITransactionRepo } from '@Modules/Transactions/repos/transactionRepo';
 import { IUserRepo } from '@Modules/Users/repos/userRepo';
+import { IAggregateAccountData } from '@Modules/BankAccounts/repos/aggregateAccountData';
 
 export interface Context extends ExpressContext {
   user: {
@@ -14,6 +15,7 @@ export interface Context extends ExpressContext {
   transferRepo: ITransferRepo;
   accountRepo: IAccountRepo;
   accountDataRepo: IAccountDataRepo;
+  aggregateAccountDataRepo: IAggregateAccountData;
   authRepo: IAuthRepo;
   categoryRepo: ICategoryRepo;
   transactionRepo: ITransactionRepo;

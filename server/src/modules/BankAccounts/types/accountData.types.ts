@@ -1,4 +1,5 @@
-import { Field, InputType, ID } from 'type-graphql';
+import { Field, InputType, ID, ObjectType, Int } from 'type-graphql';
+import { Account } from '@Shared/types';
 
 @InputType()
 export class GetBalanceParams {
@@ -10,4 +11,19 @@ export class GetBalanceParams {
 
   @Field(() => ID)
   accountId: string;
+}
+
+@ObjectType()
+export class AggregateBalanceResponse {
+  @Field(() => [Account])
+  accounts: Account[];
+
+  @Field(() => Int)
+  aggregateBalance: number;
+
+  @Field(() => Int)
+  totalAssets: number;
+
+  @Field(() => Int)
+  totalLiabilities: number;
 }

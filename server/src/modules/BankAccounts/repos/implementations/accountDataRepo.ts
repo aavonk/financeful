@@ -9,9 +9,11 @@ export class AccountDataRepo implements IAccountDataRepo {
     this.client = database;
   }
 
-  async getBalances(params: GetBalanceParams, userId: string): Promise<DailyBalance[]> {
+  async getBalances(
+    params: GetBalanceParams,
+    userId: string,
+  ): Promise<DailyBalance[]> {
     const { accountId, startDate, endDate } = params;
-
     const balances = await this.client.dailyBalances.findMany({
       where: {
         AND: [

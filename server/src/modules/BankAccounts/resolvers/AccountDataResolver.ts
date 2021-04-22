@@ -6,10 +6,12 @@ import {
   Query,
   Root,
   FieldResolver,
-  // ResolverInterface
 } from 'type-graphql';
 import { Context, DailyBalance, Account } from '@Shared/types';
-import { GetBalanceParams } from '../types/accountData.types';
+import {
+  GetBalanceParams,
+  AggregateBalanceResponse,
+} from '../types/accountData.types';
 
 @Resolver(() => DailyBalance)
 export class AccountDataResolver {
@@ -28,5 +30,13 @@ export class AccountDataResolver {
     @Ctx() { accountRepo, user }: Context,
   ): Promise<Account | null> {
     return await accountRepo.getOneAccount(dailyBalance.accountId, user.id);
+  }
+
+  @Authorized()
+  @Query(() => AggregateBalanceResponse)
+  async getAggregatedBalances(
+    @Ctx() { aggregateAccountDataRepo, user }: Context,
+  ): Promise<AggregateBalanceResponse> {
+    return await aggregateAccountDataRepo.getCurrentBalances(user.id);
   }
 }

@@ -17,6 +17,8 @@ import { CategoryRepo } from '@Modules/Transactions/repos/implementations/catego
 import { TransactionRepo } from '@Modules/Transactions/repos/implementations/transactionRepo';
 import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
 import { AccountDataRepo } from '@Modules/BankAccounts/repos/implementations/accountDataRepo';
+import { AggregateAccountData } from '@Modules/BankAccounts/repos/implementations/aggregateAccountData';
+
 import { AccountDataResolver } from '@Modules/BankAccounts/resolvers/AccountDataResolver';
 import prisma from '@Shared/database/prisma';
 
@@ -45,12 +47,13 @@ const main = async () => {
       transactionRepo: new TransactionRepo(prisma),
       userRepo: new UserRepo(prisma),
       accountDataRepo: new AccountDataRepo(prisma),
+      aggregateAccountDataRepo: new AggregateAccountData(prisma),
     }),
   });
 
   app.listen({ port: PORT }, () =>
     console.log(
-      `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`,
+      `👍 Server ready at http://localhost:${PORT}${server.graphqlPath}`,
     ),
   );
   server.applyMiddleware({ app });
