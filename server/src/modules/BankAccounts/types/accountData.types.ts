@@ -14,9 +14,15 @@ export class GetBalanceParams {
 }
 
 @ObjectType()
+export class AccountWithPercentOfAssets extends Account {
+  @Field(() => Int)
+  percentageOfAssets: number;
+}
+
+@ObjectType()
 export class AggregateBalanceResponse {
-  @Field(() => [Account])
-  accounts: Account[];
+  @Field(() => [AccountWithPercentOfAssets])
+  assets: AccountWithPercentOfAssets[];
 
   @Field(() => Int)
   aggregateBalance: number;

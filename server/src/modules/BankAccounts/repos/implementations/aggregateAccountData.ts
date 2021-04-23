@@ -28,7 +28,7 @@ export class AggregateAccountData implements IAggregateAccountData {
   public async getCurrentBalances(
     userId: string,
   ): Promise<AggregateBalanceResponse> {
-    const accounts: Account[] = await this.client.account.findMany({
+    const bankAccounts: Account[] = await this.client.account.findMany({
       where: {
         userId,
       },
@@ -37,13 +37,25 @@ export class AggregateAccountData implements IAggregateAccountData {
       },
     });
 
-    const response: AggregateBalanceResponse = {
-      accounts,
-      aggregateBalance: this.calculateAggregateTotal(accounts),
-      totalAssets: this.calculateAggregateAssets(accounts),
-      totalLiabilities: this.calculateAggregateLiabilities(accounts),
-    };
+    if (!bankAccounts || !bankAccounts.length) {
+      throw new Error('No accounts found');
+    }
 
+    const totalAssets = this.calculateAggregateAssets(bankAccounts);
+
+    const assets = bankAccounts
+      .filter((account) => account.isAsset)
+      .map((acct) => ({
+        ...acct,
+        percentageOfAssets:
+          Number((acct.balance! / totalAssets).toFixed(2)) * 100,
+      }));
+    const response: AggregateBalanceResponse = {
+      assets,
+      totalAssets,
+      aggregateBalance: this.calculateAggregateTotal(bankAccounts),
+      totalLiabilities: this.calculateAggregateLiabilities(bankAccounts),
+    };
     return response;
   }
 }
