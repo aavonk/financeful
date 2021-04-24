@@ -1,6 +1,7 @@
 query GetAssetsAndLiabilities {
   getAssetsAndLiabilites {
-    data {
+    aggregateBalance
+    accounts {
       id
       accountName
       isAsset

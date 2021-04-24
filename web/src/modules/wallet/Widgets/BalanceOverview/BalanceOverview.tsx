@@ -1,7 +1,7 @@
 import Paper from '@Common/Paper';
 import { Header, Container, Line } from './style';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
-import AssetsPieChart from './AssetsPieChart';
+import AssetsAndLiabilitiesChart from './AssetsAndLiabilitiesChart';
 
 const data = {
   aggregateBalance: 42222,
@@ -80,7 +80,7 @@ function BalanceOverview() {
           <h4>{formatMoneyFromCentsToDollars(data.aggregateBalance)}</h4>
         </Header>
         <Line />
-        <AssetsPieChart />
+        <AssetsAndLiabilitiesChart />
       </Container>
     </Paper>
   );

@@ -1,12 +1,12 @@
 import CardLoader from '@Components/CreditCard/CardLoader';
-import AssetsPieChart from '@Modules/wallet/Widgets/BalanceOverview/AssetsPieChart';
+import BarchartSkeleton from '@Components/ChartSkeletons/BarchartSkeleton';
 function DashboardPage() {
   return (
     <>
       <p>Hi</p>
       <CardLoader />
       <div style={{ marginTop: '20px' }}>
-        <AssetsPieChart />
+        <BarchartSkeleton barsCount={5} />
       </div>
     </>
   );

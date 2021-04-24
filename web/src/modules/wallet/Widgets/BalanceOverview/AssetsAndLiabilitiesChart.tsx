@@ -35,6 +35,7 @@ const data = {
       id: 'ckntayfcf00166cqs32ootrl85y',
       accountName: 'Bank with Debt ',
       balance: -522.22,
+      isLiability: true,
     },
     {
       id: 'cknrv902a0010j4qssdqw1kjn45z',
@@ -50,20 +51,21 @@ const data = {
       id: 'cknrv902i0016j4334qsh6fmu8b8',
       accountName: 'Credit Card',
       balance: -1480.0,
+      isLiability: true,
     },
   ],
 };
 
 const ASSETS_COLOR = `${theme.colors.primary}`;
 const LIABILITIES_COLOR = `${theme.colors.red}`;
+
 const CustomBar = (props: any) => {
-  const { balance } = props;
+  const { balance, isLiability } = props;
   // let fillColor = `${theme.colors.primary}`;
   let fillColor = ASSETS_COLOR;
   if (balance < 0) {
     fillColor = LIABILITIES_COLOR;
   }
-
   return (
     <Rectangle
       {...props}
@@ -74,7 +76,7 @@ const CustomBar = (props: any) => {
   );
 };
 
-function AssetsPieChart() {
+function AssetsAndLiabilitesChart() {
   return (
     <ResponsiveContainer maxHeight={250} minHeight={200} width="100%">
       <BarChart data={data.assets} margin={{ top: 10 }}>
@@ -112,7 +114,7 @@ function AssetsPieChart() {
             },
           ]}
         />
-        <Bar dataKey="balance" shape={CustomBar} name="Balance" />
+        <Bar dataKey="balance" shape={CustomBar} name="Balance" radius={4} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -136,4 +138,4 @@ function AssetsPieChart() {
 </Pie>
 </PieChart> */
 }
-export default AssetsPieChart;
+export default AssetsAndLiabilitesChart;

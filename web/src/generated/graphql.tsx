@@ -138,7 +138,8 @@ export type GetBalanceParams = {
 
 export type AssetsAndLiabilitesResponse = {
   __typename?: 'AssetsAndLiabilitesResponse';
-  data: Array<AssetsAndLiabilitiesBarChartData>;
+  accounts: Array<AssetsAndLiabilitiesBarChartData>;
+  aggregateBalance: Scalars['Float'];
 };
 
 export type AssetsAndLiabilitiesBarChartData = {
@@ -606,7 +607,8 @@ export type GetAssetsAndLiabilitiesQuery = (
   { __typename?: 'Query' }
   & { getAssetsAndLiabilites: (
     { __typename?: 'AssetsAndLiabilitesResponse' }
-    & { data: Array<(
+    & Pick<AssetsAndLiabilitesResponse, 'aggregateBalance'>
+    & { accounts: Array<(
       { __typename?: 'AssetsAndLiabilitiesBarChartData' }
       & Pick<AssetsAndLiabilitiesBarChartData, 'id' | 'accountName' | 'isAsset' | 'isLiability' | 'balance'>
     )> }
@@ -1416,7 +1418,8 @@ export type GetAccountsQueryResult = Apollo.QueryResult<GetAccountsQuery, GetAcc
 export const GetAssetsAndLiabilitiesDocument = gql`
     query GetAssetsAndLiabilities {
   getAssetsAndLiabilites {
-    data {
+    aggregateBalance
+    accounts {
       id
       accountName
       isAsset
