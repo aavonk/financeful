@@ -1,5 +1,5 @@
-import { AggregateBalanceResponse } from '../types/accountData.types';
+import { AssetsAndLiabilitesResponse } from '../types/accountData.types';
 
 export interface IAggregateAccountData {
-  getCurrentBalances(userId: string): Promise<AggregateBalanceResponse>;
+  getAssetsAndLiabilites(userId: string): Promise<AssetsAndLiabilitesResponse>;
 }

@@ -10,7 +10,7 @@ import {
 import { Context, DailyBalance, Account } from '@Shared/types';
 import {
   GetBalanceParams,
-  AggregateBalanceResponse,
+  AssetsAndLiabilitesResponse,
 } from '../types/accountData.types';
 
 @Resolver(() => DailyBalance)
@@ -33,10 +33,10 @@ export class AccountDataResolver {
   }
 
   @Authorized()
-  @Query(() => AggregateBalanceResponse)
-  async getAggregatedBalances(
-    @Ctx() { aggregateAccountDataRepo, user }: Context,
-  ): Promise<AggregateBalanceResponse> {
-    return await aggregateAccountDataRepo.getCurrentBalances(user.id);
+  @Query(() => AssetsAndLiabilitesResponse)
+  async getAssetsAndLiabilites(
+    @Ctx() { user, aggregateAccountDataRepo }: Context,
+  ): Promise<AssetsAndLiabilitesResponse> {
+    return await aggregateAccountDataRepo.getAssetsAndLiabilites(user.id);
   }
 }
