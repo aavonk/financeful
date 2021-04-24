@@ -1,0 +1,11 @@
+query GetAssetsAndLiabilities {
+  getAssetsAndLiabilites {
+    data {
+      id
+      accountName
+      isAsset
+      isLiability
+      balance
+    }
+  }
+}

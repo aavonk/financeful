@@ -25,7 +25,7 @@ export type Query = {
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
   getAccountDailyBalances: Array<DailyBalance>;
-  getAggregatedBalances: AggregateBalanceResponse;
+  getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
 };
 
 
@@ -136,29 +136,18 @@ export type GetBalanceParams = {
   accountId: Scalars['ID'];
 };
 
-export type AggregateBalanceResponse = {
-  __typename?: 'AggregateBalanceResponse';
-  assets: Array<AccountWithPercentOfAssets>;
-  aggregateBalance: Scalars['Int'];
-  totalAssets: Scalars['Int'];
-  totalLiabilities: Scalars['Int'];
+export type AssetsAndLiabilitesResponse = {
+  __typename?: 'AssetsAndLiabilitesResponse';
+  data: Array<AssetsAndLiabilitiesBarChartData>;
 };
 
-export type AccountWithPercentOfAssets = {
-  __typename?: 'AccountWithPercentOfAssets';
+export type AssetsAndLiabilitiesBarChartData = {
+  __typename?: 'AssetsAndLiabilitiesBarChartData';
   id: Scalars['ID'];
-  user?: Maybe<User>;
-  userId?: Maybe<Scalars['ID']>;
-  accountName?: Maybe<Scalars['String']>;
-  accountType?: Maybe<Scalars['String']>;
-  balance?: Maybe<Scalars['Int']>;
-  bankName?: Maybe<Scalars['String']>;
-  isAsset?: Maybe<Scalars['Boolean']>;
-  isLiability?: Maybe<Scalars['Boolean']>;
-  isInactive?: Maybe<Scalars['Boolean']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  percentageOfAssets: Scalars['Int'];
+  accountName: Scalars['String'];
+  balance: Scalars['Float'];
+  isAsset: Scalars['Boolean'];
+  isLiability: Scalars['Boolean'];
 };
 
 export type Mutation = {
@@ -608,6 +597,20 @@ export type GetAccountsQuery = (
     { __typename?: 'Account' }
     & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'isInactive' | 'balance' | 'bankName' | 'updatedAt'>
   )> }
+);
+
+export type GetAssetsAndLiabilitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAssetsAndLiabilitiesQuery = (
+  { __typename?: 'Query' }
+  & { getAssetsAndLiabilites: (
+    { __typename?: 'AssetsAndLiabilitesResponse' }
+    & { data: Array<(
+      { __typename?: 'AssetsAndLiabilitiesBarChartData' }
+      & Pick<AssetsAndLiabilitiesBarChartData, 'id' | 'accountName' | 'isAsset' | 'isLiability' | 'balance'>
+    )> }
+  ) }
 );
 
 
@@ -1410,3 +1413,43 @@ export function useGetAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetAccountsQueryHookResult = ReturnType<typeof useGetAccountsQuery>;
 export type GetAccountsLazyQueryHookResult = ReturnType<typeof useGetAccountsLazyQuery>;
 export type GetAccountsQueryResult = Apollo.QueryResult<GetAccountsQuery, GetAccountsQueryVariables>;
+export const GetAssetsAndLiabilitiesDocument = gql`
+    query GetAssetsAndLiabilities {
+  getAssetsAndLiabilites {
+    data {
+      id
+      accountName
+      isAsset
+      isLiability
+      balance
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAssetsAndLiabilitiesQuery__
+ *
+ * To run a query within a React component, call `useGetAssetsAndLiabilitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAssetsAndLiabilitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAssetsAndLiabilitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAssetsAndLiabilitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>(GetAssetsAndLiabilitiesDocument, options);
+      }
+export function useGetAssetsAndLiabilitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>(GetAssetsAndLiabilitiesDocument, options);
+        }
+export type GetAssetsAndLiabilitiesQueryHookResult = ReturnType<typeof useGetAssetsAndLiabilitiesQuery>;
+export type GetAssetsAndLiabilitiesLazyQueryHookResult = ReturnType<typeof useGetAssetsAndLiabilitiesLazyQuery>;
+export type GetAssetsAndLiabilitiesQueryResult = Apollo.QueryResult<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>;
