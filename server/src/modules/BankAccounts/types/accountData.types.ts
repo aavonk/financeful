@@ -33,5 +33,8 @@ export class AssetsAndLiabilitiesBarChartData {
 @ObjectType()
 export class AssetsAndLiabilitesResponse {
   @Field(() => [AssetsAndLiabilitiesBarChartData])
-  data: AssetsAndLiabilitiesBarChartData[];
+  accounts: AssetsAndLiabilitiesBarChartData[];
+
+  @Field(() => Float)
+  aggregateBalance: number;
 }

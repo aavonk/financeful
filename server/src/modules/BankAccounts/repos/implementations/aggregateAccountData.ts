@@ -1,12 +1,16 @@
 import { AssetsAndLiabilitesResponse } from '@Modules/BankAccounts/types/accountData.types';
-import { IDataBase } from '@Shared/types';
+import { IDataBase, Account } from '@Shared/types';
 import { IAggregateAccountData } from '../aggregateAccountData';
-
+import { MoneyUtils } from '@Shared/utils/moneyUtils';
 export class AggregateAccountData implements IAggregateAccountData {
   private readonly client: IDataBase;
 
   constructor(database: IDataBase) {
     this.client = database;
+  }
+
+  private calculateAggregateTotal(accounts: Account[]): number {
+    return accounts.reduce((total, obj) => obj.balance! + total, 0);
   }
 
   public async getAssetsAndLiabilites(
@@ -30,9 +34,14 @@ export class AggregateAccountData implements IAggregateAccountData {
 
     const data = bankAccounts.map((account) => ({
       ...account,
-      balance: Number((account.balance / 100).toFixed(2)),
+      balance: MoneyUtils.convertToFloat(account.balance),
     }));
 
-    return { data };
+    return {
+      accounts: data,
+      aggregateBalance: MoneyUtils.convertToFloat(
+        this.calculateAggregateTotal(bankAccounts),
+      ),
+    };
   }
 }
