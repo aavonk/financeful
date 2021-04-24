@@ -24,6 +24,8 @@ export type Query = {
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
+  getAccountDailyBalances: Array<DailyBalance>;
+  getAggregatedBalances: AggregateBalanceResponse;
 };
 
 
@@ -39,6 +41,11 @@ export type QueryGetTransferArgs = {
 
 export type QueryGetAccountsArgs = {
   filter?: Maybe<AccountQueryFilters>;
+};
+
+
+export type QueryGetAccountDailyBalancesArgs = {
+  input: GetBalanceParams;
 };
 
 export type User = {
@@ -111,6 +118,47 @@ export type Transfer = {
 
 export type AccountQueryFilters = {
   isInactive: Scalars['Boolean'];
+};
+
+export type DailyBalance = {
+  __typename?: 'DailyBalance';
+  id: Scalars['ID'];
+  userId: Scalars['ID'];
+  amount: Scalars['Int'];
+  date: Scalars['DateTime'];
+  accountId: Scalars['ID'];
+  account?: Maybe<Account>;
+};
+
+export type GetBalanceParams = {
+  startDate: Scalars['DateTime'];
+  endDate: Scalars['DateTime'];
+  accountId: Scalars['ID'];
+};
+
+export type AggregateBalanceResponse = {
+  __typename?: 'AggregateBalanceResponse';
+  assets: Array<AccountWithPercentOfAssets>;
+  aggregateBalance: Scalars['Int'];
+  totalAssets: Scalars['Int'];
+  totalLiabilities: Scalars['Int'];
+};
+
+export type AccountWithPercentOfAssets = {
+  __typename?: 'AccountWithPercentOfAssets';
+  id: Scalars['ID'];
+  user?: Maybe<User>;
+  userId?: Maybe<Scalars['ID']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountType?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['Int']>;
+  bankName?: Maybe<Scalars['String']>;
+  isAsset?: Maybe<Scalars['Boolean']>;
+  isLiability?: Maybe<Scalars['Boolean']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  percentageOfAssets: Scalars['Int'];
 };
 
 export type Mutation = {

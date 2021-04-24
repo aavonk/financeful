@@ -97,6 +97,7 @@
     "react-router-dom": "^5.2.0",
     "react-switch": "^6.0.0",
     "react-table": "^7.6.3",
+    "recharts": "^2.0.9",
     "styled-components": "^5.2.1",
     "uuid": "^8.3.2"
   },

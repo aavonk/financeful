@@ -23,22 +23,7 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const ProgressbarRoot = styled.div`
-  height: 10px;
-  border-radius: 5px;
-  overflow: hidden;
-  position: relative;
-  background-color: black;
-`;
-
-export const Progressbar = styled.div`
-  border-radius: 5px;
-  height: 100%;
-  background-color: ${({ theme }) => theme.colors.primary};
-  transition: transform 0.4s linear;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform-origin: left;
+export const Line = styled.div`
+  height: 1px;
+  background: ${({ theme }) => theme.colors.textSecondary};
 `;

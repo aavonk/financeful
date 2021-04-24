@@ -1,11 +1,13 @@
+import CardLoader from '@Components/CreditCard/CardLoader';
+import AssetsPieChart from '@Modules/wallet/Widgets/BalanceOverview/AssetsPieChart';
 function DashboardPage() {
   return (
     <>
-      <div>Dashboard page yay</div>;<div>Add cron job to update balance every night</div>
-      <div>Fields to add to account schema</div>
-      <ul>
-        <li>updatedAt</li>
-      </ul>
+      <p>Hi</p>
+      <CardLoader />
+      <div style={{ marginTop: '20px' }}>
+        <AssetsPieChart />
+      </div>
     </>
   );
 }
