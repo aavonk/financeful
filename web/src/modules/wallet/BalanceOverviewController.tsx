@@ -11,9 +11,8 @@ function BalanceOverviewController() {
   if (loading) {
     return <BalanceOverviewSkeleton />;
   }
-
   if (error || !data) {
-    return <BalanceOverviewError onRetry={refetch} />;
+    return <BalanceOverviewError onRetry={() => refetch()} />;
   }
   return <BalanceOverview data={data.getAssetsAndLiabilites} />;
 }
