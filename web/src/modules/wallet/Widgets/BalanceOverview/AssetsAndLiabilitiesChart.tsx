@@ -82,22 +82,4 @@ function AssetsAndLiabilitesChart({ data }: Props) {
   );
 }
 
-{
-  /* <PieChart>
-<Pie
-  data={data.assets}
-  innerRadius={60}
-  outerRadius={70}
-  paddingAngle={5}
-  cx="50%"
-  cy="50%"
-  fill="#000504"
-  dataKey="balance"
->
-  {data.assets.map((asset, index) => (
-    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-  ))}
-</Pie>
-</PieChart> */
-}
 export default AssetsAndLiabilitesChart;
