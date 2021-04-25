@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components';
 import { useGetAccountsQuery } from '@Generated/graphql';
 import CreditCard from '@Components/CreditCard';
 import CardLoader from '@Components/CreditCard/CardLoader';
-import AccountOverviewModal from './AccountOverview/Modal';
 import Toast from '@Common/Alerts/Toast';
+import AccountOverviewModal from './AccountOverview/Modal';
+import AccountOverviewController from './AccountOverviewController';
 
 type GridProps = { shouldFlex?: boolean };
 
@@ -76,9 +77,7 @@ function CreditCardsContainer() {
         ))}
       </AnimatePresence>
       <AccountOverviewModal isOpen={dialogOpen} onDismiss={() => setDialogOpen(false)}>
-        <div>Acocunt name and balance</div>
-        <div> Area chart with 3-6 months baance history</div>
-        <div>recent transactions</div>
+        <AccountOverviewController />
       </AccountOverviewModal>
     </GridView>
   );

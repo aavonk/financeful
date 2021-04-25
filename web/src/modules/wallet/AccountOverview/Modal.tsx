@@ -21,6 +21,7 @@ const Container = styled(motion.div)<HTMLMotionProps<'div'>>`
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 12px;
+  padding: 1rem;
 `;
 
 const modalVariant = {
