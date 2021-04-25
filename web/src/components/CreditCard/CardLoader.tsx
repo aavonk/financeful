@@ -1,30 +1,32 @@
-import { Card, BankName, Chip, Data } from './style';
+import { Card, BankName, Chip, Data, AmountBar } from './style';
 import Skeleton from '@Common/Skeleton';
 function CardLoader() {
   return (
     <Card>
       <BankName>
-        <span />
-        <p>
-          <Skeleton height="26px" width="190px" />
-        </p>
+        <span className="empty" />
+        <div className="names">
+          <p>
+            <Skeleton height="26px" width="190px" />
+          </p>
+          <span />
+        </div>
       </BankName>
-      <Chip>
-        <div className="side left" />
-        <div className="side right" />
-        <div className="vertical top" />
-        <div className="vertical bottom" />
-      </Chip>
+      <AmountBar>
+        <Chip>
+          <div className="side left" />
+          <div className="side right" />
+          <div className="vertical top" />
+          <div className="vertical bottom" />
+        </Chip>
+      </AmountBar>
       <Data>
-        <div className="pan">
+        <div className="pan" style={{ marginTop: '18px' }}>
           <Skeleton height="32px" width="80%" />
         </div>
         <div className="details">
           <div className="label">
             <Skeleton height="10px" width="26.6%" />
-          </div>
-          <div className="date" style={{ marginTop: '5px' }}>
-            <Skeleton height="14px" width="28.6%" />
           </div>
         </div>
       </Data>
