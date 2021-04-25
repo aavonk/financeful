@@ -33,6 +33,8 @@ const renderTitle = (path: string) => {
       return 'Bills';
     case '/settings':
       return 'Settings';
+    case '/my-wallet':
+      return 'My Wallet';
     default:
       return 'Financeful';
   }

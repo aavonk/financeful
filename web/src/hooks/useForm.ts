@@ -1,35 +1,36 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+/* eslint-disable @typescript-eslint/ban-types */
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 
 // Reference to this hook: https://felixgerschau.com/react-hooks-form-validation-typescript/
 
 // EXAMPLE USAGE:
-/* 
-const { handleSubmit, handleChange, values, errors } = useForm({
-  validations: {
-    name: {
-      pattern: {
-        value: '^[A-Za-z]*$',
-        message: "You're not allowed to...",
+/** 
+  const { handleSubmit, handleChange, values, errors } = useForm({
+    validations: {
+      name: {
+        pattern: {
+          value: '^[A-Za-z]*$',
+          message: "You're not allowed to...",
+        },
+      },
+      age: {
+        custom: {
+          isValid: (value) => parseInt(value, 10) > 17,
+          message: 'You have to be at least 18 years old.',
+        },
+      },
+      password: {
+        required: {
+          value: true,
+          message: 'This field is required',
+        },
+        custom: {
+          isValid: (value) => value.length > 6,
+          message: 'The password needs to be at...',
+        },
       },
     },
-    age: {
-      custom: {
-        isValid: (value) => parseInt(value, 10) > 17,
-        message: 'You have to be at least 18 years old.',
-      },
-    },
-    password: {
-      required: {
-        value: true,
-        message: 'This field is required',
-      },
-      custom: {
-        isValid: (value) => value.length > 6,
-        message: 'The password needs to be at...',
-      },
-    },
-  },
-});
+  });
 
 */
 
@@ -51,15 +52,20 @@ interface Validation {
 type ErrorRecord<T> = Record<keyof T, string>;
 type Validations<T extends {}> = Partial<Record<keyof T, Validation>>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
   validations?: Validations<T>;
   initialValue?: Partial<T>;
   onSubmit?: () => void;
+  useEffectOnMount?: boolean;
 }) => {
   const [values, setValues] = useState<T>((options?.initialValue || {}) as T);
   const [errors, setErrors] = useState<ErrorRecord<T>>({} as ErrorRecord<T>);
+
+  useEffect(() => {
+    if (options?.useEffectOnMount && options?.initialValue) {
+      setValues(options.initialValue as T);
+    }
+  }, [options?.initialValue, options?.useEffectOnMount]);
 
   const handleChange = <S extends unknown>(
     key: keyof T,

@@ -1,0 +1,13 @@
+query GetAccounts($filter: AccountQueryFilters) {
+  getAccounts(filter: $filter) {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    isInactive
+    balance
+    bankName
+    updatedAt
+  }
+}

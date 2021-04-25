@@ -24,6 +24,8 @@ export type Query = {
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
+  getAccountDailyBalances: Array<DailyBalance>;
+  getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
 };
 
 
@@ -34,6 +36,16 @@ export type QueryGetTransactionArgs = {
 
 export type QueryGetTransferArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetAccountsArgs = {
+  filter?: Maybe<AccountQueryFilters>;
+};
+
+
+export type QueryGetAccountDailyBalancesArgs = {
+  input: GetBalanceParams;
 };
 
 export type User = {
@@ -84,9 +96,13 @@ export type Account = {
   userId?: Maybe<Scalars['ID']>;
   accountName?: Maybe<Scalars['String']>;
   accountType?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['Int']>;
+  bankName?: Maybe<Scalars['String']>;
   isAsset?: Maybe<Scalars['Boolean']>;
   isLiability?: Maybe<Scalars['Boolean']>;
-  balance?: Maybe<Scalars['Int']>;
+  isInactive?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Transfer = {
@@ -100,6 +116,41 @@ export type Transfer = {
   amount: Scalars['Int'];
 };
 
+export type AccountQueryFilters = {
+  isInactive: Scalars['Boolean'];
+};
+
+export type DailyBalance = {
+  __typename?: 'DailyBalance';
+  id: Scalars['ID'];
+  userId: Scalars['ID'];
+  amount: Scalars['Int'];
+  date: Scalars['DateTime'];
+  accountId: Scalars['ID'];
+  account?: Maybe<Account>;
+};
+
+export type GetBalanceParams = {
+  startDate: Scalars['DateTime'];
+  endDate: Scalars['DateTime'];
+  accountId: Scalars['ID'];
+};
+
+export type AssetsAndLiabilitesResponse = {
+  __typename?: 'AssetsAndLiabilitesResponse';
+  accounts: Array<AssetsAndLiabilitiesBarChartData>;
+  aggregateBalance: Scalars['Float'];
+};
+
+export type AssetsAndLiabilitiesBarChartData = {
+  __typename?: 'AssetsAndLiabilitiesBarChartData';
+  id: Scalars['ID'];
+  accountName: Scalars['String'];
+  balance: Scalars['Float'];
+  isAsset: Scalars['Boolean'];
+  isLiability: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   login: User;
@@ -110,6 +161,10 @@ export type Mutation = {
   createTransfer: TransferResult;
   updateTransfer: TransferResult;
   deleteTransfer: Scalars['String'];
+  createAccount: Account;
+  editAccount: Account;
+  toggleAccountActiveStatus: Account;
+  deleteAccount: Scalars['ID'];
   createCategory: Category;
   updateCategory: Category;
   deleteCategory: Scalars['String'];
@@ -156,6 +211,27 @@ export type MutationUpdateTransferArgs = {
 
 export type MutationDeleteTransferArgs = {
   transferId: Scalars['String'];
+};
+
+
+export type MutationCreateAccountArgs = {
+  input: CreateAccountInput;
+};
+
+
+export type MutationEditAccountArgs = {
+  accountId: Scalars['String'];
+  input: EditAccountInput;
+};
+
+
+export type MutationToggleAccountActiveStatusArgs = {
+  accountId: Scalars['String'];
+};
+
+
+export type MutationDeleteAccountArgs = {
+  accountId: Scalars['String'];
 };
 
 
@@ -209,6 +285,27 @@ export type TransferInput = {
   toAccount: Scalars['ID'];
   description?: Maybe<Scalars['String']>;
   categoryId?: Maybe<Scalars['ID']>;
+};
+
+export type CreateAccountInput = {
+  accountName: Scalars['String'];
+  accountType: Scalars['String'];
+  balance: Scalars['Int'];
+  bankName?: Maybe<Scalars['String']>;
+  classification: AccountType;
+};
+
+/** Asset or liability */
+export enum AccountType {
+  Asset = 'asset',
+  Liability = 'liability'
+}
+
+export type EditAccountInput = {
+  accountName: Scalars['String'];
+  accountType: Scalars['String'];
+  bankName?: Maybe<Scalars['String']>;
+  classification: AccountType;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -436,6 +533,84 @@ export type GetTransferQuery = (
     ), category?: Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'name' | 'id'>
+    )> }
+  ) }
+);
+
+export type CreateAccountMutationVariables = Exact<{
+  input: CreateAccountInput;
+}>;
+
+
+export type CreateAccountMutation = (
+  { __typename?: 'Mutation' }
+  & { createAccount: (
+    { __typename?: 'Account' }
+    & Pick<Account, 'balance' | 'bankName' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability'>
+  ) }
+);
+
+export type DeleteAccountMutationVariables = Exact<{
+  accountId: Scalars['String'];
+}>;
+
+
+export type DeleteAccountMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteAccount'>
+);
+
+export type EditAccountMutationVariables = Exact<{
+  accountId: Scalars['String'];
+  input: EditAccountInput;
+}>;
+
+
+export type EditAccountMutation = (
+  { __typename?: 'Mutation' }
+  & { editAccount: (
+    { __typename?: 'Account' }
+    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'balance' | 'bankName'>
+  ) }
+);
+
+export type ToggleAccountActiveStatusMutationVariables = Exact<{
+  accountId: Scalars['String'];
+}>;
+
+
+export type ToggleAccountActiveStatusMutation = (
+  { __typename?: 'Mutation' }
+  & { toggleAccountActiveStatus: (
+    { __typename?: 'Account' }
+    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'balance' | 'isInactive'>
+  ) }
+);
+
+export type GetAccountsQueryVariables = Exact<{
+  filter?: Maybe<AccountQueryFilters>;
+}>;
+
+
+export type GetAccountsQuery = (
+  { __typename?: 'Query' }
+  & { getAccounts: Array<(
+    { __typename?: 'Account' }
+    & Pick<Account, 'id' | 'accountName' | 'accountType' | 'isAsset' | 'isLiability' | 'isInactive' | 'balance' | 'bankName' | 'updatedAt'>
+  )> }
+);
+
+export type GetAssetsAndLiabilitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAssetsAndLiabilitiesQuery = (
+  { __typename?: 'Query' }
+  & { getAssetsAndLiabilites: (
+    { __typename?: 'AssetsAndLiabilitesResponse' }
+    & Pick<AssetsAndLiabilitesResponse, 'aggregateBalance'>
+    & { accounts: Array<(
+      { __typename?: 'AssetsAndLiabilitiesBarChartData' }
+      & Pick<AssetsAndLiabilitiesBarChartData, 'id' | 'accountName' | 'isAsset' | 'isLiability' | 'balance'>
     )> }
   ) }
 );
@@ -874,7 +1049,7 @@ export type FetchAccountsLazyQueryHookResult = ReturnType<typeof useFetchAccount
 export type FetchAccountsQueryResult = Apollo.QueryResult<FetchAccountsQuery, FetchAccountsQueryVariables>;
 export const FetchAccountsAndCategoriesDocument = gql`
     query fetchAccountsAndCategories {
-  getAccounts {
+  getAccounts(filter: {isInactive: true}) {
     id
     accountName
   }
@@ -1049,3 +1224,235 @@ export function useGetTransferLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetTransferQueryHookResult = ReturnType<typeof useGetTransferQuery>;
 export type GetTransferLazyQueryHookResult = ReturnType<typeof useGetTransferLazyQuery>;
 export type GetTransferQueryResult = Apollo.QueryResult<GetTransferQuery, GetTransferQueryVariables>;
+export const CreateAccountDocument = gql`
+    mutation CreateAccount($input: CreateAccountInput!) {
+  createAccount(input: $input) {
+    balance
+    bankName
+    accountName
+    accountType
+    isAsset
+    isLiability
+  }
+}
+    `;
+export type CreateAccountMutationFn = Apollo.MutationFunction<CreateAccountMutation, CreateAccountMutationVariables>;
+
+/**
+ * __useCreateAccountMutation__
+ *
+ * To run a mutation, you first call `useCreateAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAccountMutation, { data, loading, error }] = useCreateAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOptions<CreateAccountMutation, CreateAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAccountMutation, CreateAccountMutationVariables>(CreateAccountDocument, options);
+      }
+export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
+export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
+export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const DeleteAccountDocument = gql`
+    mutation DeleteAccount($accountId: String!) {
+  deleteAccount(accountId: $accountId)
+}
+    `;
+export type DeleteAccountMutationFn = Apollo.MutationFunction<DeleteAccountMutation, DeleteAccountMutationVariables>;
+
+/**
+ * __useDeleteAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountMutation, { data, loading, error }] = useDeleteAccountMutation({
+ *   variables: {
+ *      accountId: // value for 'accountId'
+ *   },
+ * });
+ */
+export function useDeleteAccountMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAccountMutation, DeleteAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument, options);
+      }
+export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
+export type DeleteAccountMutationResult = Apollo.MutationResult<DeleteAccountMutation>;
+export type DeleteAccountMutationOptions = Apollo.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
+export const EditAccountDocument = gql`
+    mutation EditAccount($accountId: String!, $input: EditAccountInput!) {
+  editAccount(accountId: $accountId, input: $input) {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    balance
+    bankName
+  }
+}
+    `;
+export type EditAccountMutationFn = Apollo.MutationFunction<EditAccountMutation, EditAccountMutationVariables>;
+
+/**
+ * __useEditAccountMutation__
+ *
+ * To run a mutation, you first call `useEditAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editAccountMutation, { data, loading, error }] = useEditAccountMutation({
+ *   variables: {
+ *      accountId: // value for 'accountId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useEditAccountMutation(baseOptions?: Apollo.MutationHookOptions<EditAccountMutation, EditAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditAccountMutation, EditAccountMutationVariables>(EditAccountDocument, options);
+      }
+export type EditAccountMutationHookResult = ReturnType<typeof useEditAccountMutation>;
+export type EditAccountMutationResult = Apollo.MutationResult<EditAccountMutation>;
+export type EditAccountMutationOptions = Apollo.BaseMutationOptions<EditAccountMutation, EditAccountMutationVariables>;
+export const ToggleAccountActiveStatusDocument = gql`
+    mutation ToggleAccountActiveStatus($accountId: String!) {
+  toggleAccountActiveStatus(accountId: $accountId) {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    balance
+    isInactive
+  }
+}
+    `;
+export type ToggleAccountActiveStatusMutationFn = Apollo.MutationFunction<ToggleAccountActiveStatusMutation, ToggleAccountActiveStatusMutationVariables>;
+
+/**
+ * __useToggleAccountActiveStatusMutation__
+ *
+ * To run a mutation, you first call `useToggleAccountActiveStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleAccountActiveStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleAccountActiveStatusMutation, { data, loading, error }] = useToggleAccountActiveStatusMutation({
+ *   variables: {
+ *      accountId: // value for 'accountId'
+ *   },
+ * });
+ */
+export function useToggleAccountActiveStatusMutation(baseOptions?: Apollo.MutationHookOptions<ToggleAccountActiveStatusMutation, ToggleAccountActiveStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ToggleAccountActiveStatusMutation, ToggleAccountActiveStatusMutationVariables>(ToggleAccountActiveStatusDocument, options);
+      }
+export type ToggleAccountActiveStatusMutationHookResult = ReturnType<typeof useToggleAccountActiveStatusMutation>;
+export type ToggleAccountActiveStatusMutationResult = Apollo.MutationResult<ToggleAccountActiveStatusMutation>;
+export type ToggleAccountActiveStatusMutationOptions = Apollo.BaseMutationOptions<ToggleAccountActiveStatusMutation, ToggleAccountActiveStatusMutationVariables>;
+export const GetAccountsDocument = gql`
+    query GetAccounts($filter: AccountQueryFilters) {
+  getAccounts(filter: $filter) {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    isInactive
+    balance
+    bankName
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetAccountsQuery__
+ *
+ * To run a query within a React component, call `useGetAccountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAccountsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetAccountsQuery(baseOptions?: Apollo.QueryHookOptions<GetAccountsQuery, GetAccountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAccountsQuery, GetAccountsQueryVariables>(GetAccountsDocument, options);
+      }
+export function useGetAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAccountsQuery, GetAccountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAccountsQuery, GetAccountsQueryVariables>(GetAccountsDocument, options);
+        }
+export type GetAccountsQueryHookResult = ReturnType<typeof useGetAccountsQuery>;
+export type GetAccountsLazyQueryHookResult = ReturnType<typeof useGetAccountsLazyQuery>;
+export type GetAccountsQueryResult = Apollo.QueryResult<GetAccountsQuery, GetAccountsQueryVariables>;
+export const GetAssetsAndLiabilitiesDocument = gql`
+    query GetAssetsAndLiabilities {
+  getAssetsAndLiabilites {
+    aggregateBalance
+    accounts {
+      id
+      accountName
+      isAsset
+      isLiability
+      balance
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAssetsAndLiabilitiesQuery__
+ *
+ * To run a query within a React component, call `useGetAssetsAndLiabilitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAssetsAndLiabilitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAssetsAndLiabilitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAssetsAndLiabilitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>(GetAssetsAndLiabilitiesDocument, options);
+      }
+export function useGetAssetsAndLiabilitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>(GetAssetsAndLiabilitiesDocument, options);
+        }
+export type GetAssetsAndLiabilitiesQueryHookResult = ReturnType<typeof useGetAssetsAndLiabilitiesQuery>;
+export type GetAssetsAndLiabilitiesLazyQueryHookResult = ReturnType<typeof useGetAssetsAndLiabilitiesLazyQuery>;
+export type GetAssetsAndLiabilitiesQueryResult = Apollo.QueryResult<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>;

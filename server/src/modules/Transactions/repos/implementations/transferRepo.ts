@@ -2,11 +2,31 @@ import { Account, Transaction } from '@Shared/types';
 import { Transfer, TransferInput } from '../../types/transfer.types';
 import { nanoid } from 'nanoid';
 import { ITransferRepo } from '../transferRepo';
-import { DataSource } from '@Shared/core/DataSource';
+import { IDataBase } from '@Shared/database/IDataBase';
 
-export class TransferRepo extends DataSource implements ITransferRepo {
-  constructor() {
-    super();
+export class TransferRepo implements ITransferRepo {
+  private client: IDataBase;
+  constructor(database: IDataBase) {
+    this.client = database;
+  }
+
+  private createQueryOptions(): any {
+    return {
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        account: {
+          select: {
+            accountName: true,
+            id: true,
+          },
+        },
+      },
+    };
   }
   public validateAccounts(input: TransferInput): boolean {
     const { fromAccount, toAccount } = input;
@@ -17,24 +37,12 @@ export class TransferRepo extends DataSource implements ITransferRepo {
   }
 
   public async getTransfer(id: string): Promise<Transfer> {
+    const baseOptions = this.createQueryOptions();
     const transactions: Transaction[] = await this.client.transaction.findMany({
       where: {
         transferId: id,
       },
-      include: {
-        account: {
-          select: {
-            accountName: true,
-            id: true,
-          },
-        },
-        category: {
-          select: {
-            name: true,
-            id: true,
-          },
-        },
-      },
+      ...baseOptions,
     });
 
     if (!transactions || !transactions.length) {
@@ -66,29 +74,64 @@ export class TransferRepo extends DataSource implements ITransferRepo {
     id: string,
     userId: string,
   ): Promise<Transaction[]> {
+    const baseOptions = this.createQueryOptions();
     const transactions = await this.client.transaction.findMany({
       where: {
         transferId: id,
         userId,
       },
+      ...baseOptions,
     });
 
     return transactions;
   }
 
   public async deleteTransfer(id: string, userId: string): Promise<void> {
-    await this.client.transaction.deleteMany({
+    const transactions = await this.getTransferTransactions(id, userId);
+
+    const expenseTransaction = transactions.filter((item) => item.isCashOut)[0];
+
+    const incomeTransaction = transactions.filter((item) => item.isCashIn)[0];
+
+    const reverseExpesnseFromAccount = this.client.account.update({
       where: {
-        transferId: id,
-        userId,
+        id: expenseTransaction.accountId,
+      },
+      data: {
+        balance: { increment: expenseTransaction.amount * -1 },
+        transaction: {
+          delete: {
+            id: expenseTransaction.id,
+          },
+        },
       },
     });
+
+    const reverseIncomeFromAccount = this.client.account.update({
+      where: {
+        id: incomeTransaction.accountId,
+      },
+      data: {
+        balance: { decrement: incomeTransaction.amount },
+        transaction: {
+          delete: {
+            id: incomeTransaction.id,
+          },
+        },
+      },
+    });
+
+    await this.client.$transaction([
+      reverseExpesnseFromAccount,
+      reverseIncomeFromAccount,
+    ]);
   }
 
   public async createTransfer(
     input: TransferInput,
     userId: string,
   ): Promise<Transaction[]> {
+    const baseOptions = this.createQueryOptions();
     const accounts: Account[] = await this.client.account.findMany({
       where: {
         userId,
@@ -102,74 +145,95 @@ export class TransferRepo extends DataSource implements ITransferRepo {
       (account) => account.id === input.toAccount,
     )[0];
 
+    if (!accountLeaving || !accountEntering) {
+      throw new Error('No accounts found by those IDs');
+    }
+
     const transferIdentifier: string = nanoid();
     const transferDate = new Date(input.date);
 
-    const expense = this.client.transaction.create({
-      data: {
-        date: transferDate,
-        payee: `Transfer to ${accountEntering.accountName}`,
-        description: input.description || null,
-        amount: input.amount * -1,
-        type: 'TRANSFER',
-        accountId: accountLeaving.id,
-        userId,
-        categoryId: input.categoryId || null,
-        isCashIn: false,
-        isCashOut: true,
-        isTransfer: true,
-        isUncategorized: !input.categoryId,
-        transferId: transferIdentifier,
+    const accountWithExpense = this.client.account.update({
+      where: {
+        id: accountLeaving.id,
       },
-      include: {
-        category: {
-          select: {
-            id: true,
-            name: true,
+      data: {
+        balance: { decrement: input.amount },
+        transaction: {
+          create: {
+            date: transferDate,
+            payee: `Transfer to ${accountEntering.accountName}`,
+            description: input.description || null,
+            amount: input.amount * -1,
+            type: 'TRANSFER',
+            userId,
+            categoryId: input.categoryId || null,
+            isCashIn: false,
+            isCashOut: true,
+            isTransfer: true,
+            isUncategorized: !input.categoryId,
+            transferId: transferIdentifier,
           },
         },
-        account: {
-          select: {
-            accountName: true,
-            id: true,
+      },
+      select: {
+        transaction: {
+          where: {
+            transferId: transferIdentifier,
+            AND: {
+              amount: {
+                lt: 0,
+              },
+            },
           },
+          ...baseOptions,
         },
       },
     });
 
-    const income = this.client.transaction.create({
-      data: {
-        date: transferDate,
-        payee: `Transfer from ${accountLeaving.accountName}`,
-        description: input.description || null,
-        amount: input.amount,
-        type: 'TRANSFER',
-        accountId: accountEntering.id,
-        userId,
-        categoryId: input.categoryId || null,
-        isCashIn: true,
-        isCashOut: false,
-        isTransfer: true,
-        isUncategorized: !input.categoryId,
-        transferId: transferIdentifier,
+    const accountWithIncome = this.client.account.update({
+      where: {
+        id: accountEntering.id,
       },
-      include: {
-        category: {
-          select: {
-            id: true,
-            name: true,
+      data: {
+        balance: { increment: input.amount },
+        transaction: {
+          create: {
+            date: transferDate,
+            payee: `Transfer from ${accountLeaving.accountName}`,
+            description: input.description || null,
+            amount: input.amount,
+            type: 'TRANSFER',
+            userId,
+            categoryId: input.categoryId || null,
+            isCashIn: true,
+            isCashOut: false,
+            isTransfer: true,
+            isUncategorized: !input.categoryId,
+            transferId: transferIdentifier,
           },
         },
-        account: {
-          select: {
-            accountName: true,
-            id: true,
+      },
+      select: {
+        transaction: {
+          where: {
+            transferId: transferIdentifier,
+            AND: {
+              amount: {
+                gt: 0,
+              },
+            },
           },
+          ...baseOptions,
         },
       },
     });
 
-    const transactions = await this.client.$transaction([expense, income]);
+    const result = await this.client.$transaction([
+      accountWithExpense,
+      accountWithIncome,
+    ]);
+
+    const transactions = result.map((res) => res.transaction[0]);
 
     return transactions;
   }

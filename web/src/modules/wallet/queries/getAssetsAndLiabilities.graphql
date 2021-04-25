@@ -1,0 +1,12 @@
+query GetAssetsAndLiabilities {
+  getAssetsAndLiabilites {
+    aggregateBalance
+    accounts {
+      id
+      accountName
+      isAsset
+      isLiability
+      balance
+    }
+  }
+}

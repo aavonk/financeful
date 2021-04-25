@@ -1,0 +1,3 @@
+mutation DeleteAccount($accountId: String!) {
+  deleteAccount(accountId: $accountId)
+}

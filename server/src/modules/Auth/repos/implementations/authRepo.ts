@@ -1,13 +1,14 @@
 import { UserInputError } from 'apollo-server-express';
-import { DataSource } from '@Shared/core/DataSource';
+import { PrismaClient } from '@prisma/client';
 import { User } from '@Shared/types';
 import { IAuthRepo } from '../authRepo';
 import { authUtils } from './authUtils';
 import { RegisterInput } from '@Modules/Auth/resolvers/types';
 
-export class AuthRepo extends DataSource implements IAuthRepo {
-  constructor() {
-    super();
+export class AuthRepo implements IAuthRepo {
+  private client: PrismaClient;
+  constructor(database: PrismaClient) {
+    this.client = database;
   }
 
   async findUserByEmail(email: string): Promise<User | null> {

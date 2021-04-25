@@ -21,14 +21,14 @@ type InputTypes = {
   htmlFor?: string;
   type: 'text' | 'password' | 'date';
   placeholder?: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
-  ) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   autoFocus?: boolean;
   withPrefix?: boolean;
   prefix?: string;
+  ariaDescribedBy?: string;
+  required?: boolean;
 };
 
 export function UnderlineInput(props: InputTypes) {
@@ -43,6 +43,8 @@ export function UnderlineInput(props: InputTypes) {
         onChange={props.onChange}
         autoFocus={props.autoFocus}
         disabled={props.disabled}
+        aria-describedby={props.ariaDescribedBy}
+        aria-required={props.required}
       />
     </StyledLabel>
   );
@@ -65,6 +67,8 @@ export const BorderedInput = React.forwardRef<HTMLInputElement, InputTypes>(
             disabled={props.disabled}
             onBlur={props.onBlur}
             ref={ref}
+            aria-describedby={props.ariaDescribedBy}
+            aria-required={props.required}
           />
         </div>
       </BorderedLabel>
@@ -81,9 +85,11 @@ type SelectProps = {
   children: React.ReactNode;
   value: string;
   defaultValue?: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
-  ) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>) => void;
+  ariaDescribedBy?: string;
+  required?: boolean;
+  id?: string;
+  'data-testid'?: string;
 };
 export function BorderedSelect(props: SelectProps) {
   return (
@@ -93,6 +99,10 @@ export function BorderedSelect(props: SelectProps) {
         value={props.value}
         onChange={props.onChange}
         defaultValue={props.defaultValue}
+        aria-describedby={props.ariaDescribedBy}
+        aria-required={props.required}
+        id={props.id}
+        data-testid={props['data-testid']}
       >
         {props.children}
       </TransparentSelect>
@@ -102,19 +112,21 @@ export function BorderedSelect(props: SelectProps) {
 
 type ErrorProps = {
   children: string | null;
+  id?: string;
 };
 
-export function ErrorMessage({ children }: ErrorProps) {
-  return <StyledError role="alert">{children}</StyledError>;
+export function ErrorMessage({ children, id }: ErrorProps) {
+  return (
+    <StyledError role="alert" id={id}>
+      {children}
+    </StyledError>
+  );
 }
 
 type DateProps = {
   selected: Date | null;
   label: string;
-  onChange: (
-    date: Date,
-    event: React.SyntheticEvent<any, Event> | undefined,
-  ) => void;
+  onChange: (date: Date, event: React.SyntheticEvent<any, Event> | undefined) => void;
 };
 export const BorderedDatePicker = React.forwardRef<HTMLLabelElement, DateProps>(
   (props, ref) => {

@@ -5,6 +5,7 @@ import { AlertRoot, AlertIcon, AlertMessage } from './style';
 interface AlertProps {
   type: 'error' | 'success' | 'info';
   message: string;
+  timeout?: number;
 }
 
 /* 
@@ -29,13 +30,13 @@ interface AlertProps {
       *** The error will dissapear after three seconds
 */
 
-function Toast({ type, message }: AlertProps) {
+function Toast({ type, message, timeout = 3000 }: AlertProps) {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     const timeId = setTimeout(() => {
       setShow(false);
-    }, 3000);
+    }, timeout);
 
     return () => {
       clearTimeout(timeId);

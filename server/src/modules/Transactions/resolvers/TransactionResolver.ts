@@ -54,13 +54,7 @@ export class TransactionResolver {
     @Arg('id') id: string,
     @Ctx() { user, transactionRepo }: Context,
   ): Promise<string> {
-    const transaction = await transactionRepo.findOne(id);
-
-    if (transaction?.userId !== user.id) {
-      throw new AuthenticationError('Unauthorized to perform this action');
-    }
-
-    await transactionRepo.deleteOne(transaction.id);
+    await transactionRepo.deleteOne(id, user.id);
 
     return 'Successfully removed';
   }
@@ -73,21 +67,10 @@ export class TransactionResolver {
     @Arg('input') input: TransactionInput,
     @Ctx() { user, transactionRepo }: Context,
   ): Promise<Transaction> {
-    const transaction = await transactionRepo.findOne(id);
+    await transactionRepo.deleteOne(id, user.id);
 
-    if (!transaction) {
-      throw new Error('Unable to find transaction');
-    }
+    const newTransaction = await transactionRepo.createOne(input, user.id);
 
-    if (transaction?.userId !== user.id) {
-      throw new AuthenticationError('Unauthorized to perform this action');
-    }
-
-    const updatedTransaction = await transactionRepo.updateOne(
-      transaction.id,
-      input,
-    );
-
-    return updatedTransaction;
+    return newTransaction;
   }
 }

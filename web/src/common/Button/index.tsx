@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from 'react';
 import { StyledButton, ButtonText } from './style';
 
@@ -7,32 +8,25 @@ type ButtonProps = {
   type?: 'submit' | undefined;
   margin?: string;
   disabled?: boolean;
-  variant: 'primary' | 'outline' | 'dark';
+  variant: 'primary' | 'outline' | 'dark' | 'danger';
   id?: string;
   onClick?: () => void;
 };
 
-const Button = ({
-  children,
-  fullWidth,
-  margin,
-  disabled,
-  variant,
-  onClick,
-  id,
-}: ButtonProps) => {
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   return (
     <StyledButton
-      fullWidth={fullWidth}
-      margin={margin}
-      disabled={disabled}
-      variant={variant}
-      id={id}
-      onClick={onClick}
+      fullWidth={props.fullWidth}
+      margin={props.margin}
+      disabled={props.disabled}
+      variant={props.variant}
+      id={props.id}
+      onClick={props.onClick}
+      ref={ref}
     >
-      <ButtonText>{children}</ButtonText>
+      <ButtonText>{props.children}</ButtonText>
     </StyledButton>
   );
-};
+});
 
 export default Button;

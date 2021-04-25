@@ -63,6 +63,17 @@ export const StyledButton = styled.button<ButtonProps>`
         background-color: ${({ theme }) => theme.colors.darkThree};
       }
     `}
+  ${({ variant }) =>
+    variant === 'danger' &&
+    css`
+      background-color: ${({ theme }) => theme.colors.textError};
+      color: ${({ theme }) => theme.colors.textPrimary};
+
+      &:hover,
+      :focus {
+        background-color: rgb(202, 32, 85);
+      }
+    `}
   ${(props) =>
     props.fullWidth &&
     css`

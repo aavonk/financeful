@@ -1,10 +1,11 @@
-import { DataSource } from '@Shared/core/DataSource';
+import { IDataBase } from '@Shared/database/IDataBase';
 import { User } from '@Shared/types';
 import { IUserRepo } from '../userRepo';
 
-export class UserRepo extends DataSource implements IUserRepo {
-  constructor() {
-    super();
+export class UserRepo implements IUserRepo {
+  private client: IDataBase;
+  constructor(database: IDataBase) {
+    this.client = database;
   }
 
   public async findOne(userId: string): Promise<User | null> {

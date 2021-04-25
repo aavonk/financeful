@@ -1,4 +1,5 @@
 import '@reach/menu-button/styles.css';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button';
 import { ChevronDownIcon, LogoutIcon, WalletIcon } from '@Common/Icons';
@@ -7,8 +8,7 @@ import Avatar from '@Common/Avatar';
 
 const StyledMenuList = styled(MenuList)`
   background: ${({ theme }) => theme.colors.darkTwo};
-  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
-    rgb(136 153 166 / 15%) 0px 0px 3px 1px;
+  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px, rgb(136 153 166 / 15%) 0px 0px 3px 1px;
   border-radius: 0.25rem;
   font-size: 1rem;
   text-align: left;
@@ -25,6 +25,10 @@ const StyledMenuItem = styled(MenuItem)`
   & > span > svg {
     margin-right: 0.75rem;
     vertical-align: middle;
+  }
+
+  & > a {
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 `;
 
@@ -72,6 +76,7 @@ function UserMenu() {
     state: { user },
     dispatch,
   } = useAuth();
+  const history = useHistory();
   return (
     <Menu>
       <StyledMenuButton id="user-actions">
@@ -83,7 +88,7 @@ function UserMenu() {
       </StyledMenuButton>
 
       <StyledMenuList>
-        <StyledMenuItem onSelect={() => console.log('wallet')}>
+        <StyledMenuItem onSelect={() => history.push('/my-wallet')}>
           <span aria-hidden="true">
             <WalletIcon />
           </span>

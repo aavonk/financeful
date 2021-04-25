@@ -1,0 +1,11 @@
+mutation ToggleAccountActiveStatus($accountId: String!) {
+  toggleAccountActiveStatus(accountId: $accountId) {
+    id
+    accountName
+    accountType
+    isAsset
+    isLiability
+    balance
+    isInactive
+  }
+}

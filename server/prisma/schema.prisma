@@ -21,6 +21,7 @@ model User {
   createdAt    DateTime      @default(now())
   categories   Category[]
   account      Account[]
+  dailyBalances DailyBalances[]
 }
 
 model Transaction {
@@ -60,5 +61,20 @@ model Account {
   isAsset     Boolean
   isLiability Boolean
   balance     Int
+  bankName    String?
   transaction Transaction[]
+  isInactive  Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  dailyBalances DailyBalances[]
+}
+
+model DailyBalances {
+  id          String        @id @default(cuid())
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Int
+  date        DateTime
+  account     Account       @relation(fields: [accountId], references: [id])
+  accountId   String
 }

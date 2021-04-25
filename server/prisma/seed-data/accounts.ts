@@ -1,26 +1,31 @@
 export const accounts = [
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     accountName: "Primary Checking",
-    accountType: "DEBIT",
+    accountType: "Checking Account",
     isAsset: true,
     isLiability: false,
-    balance: 20000
+    balance: 0,
+    bankName: "Chase",
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     accountName: "Primary Savings",
-    accountType: "SAVINGS",
+    accountType: "Savings Account",
     isAsset: true,
     isLiability: false,
-    balance: 200000
+    balance: 0,
+    bankName: "Ally Savings",
+
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     accountName: "Credit Card",
-    accountType: "CREDIT",
+    accountType: "Credit",
     isAsset: false,
     isLiability: true,
-    balance: -20000
+    balance: -20000,
+    bankName: "Discover",
+
   },
 ]

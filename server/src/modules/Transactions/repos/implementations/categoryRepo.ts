@@ -1,12 +1,13 @@
-import { DataSource } from '@Shared/core/DataSource';
+import { IDataBase } from '@Shared/database/IDataBase';
 import { ICategoryRepo } from '../categoryRepo';
 import { Category } from '@Shared/types';
 
-export class CategoryRepo extends DataSource implements ICategoryRepo {
-  constructor() {
-    super();
-  }
+export class CategoryRepo implements ICategoryRepo {
+  private client: IDataBase;
 
+  constructor(database: IDataBase) {
+    this.client = database;
+  }
   async findAll(userId: string): Promise<Category[]> {
     return await this.client.category.findMany({
       where: {

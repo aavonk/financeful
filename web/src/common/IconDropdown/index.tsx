@@ -20,6 +20,7 @@ type Props = {
   items: DropdownItems;
   ariaText: string;
   variant?: 'small';
+  'data-testid'?: string;
 };
 
 /* children : [
@@ -40,9 +41,10 @@ function IconDropdown({
   id,
   ariaText,
   variant,
+  ...props
 }: Props) {
   return (
-    <Menu>
+    <Menu data-testid={props['data-testid']}>
       {withBadge && badgeContent ? (
         <Badge badgeContent={badgeContent}>
           <StyledMenuButton $grey id={id} variant={variant}>

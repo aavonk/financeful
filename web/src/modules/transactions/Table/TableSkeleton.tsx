@@ -1,14 +1,7 @@
 import Paper from '@Common/Paper';
 import Skeleton from '@Common/Skeleton';
 
-import {
-  TableRoot,
-  TableHead,
-  TableCell,
-  Header,
-  TableRow,
-  TableBody,
-} from './style';
+import { TableRoot, TableHead, TableCell, Header, TableRow, TableBody } from './style';
 
 type Props = {
   rows: number;
@@ -25,10 +18,7 @@ function TableSkeleton({ rows, columns }: Props) {
           <TableRow>
             {colsArray.map((col, index) => (
               <Header key={index}>
-                <Skeleton
-                  height="16px"
-                  width={index == 2 ? '200px' : '100px'}
-                />
+                <Skeleton height="16px" width={index == 2 ? '200px' : '100px'} />
               </Header>
             ))}
           </TableRow>
@@ -38,10 +28,7 @@ function TableSkeleton({ rows, columns }: Props) {
             <TableRow key={index}>
               {colsArray.map((col, index) => (
                 <TableCell key={index}>
-                  <Skeleton
-                    height="16px"
-                    width={index == 2 ? '200px' : '100px'}
-                  />
+                  <Skeleton height="16px" width={index == 2 ? '200px' : '100px'} />
                 </TableCell>
               ))}
             </TableRow>

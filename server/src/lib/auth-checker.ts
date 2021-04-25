@@ -1,5 +1,5 @@
 import { AuthChecker } from 'type-graphql';
-import { Context } from '../types/Context';
+import { Context } from '@Shared/types/Context';
 import jwt from 'jsonwebtoken';
 
 export const authChecker: AuthChecker<Context> = ({ context }) => {

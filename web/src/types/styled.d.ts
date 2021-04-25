@@ -8,10 +8,15 @@ declare module 'styled-components' {
       darkOne: string;
       darkTwo: string;
       darkThree: string;
+      darkFour: string;
       primary: string;
       primaryDark: string;
       primaryDarkest: string;
       paper: string;
+      red: string;
+      yellow: string;
+      green: string;
+      turqouise: string;
       textPrimary: string;
       textPrimaryInversed: string;
       textGrey: string;

@@ -1,11 +1,12 @@
-import { DataSource } from '@Shared/core/DataSource';
+import { IDataBase } from '@Shared/database/IDataBase';
 import { Transaction } from '@Shared/types';
 import { ITransactionRepo } from '../transactionRepo';
 import { TransactionInput } from '../../types/transaction.types';
 
-export class TransactionRepo extends DataSource implements ITransactionRepo {
-  constructor() {
-    super();
+export class TransactionRepo implements ITransactionRepo {
+  private client: IDataBase;
+  constructor(database: IDataBase) {
+    this.client = database;
   }
 
   private createQueryOptions(): any {
@@ -57,51 +58,74 @@ export class TransactionRepo extends DataSource implements ITransactionRepo {
   ): Promise<Transaction> {
     const baseOptions = this.createQueryOptions();
 
-    const transaction = await this.client.transaction.create({
-      data: {
-        ...input,
-        userId,
-        categoryId: input.categoryId ? input.categoryId : null,
-        amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
-        isCashIn: input.type === 'INCOME',
-        isCashOut: input.type === 'EXPENSE',
-        isTransfer: false,
-        isUncategorized: !input.categoryId,
-      },
-      ...baseOptions,
-    });
-    return transaction;
-  }
+    let transactionDate = new Date(input.date);
+    const { accountId, ...filteredInput } = input;
 
-  public async deleteOne(id: string): Promise<void> {
-    await this.client.transaction.delete({
+    const updatedAccount = await this.client.account.update({
       where: {
-        id,
-      },
-    });
-  }
-  public async updateOne(
-    id: string,
-    input: TransactionInput,
-  ): Promise<Transaction> {
-    const options = this.createQueryOptions();
-
-    const transaction: Transaction = await this.client.transaction.update({
-      where: {
-        id,
+        id: input.accountId,
       },
       data: {
-        ...input,
-        categoryId: input.categoryId ? input.categoryId : null,
-        amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
-        isCashIn: input.type === 'INCOME',
-        isCashOut: input.type === 'EXPENSE',
-        isTransfer: false,
-        isUncategorized: !input.categoryId,
+        balance:
+          input.type === 'INCOME'
+            ? { increment: input.amount }
+            : { decrement: input.amount },
+        transaction: {
+          create: {
+            ...filteredInput,
+            userId,
+            date: transactionDate,
+            categoryId: input.categoryId ? input.categoryId : null,
+            amount: input.type === 'INCOME' ? input.amount : input.amount * -1,
+            isCashIn: input.type === 'INCOME',
+            isCashOut: input.type === 'EXPENSE',
+            isTransfer: false,
+            isUncategorized: !input.categoryId,
+          },
+        },
       },
-      ...options,
+      select: {
+        transaction: {
+          where: {
+            date: transactionDate,
+          },
+          ...baseOptions,
+        },
+      },
     });
 
-    return transaction;
+    const newTransaction = updatedAccount.transaction[0];
+
+    return newTransaction;
+  }
+
+  public async deleteOne(id: string, userId: string): Promise<void> {
+    const transaction = await this.client.transaction.findUnique({
+      where: { id },
+    });
+
+    if (!transaction) {
+      throw new Error('Unable to find transaction by that ID');
+    }
+
+    if (transaction.userId !== userId) {
+      throw new Error('Not authorized to perform this action');
+    }
+
+    const deleteTransaction = this.client.transaction.delete({
+      where: { id },
+    });
+
+    const updateAccount = this.client.account.update({
+      where: {
+        id: transaction.accountId,
+      },
+      data: {
+        balance: transaction.isCashIn
+          ? { decrement: transaction.amount }
+          : { increment: transaction.amount * -1 },
+      },
+    });
+    await this.client.$transaction([deleteTransaction, updateAccount]);
   }
 }

@@ -1,6 +1,6 @@
 import { ToolbarRoot, ActionsContainer } from './style';
 import { TableInstance } from 'react-table';
-import TransactionForm from '../../Forms/TransactionForm/TransactionFormController';
+import TransactionFormController from '../../Forms/TransactionForm/TransactionFormController';
 import Searchbox from './Searchbox';
 
 type ToolbarProps<T extends Record<string, unknown>> = {
@@ -19,7 +19,7 @@ function Toolbar<T extends Record<string, unknown>>({ instance }: ToolbarProps<T
         ))}
       <ActionsContainer>
         <Searchbox instance={instance} />
-        <TransactionForm />
+        <TransactionFormController />
       </ActionsContainer>
     </ToolbarRoot>
   );

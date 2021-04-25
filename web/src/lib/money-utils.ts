@@ -20,8 +20,14 @@ export const formatMoneyFromCentsToDollars = (cents: number, withDollarSign = tr
     currency: 'USD',
   });
 
+  const isNegative = cents < 0;
+
   if (withDollarSign) {
     return originalString;
+  }
+
+  if (isNegative && !withDollarSign) {
+    return originalString.slice(2);
   }
 
   return originalString.slice(1);

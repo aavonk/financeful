@@ -1,46 +1,46 @@
 export const categories = [
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Groceries"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Drinks & Snacks"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Rent"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Utilities"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Entertainment"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Pets/Pet Care"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Electronics"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Transfers"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Savings"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Paycheck"
   },
   {
-    userId: "ckn24x0ap00059gqsikqa7w3a",
+    userId: "cknhv5hlp000204qsu4buhqgr",
     name: "Investment Income"
   },
 ]

@@ -78,12 +78,14 @@
   "dependencies": {
     "@apollo/client": "^3.3.13",
     "@apollo/react-hooks": "^4.0.0",
+    "@reach/alert-dialog": "^0.15.0",
     "@reach/dialog": "^0.13.2",
     "@reach/menu-button": "^0.13.2",
     "@reach/visually-hidden": "^0.13.2",
     "apollo-link-context": "^1.0.20",
     "date-fns": "^2.19.0",
     "dotenv": "^8.2.0",
+    "framer-motion": "^4.1.4",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "react": "^17.0.1",
@@ -95,6 +97,7 @@
     "react-router-dom": "^5.2.0",
     "react-switch": "^6.0.0",
     "react-table": "^7.6.3",
+    "recharts": "^2.0.9",
     "styled-components": "^5.2.1",
     "uuid": "^8.3.2"
   },
