@@ -2,7 +2,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import AccountActionsController from '@Modules/wallet/AccountActionsController';
 import AccountListError from '@Modules/wallet/AccountList/AccountListError';
 import CreditCardsContainer from '@Modules/wallet/CreditCardsContainer';
-import BalanceOverview from '@Modules/wallet/Widgets/BalanceOverview/BalanceOverview';
+import BalanceOverviewController from '@Modules/wallet/BalanceOverviewController';
 import {
   GridContainer,
   CardViewContainer,
@@ -17,7 +17,7 @@ function MyWalletPage() {
         <CreditCardsContainer />
       </CardViewContainer>
       <WidgetViewContainer>
-        <BalanceOverview />
+        <BalanceOverviewController />
       </WidgetViewContainer>
       <AccountViewContainer>
         <ErrorBoundary FallbackComponent={AccountListError}>

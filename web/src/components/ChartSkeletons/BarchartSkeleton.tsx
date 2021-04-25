@@ -1,3 +1,4 @@
+import { useState, useLayoutEffect, useCallback } from 'react';
 import {
   ResponsiveContainer,
   BarChart,
@@ -5,44 +6,17 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   Legend,
-  ReferenceLine,
-  Rectangle,
 } from 'recharts';
 import { theme } from '@Constants/theme';
 
-import Skeleton from '@Common/Skeleton';
 type Data = {
   message: string;
   value: number;
 };
 
-const loadingData: Data[] = [
-  {
-    message: 'Loading 1',
-    value: 424.74,
-  },
-  {
-    message: 'Loading 2',
-    value: 124.83,
-  },
-  {
-    message: 'Loading 3',
-    value: 324.53,
-  },
-  {
-    message: 'Loading 4',
-    value: 124.53,
-  },
-  {
-    message: 'Loading 5',
-    value: 224.53,
-  },
-];
-
 const generateNumber = () => {
-  return Number((Math.random() * (500 - 300) + 300).toFixed(2));
+  return Number((Math.random() * (600 - 300) + 300).toFixed(2));
 };
 
 type Props = {
@@ -52,9 +26,27 @@ type Props = {
 };
 
 function BarchartSkeleton({ height = 200, width = 300, barsCount }: Props) {
+  const [data, setData] = useState<Data[]>([]);
+
+  const generateBars = useCallback(() => {
+    const arr: Data[] = [];
+    for (let i = 0; i < barsCount; i++) {
+      arr.push({
+        message: `Loading-${i}`,
+        value: generateNumber(),
+      });
+    }
+    return arr;
+  }, [barsCount]);
+
+  useLayoutEffect(() => {
+    const barData = generateBars();
+    setData(barData);
+  }, [generateBars]);
+
   return (
     <ResponsiveContainer height={height} width={width}>
-      <BarChart data={loadingData}>
+      <BarChart data={data}>
         <CartesianGrid
           stroke="rgba(255, 255, 255, 0.1)"
           strokeDasharray="3"

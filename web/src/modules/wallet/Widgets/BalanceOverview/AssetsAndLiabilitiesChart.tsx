@@ -10,76 +10,38 @@ import {
   ReferenceLine,
   Rectangle,
 } from 'recharts';
+import { AssetsAndLiabilitesResponse } from '@Generated/graphql';
 import { theme } from '@Constants/theme';
-const data = {
-  aggregateBalance: 42222,
-  totalAssets: 62222,
-  totalLiabilities: -20000,
-  assets: [
-    {
-      id: 'ckntayfcf00166cqsootrl85y',
-      accountType: 'Primary Checking',
-      balance: 122.23,
-    },
-    {
-      id: 'cknrv902a0010j4qssdkjn45z',
-      accountName: 'Primary Checking',
-      balance: 875.0,
-    },
-    {
-      id: 'cknrv902i0016j4qsh6fmu8b8',
-      accountName: 'Primary Savings',
-      balance: 5000.21,
-    },
-    {
-      id: 'ckntayfcf00166cqs32ootrl85y',
-      accountName: 'Bank with Debt ',
-      balance: -522.22,
-      isLiability: true,
-    },
-    {
-      id: 'cknrv902a0010j4qssdqw1kjn45z',
-      accountName: 'Primary Checking',
-      balance: 900.0,
-    },
-    {
-      id: 'cknrv902i0016j4334qsh6fmu8b8',
-      accountName: 'Primary Savings',
-      balance: 0,
-    },
-    {
-      id: 'cknrv902i0016j4334qsh6fmu8b8',
-      accountName: 'Credit Card',
-      balance: -1480.0,
-      isLiability: true,
-    },
-  ],
-};
 
 const ASSETS_COLOR = `${theme.colors.primary}`;
 const LIABILITIES_COLOR = `${theme.colors.red}`;
 
 const CustomBar = (props: any) => {
-  const { balance, isLiability } = props;
-  // let fillColor = `${theme.colors.primary}`;
+  const { isLiability } = props;
   let fillColor = ASSETS_COLOR;
-  if (balance < 0) {
+
+  if (isLiability) {
     fillColor = LIABILITIES_COLOR;
   }
+
   return (
     <Rectangle
       {...props}
       fill={fillColor}
       fillOpacity={0.8}
-      id={balance < 0 ? 'liability' : 'asset'}
+      id={isLiability ? 'liability' : 'asset'}
     />
   );
 };
 
-function AssetsAndLiabilitesChart() {
+interface Props {
+  data: AssetsAndLiabilitesResponse['accounts'];
+}
+
+function AssetsAndLiabilitesChart({ data }: Props) {
   return (
     <ResponsiveContainer maxHeight={250} minHeight={200} width="100%">
-      <BarChart data={data.assets} margin={{ top: 10 }}>
+      <BarChart data={data} margin={{ top: 10 }}>
         <CartesianGrid
           stroke={`${theme.colors.textSecondary}`}
           strokeDasharray="3"

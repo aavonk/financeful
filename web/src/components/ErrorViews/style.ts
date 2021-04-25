@@ -12,6 +12,7 @@ export const Heading = styled.h3`
   margin-bottom: 8px;
   color: ${({ theme }) => theme.colors.textPrimary};
   padding: 0 24px;
+  text-align: center;
 `;
 export const Description = styled.p<{ whiteText?: boolean }>`
   margin-top: 8px;
@@ -21,6 +22,7 @@ export const Description = styled.p<{ whiteText?: boolean }>`
   line-height: 1.4;
   color: ${({ theme }) => theme.colors.textSecondary};
   padding: 0 24px;
+  text-align: center;
   ${({ whiteText }) =>
     whiteText &&
     css`

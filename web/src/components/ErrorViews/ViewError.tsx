@@ -1,4 +1,3 @@
-import { FallbackProps } from 'react-error-boundary';
 import Button from '@Common/Button';
 import { Emoji, Heading, Description, Container } from './style';
 
