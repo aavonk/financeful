@@ -5,6 +5,8 @@ import TransactionTable from '@Modules/transactions/Table';
 import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
 import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
 import { Transaction } from '@Generated/graphql';
+import { formatDate } from '@Lib/date-formatting';
+import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 
 const testData = [
   {
@@ -30,14 +32,20 @@ function RecentTransactions() {
       {
         Header: 'Date',
         accessor: 'date',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <span>{formatDate(value, 'M/d/yyyy')}</span>;
+        },
       },
       {
         Header: 'Payee',
         accessor: 'payee',
       },
       {
-        Header: 'Amount',
+        Header: () => <span className="align-right">Amount</span>,
         accessor: 'amount',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <div className="number">{formatMoneyFromCentsToDollars(value)}</div>;
+        },
       },
       {
         Header: 'Type',

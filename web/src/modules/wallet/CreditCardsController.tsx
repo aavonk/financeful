@@ -5,9 +5,8 @@ import { useGetAccountsQuery } from '@Generated/graphql';
 import CreditCard from '@Components/CreditCard';
 import CardLoader from '@Components/CreditCard/CardLoader';
 import Toast from '@Common/Alerts/Toast';
-import AccountOverviewModal from './AccountOverview/Modal';
 import AccountOverviewController from './AccountOverviewController';
-
+import { ModalRoot, ModalTitle, ModalBody } from '@Components/Modal';
 type GridProps = { shouldFlex?: boolean };
 
 const GridView = styled.div<GridProps>`
@@ -76,9 +75,21 @@ function CreditCardsContainer() {
           </motion.div>
         ))}
       </AnimatePresence>
-      <AccountOverviewModal isOpen={dialogOpen} onDismiss={() => setDialogOpen(false)}>
-        <AccountOverviewController />
-      </AccountOverviewModal>
+      <ModalRoot
+        isOpen={dialogOpen}
+        onDismiss={() => setDialogOpen(false)}
+        ariaLabel="Account overview"
+      >
+        <ModalTitle
+          onClose={() => setDialogOpen(false)}
+          title="Account Overview"
+          splitHeader
+          RightSideComponent={<span>See more</span>}
+        />
+        <ModalBody>
+          <AccountOverviewController />
+        </ModalBody>
+      </ModalRoot>
     </GridView>
   );
 }
