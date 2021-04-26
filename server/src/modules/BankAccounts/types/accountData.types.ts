@@ -1,13 +1,8 @@
 import { Field, InputType, ID, ObjectType, Float } from 'type-graphql';
+import { RangeParams } from '@Shared/types';
 
 @InputType()
-export class GetBalanceParams {
-  @Field(() => Date)
-  startDate: Date;
-
-  @Field(() => Date)
-  endDate: Date;
-
+export class GetBalanceParams extends RangeParams {
   @Field(() => ID)
   accountId: string;
 }

@@ -2,6 +2,7 @@ import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
 import { AuthenticationError } from 'apollo-server-express';
 import { Context, Transaction } from '@Shared/types';
 import { TransactionInput } from '../types/transaction.types';
+import { RangeParams } from '@Shared/types';
 
 @Resolver()
 export class TransactionResolver {
@@ -72,5 +73,15 @@ export class TransactionResolver {
     const newTransaction = await transactionRepo.createOne(input, user.id);
 
     return newTransaction;
+  }
+
+  // Get Transactions based off date RangeParams
+  @Authorized()
+  @Query(() => [Transaction])
+  async getTransactionsRange(
+    @Arg('input') input: RangeParams,
+    @Ctx() { user, transactionRepo }: Context,
+  ): Promise<Transaction[]> {
+    return await transactionRepo.getRange(input, user.id);
   }
 }
