@@ -57,7 +57,10 @@ function Routes() {
                       component={TransactionPage}
                     />
                   </ErrorBoundary>
-                  <PrivateRoute exact path="/my-wallet" component={MyWalletPage} />
+                  <PrivateRoute
+                    path={['/my-wallet', '/my-wallet/:id']}
+                    component={MyWalletPage}
+                  />
                 </ConfirmationProvider>
               </Layout>
             </Switch>

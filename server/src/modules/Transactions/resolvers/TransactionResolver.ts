@@ -80,8 +80,9 @@ export class TransactionResolver {
   @Query(() => [Transaction])
   async getTransactionsRange(
     @Arg('input') input: RangeParams,
+    @Arg('accountId', { nullable: true }) accountId: string,
     @Ctx() { user, transactionRepo }: Context,
   ): Promise<Transaction[]> {
-    return await transactionRepo.getRange(input, user.id);
+    return await transactionRepo.getRange(input, user.id, accountId);
   }
 }

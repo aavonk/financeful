@@ -32,9 +32,27 @@ export class TransactionRepo implements ITransactionRepo {
   public async getRange(
     range: RangeParams,
     userId: string,
+    accountId?: string,
   ): Promise<Transaction[]> {
     const { startDate, endDate } = range;
     const options = this.createQueryOptions();
+
+    if (accountId) {
+      return await this.client.transaction.findMany({
+        where: {
+          userId,
+          accountId,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+        orderBy: {
+          date: 'desc',
+        },
+        ...options,
+      });
+    }
 
     return await this.client.transaction.findMany({
       where: {

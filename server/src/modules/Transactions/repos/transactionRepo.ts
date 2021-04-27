@@ -7,6 +7,10 @@ export interface ITransactionRepo {
   findOne(id: string): Promise<Transaction | null>;
   createOne(input: TransactionInput, userId: string): Promise<Transaction>;
   deleteOne(id: string, userId: string): Promise<void>;
-  getRange(range: RangeParams, userId: string): Promise<Transaction[]>;
+  getRange(
+    range: RangeParams,
+    userId: string,
+    accountId?: string,
+  ): Promise<Transaction[]>;
   // updateOne(id: string, input: TransactionInput, userId: string): Promise<Transaction>;
 }
