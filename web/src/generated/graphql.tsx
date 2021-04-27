@@ -21,6 +21,7 @@ export type Query = {
   getCurrentUser: User;
   getTransactions?: Maybe<Array<Transaction>>;
   getTransaction?: Maybe<Transaction>;
+  getTransactionsRange: Array<Transaction>;
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
@@ -31,6 +32,11 @@ export type Query = {
 
 export type QueryGetTransactionArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryGetTransactionsRangeArgs = {
+  input: RangeParams;
 };
 
 
@@ -103,6 +109,11 @@ export type Account = {
   isInactive?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type RangeParams = {
+  startDate: Scalars['DateTime'];
+  endDate: Scalars['DateTime'];
 };
 
 export type Transfer = {
@@ -346,6 +357,18 @@ export type FetchUserQuery = (
   ) }
 );
 
+export type TransactionFieldsFragment = (
+  { __typename?: 'Transaction' }
+  & Pick<Transaction, 'id' | 'payee' | 'description' | 'amount' | 'type' | 'date' | 'accountId'>
+  & { category?: Maybe<(
+    { __typename?: 'Category' }
+    & Pick<Category, 'id' | 'name'>
+  )>, account?: Maybe<(
+    { __typename?: 'Account' }
+    & Pick<Account, 'accountName' | 'id'>
+  )> }
+);
+
 export type AddTransactionMutationVariables = Exact<{
   input: TransactionInput;
 }>;
@@ -496,6 +519,20 @@ export type FetchCategoriesQuery = (
   )> }
 );
 
+export type GetTransactionsRangeQueryVariables = Exact<{
+  input: RangeParams;
+}>;
+
+
+export type GetTransactionsRangeQuery = (
+  { __typename?: 'Query' }
+  & { getTransactionsRange: Array<(
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'isCashIn' | 'isCashOut' | 'isUncategorized' | 'isTransfer' | 'transferId'>
+    & TransactionFieldsFragment
+  )> }
+);
+
 export type GetTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -615,7 +652,25 @@ export type GetAssetsAndLiabilitiesQuery = (
   ) }
 );
 
-
+export const TransactionFieldsFragmentDoc = gql`
+    fragment TransactionFields on Transaction {
+  id
+  payee
+  description
+  amount
+  category {
+    id
+    name
+  }
+  type
+  date
+  accountId
+  account {
+    accountName
+    id
+  }
+}
+    `;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -1121,6 +1176,46 @@ export function useFetchCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type FetchCategoriesQueryHookResult = ReturnType<typeof useFetchCategoriesQuery>;
 export type FetchCategoriesLazyQueryHookResult = ReturnType<typeof useFetchCategoriesLazyQuery>;
 export type FetchCategoriesQueryResult = Apollo.QueryResult<FetchCategoriesQuery, FetchCategoriesQueryVariables>;
+export const GetTransactionsRangeDocument = gql`
+    query GetTransactionsRange($input: RangeParams!) {
+  getTransactionsRange(input: $input) {
+    ...TransactionFields
+    isCashIn
+    isCashOut
+    isUncategorized
+    isTransfer
+    transferId
+  }
+}
+    ${TransactionFieldsFragmentDoc}`;
+
+/**
+ * __useGetTransactionsRangeQuery__
+ *
+ * To run a query within a React component, call `useGetTransactionsRangeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTransactionsRangeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTransactionsRangeQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetTransactionsRangeQuery(baseOptions: Apollo.QueryHookOptions<GetTransactionsRangeQuery, GetTransactionsRangeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTransactionsRangeQuery, GetTransactionsRangeQueryVariables>(GetTransactionsRangeDocument, options);
+      }
+export function useGetTransactionsRangeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTransactionsRangeQuery, GetTransactionsRangeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTransactionsRangeQuery, GetTransactionsRangeQueryVariables>(GetTransactionsRangeDocument, options);
+        }
+export type GetTransactionsRangeQueryHookResult = ReturnType<typeof useGetTransactionsRangeQuery>;
+export type GetTransactionsRangeLazyQueryHookResult = ReturnType<typeof useGetTransactionsRangeLazyQuery>;
+export type GetTransactionsRangeQueryResult = Apollo.QueryResult<GetTransactionsRangeQuery, GetTransactionsRangeQueryVariables>;
 export const GetTransactionsDocument = gql`
     query GetTransactions {
   getTransactions {
