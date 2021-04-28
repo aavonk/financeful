@@ -1,5 +1,5 @@
-query GetTransactionsRange($input: RangeParams!) {
-  getTransactionsRange(input: $input) {
+query GetTransactionsRange($input: RangeParams!, $accountId: String) {
+  getTransactionsRange(input: $input, accountId: $accountId) {
     ...TransactionFields
     isCashIn
     isCashOut

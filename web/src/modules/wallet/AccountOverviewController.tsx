@@ -3,13 +3,17 @@ import { addDays } from '@Lib/date-formatting';
 
 //TODO: Refreshing when modal is open breaks app
 // route my-wallet/:id cant refresh -- why?
-function AccountOverviewController() {
+
+type Props = {
+  accountId: string;
+};
+
+function AccountOverviewController({ accountId }: Props) {
   const today = new Date();
   const startDate = addDays(today, { days: -90 });
-  console.log({ startDate, today });
   return (
     <>
-      <RecentTransactions startDate={startDate} endDate={today} />
+      <RecentTransactions startDate={startDate} endDate={today} accountId={accountId} />
     </>
   );
 }

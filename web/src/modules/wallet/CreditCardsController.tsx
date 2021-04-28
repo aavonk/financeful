@@ -33,6 +33,7 @@ const GridView = styled.div<GridProps>`
 function CreditCardsContainer() {
   const arr = new Array(4).fill(undefined).map((val, idx) => idx);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [accountId, setAccountId] = useState('');
   const history = useHistory();
   const { data: accounts, loading: fetchingAccounts, error } = useGetAccountsQuery({
     variables: { filter: { isInactive: true } },
@@ -79,6 +80,7 @@ function CreditCardsContainer() {
             initial={{ opacity: 0, y: 50, scale: 0.3 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={() => {
+              setAccountId(account.id);
               history.push(`/my-wallet/${account.id}`);
               setDialogOpen(true);
             }}
@@ -95,7 +97,7 @@ function CreditCardsContainer() {
           RightSideComponent={<span>See more</span>}
         />
         <ModalBody>
-          <AccountOverviewController />
+          <AccountOverviewController accountId={accountId} />
         </ModalBody>
       </ModalRoot>
     </GridView>

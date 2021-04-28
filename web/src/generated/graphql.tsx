@@ -36,6 +36,7 @@ export type QueryGetTransactionArgs = {
 
 
 export type QueryGetTransactionsRangeArgs = {
+  accountId?: Maybe<Scalars['String']>;
   input: RangeParams;
 };
 
@@ -521,6 +522,7 @@ export type FetchCategoriesQuery = (
 
 export type GetTransactionsRangeQueryVariables = Exact<{
   input: RangeParams;
+  accountId?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -1177,8 +1179,8 @@ export type FetchCategoriesQueryHookResult = ReturnType<typeof useFetchCategorie
 export type FetchCategoriesLazyQueryHookResult = ReturnType<typeof useFetchCategoriesLazyQuery>;
 export type FetchCategoriesQueryResult = Apollo.QueryResult<FetchCategoriesQuery, FetchCategoriesQueryVariables>;
 export const GetTransactionsRangeDocument = gql`
-    query GetTransactionsRange($input: RangeParams!) {
-  getTransactionsRange(input: $input) {
+    query GetTransactionsRange($input: RangeParams!, $accountId: String) {
+  getTransactionsRange(input: $input, accountId: $accountId) {
     ...TransactionFields
     isCashIn
     isCashOut
@@ -1202,6 +1204,7 @@ export const GetTransactionsRangeDocument = gql`
  * const { data, loading, error } = useGetTransactionsRangeQuery({
  *   variables: {
  *      input: // value for 'input'
+ *      accountId: // value for 'accountId'
  *   },
  * });
  */

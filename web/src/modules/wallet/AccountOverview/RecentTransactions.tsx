@@ -17,11 +17,13 @@ import { useGetTransactionsRangeQuery } from '@Generated/graphql';
 type Props = {
   startDate: Date;
   endDate: Date;
+  accountId: string;
 };
-function RecentTransactions({ startDate, endDate }: Props) {
+function RecentTransactions({ startDate, endDate, accountId }: Props) {
   const { data, loading, error } = useGetTransactionsRangeQuery({
-    variables: { input: { startDate, endDate } },
+    variables: { input: { startDate, endDate }, accountId },
   });
+
   const history = useHistory();
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
