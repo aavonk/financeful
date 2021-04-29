@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
@@ -7,7 +6,6 @@ import CreditCard from '@Components/CreditCard';
 import CardLoader from '@Components/CreditCard/CardLoader';
 import Toast from '@Common/Alerts/Toast';
 import AccountOverviewController from './AccountOverviewController';
-import { ModalRoot, ModalTitle, ModalBody } from '@Components/Modal';
 
 type GridProps = { shouldFlex?: boolean };
 
@@ -32,8 +30,6 @@ const GridView = styled.div<GridProps>`
 
 function CreditCardsContainer() {
   const arr = new Array(4).fill(undefined).map((val, idx) => idx);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [accountId, setAccountId] = useState('');
   const history = useHistory();
   const { data: accounts, loading: fetchingAccounts, error } = useGetAccountsQuery({
     variables: { filter: { isInactive: true } },
@@ -63,11 +59,6 @@ function CreditCardsContainer() {
     return null;
   }
 
-  const handleClose = () => {
-    history.push('/my-wallet');
-    setDialogOpen(false);
-  };
-
   return (
     <GridView shouldFlex={accounts.getAccounts.length < 4}>
       <AnimatePresence initial={true}>
@@ -80,28 +71,28 @@ function CreditCardsContainer() {
             initial={{ opacity: 0, y: 50, scale: 0.3 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={() => {
-              setAccountId(account.id);
               history.push(`/my-wallet/${account.id}`);
-              setDialogOpen(true);
             }}
           >
             <CreditCard account={account} />
           </motion.div>
         ))}
       </AnimatePresence>
-      <ModalRoot isOpen={dialogOpen} onDismiss={handleClose} ariaLabel="Account overview">
-        <ModalTitle
-          onClose={handleClose}
-          title="Account Overview"
-          splitHeader
-          RightSideComponent={<span>See more</span>}
-        />
-        <ModalBody>
-          <AccountOverviewController accountId={accountId} />
-        </ModalBody>
-      </ModalRoot>
+      <AccountOverviewController />
     </GridView>
   );
 }
+
+// <ModalRoot isOpen={dialogOpen} onDismiss={handleClose} ariaLabel="Account overview">
+// <ModalTitle
+//   onClose={handleClose}
+//   title="Account Overview"
+//   splitHeader
+//   RightSideComponent={<span>See more</span>}
+// />
+// <ModalBody>
+//   <AccountOverviewController accountId={accountId} />
+// </ModalBody>
+// </ModalRoot>
 
 export default CreditCardsContainer;
