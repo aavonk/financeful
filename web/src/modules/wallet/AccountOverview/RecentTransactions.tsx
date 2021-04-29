@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { useMemo } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Column, Cell } from 'react-table';
 import TransactionTable from '@Modules/transactions/Table';
 import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
@@ -24,8 +24,6 @@ function RecentTransactions({ startDate, endDate, accountId }: Props) {
   const { data, loading, error } = useGetTransactionsRangeQuery({
     variables: { input: { startDate, endDate }, accountId },
   });
-  const params = useParams();
-  console.log(params);
 
   const history = useHistory();
   const columns = useMemo<Column<Record<string, unknown>>[]>(

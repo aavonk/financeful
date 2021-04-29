@@ -5,7 +5,7 @@ import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
 
 function AccountOverviewController() {
   const today = new Date();
-  const startDate = addDays(today, { days: -90 });
+  const startDate = addDays(today, { days: -30 });
   const history = useHistory();
   const params = useParams<{ account_id: string }>();
 
