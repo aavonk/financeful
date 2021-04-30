@@ -16,6 +16,7 @@ import { AlertProvider } from '@Context/alert/alertContext';
 import { ConfirmationProvider } from '@Context/confirmation/confirmationContext';
 
 import Alerts from '@Common/Alerts';
+import AccountPage from '@Pages/AccountPage';
 
 function Routes() {
   const { data, error } = useFetchUserQuery();
@@ -64,6 +65,7 @@ function Routes() {
                     exact={false}
                   />
                 </ConfirmationProvider>
+                <PrivateRoute exact path="/account/:id" component={AccountPage} />
               </Layout>
             </Switch>
           </AlertProvider>
