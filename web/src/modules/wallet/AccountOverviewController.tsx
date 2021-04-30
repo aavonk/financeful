@@ -3,7 +3,7 @@ import { addDays } from '@Lib/date-formatting';
 import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
 import RecentTransactions from '@Modules/wallet/AccountOverview/RecentTransactions';
 import DailyBalancesChart from '@Modules/wallet/AccountOverview/DailyBalancesChart';
-
+import { BlueText } from '@Globals/index';
 function AccountOverviewController() {
   const today = new Date();
   const startDate = addDays(today, { days: -30 });
@@ -24,7 +24,7 @@ function AccountOverviewController() {
         onClose={handleClose}
         title="Account Overview"
         splitHeader
-        RightSideComponent={<span>See more</span>}
+        RightSideComponent={<BlueText>See more</BlueText>}
       />
       <ModalBody>
         <DailyBalancesChart

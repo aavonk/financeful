@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, CSSProperties } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
 import { DialogProps } from '@reach/dialog';
@@ -30,7 +30,7 @@ type TitleProps = {
   title: string;
   onClose: () => void;
   splitHeader?: boolean;
-  RightSideComponent?: ReactElement;
+  RightSideComponent?: ReactNode;
 };
 export function ModalTitle({
   title,

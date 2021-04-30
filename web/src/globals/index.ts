@@ -1,5 +1,21 @@
+import { Link, LinkProps } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+export const BlueLink = styled(Link)<LinkProps>`
+  color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
+  & :hover {
+    color: rgb(21, 95, 160);
+  }
+`;
+
+export const BlueText = styled.span`
+  color: ${({ theme }) => theme.colors.primary};
+  cursor: pointer;
+  & :hover {
+    color: rgb(21, 95, 160);
+  }
+`;
 export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
