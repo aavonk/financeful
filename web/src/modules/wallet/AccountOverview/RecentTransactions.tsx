@@ -88,6 +88,7 @@ function RecentTransactions({ startDate, endDate, accountId }: Props) {
       data={data.getTransactionsRange}
       withPagination={false}
       withToolbar={false}
+      elevate={false}
     />
   );
 }

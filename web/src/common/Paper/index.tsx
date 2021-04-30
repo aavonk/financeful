@@ -6,13 +6,16 @@ type Props = {
   maxHeight?: string;
   flex?: boolean;
   center?: boolean;
+  withElevation?: boolean;
   children: React.ReactNode;
 };
 export const StyledPaper = styled.div<Props>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.darkTwo};
-  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
-    0px 1px 3px 0px rgb(0 0 0 / 12%);
+  box-shadow: ${(props) =>
+    props.withElevation === false
+      ? 'none'
+      : '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),0px 1px 3px 0px rgb(0 0 0 / 12%)'};
   border-radius: 9px;
   overflow-x: auto;
   min-height: ${({ minHeight }) => minHeight || '0'};
@@ -52,9 +55,22 @@ export const StyledPaper = styled.div<Props>`
   }
 `;
 
-function Paper({ children, minHeight, maxHeight, flex, center }: Props) {
+function Paper({
+  children,
+  minHeight,
+  maxHeight,
+  flex,
+  center,
+  withElevation = true,
+}: Props) {
   return (
-    <StyledPaper minHeight={minHeight} flex={flex} center={center} maxHeight={maxHeight}>
+    <StyledPaper
+      minHeight={minHeight}
+      flex={flex}
+      center={center}
+      maxHeight={maxHeight}
+      withElevation={withElevation}
+    >
       {children}
     </StyledPaper>
   );
