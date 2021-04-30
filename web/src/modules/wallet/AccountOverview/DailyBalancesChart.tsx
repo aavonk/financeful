@@ -2,6 +2,7 @@ import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'rec
 import { useGetDailyBalancesQuery } from '@Generated/graphql';
 import AreaChartSkeleton from '@Components/ChartSkeletons/AreaChartSkeleton';
 import { theme } from '@Constants/theme';
+import CustomAxisTick from '@Components/Charts/CustomAxisTick';
 
 type Props = {
   startDate: Date;
@@ -24,6 +25,10 @@ function DailyBalancesChart({ startDate, endDate, accountId }: Props) {
     );
   }
 
+  if (loading) {
+    return <AreaChartSkeleton />;
+  }
+
   if (!data) {
     return null;
   }
@@ -31,7 +36,7 @@ function DailyBalancesChart({ startDate, endDate, accountId }: Props) {
   return (
     <ResponsiveContainer minHeight={200} width="100%">
       <AreaChart data={data.getAccountDailyBalances}>
-        <XAxis dataKey="date" allowDuplicatedCategory={false} />
+        <XAxis dataKey="date" allowDuplicatedCategory={false} tick={<CustomAxisTick />} />
         <YAxis hide />
         <Tooltip
           itemStyle={{ color: `${theme.colors.textPrimary}` }}

@@ -33,6 +33,7 @@ function AreaChartSkeleton({
           <XAxis dataKey="name" hide />
           <YAxis hide />
           <Area
+            isAnimationActive={false}
             type="monotone"
             dataKey="amount"
             stroke="#000"
