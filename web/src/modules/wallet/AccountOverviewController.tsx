@@ -1,7 +1,8 @@
-import RecentTransactions from '@Modules/wallet/AccountOverview/RecentTransactions';
 import { useHistory, useParams } from 'react-router-dom';
 import { addDays } from '@Lib/date-formatting';
 import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
+import RecentTransactions from '@Modules/wallet/AccountOverview/RecentTransactions';
+import DailyBalancesChart from '@Modules/wallet/AccountOverview/DailyBalancesChart';
 
 function AccountOverviewController() {
   const today = new Date();
@@ -26,6 +27,11 @@ function AccountOverviewController() {
         RightSideComponent={<span>See more</span>}
       />
       <ModalBody>
+        <DailyBalancesChart
+          startDate={startDate}
+          endDate={today}
+          accountId={params.account_id}
+        />
         <RecentTransactions
           startDate={startDate}
           endDate={today}
