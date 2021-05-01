@@ -1,7 +1,12 @@
-import { AssetsAndLiabilitesResponse } from '@Modules/BankAccounts/types/accountData.types';
-import { IDataBase, Account } from '@Shared/types';
+import {
+  AssetsAndLiabilitesResponse,
+  GetBalanceHistoriesResponse,
+} from '@Modules/BankAccounts/types/accountData.types';
+import { IDataBase, Account, RangeParams } from '@Shared/types';
 import { IAggregateAccountData } from '../aggregateAccountData';
 import { MoneyUtils } from '@Shared/utils/moneyUtils';
+import { DateUtils } from '@Shared/utils/DateUtils';
+
 export class AggregateAccountData implements IAggregateAccountData {
   private readonly client: IDataBase;
 
@@ -43,5 +48,55 @@ export class AggregateAccountData implements IAggregateAccountData {
         this.calculateAggregateTotal(bankAccounts),
       ),
     };
+  }
+
+  public async getBalanceHistories(
+    userId: string,
+    range: RangeParams,
+  ): Promise<GetBalanceHistoriesResponse> {
+    const { startDate, endDate } = range;
+
+    const balances = await this.client.dailyBalances.findMany({
+      where: {
+        AND: [
+          {
+            date: {
+              gte: startDate,
+              lte: endDate,
+            },
+            userId,
+          },
+        ],
+      },
+      orderBy: {
+        date: 'asc',
+      },
+      select: {
+        userId: false,
+        id: true,
+        date: true,
+        amount: true,
+        accountId: true,
+        account: {
+          select: {
+            accountName: true,
+          },
+        },
+      },
+    });
+    const data: GetBalanceHistoriesResponse = {
+      accountIds: [...new Set(balances.map((item) => item.accountId))],
+      histories: balances.map((item) => {
+        const { id, amount, account, ...rest } = item;
+        return {
+          ...rest,
+          date: DateUtils.formatNumericDate(item.date),
+          balance: MoneyUtils.convertToFloat(amount),
+          balanceId: id,
+          accountName: account.accountName,
+        };
+      }),
+    };
+    return data;
   }
 }
