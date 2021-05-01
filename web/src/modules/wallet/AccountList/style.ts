@@ -50,13 +50,12 @@ export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
   display: flex;
   flex-direction: row;
   flex: 0 0 100%;
-  padding: 0.5rem 0 0.5rem 0.2rem;
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
   cursor: pointer;
   border-radius: 4px;
   &:hover {
     background-color: ${({ theme }) => theme.colors.darkThree};
-    /* padding: 0.5rem;
-    transition: padding 0.2s ease-in; */
+    transition: background-color 0.2s ease-in;
   }
   ${({ $inactive }) =>
     $inactive &&
