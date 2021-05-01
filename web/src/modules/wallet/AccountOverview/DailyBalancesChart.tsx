@@ -55,8 +55,9 @@ function DailyBalancesChart({ startDate, endDate, accountId }: Props) {
           type="monotone"
           dataKey="amount"
           name="Balance"
-          stroke="#8884d8"
-          fill="#8884d8"
+          stroke={`${theme.charts.purpleStroke}`}
+          strokeWidth={theme.charts.strokeWidth}
+          fill={`${theme.charts.purpleFill}`}
         />
       </AreaChart>
     </ResponsiveContainer>

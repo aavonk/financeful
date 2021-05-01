@@ -23,6 +23,11 @@ const theme: DefaultTheme = {
     green: 'rgb(52,195,143)',
     turqouise: 'rgb(2,164,153)',
   },
+  charts: {
+    purpleFill: '#8884d8',
+    purpleStroke: '#5551A5',
+    strokeWidth: 4,
+  },
   effects: {
     buttonHover: 'rgba(29, 161, 242, 0.1)',
     dangerHover: 'rgba(224, 36, 94, 0.2)',

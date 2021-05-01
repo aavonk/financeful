@@ -25,7 +25,11 @@ declare module 'styled-components' {
       textError: string;
       tooltip: string;
     };
-
+    charts: {
+      purpleFill: string;
+      purpleStroke: string;
+      strokeWidth: number;
+    };
     effects: {
       buttonHover: string;
       dangerHover: string;
