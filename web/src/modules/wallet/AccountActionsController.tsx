@@ -49,6 +49,13 @@ function AccountActionsController() {
                   (reference: any) => account.id !== readField('id', reference),
                 );
               },
+              getAssetsAndLiabilites(existingData, { readField }) {
+                if (existingData.accounts) {
+                  return existingData.accounts.filter(
+                    (ref: any) => account.id !== readField('id', ref),
+                  );
+                }
+              },
             },
           });
         },
