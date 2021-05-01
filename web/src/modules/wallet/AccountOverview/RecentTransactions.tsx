@@ -89,6 +89,7 @@ function RecentTransactions({ startDate, endDate, accountId }: Props) {
       withPagination={false}
       withToolbar={false}
       elevate={false}
+      limitHeight={false}
     />
   );
 }

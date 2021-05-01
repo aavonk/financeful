@@ -27,6 +27,7 @@ export interface TableProperties<T extends Record<string, unknown>>
   withPagination?: boolean;
   withToolbar?: boolean;
   elevate?: boolean;
+  limitHeight?: boolean;
 }
 
 function Table<T extends Record<string, unknown>>({
@@ -35,6 +36,7 @@ function Table<T extends Record<string, unknown>>({
   withPagination = true,
   withToolbar = true,
   elevate = true,
+  limitHeight = true,
 }: TableProperties<T>) {
   const instance = useTable<T>(
     { columns, data },
@@ -48,7 +50,7 @@ function Table<T extends Record<string, unknown>>({
   return (
     <>
       {withToolbar && <Toolbar instance={instance} />}
-      <TablePaper withElevation={elevate}>
+      <TablePaper withElevation={elevate} limitHeight={limitHeight}>
         <TableRoot {...getTableProps()}>
           <TableHead>
             {headerGroups.map((headerGroup) => (
