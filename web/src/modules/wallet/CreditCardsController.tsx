@@ -28,7 +28,7 @@ const GridView = styled.div<GridProps>`
     `}
 `;
 
-function CreditCardsContainer() {
+function CreditCardsController() {
   const arr = new Array(4).fill(undefined).map((val, idx) => idx);
   const history = useHistory();
   const { data: accounts, loading: fetchingAccounts, error } = useGetAccountsQuery({
@@ -61,7 +61,7 @@ function CreditCardsContainer() {
 
   return (
     <GridView shouldFlex={accounts.getAccounts.length < 4}>
-      <AnimatePresence initial={true}>
+      <AnimatePresence initial={false}>
         {accounts.getAccounts.slice(0, 4).map((account, index) => (
           <motion.div
             key={index}
@@ -71,7 +71,7 @@ function CreditCardsContainer() {
             initial={{ opacity: 0, y: 50, scale: 0.3 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             onClick={() => {
-              history.push(`/my-wallet/${account.id}`);
+              history.push(`/my-wallet/${account.id}?name=${account.accountName}`);
             }}
           >
             <CreditCard account={account} />
@@ -83,16 +83,4 @@ function CreditCardsContainer() {
   );
 }
 
-// <ModalRoot isOpen={dialogOpen} onDismiss={handleClose} ariaLabel="Account overview">
-// <ModalTitle
-//   onClose={handleClose}
-//   title="Account Overview"
-//   splitHeader
-//   RightSideComponent={<span>See more</span>}
-// />
-// <ModalBody>
-//   <AccountOverviewController accountId={accountId} />
-// </ModalBody>
-// </ModalRoot>
-
-export default CreditCardsContainer;
+export default CreditCardsController;

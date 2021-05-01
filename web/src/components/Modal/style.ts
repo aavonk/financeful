@@ -19,6 +19,7 @@ export const Content = styled(DialogContent)`
   background: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 1rem;
   max-height: 90vh;
+  height: 650px;
   min-width: 600px;
   max-width: 600px;
   padding: 0;
