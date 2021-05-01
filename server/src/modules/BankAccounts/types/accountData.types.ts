@@ -39,11 +39,6 @@ export class AssetsAndLiabilitesResponse {
   aggregateBalance: number;
 }
 
-// const data = {
-//   accountIds: ['asdf', 'asdf', 'asdf '], //To be able to create an area for each account -- dataKey = ID,
-//   histories: [{accountName: 'asdf', balance: 12, date: '12/14/21'}]
-// }
-
 @ObjectType()
 export class HistoryObject extends FormattedAccountBalance {
   @Field(() => String, { description: 'Date formated in mm/dd/yyyy format' })
@@ -55,6 +50,7 @@ export class HistoryObject extends FormattedAccountBalance {
   @Field(() => ID, { description: 'The ID of the account' })
   accountId: string;
 }
+
 @ObjectType()
 export class GetBalanceHistoriesResponse {
   @Field(() => [ID], { description: 'An array containing each account ID' })

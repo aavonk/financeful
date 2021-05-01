@@ -26,7 +26,11 @@ function AccountOverviewController() {
         onClose={handleClose}
         title={`${urlQuery.get('name')}`}
         splitHeader
-        RightSideComponent={<BlueText>See more</BlueText>}
+        RightSideComponent={
+          <BlueText onClick={() => history.push(`/account/${params.account_id}`)}>
+            See more
+          </BlueText>
+        }
       />
       <ModalBody>
         <DailyBalancesChart
