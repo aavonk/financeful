@@ -4,6 +4,7 @@ import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
 import RecentTransactions from '@Modules/wallet/AccountOverview/RecentTransactions';
 import DailyBalancesChart from '@Modules/wallet/AccountOverview/DailyBalancesChart';
 import { BlueText } from '@Globals/index';
+
 function AccountOverviewController() {
   const today = new Date();
   const startDate = addDays(today, { days: -30 });
