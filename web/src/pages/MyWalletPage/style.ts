@@ -49,9 +49,13 @@ export const WidgetViewContainer = styled.section`
   @media ${({ theme }) => theme.device.laptopAndUp} {
     display: block;
   }
+
+  @media ${({ theme }) => theme.device.desktop} {
+    max-width: 400px;
+    justify-self: end;
+  }
 `;
 
 export const AccountViewContainer = styled.section`
   grid-area: accounts;
-  /* background-color: blue; */
 `;

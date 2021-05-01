@@ -19,7 +19,6 @@ export const Content = styled(DialogContent)`
   background: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 1rem;
   max-height: 90vh;
-  height: 650px;
   min-width: 600px;
   max-width: 600px;
   padding: 0;
@@ -32,6 +31,10 @@ export const Content = styled(DialogContent)`
     height: 100vh;
     border-radius: 0;
     min-width: 0;
+  }
+
+  @media ${({ theme }) => theme.device.desktop} {
+    height: 650px;
   }
 `;
 

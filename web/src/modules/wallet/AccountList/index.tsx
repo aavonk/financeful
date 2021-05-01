@@ -1,12 +1,10 @@
-import Paper from '@Common/Paper';
-import { Container } from './style';
+import { Container, StyledPaper } from './style';
 import { Account } from '@Generated/graphql';
 import AccountListHeader from './AccountListHeader';
 import AccountItem from './AccountItem';
 import EmptyView from '@Components/EmptyViews/GeneralEmptyView';
 import AccountActions from './AccountActions';
 import { IAccountActions } from './AccountActions';
-
 type IAccountList = {
   accounts: Account[] | undefined;
 } & IAccountActions;
@@ -18,7 +16,7 @@ function AccountList({
   onMarkInactiveClick,
 }: IAccountList) {
   return (
-    <Paper>
+    <StyledPaper maxWidth="1000px">
       <Container>
         <AccountListHeader />
         {accounts?.length ? (
@@ -40,7 +38,7 @@ function AccountList({
           />
         )}
       </Container>
-    </Paper>
+    </StyledPaper>
   );
 }
 

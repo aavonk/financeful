@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
+import { Props as PaperProps, StyledPaper as Paper } from '@Common/Paper';
 
+export const StyledPaper = styled(Paper)<PaperProps>`
+  /* background-color: red; */
+`;
 export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -11,6 +15,11 @@ export const HeaderContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.darkTwo};
   position: sticky;
   top: 0;
+`;
+
+export const TextWrapper = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 export const Title = styled.div`
@@ -41,8 +50,14 @@ export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
   display: flex;
   flex-direction: row;
   flex: 0 0 100%;
-  padding: 0.5rem 0;
-
+  padding: 0.5rem 0 0.5rem 0.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+    /* padding: 0.5rem;
+    transition: padding 0.2s ease-in; */
+  }
   ${({ $inactive }) =>
     $inactive &&
     css`

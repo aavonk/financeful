@@ -1,9 +1,10 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 
-type Props = {
+export type Props = {
   minHeight?: string;
   maxHeight?: string;
+  maxWidth?: string;
   flex?: boolean;
   center?: boolean;
   withElevation?: boolean;
@@ -20,6 +21,7 @@ export const StyledPaper = styled.div<Props>`
   overflow-x: auto;
   min-height: ${({ minHeight }) => minHeight || '0'};
   max-height: ${({ maxHeight }) => maxHeight || '100%'};
+  max-width: ${({ maxWidth }) => maxWidth || '100%'};
 
   ${({ flex, center }) =>
     flex &&
@@ -62,6 +64,7 @@ function Paper({
   flex,
   center,
   withElevation = true,
+  maxWidth,
 }: Props) {
   return (
     <StyledPaper
@@ -69,6 +72,7 @@ function Paper({
       flex={flex}
       center={center}
       maxHeight={maxHeight}
+      maxWidth={maxWidth}
       withElevation={withElevation}
     >
       {children}
