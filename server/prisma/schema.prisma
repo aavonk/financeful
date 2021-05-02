@@ -74,7 +74,7 @@ model DailyBalances {
   user        User          @relation(fields: [userId], references: [id])
   userId      String
   amount      Int
-  date        DateTime
+  date        DateTime      @db.Date
   account     Account       @relation(fields: [accountId], references: [id])
   accountId   String
 }
