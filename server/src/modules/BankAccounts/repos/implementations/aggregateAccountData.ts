@@ -84,6 +84,21 @@ export class AggregateAccountData implements IAggregateAccountData {
         },
       },
     });
+    //TODO: Add date range filter
+    const testArr = await this.client.dailyBalances.groupBy({
+      by: ['date'],
+      where: {
+        userId,
+      },
+      sum: {
+        amount: true,
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
+
+    console.log(testArr);
     const data: GetBalanceHistoriesResponse = {
       accountIds: [...new Set(balances.map((item) => item.accountId))],
       histories: balances.map((item) => {

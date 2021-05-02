@@ -18,10 +18,16 @@ export const randomNumber = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+// 4 months worth of dates
 export const generateBalanceObjects = (): Balance[] => {
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
-  const dates = getDaysInMonth(month, year);
+  // const dates = getDaysInMonth(month, year);
+  const dates = [];
+  for (let i = 0; i < 4; i++) {
+    const temp = getDaysInMonth(month - i, year);
+    dates.push(...temp);
+  }
 
   const arr: Balance[] = [];
 

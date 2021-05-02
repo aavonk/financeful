@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID, Float } from 'type-graphql';
+import { Field, ObjectType, ID, Int } from 'type-graphql';
 import { Account } from '@Shared/types';
 
 @ObjectType()
@@ -9,7 +9,7 @@ export class DailyBalance {
   @Field(() => ID)
   userId: string;
 
-  @Field(() => Float)
+  @Field(() => Int)
   amount: number;
 
   @Field(() => String)

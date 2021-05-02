@@ -1,5 +1,5 @@
 import { theme } from '@Constants/theme';
-
+import { format } from 'date-fns';
 function CustomAxisTick(props: any) {
   const { x, y, payload } = props;
 
@@ -13,7 +13,7 @@ function CustomAxisTick(props: any) {
         y={0}
         dy={10}
       >
-        {payload.value}
+        {format(new Date(payload.value), 'MMM d')}
       </text>
     </g>
   );

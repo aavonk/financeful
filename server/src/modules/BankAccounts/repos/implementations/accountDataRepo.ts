@@ -2,7 +2,7 @@ import { IDataBase, DailyBalance } from '@Shared/types/';
 import { IAccountDataRepo } from '../accountDataRepo';
 import { GetBalanceParams } from '../../types/accountData.types';
 import { DateUtils } from '@Shared/utils/DateUtils';
-import { MoneyUtils } from '@Shared/utils/MoneyUtils';
+// import { MoneyUtils } from '@Shared/utils/MoneyUtils';
 export class AccountDataRepo implements IAccountDataRepo {
   private client: IDataBase;
 
@@ -33,7 +33,6 @@ export class AccountDataRepo implements IAccountDataRepo {
     return balances.map((item) => ({
       ...item,
       date: DateUtils.formatNumericDate(item.date),
-      amount: MoneyUtils.convertToFloat(item.amount),
     }));
   }
 }

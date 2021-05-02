@@ -2,8 +2,7 @@ import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'rec
 import { useGetDailyBalancesQuery } from '@Generated/graphql';
 import AreaChartSkeleton from '@Components/ChartSkeletons/AreaChartSkeleton';
 import { theme } from '@Constants/theme';
-import CustomAxisTick from '@Components/Charts/CustomAxisTick';
-
+import { CustomAxisTick, CustomTooltip } from '@Components/Charts';
 type Props = {
   startDate: Date;
   endDate: Date;
@@ -32,25 +31,23 @@ function DailyBalancesChart({ startDate, endDate, accountId }: Props) {
   if (!data) {
     return null;
   }
-
+  // itemStyle={{ color: `${theme.colors.textPrimary}` }}
+  // contentStyle={{
+  //   backgroundColor: `${theme.colors.darkThree}`,
+  //   borderColor: `${theme.colors.darkThree}`,
+  //   borderRadius: '4px',
+  // }}
+  // cursor={{
+  //   stroke: `${theme.colors.darkThree}`,
+  //   strokeWidth: 2,
+  //   fill: `${theme.colors.darkThree}`,
+  // }}
   return (
     <ResponsiveContainer minHeight={200} width="100%">
       <AreaChart data={data.getAccountDailyBalances}>
         <XAxis dataKey="date" allowDuplicatedCategory={false} tick={<CustomAxisTick />} />
         <YAxis hide />
-        <Tooltip
-          itemStyle={{ color: `${theme.colors.textPrimary}` }}
-          contentStyle={{
-            backgroundColor: `${theme.colors.darkThree}`,
-            borderColor: `${theme.colors.darkThree}`,
-            borderRadius: '4px',
-          }}
-          cursor={{
-            stroke: `${theme.colors.darkThree}`,
-            strokeWidth: 2,
-            fill: `${theme.colors.darkThree}`,
-          }}
-        />
+        <Tooltip content={<CustomTooltip />} />
         <Area
           type="monotone"
           dataKey="amount"
