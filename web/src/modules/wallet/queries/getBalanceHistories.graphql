@@ -1,0 +1,6 @@
+query GetBalanceHistories($input: RangeParams!) {
+  getBalanceHistories(input: $input) {
+    date
+    balance
+  }
+}

@@ -27,6 +27,7 @@ export type Query = {
   getCategories: Array<Category>;
   getAccountDailyBalances: Array<DailyBalance>;
   getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
+  getBalanceHistories: Array<HistoryObject>;
 };
 
 
@@ -53,6 +54,11 @@ export type QueryGetAccountsArgs = {
 
 export type QueryGetAccountDailyBalancesArgs = {
   input: GetBalanceParams;
+};
+
+
+export type QueryGetBalanceHistoriesArgs = {
+  input: RangeParams;
 };
 
 export type User = {
@@ -137,7 +143,7 @@ export type DailyBalance = {
   id: Scalars['ID'];
   userId: Scalars['ID'];
   amount: Scalars['Int'];
-  date: Scalars['DateTime'];
+  date: Scalars['String'];
   accountId: Scalars['ID'];
   account?: Maybe<Account>;
 };
@@ -151,16 +157,27 @@ export type GetBalanceParams = {
 export type AssetsAndLiabilitesResponse = {
   __typename?: 'AssetsAndLiabilitesResponse';
   accounts: Array<AssetsAndLiabilitiesBarChartData>;
+  /** The combined balance of all accounts formatted as a float */
   aggregateBalance: Scalars['Float'];
 };
 
 export type AssetsAndLiabilitiesBarChartData = {
   __typename?: 'AssetsAndLiabilitiesBarChartData';
-  id: Scalars['ID'];
   accountName: Scalars['String'];
+  /** The balance formatted as a float */
   balance: Scalars['Float'];
+  /** The ID of the account */
+  id: Scalars['ID'];
   isAsset: Scalars['Boolean'];
   isLiability: Scalars['Boolean'];
+};
+
+export type HistoryObject = {
+  __typename?: 'HistoryObject';
+  /** Date formated in mm/dd/yyyy format */
+  date: Scalars['String'];
+  /** The aggregated balance formatted in $120.00 */
+  balance: Scalars['Float'];
 };
 
 export type Mutation = {
@@ -652,6 +669,19 @@ export type GetAssetsAndLiabilitiesQuery = (
       & Pick<AssetsAndLiabilitiesBarChartData, 'id' | 'accountName' | 'isAsset' | 'isLiability' | 'balance'>
     )> }
   ) }
+);
+
+export type GetBalanceHistoriesQueryVariables = Exact<{
+  input: RangeParams;
+}>;
+
+
+export type GetBalanceHistoriesQuery = (
+  { __typename?: 'Query' }
+  & { getBalanceHistories: Array<(
+    { __typename?: 'HistoryObject' }
+    & Pick<HistoryObject, 'date' | 'balance'>
+  )> }
 );
 
 export type GetDailyBalancesQueryVariables = Exact<{
@@ -1567,6 +1597,42 @@ export function useGetAssetsAndLiabilitiesLazyQuery(baseOptions?: Apollo.LazyQue
 export type GetAssetsAndLiabilitiesQueryHookResult = ReturnType<typeof useGetAssetsAndLiabilitiesQuery>;
 export type GetAssetsAndLiabilitiesLazyQueryHookResult = ReturnType<typeof useGetAssetsAndLiabilitiesLazyQuery>;
 export type GetAssetsAndLiabilitiesQueryResult = Apollo.QueryResult<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>;
+export const GetBalanceHistoriesDocument = gql`
+    query GetBalanceHistories($input: RangeParams!) {
+  getBalanceHistories(input: $input) {
+    date
+    balance
+  }
+}
+    `;
+
+/**
+ * __useGetBalanceHistoriesQuery__
+ *
+ * To run a query within a React component, call `useGetBalanceHistoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBalanceHistoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBalanceHistoriesQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetBalanceHistoriesQuery(baseOptions: Apollo.QueryHookOptions<GetBalanceHistoriesQuery, GetBalanceHistoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBalanceHistoriesQuery, GetBalanceHistoriesQueryVariables>(GetBalanceHistoriesDocument, options);
+      }
+export function useGetBalanceHistoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBalanceHistoriesQuery, GetBalanceHistoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBalanceHistoriesQuery, GetBalanceHistoriesQueryVariables>(GetBalanceHistoriesDocument, options);
+        }
+export type GetBalanceHistoriesQueryHookResult = ReturnType<typeof useGetBalanceHistoriesQuery>;
+export type GetBalanceHistoriesLazyQueryHookResult = ReturnType<typeof useGetBalanceHistoriesLazyQuery>;
+export type GetBalanceHistoriesQueryResult = Apollo.QueryResult<GetBalanceHistoriesQuery, GetBalanceHistoriesQueryVariables>;
 export const GetDailyBalancesDocument = gql`
     query GetDailyBalances($input: GetBalanceParams!) {
   getAccountDailyBalances(input: $input) {
