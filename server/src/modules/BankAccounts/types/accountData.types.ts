@@ -40,22 +40,12 @@ export class AssetsAndLiabilitesResponse {
 }
 
 @ObjectType()
-export class HistoryObject extends FormattedAccountBalance {
+export class HistoryObject {
   @Field(() => String, { description: 'Date formated in mm/dd/yyyy format' })
   date: string;
 
-  @Field(() => ID, { description: 'The ID of the balance object' })
-  balanceId: string;
-
-  @Field(() => ID, { description: 'The ID of the account' })
-  accountId: string;
-}
-
-@ObjectType()
-export class GetBalanceHistoriesResponse {
-  @Field(() => [ID], { description: 'An array containing each account ID' })
-  accountIds: string[];
-
-  @Field(() => [HistoryObject])
-  histories: HistoryObject[];
+  @Field(() => Float, {
+    description: 'The aggregated balance formatted in $120.00',
+  })
+  balance: number;
 }

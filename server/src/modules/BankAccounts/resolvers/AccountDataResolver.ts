@@ -11,7 +11,7 @@ import { Context, DailyBalance, Account, RangeParams } from '@Shared/types';
 import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
-  GetBalanceHistoriesResponse,
+  HistoryObject,
 } from '../types/accountData.types';
 
 @Resolver(() => DailyBalance)
@@ -42,11 +42,11 @@ export class AccountDataResolver {
   }
 
   @Authorized()
-  @Query(() => GetBalanceHistoriesResponse)
+  @Query(() => [HistoryObject])
   async getBalanceHistories(
     @Arg('input') input: RangeParams,
     @Ctx() { aggregateAccountDataRepo, user }: Context,
-  ): Promise<GetBalanceHistoriesResponse> {
+  ): Promise<HistoryObject[]> {
     return await aggregateAccountDataRepo.getBalanceHistories(user.id, input);
   }
 }

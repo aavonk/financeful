@@ -1,6 +1,6 @@
 import {
   AssetsAndLiabilitesResponse,
-  GetBalanceHistoriesResponse,
+  HistoryObject,
 } from '../types/accountData.types';
 import { RangeParams } from '@Shared/types';
 
@@ -9,5 +9,5 @@ export interface IAggregateAccountData {
   getBalanceHistories(
     userId: string,
     range: RangeParams,
-  ): Promise<GetBalanceHistoriesResponse>;
+  ): Promise<HistoryObject[]>;
 }

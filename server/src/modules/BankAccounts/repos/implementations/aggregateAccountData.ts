@@ -1,6 +1,6 @@
 import {
   AssetsAndLiabilitesResponse,
-  GetBalanceHistoriesResponse,
+  HistoryObject,
 } from '@Modules/BankAccounts/types/accountData.types';
 import { IDataBase, Account, RangeParams } from '@Shared/types';
 import { IAggregateAccountData } from '../aggregateAccountData';
@@ -53,42 +53,21 @@ export class AggregateAccountData implements IAggregateAccountData {
   public async getBalanceHistories(
     userId: string,
     range: RangeParams,
-  ): Promise<GetBalanceHistoriesResponse> {
+  ): Promise<HistoryObject[]> {
     const { startDate, endDate } = range;
 
-    const balances = await this.client.dailyBalances.findMany({
+    const aggregatedBalances = await this.client.dailyBalances.groupBy({
+      by: ['date'],
       where: {
         AND: [
           {
+            userId,
             date: {
               gte: startDate,
               lte: endDate,
             },
-            userId,
           },
         ],
-      },
-      orderBy: {
-        date: 'asc',
-      },
-      select: {
-        userId: false,
-        id: true,
-        date: true,
-        amount: true,
-        accountId: true,
-        account: {
-          select: {
-            accountName: true,
-          },
-        },
-      },
-    });
-    //TODO: Add date range filter
-    const testArr = await this.client.dailyBalances.groupBy({
-      by: ['date'],
-      where: {
-        userId,
       },
       sum: {
         amount: true,
@@ -98,20 +77,11 @@ export class AggregateAccountData implements IAggregateAccountData {
       },
     });
 
-    console.log(testArr);
-    const data: GetBalanceHistoriesResponse = {
-      accountIds: [...new Set(balances.map((item) => item.accountId))],
-      histories: balances.map((item) => {
-        const { id, amount, account, ...rest } = item;
-        return {
-          ...rest,
-          date: DateUtils.formatNumericDate(item.date),
-          balance: MoneyUtils.convertToFloat(amount),
-          balanceId: id,
-          accountName: account.accountName,
-        };
-      }),
-    };
+    const data = aggregatedBalances.map((item) => ({
+      date: DateUtils.formatNumericDate(item.date),
+      balance: MoneyUtils.convertToFloat(item.sum.amount!),
+    }));
+
     return data;
   }
 }

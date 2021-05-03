@@ -1,7 +1,8 @@
 import { theme } from '@Constants/theme';
-import { format } from 'date-fns';
-function CustomAxisTick(props: any) {
-  const { x, y, payload } = props;
+import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
+
+function CustomYAxisTick(props: any) {
+  const { x, y, payload, formatCents } = props;
 
   return (
     <g transform={`translate(${x},${y})`}>
@@ -13,10 +14,10 @@ function CustomAxisTick(props: any) {
         y={0}
         dy={10}
       >
-        {format(new Date(payload.value), 'MMM d')}
+        {formatCents ? formatMoneyFromCentsToDollars(payload.value) : payload.value}
       </text>
     </g>
   );
 }
 
-export default CustomAxisTick;
+export default CustomYAxisTick;
