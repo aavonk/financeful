@@ -2,7 +2,7 @@ import {
   BalanceOverview,
   BalanceOverviewSkeleton,
   BalanceOverviewError,
-} from '@Modules/wallet/Widgets/BalanceOverview/';
+} from '@Modules/wallet/BalanceOverview';
 import { useGetAssetsAndLiabilitiesQuery } from '@Generated/graphql';
 
 function BalanceOverviewController() {
