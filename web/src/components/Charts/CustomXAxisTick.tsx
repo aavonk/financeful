@@ -14,7 +14,7 @@ function CustomXAxisTick(props: any) {
         y={0}
         dy={10}
       >
-        {format(new Date(payload.value), 'MMM d')}
+        {payload.value ? format(new Date(payload.value), 'MMM d') : ''}
       </text>
     </g>
   );
