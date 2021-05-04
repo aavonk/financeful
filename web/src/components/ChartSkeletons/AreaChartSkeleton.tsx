@@ -13,19 +13,20 @@ function AreaChartSkeleton({
 }: ErrorProps) {
   const data = useMemo(
     () => [
-      { name: 'Wrapsafe', amount: 2247 },
-      { name: 'Solarbreeze', amount: 3173 },
-      { name: 'Biodex', amount: 4328 },
-      { name: 'Andalax', amount: 4296 },
-      { name: 'Cookley', amount: 3560 },
-      { name: 'Alpha', amount: 4528 },
-      { name: 'Lotlux', amount: 3942 },
-      { name: 'Biodex', amount: 2751 },
-      { name: 'Konklab', amount: 3099 },
-      { name: 'Biodex', amount: 5929 },
+      { name: 'Wrapsafe', amount: 191814 },
+      { name: 'Solarbreeze', amount: 1991040 },
+      { name: 'Biodex', amount: 1799700 },
+      { name: 'Andalax', amount: 1818730 },
+      { name: 'Cookley', amount: 1717720 },
+      { name: 'Alpha', amount: 1523400 },
+      { name: 'Lotlux', amount: 1123670 },
+      { name: 'Biodex', amount: 1669570 },
+      { name: 'Konklab', amount: 1166250 },
+      { name: 'Biodex', amount: 1383590 },
     ],
     [],
   );
+
   return (
     <RelativeContainer>
       <ResponsiveContainer minHeight={200} width="100%">

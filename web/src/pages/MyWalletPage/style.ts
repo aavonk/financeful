@@ -2,60 +2,31 @@ import styled from 'styled-components';
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 0.4fr 1fr;
   grid-template-rows: repeat(3, 1fr);
-  gap: 20px 20px;
-  grid-template-areas:
-    'accounts'
-    'accounts'
-    'accounts';
-
-  /* tablet */
-  @media (min-width: 768px) {
-    grid-template-areas:
-      'cards'
-      'accounts'
-      'accounts';
-  }
-  @media ${({ theme }) => theme.device.laptopAndUp} {
-    grid-template-columns: 0.6fr 1.4fr;
-    grid-template-rows: 0.6fr 1.4fr;
-    gap: 20px 40px;
-    grid-template-areas:
-      'cards cards'
-      'widgets accounts';
-  }
+  grid-column-gap: 20px;
+  grid-row-gap: 16px;
 `;
 
 export const CardViewContainer = styled.section`
-  display: none;
   position: relative;
-
-  @media (min-width: 768px) {
-    grid-area: cards;
-    display: block;
-    /* Inner grid */
-    /* display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px 20px;
-    justify-items: center; */
-  }
+  display: block;
+  width: 100%;
+  grid-area: 1 / 1 / 2 / 3;
 `;
 
 export const WidgetViewContainer = styled.section`
   display: none;
-  grid-area: widgets;
 
   @media ${({ theme }) => theme.device.laptopAndUp} {
     display: block;
-  }
-
-  @media ${({ theme }) => theme.device.desktop} {
-    max-width: 400px;
-    justify-self: end;
+    grid-area: 2 / 1 / 4 / 2;
   }
 `;
 
 export const AccountViewContainer = styled.section`
-  grid-area: accounts;
+  grid-area: 2 / 1 / 4 / 3;
+  @media ${({ theme }) => theme.device.laptopAndUp} {
+    grid-area: 2 / 2 / 4 / 3;
+  }
 `;
