@@ -8,7 +8,7 @@ interface Props {
 }
 function BalanceOverview({ data }: Props) {
   return (
-    <Paper>
+    <Paper maxHeight="350px" maxWidth="400px">
       <Container>
         <Header>
           <h3>Net Balance</h3>

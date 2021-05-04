@@ -21,11 +21,11 @@ function AccountItem({ account, children }: Props) {
           <p>Nickname</p>
           <p>{account.accountName}</p>
         </ItemName>
-        <ItemName>
+        <ItemName hide>
           <p>Bank</p>
           <p>{account.bankName ? account.bankName : ' '}</p>
         </ItemName>
-        <ItemName>
+        <ItemName hide>
           <p>Account type</p>
           <p>{account.accountType}</p>
         </ItemName>

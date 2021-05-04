@@ -16,7 +16,7 @@ function AccountList({
   onMarkInactiveClick,
 }: IAccountList) {
   return (
-    <StyledPaper maxWidth="1000px">
+    <StyledPaper>
       <Container>
         <AccountListHeader />
         {accounts?.length ? (

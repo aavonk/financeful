@@ -9,13 +9,14 @@ import {
 } from 'recharts';
 import { CustomXAxisTick, CustomTooltip, CustomYAxisTick } from '@Components/Charts';
 import { HistoryObject } from '@Generated/graphql';
-
+import { useMediaQuery } from '@Hooks/useMediaQuery';
 type Props = {
   data: HistoryObject[];
 };
 function BalanceHistoryChart({ data }: Props) {
+  const isDesktop = useMediaQuery('(min-width: 1601px)');
   return (
-    <ResponsiveContainer width="100%" maxHeight={300} minHeight={200}>
+    <ResponsiveContainer width="100%" height={isDesktop ? 420 : 300}>
       <AreaChart data={data}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
@@ -28,14 +29,16 @@ function BalanceHistoryChart({ data }: Props) {
           axisLine={false}
           tickLine={false}
           tick={<CustomXAxisTick />}
+          tickCount={8}
         />
         <YAxis
+          hide
           dataKey="balance"
           axisLine={false}
           tickLine={false}
           tickCount={4}
           width={80}
-          tick={<CustomYAxisTick formatCents />}
+          tick={<CustomYAxisTick />}
         />
         <Tooltip content={<CustomTooltip />} />
         <Area

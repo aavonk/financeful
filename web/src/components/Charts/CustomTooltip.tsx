@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { parseISO, format } from 'date-fns';
-import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
+import { formatCurrency } from '@Lib/money-utils';
 
 const Tooltip = styled.div`
   border-radius: 0.25rem;
@@ -21,7 +21,7 @@ function CustomTooltip({ active, payload, label }: any) {
     return (
       <Tooltip className="tooltip">
         <h4>{format(parseISO(new Date(label).toISOString()), 'eeee, d MMM, yyyy')}</h4>
-        <p>{formatMoneyFromCentsToDollars(payload[0].value)}</p>
+        <p>{formatCurrency(payload[0].value)}</p>
       </Tooltip>
     );
   }

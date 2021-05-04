@@ -42,8 +42,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  max-height: 600px;
-  min-height: 400px;
 `;
 
 export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
@@ -64,7 +62,7 @@ export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
     `}
 `;
 
-export const ItemName = styled.div`
+export const ItemName = styled.div<{ hide?: boolean }>`
   flex-basis: 24.5%;
   display: flex;
   flex-direction: column;
@@ -85,6 +83,14 @@ export const ItemName = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
+
+  ${({ hide }) =>
+    hide &&
+    css`
+      @media ${({ theme }) => theme.device.mobile} {
+        display: none;
+      }
+    `}
 `;
 
 export const MenuContainer = styled.div`

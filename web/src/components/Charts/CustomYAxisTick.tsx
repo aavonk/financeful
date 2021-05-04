@@ -14,7 +14,7 @@ function CustomYAxisTick(props: any) {
         y={0}
         dy={10}
       >
-        {formatCents ? formatMoneyFromCentsToDollars(payload.value) : payload.value}
+        {formatCents ? formatMoneyFromCentsToDollars(payload.value) : `$${payload.value}`}
       </text>
     </g>
   );
