@@ -70,3 +70,19 @@ $ yarn studio
 ```
 
 If for some reason the `yarn studio` throws an error, try running `npx prisma studio`.
+
+
+### v1 Minimum Requirements:
+##### Transactions 
+   - [X] CRUD
+   - [ ] Import CSV
+
+##### Accounts:
+  - [X] CRUD
+  - [X] Account Overview
+  - [ ] Account Details Page
+
+##### Dashboard:
+ - [ ] Networth Chart
+ - [ ] Recent Transactions
+ - [ ] Upcoming Bills/Reminders
