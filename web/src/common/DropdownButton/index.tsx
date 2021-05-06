@@ -8,12 +8,15 @@ type DropdownProps = {
   selected: string;
   id: string;
   items: DropdownItems;
+  small?: boolean;
 };
 
-function Dropdown({ selected, items, id }: DropdownProps) {
+function Dropdown({ selected, items, id, small }: DropdownProps) {
   return (
     <Menu>
-      <StyledMenuButton id={id}>{selected}</StyledMenuButton>
+      <StyledMenuButton id={id} $small={small}>
+        {selected}
+      </StyledMenuButton>
       <StyledMenuList>
         {items.map((item, index) => (
           <StyledMenuItem key={index} onSelect={item.onSelect}>
