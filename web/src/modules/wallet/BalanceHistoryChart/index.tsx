@@ -32,13 +32,14 @@ function BalanceHistoryChart({ data }: Props) {
           tickCount={8}
         />
         <YAxis
-          hide
+          type="number"
           dataKey="balance"
           axisLine={false}
           tickLine={false}
           tickCount={4}
           width={80}
           tick={<CustomYAxisTick />}
+          hide
         />
         <Tooltip content={<CustomTooltip />} />
         <Area

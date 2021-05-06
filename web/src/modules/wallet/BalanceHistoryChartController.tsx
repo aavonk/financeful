@@ -1,11 +1,21 @@
+import { useState } from 'react';
 import { useGetBalanceHistoriesQuery } from '@Generated/graphql';
 import { addDays } from '@Lib/date-formatting';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
+import { getDateRange } from '@Lib/date-formatting';
 import BalanceHistoryChart from './BalanceHistoryChart';
+import DateRangeFilter from './DateRangeFilter';
+
+type DateRangeState = {
+  startDate: Date;
+  endDate: Date;
+};
+
 function BalanceHistoryChartController() {
+  const [range, setRange] = useState<DateRangeState>(() => getDateRange('90-days'));
   const today = new Date();
   const startDate = addDays(today, { days: -90 });
-
+  console.log({ range });
   const { data, loading, error } = useGetBalanceHistoriesQuery({
     variables: { input: { startDate, endDate: today } },
   });
@@ -13,6 +23,7 @@ function BalanceHistoryChartController() {
   if (loading) {
     return <AreaChartSkeleton />;
   }
+
   if (error) {
     return (
       <AreaChartSkeleton
@@ -36,7 +47,12 @@ function BalanceHistoryChartController() {
   if (!data) {
     return null;
   }
-  return <BalanceHistoryChart data={data.getBalanceHistories} />;
+  return (
+    <div style={{ position: 'relative', width: '100%' }}>
+      <DateRangeFilter />
+      <BalanceHistoryChart data={data.getBalanceHistories} />
+    </div>
+  );
 }
 
 export default BalanceHistoryChartController;
