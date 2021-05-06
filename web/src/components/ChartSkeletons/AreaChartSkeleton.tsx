@@ -2,15 +2,20 @@ import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { RelativeContainer, ErrorMessage } from './style';
 
+type NormalProps = {
+  height?: number;
+};
 type ErrorProps =
   | { withOverlappingMessage?: false; heading?: never; subheading?: never }
   | { withOverlappingMessage: true; heading: string; subheading: string };
 
+type Props = NormalProps & ErrorProps;
 function AreaChartSkeleton({
   withOverlappingMessage = false,
   heading,
   subheading,
-}: ErrorProps) {
+  height,
+}: Props) {
   const data = useMemo(
     () => [
       { name: 'Wrapsafe', amount: 191814 },
@@ -29,7 +34,7 @@ function AreaChartSkeleton({
 
   return (
     <RelativeContainer>
-      <ResponsiveContainer minHeight={200} width="100%">
+      <ResponsiveContainer minHeight={height ? height : 300} width="100%">
         <AreaChart data={data}>
           <XAxis dataKey="name" hide />
           <YAxis hide />

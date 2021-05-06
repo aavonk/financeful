@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { useGetBalanceHistoriesQuery } from '@Generated/graphql';
-import { addDays } from '@Lib/date-formatting';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
 import { getDateRange } from '@Lib/date-formatting';
 import BalanceHistoryChart from './BalanceHistoryChart';
 import DateRangeFilter from './DateRangeFilter';
 
-type DateRangeState = {
+export type DateRangeState = {
   startDate: Date;
   endDate: Date;
+  label: string;
 };
 
 function BalanceHistoryChartController() {
-  const [range, setRange] = useState<DateRangeState>(() => getDateRange('90-days'));
-  const today = new Date();
-  const startDate = addDays(today, { days: -90 });
-  console.log({ range });
+  const [range, setRange] = useState<DateRangeState>(() => {
+    const { startDate, endDate } = getDateRange('90-days');
+    return { startDate, endDate, label: '90 days' };
+  });
   const { data, loading, error } = useGetBalanceHistoriesQuery({
-    variables: { input: { startDate, endDate: today } },
+    variables: { input: { startDate: range.startDate, endDate: range.endDate } },
   });
 
   if (loading) {
@@ -34,23 +34,21 @@ function BalanceHistoryChartController() {
     );
   }
 
-  if (!data?.getBalanceHistories || !data.getBalanceHistories.length) {
-    return (
-      <AreaChartSkeleton
-        withOverlappingMessage
-        heading="Woah there"
-        subheading="It looks like you don't have enough balance history yet."
-      />
-    );
-  }
-
   if (!data) {
     return null;
   }
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <DateRangeFilter />
-      <BalanceHistoryChart data={data.getBalanceHistories} />
+      <DateRangeFilter setRange={setRange} selected={range.label} />
+      {!data.getBalanceHistories.length ? (
+        <AreaChartSkeleton
+          withOverlappingMessage
+          heading="Woah there"
+          subheading="It looks like you don't have enough balance history yet."
+        />
+      ) : (
+        <BalanceHistoryChart data={data.getBalanceHistories} />
+      )}
     </div>
   );
 }

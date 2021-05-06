@@ -1,40 +1,62 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
-import { addDays, getEndOfMonth, getDateRange } from '@Lib/date-formatting';
+import { getDateRange } from '@Lib/date-formatting';
+import { DateRangeState } from './BalanceHistoryChartController';
 
-function DateRangeFilter() {
+type Props = {
+  setRange: Dispatch<SetStateAction<DateRangeState>>;
+  selected: string;
+};
+
+function DateRangeFilter({ setRange, selected }: Props) {
   const dateRanges: DropdownItems = [
     {
       label: 'This month',
       onSelect: () => {
-        const endOfMonth = getEndOfMonth(new Date());
-        console.log(endOfMonth);
+        const { startDate, endDate } = getDateRange('current-month');
+        setRange({ startDate, endDate, label: 'This month' });
       },
     },
     {
       label: 'Last month',
-      onSelect: () => console.log('60 days'),
+      onSelect: () => {
+        const { startDate, endDate } = getDateRange('last-month');
+        setRange({ startDate, endDate, label: 'Last month' });
+      },
     },
     {
       label: '90 days',
-      onSelect: () => console.log('30 days'),
+      onSelect: () => {
+        const { startDate, endDate } = getDateRange('90-days');
+        setRange({ startDate, endDate, label: '90 days' });
+      },
     },
     {
       label: '1 year',
-      onSelect: () => console.log('30 days'),
+      onSelect: () => {
+        const { startDate, endDate } = getDateRange('1-year');
+        setRange({ startDate, endDate, label: '1 year' });
+      },
     },
     {
       label: 'This year',
-      onSelect: () => console.log('30 days'),
+      onSelect: () => {
+        const { startDate, endDate } = getDateRange('this-year');
+        setRange({ startDate, endDate, label: 'This year' });
+      },
     },
     {
       label: 'Last year',
-      onSelect: () => console.log('30 days'),
+      onSelect: () => {
+        const { startDate, endDate } = getDateRange('last-year');
+        setRange({ startDate, endDate, label: 'Last year' });
+      },
     },
   ];
   return (
     <Container>
-      <DropdownButton id="date-filter" items={dateRanges} selected="90 days" small />
+      <DropdownButton id="date-filter" items={dateRanges} selected={selected} small />
     </Container>
   );
 }
