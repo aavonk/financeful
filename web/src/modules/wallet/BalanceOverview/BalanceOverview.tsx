@@ -14,21 +14,22 @@ function BalanceOverview({ data }: Props) {
       <Container>
         <Header>
           <h3>Net Worth</h3>
-          {/* <h4>{formatCurrency(data.aggregateBalance)}</h4> */}
-          <h4>$120,000,000.00</h4>
+          <h4>{formatCurrency(aggregateBalance)}</h4>
         </Header>
-        <RangeBar
-          id="assets"
-          labelAmount={formatCurrency(assets.amount)}
-          labelText="Assets"
-        />
-        <RangeBar
-          id="liabilities"
-          percentOfAssets={`${liabilites.percentOfAssets}%`}
-          labelText="Liabilites"
-          labelAmount={formatCurrency(liabilites.amount)}
-          secondary
-        />
+        <div className="range">
+          <RangeBar
+            id="assets"
+            labelAmount={formatCurrency(assets.amount)}
+            labelText="Assets"
+          />
+          <RangeBar
+            id="liabilities"
+            percentage={`${liabilites.percentOfAssets}%`}
+            labelText="Liabilites"
+            labelAmount={formatCurrency(liabilites.amount)}
+            secondary
+          />
+        </div>
       </Container>
     </Paper>
   );
