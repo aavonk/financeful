@@ -4,7 +4,7 @@ type Props = {
   id: string;
   percentOfAssets?: string;
   labelText: string;
-  labelAmount: number;
+  labelAmount: string;
   secondary?: boolean;
 };
 

@@ -156,20 +156,21 @@ export type GetBalanceParams = {
 
 export type AssetsAndLiabilitesResponse = {
   __typename?: 'AssetsAndLiabilitesResponse';
-  accounts: Array<AssetsAndLiabilitiesBarChartData>;
   /** The combined balance of all accounts formatted as a float */
   aggregateBalance: Scalars['Float'];
+  assets: AmountFloat;
+  liabilites: LiabilityDetails;
 };
 
-export type AssetsAndLiabilitiesBarChartData = {
-  __typename?: 'AssetsAndLiabilitiesBarChartData';
-  accountName: Scalars['String'];
-  /** The balance formatted as a float */
-  balance: Scalars['Float'];
-  /** The ID of the account */
-  id: Scalars['ID'];
-  isAsset: Scalars['Boolean'];
-  isLiability: Scalars['Boolean'];
+export type AmountFloat = {
+  __typename?: 'AmountFloat';
+  amount: Scalars['Float'];
+};
+
+export type LiabilityDetails = {
+  __typename?: 'LiabilityDetails';
+  amount: Scalars['Float'];
+  percentOfAssets: Scalars['Int'];
 };
 
 export type HistoryObject = {
@@ -664,10 +665,13 @@ export type GetAssetsAndLiabilitiesQuery = (
   & { getAssetsAndLiabilites: (
     { __typename?: 'AssetsAndLiabilitesResponse' }
     & Pick<AssetsAndLiabilitesResponse, 'aggregateBalance'>
-    & { accounts: Array<(
-      { __typename?: 'AssetsAndLiabilitiesBarChartData' }
-      & Pick<AssetsAndLiabilitiesBarChartData, 'id' | 'accountName' | 'isAsset' | 'isLiability' | 'balance'>
-    )> }
+    & { assets: (
+      { __typename?: 'AmountFloat' }
+      & Pick<AmountFloat, 'amount'>
+    ), liabilites: (
+      { __typename?: 'LiabilityDetails' }
+      & Pick<LiabilityDetails, 'amount' | 'percentOfAssets'>
+    ) }
   ) }
 );
 
@@ -1560,12 +1564,12 @@ export const GetAssetsAndLiabilitiesDocument = gql`
     query GetAssetsAndLiabilities {
   getAssetsAndLiabilites {
     aggregateBalance
-    accounts {
-      id
-      accountName
-      isAsset
-      isLiability
-      balance
+    assets {
+      amount
+    }
+    liabilites {
+      amount
+      percentOfAssets
     }
   }
 }
