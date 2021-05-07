@@ -28,18 +28,6 @@ export class FormattedAccountBalance {
   balance: number;
 }
 
-// @ObjectType()
-// export class AssetsAndLiabilitiesBarChartData extends FormattedAccountBalance {
-//   @Field(() => ID, { description: 'The ID of the account' })
-//   id: string;
-
-//   @Field(() => Boolean)
-//   isAsset: boolean;
-
-//   @Field(() => Boolean)
-//   isLiability: boolean;
-// }
-
 @ObjectType()
 export class AssetsAndLiabilitesResponse {
   @Field(() => Float, {
