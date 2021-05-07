@@ -47,7 +47,7 @@ export const Container = styled.div`
 export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
   display: flex;
   flex-direction: row;
-  flex: 0 0 100%;
+  flex: 0 0 auto;
   padding: 0.5rem 0.2rem 0.5rem 0.2rem;
   cursor: pointer;
   border-radius: 4px;
@@ -83,7 +83,9 @@ export const ItemName = styled.div<{ hide?: boolean }>`
     white-space: nowrap;
     overflow: hidden;
   }
-
+  @media ${({ theme }) => theme.device.mobile} {
+    flex-basis: 50%;
+  }
   ${({ hide }) =>
     hide &&
     css`

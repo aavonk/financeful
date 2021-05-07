@@ -22,6 +22,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
+  & > .range {
+    margin-top: 20px;
+  }
 `;
 
 type BarProps = {
@@ -32,6 +36,7 @@ export const RangeBar = styled.div<BarProps>`
   height: 4px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  border-radius: 2px;
   & > span {
     height: 4px;
     background: ${({ theme }) => theme.colors.primary};

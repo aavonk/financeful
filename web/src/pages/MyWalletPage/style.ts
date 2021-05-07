@@ -26,6 +26,7 @@ export const WidgetViewContainer = styled.section`
 export const AccountViewContainer = styled.section`
   display: block;
   grid-area: 2 / 1 / 4 / 3;
+  overflow: hidden;
   @media ${({ theme }) => theme.device.laptopAndUp} {
     grid-area: 2 / 2 / 4 / 3;
     display: contents;
