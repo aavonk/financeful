@@ -1,6 +1,7 @@
 import Paper from '@Common/Paper';
 import { Header, Container } from './style';
 import { AssetsAndLiabilitesResponse } from '@Generated/graphql';
+// import { formatCurrency } from '@Lib/money-utils';
 import RangeBar from './RangeBar';
 interface Props {
   data: AssetsAndLiabilitesResponse;
@@ -12,7 +13,8 @@ function BalanceOverview({ data }: Props) {
       <Container>
         <Header>
           <h3>Net Worth</h3>
-          <h4>${data.aggregateBalance}</h4>
+          {/* <h4>{formatCurrency(data.aggregateBalance)}</h4> */}
+          <h4>$120,000,000.00</h4>
         </Header>
         <RangeBar id="assets" labelAmount={4000.21} labelText="Assets" />
         <RangeBar

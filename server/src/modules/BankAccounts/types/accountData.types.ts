@@ -1,10 +1,22 @@
-import { Field, InputType, ID, ObjectType, Float } from 'type-graphql';
+import { Field, InputType, ID, ObjectType, Float, Int } from 'type-graphql';
 import { RangeParams } from '@Shared/types';
 
 @InputType()
 export class GetBalanceParams extends RangeParams {
   @Field(() => ID)
   accountId: string;
+}
+
+@ObjectType()
+export class AmountFloat {
+  @Field(() => Float)
+  amount: number;
+}
+
+@ObjectType()
+export class LiabilityDetails extends AmountFloat {
+  @Field(() => Int)
+  percentOfAssets: number;
 }
 
 @ObjectType()
@@ -16,27 +28,30 @@ export class FormattedAccountBalance {
   balance: number;
 }
 
-@ObjectType()
-export class AssetsAndLiabilitiesBarChartData extends FormattedAccountBalance {
-  @Field(() => ID, { description: 'The ID of the account' })
-  id: string;
+// @ObjectType()
+// export class AssetsAndLiabilitiesBarChartData extends FormattedAccountBalance {
+//   @Field(() => ID, { description: 'The ID of the account' })
+//   id: string;
 
-  @Field(() => Boolean)
-  isAsset: boolean;
+//   @Field(() => Boolean)
+//   isAsset: boolean;
 
-  @Field(() => Boolean)
-  isLiability: boolean;
-}
+//   @Field(() => Boolean)
+//   isLiability: boolean;
+// }
 
 @ObjectType()
 export class AssetsAndLiabilitesResponse {
-  @Field(() => [AssetsAndLiabilitiesBarChartData])
-  accounts: AssetsAndLiabilitiesBarChartData[];
-
   @Field(() => Float, {
     description: 'The combined balance of all accounts formatted as a float',
   })
   aggregateBalance: number;
+
+  @Field(() => AmountFloat)
+  assets: AmountFloat;
+
+  @Field(() => LiabilityDetails)
+  liabilites: LiabilityDetails;
 }
 
 @ObjectType()

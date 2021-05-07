@@ -18,6 +18,20 @@ export class AggregateAccountData implements IAggregateAccountData {
     return accounts.reduce((total, obj) => obj.balance! + total, 0);
   }
 
+  private calculatePercentageOfAssets(
+    assets: Account[],
+    liabilites: Account[],
+  ): number {
+    const assetsTotal = this.calculateAggregateTotal(assets);
+    let liabilitesTotal = this.calculateAggregateTotal(liabilites);
+
+    if (liabilitesTotal < 0) {
+      liabilitesTotal = liabilitesTotal * -1;
+    }
+
+    return Math.round((liabilitesTotal / assetsTotal) * 100);
+  }
+
   public async getAssetsAndLiabilites(
     userId: string,
   ): Promise<AssetsAndLiabilitesResponse> {
@@ -37,16 +51,22 @@ export class AggregateAccountData implements IAggregateAccountData {
       },
     });
 
-    const data = bankAccounts.map((account) => ({
-      ...account,
-      balance: MoneyUtils.convertToFloat(account.balance),
-    }));
+    const assets = bankAccounts.filter((acct) => acct.isAsset === true);
+    const liabilites = bankAccounts.filter((acct) => acct.isLiability === true);
 
     return {
-      accounts: data,
       aggregateBalance: MoneyUtils.convertToFloat(
         this.calculateAggregateTotal(bankAccounts),
       ),
+      assets: {
+        amount: MoneyUtils.convertToFloat(this.calculateAggregateTotal(assets)),
+      },
+      liabilites: {
+        amount: MoneyUtils.convertToFloat(
+          this.calculateAggregateTotal(liabilites) * -1,
+        ),
+        percentOfAssets: this.calculatePercentageOfAssets(assets, liabilites),
+      },
     };
   }
 

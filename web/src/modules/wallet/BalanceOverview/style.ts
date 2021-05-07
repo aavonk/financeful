@@ -30,12 +30,12 @@ type BarProps = {
 };
 export const RangeBar = styled.div<BarProps>`
   width: 100%;
-  height: 3px;
+  height: 4px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
   & > span {
     width: 100%;
-    height: 3px;
+    height: 4px;
     background: ${({ theme }) => theme.colors.primary};
     display: inherit;
     transform: ${({ percentage }) => (percentage ? `translateX(${percentage})` : 'none')};
