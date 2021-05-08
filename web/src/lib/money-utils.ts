@@ -33,6 +33,17 @@ export const formatMoneyFromCentsToDollars = (cents: number, withDollarSign = tr
   return originalString.slice(1);
 };
 
+/*
+ *
+ * @returns {} a formatted currency with leading Dollar Sign
+ */
+export const formatCurrency = (money: number) => {
+  return money.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+};
+
 export const convertInputAmountToCents = (amount: string) => {
   return parseFloat(amount.replace(/,/g, '')) * 100;
 };

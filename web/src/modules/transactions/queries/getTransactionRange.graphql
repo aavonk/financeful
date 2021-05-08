@@ -1,0 +1,10 @@
+query GetTransactionsRange($input: RangeParams!, $accountId: String) {
+  getTransactionsRange(input: $input, accountId: $accountId) {
+    ...TransactionFields
+    isCashIn
+    isCashOut
+    isUncategorized
+    isTransfer
+    transferId
+  }
+}

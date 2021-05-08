@@ -97,6 +97,7 @@ function LoginPage() {
               autoFocus={true}
               value={values.email}
               onChange={handleChange('email')}
+              data-testid="email-input"
             >
               Email
             </UnderlineInput>
@@ -105,6 +106,7 @@ function LoginPage() {
               id="password"
               value={values.password}
               onChange={handleChange('password')}
+              data-testid="password-input"
             >
               Password
             </UnderlineInput>
@@ -114,6 +116,7 @@ function LoginPage() {
               margin="1.2rem 0 0 0"
               disabled={loading}
               variant="primary"
+              data-testid="login-submit"
             >
               Login
             </Button>

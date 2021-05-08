@@ -10,7 +10,7 @@ import Table from '@Modules/transactions/Table';
 import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
 import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
 import TableActions from '@Modules/transactions/Table/Actions';
-import TransactionTypeCell from './components/TransactionTypeCell';
+import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from './components/NoTransactions';

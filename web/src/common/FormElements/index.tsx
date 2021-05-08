@@ -29,6 +29,7 @@ type InputTypes = {
   prefix?: string;
   ariaDescribedBy?: string;
   required?: boolean;
+  'data-testid'?: string;
 };
 
 export function UnderlineInput(props: InputTypes) {
@@ -45,6 +46,7 @@ export function UnderlineInput(props: InputTypes) {
         disabled={props.disabled}
         aria-describedby={props.ariaDescribedBy}
         aria-required={props.required}
+        data-testid={props['data-testid']}
       />
     </StyledLabel>
   );
@@ -69,6 +71,7 @@ export const BorderedInput = React.forwardRef<HTMLInputElement, InputTypes>(
             ref={ref}
             aria-describedby={props.ariaDescribedBy}
             aria-required={props.required}
+            data-testid={props['data-testid']}
           />
         </div>
       </BorderedLabel>

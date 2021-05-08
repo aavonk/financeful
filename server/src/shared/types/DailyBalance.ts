@@ -12,8 +12,8 @@ export class DailyBalance {
   @Field(() => Int)
   amount: number;
 
-  @Field(() => Date)
-  date: Date;
+  @Field(() => String)
+  date: Date | string;
 
   @Field(() => ID)
   accountId: string;

@@ -1,31 +1,36 @@
+import { Account } from '../../src/shared/types';
+import { randomNumber } from './balances';
+
+export const getRandomAccountId = (accounts: Account[]) => {
+  const index = randomNumber(0, accounts.length - 1);
+  return accounts[index].id;
+};
 export const accounts = [
   {
-    userId: "cknhv5hlp000204qsu4buhqgr",
-    accountName: "Primary Checking",
-    accountType: "Checking Account",
+    userId: 'cknhv5hlp000204qsu4buhqgr',
+    accountName: 'Primary Checking',
+    accountType: 'Checking Account',
     isAsset: true,
     isLiability: false,
-    balance: 0,
-    bankName: "Chase",
+    balance: 335400,
+    bankName: 'Chase',
   },
   {
-    userId: "cknhv5hlp000204qsu4buhqgr",
-    accountName: "Primary Savings",
-    accountType: "Savings Account",
+    userId: 'cknhv5hlp000204qsu4buhqgr',
+    accountName: 'Primary Savings',
+    accountType: 'Savings Account',
     isAsset: true,
     isLiability: false,
-    balance: 0,
-    bankName: "Ally Savings",
-
+    balance: 650000,
+    bankName: 'Ally Savings',
   },
   {
-    userId: "cknhv5hlp000204qsu4buhqgr",
-    accountName: "Credit Card",
-    accountType: "Credit",
+    userId: 'cknhv5hlp000204qsu4buhqgr',
+    accountName: 'Credit Card',
+    accountType: 'Credit',
     isAsset: false,
     isLiability: true,
     balance: -20000,
-    bankName: "Discover",
-
+    bankName: 'Discover',
   },
-]
+];

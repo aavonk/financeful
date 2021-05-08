@@ -6,6 +6,8 @@ import { User } from './User';
 import { DailyBalance } from './DailyBalance';
 import { IDataBase } from '../database/IDataBase';
 
+export * from './inputTypes';
+
 export {
   Account,
   Category,

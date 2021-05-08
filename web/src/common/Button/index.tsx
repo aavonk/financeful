@@ -11,6 +11,7 @@ type ButtonProps = {
   variant: 'primary' | 'outline' | 'dark' | 'danger';
   id?: string;
   onClick?: () => void;
+  'data-testid'?: string;
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -23,6 +24,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, r
       id={props.id}
       onClick={props.onClick}
       ref={ref}
+      data-testid={props['data-testid']}
     >
       <ButtonText>{props.children}</ButtonText>
     </StyledButton>

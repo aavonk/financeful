@@ -32,6 +32,10 @@ export const Content = styled(DialogContent)`
     border-radius: 0;
     min-width: 0;
   }
+
+  @media ${({ theme }) => theme.device.desktop} {
+    height: 650px;
+  }
 `;
 
 export const Header = styled.div`

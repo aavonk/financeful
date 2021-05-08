@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
+import { Props as PaperProps, StyledPaper as Paper } from '@Common/Paper';
 
+export const StyledPaper = styled(Paper)<PaperProps>`
+  /* background-color: red; */
+`;
 export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -11,6 +15,11 @@ export const HeaderContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.darkTwo};
   position: sticky;
   top: 0;
+`;
+
+export const TextWrapper = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 export const Title = styled.div`
@@ -33,16 +42,19 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  max-height: 600px;
-  min-height: 400px;
 `;
 
 export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
   display: flex;
   flex-direction: row;
-  flex: 0 0 100%;
-  padding: 0.5rem 0;
-
+  flex: 0 0 auto;
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.darkThree};
+    transition: background-color 0.2s ease-in;
+  }
   ${({ $inactive }) =>
     $inactive &&
     css`
@@ -50,7 +62,7 @@ export const AccountItemBox = styled.div<{ $inactive?: boolean }>`
     `}
 `;
 
-export const ItemName = styled.div`
+export const ItemName = styled.div<{ hide?: boolean }>`
   flex-basis: 24.5%;
   display: flex;
   flex-direction: column;
@@ -71,6 +83,16 @@ export const ItemName = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
+  @media ${({ theme }) => theme.device.mobile} {
+    flex-basis: 50%;
+  }
+  ${({ hide }) =>
+    hide &&
+    css`
+      @media ${({ theme }) => theme.device.mobile} {
+        display: none;
+      }
+    `}
 `;
 
 export const MenuContainer = styled.div`

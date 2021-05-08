@@ -23,7 +23,7 @@ const setup = (mocks: MockedResponse[]) => {
     <MockedProvider
       mocks={mocks}
       addTypename={true}
-      // defaultOptions={{ watchQuery: { fetchPolicy: 'no-cache' } }}
+      defaultOptions={{ watchQuery: { fetchPolicy: 'no-cache' } }}
     >
       <ThemeProvider>
         <AlertProvider>

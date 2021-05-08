@@ -45,6 +45,8 @@ export const BankName = styled.div`
   & > .names > span.bank-name {
     color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 14px;
+    min-height: 20px;
+    min-width: 20px;
   }
 `;
 

@@ -1,0 +1,17 @@
+fragment TransactionFields on Transaction {
+  id
+  payee
+  description
+  amount
+  category {
+    id
+    name
+  }
+  type
+  date
+  accountId
+  account {
+    accountName
+    id
+  }
+}

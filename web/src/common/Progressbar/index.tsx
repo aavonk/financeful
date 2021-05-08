@@ -39,8 +39,7 @@ const progressKeyframes2 = keyframes`
 
 export const BarOne = styled.div`
   width: auto;
-  animation: ${progressKeyframes1} 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395)
-    infinite;
+  animation: ${progressKeyframes1} 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
   background-color: ${({ theme }) => theme.colors.primary};
   top: 0;
   left: 0;
@@ -52,8 +51,7 @@ export const BarOne = styled.div`
 
 export const BarTwo = styled.div`
   width: auto;
-  animation: ${progressKeyframes2} 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s
-    infinite;
+  animation: ${progressKeyframes2} 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite;
   background-color: ${({ theme }) => theme.colors.primary};
   top: 0;
   left: 0;

@@ -7,10 +7,11 @@ import {
   Root,
   FieldResolver,
 } from 'type-graphql';
-import { Context, DailyBalance, Account } from '@Shared/types';
+import { Context, DailyBalance, Account, RangeParams } from '@Shared/types';
 import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
+  HistoryObject,
 } from '../types/accountData.types';
 
 @Resolver(() => DailyBalance)
@@ -38,5 +39,14 @@ export class AccountDataResolver {
     @Ctx() { user, aggregateAccountDataRepo }: Context,
   ): Promise<AssetsAndLiabilitesResponse> {
     return await aggregateAccountDataRepo.getAssetsAndLiabilites(user.id);
+  }
+
+  @Authorized()
+  @Query(() => [HistoryObject])
+  async getBalanceHistories(
+    @Arg('input') input: RangeParams,
+    @Ctx() { aggregateAccountDataRepo, user }: Context,
+  ): Promise<HistoryObject[]> {
+    return await aggregateAccountDataRepo.getBalanceHistories(user.id, input);
   }
 }

@@ -1,6 +1,6 @@
 import Skeleton from '@Common/Skeleton';
 import Paper from '@Common/Paper';
-import { Container, Header, Line } from './style';
+import { Container, Header } from './style';
 import BarchartSkeleton from '@Components/ChartSkeletons/BarchartSkeleton';
 
 function BalanceOverviewSkeleton() {
@@ -15,7 +15,6 @@ function BalanceOverviewSkeleton() {
             <Skeleton width="70%" height="32px" />
           </h4>
         </Header>
-        <Line />
         <BarchartSkeleton barsCount={5} />
       </Container>
     </Paper>

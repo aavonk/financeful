@@ -17,7 +17,7 @@ function CreditCard({ style, account }: Props) {
         <span className="empty" />
         <div className="names">
           <p>{account.accountName}</p>
-          <span className="bank-name">{account.bankName}</span>
+          <span className="bank-name">{account.bankName ? account.bankName : ' '}</span>
         </div>
       </BankName>
       <AmountBar>
