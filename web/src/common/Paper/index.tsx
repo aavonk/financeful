@@ -9,6 +9,7 @@ export type Props = {
   center?: boolean;
   withElevation?: boolean;
   children: React.ReactNode;
+  'data-testid'?: string;
 };
 export const StyledPaper = styled.div<Props>`
   width: 100%;
@@ -65,9 +66,11 @@ function Paper({
   center,
   withElevation = true,
   maxWidth,
+  ...props
 }: Props) {
   return (
     <StyledPaper
+      data-testid={props['data-testid']}
       minHeight={minHeight}
       flex={flex}
       center={center}

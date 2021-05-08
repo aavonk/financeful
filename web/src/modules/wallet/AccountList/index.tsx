@@ -16,7 +16,7 @@ function AccountList({
   onMarkInactiveClick,
 }: IAccountList) {
   return (
-    <StyledPaper>
+    <StyledPaper data-testid="account-list">
       <Container>
         <AccountListHeader />
         {accounts?.length ? (
