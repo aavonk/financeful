@@ -29,7 +29,12 @@ export class AggregateAccountData implements IAggregateAccountData {
       liabilitesTotal = liabilitesTotal * -1;
     }
 
-    return Math.round((liabilitesTotal / assetsTotal) * 100);
+    let result = Math.round((liabilitesTotal / assetsTotal) * 100);
+
+    if (Number.isNaN(result)) result = 0;
+    if (!Number.isFinite(result)) result = 100;
+
+    return result;
   }
 
   public async getAssetsAndLiabilites(
