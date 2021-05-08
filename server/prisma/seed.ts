@@ -75,27 +75,36 @@ async function main() {
     passwordConfirmation: passwordConfirmation as string,
   };
 
-  // const testUserValues: RegisterInput = {
-  //   displayName: 'Test User',
-  //   email: 'test@test.com',
-  //   password: 'testing123',
-  //   passwordConfirmation: 'testing123',
-  // };
-  const user: User = await auth.handleRegister(userValues);
-  // const testUser: User = await auth.handleRegister(testUserValues);
+  const testUserValues: RegisterInput = {
+    displayName: 'Test User',
+    email: 'test@test.com',
+    password: 'testing123',
+    passwordConfirmation: 'testing123',
+  };
 
+  const user: User = await auth.handleRegister(userValues);
+  const testUser: User = await auth.handleRegister(testUserValues);
   // ------- Create the Accounts ---------------//
   const accounts = await createBankAccounts(user.id, prisma);
+  const testUserAccounts = await createBankAccounts(testUser.id, prisma);
 
   // ------- Create the Categories ---------------//
   const categories = await createCategories(user.id, prisma);
+  const testCategories = await createCategories(testUser.id, prisma);
 
   // ------- Create the Bank Balances ---------------//
   await createBankBalances(user.id, accounts, prisma);
+  await createBankBalances(testUser.id, testUserAccounts, prisma);
 
   // ------- Create the Transactions ---------------//
 
   await createTransactions(user.id, accounts, categories, prisma);
+  await createTransactions(
+    testUser.id,
+    testUserAccounts,
+    testCategories,
+    prisma,
+  );
 }
 
 main()
