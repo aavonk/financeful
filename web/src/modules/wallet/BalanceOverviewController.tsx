@@ -9,7 +9,6 @@ function BalanceOverviewController() {
   const { data, loading, error, refetch } = useGetAssetsAndLiabilitiesQuery();
 
   if (loading) {
-    //TODO: Change the skeleton as I deleted the bar chart
     return <BalanceOverviewSkeleton />;
   }
   if (error || !data) {
