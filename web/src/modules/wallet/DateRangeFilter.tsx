@@ -56,7 +56,13 @@ function DateRangeFilter({ setRange, selected }: Props) {
   ];
   return (
     <Container>
-      <DropdownButton id="date-filter" items={dateRanges} selected={selected} small />
+      <DropdownButton
+        id="date-filter"
+        items={dateRanges}
+        selected={selected}
+        small
+        data-testid="date-range-button"
+      />
     </Container>
   );
 }

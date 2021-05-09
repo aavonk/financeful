@@ -81,6 +81,7 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
           ariaDescribedBy="name-errors"
           required
           ref={inputRef}
+          data-testid="account-name-input"
         >
           Account name
         </BorderedInput>
@@ -93,6 +94,7 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
           type="text"
           value={values.bankName}
           onChange={handleChange('bankName')}
+          data-testid="bank-name-input"
         >
           Bank name
         </BorderedInput>
@@ -117,6 +119,7 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
             onChange={handleChange('balance')}
             ariaDescribedBy="balance-errors"
             required
+            data-testid="starting-balance-input"
           >
             Starting Balance
           </BorderedInput>
@@ -131,6 +134,7 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
             onChange={handleChange('classification')}
             ariaDescribedBy="classification-errors"
             required
+            data-testid="classification-select"
           >
             <option value="" disabled></option>
             <option value={AccountType.Asset}>Asset</option>
@@ -144,7 +148,7 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
         </Col>
       </Row>
       <Footer style={{ padding: '0', marginTop: '20px' }}>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" data-testid="submit-account-button">
           Save
         </Button>
       </Footer>

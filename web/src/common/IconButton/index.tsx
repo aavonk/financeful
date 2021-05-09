@@ -9,6 +9,7 @@ type Props = {
   children: React.ReactNode;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   ariaText: string;
+  'data-testid'?: string;
 };
 
 function IconButton({ small, active, grey, blue, ariaText, ...props }: Props) {
@@ -20,6 +21,7 @@ function IconButton({ small, active, grey, blue, ariaText, ...props }: Props) {
         $active={active}
         $blue={blue}
         {...props}
+        data-testid={props['data-testid']}
       >
         <VisuallyHidden>{ariaText}</VisuallyHidden>
         {props.children}

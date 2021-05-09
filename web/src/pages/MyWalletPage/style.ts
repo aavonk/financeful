@@ -18,7 +18,7 @@ export const WidgetViewContainer = styled.section`
   display: none;
 
   @media ${({ theme }) => theme.device.laptopAndUp} {
-    display: contents;
+    display: block;
     grid-area: 2 / 1 / 4 / 2;
     min-width: 400px;
     min-height: 200px;

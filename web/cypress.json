@@ -5,5 +5,6 @@
     "password": "testing123",
     "api": "http://localhost:4000/graphql"
   },
-  "viewportWidth": 1300
+  "viewportWidth": 1300,
+  "viewportHeight": 800
 }

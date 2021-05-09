@@ -50,10 +50,19 @@ function ConfirmationDialog(props: ConfirmationDialogProps) {
           </SecondaryMessage>
         </AlertDialogDescription>
         <StyledActions>
-          <Button variant="dark" ref={cancelRef} onClick={onCancel}>
+          <Button
+            variant="dark"
+            ref={cancelRef}
+            onClick={onCancel}
+            data-testid="confirmation-cancel"
+          >
             Cancel
           </Button>
-          <Button variant="danger" onClick={onConfirmation}>
+          <Button
+            variant="danger"
+            onClick={onConfirmation}
+            data-testid="confirmation-danger"
+          >
             {confirmButtonText}
           </Button>
         </StyledActions>

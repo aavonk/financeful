@@ -23,16 +23,6 @@ type Props = {
   'data-testid'?: string;
 };
 
-/* children : [
-  {
-    icon?: <Icon />,
-    label: "Some Text"
-    onClick: () => void
-  }
-]
-
-*/
-
 function IconDropdown({
   icon,
   withBadge,
@@ -44,16 +34,26 @@ function IconDropdown({
   ...props
 }: Props) {
   return (
-    <Menu data-testid={props['data-testid']}>
+    <Menu>
       {withBadge && badgeContent ? (
         <Badge badgeContent={badgeContent}>
-          <StyledMenuButton $grey id={id} variant={variant}>
+          <StyledMenuButton
+            $grey
+            id={id}
+            variant={variant}
+            data-testid={props['data-testid']}
+          >
             <VisuallyHidden>{ariaText}</VisuallyHidden>
             {icon}
           </StyledMenuButton>
         </Badge>
       ) : (
-        <StyledMenuButton $grey id={id} variant={variant}>
+        <StyledMenuButton
+          $grey
+          id={id}
+          variant={variant}
+          data-testid={props['data-testid']}
+        >
           <VisuallyHidden>{ariaText}</VisuallyHidden>
           {icon}
         </StyledMenuButton>

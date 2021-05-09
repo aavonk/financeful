@@ -10,7 +10,12 @@ interface Props {
 function BalanceOverview({ data }: Props) {
   const { aggregateBalance, assets, liabilites } = data;
   return (
-    <Paper maxHeight="350px" maxWidth="400px" data-testid="balance-overview">
+    <Paper
+      maxHeight="350px"
+      maxWidth="400px"
+      minHeight="250px"
+      data-testid="balance-overview"
+    >
       <Container>
         <Header>
           <h3>Net Worth</h3>
