@@ -1,4 +1,8 @@
-import { useCreateAccountMutation, GetAccountsDocument } from '@Generated/graphql';
+import {
+  useCreateAccountMutation,
+  GetAccountsDocument,
+  GetAssetsAndLiabilitiesDocument,
+} from '@Generated/graphql';
 
 export function useCreateAccount() {
   const [mutate, { data, error, loading }] = useCreateAccountMutation({
@@ -16,6 +20,11 @@ export function useCreateAccount() {
         },
       });
     },
+    refetchQueries: [
+      {
+        query: GetAssetsAndLiabilitiesDocument,
+      },
+    ],
   });
 
   return { mutate, data, error, loading };
