@@ -4,6 +4,7 @@ import { RelativeContainer, ErrorMessage } from './style';
 
 type NormalProps = {
   height?: number;
+  errorTestId?: string;
 };
 type ErrorProps =
   | { withOverlappingMessage?: false; heading?: never; subheading?: never }
@@ -15,6 +16,7 @@ function AreaChartSkeleton({
   heading,
   subheading,
   height,
+  errorTestId,
 }: Props) {
   const data = useMemo(
     () => [
@@ -48,7 +50,7 @@ function AreaChartSkeleton({
         </AreaChart>
       </ResponsiveContainer>
       {withOverlappingMessage && (
-        <ErrorMessage>
+        <ErrorMessage data-testid={errorTestId}>
           <h3>{heading}</h3>
           <p>{subheading}</p>
         </ErrorMessage>

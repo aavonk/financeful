@@ -32,7 +32,14 @@ function Alerts() {
           data-testid="toast-alert"
         >
           <AlertIcon>{renderIcon(alert.type)}</AlertIcon>
-          <AlertMessage>{alert.message}</AlertMessage>
+          <AlertMessage
+            data-testid="toast-alert-message"
+            data-variant={
+              alert.type === 'info' || alert.type === 'success' ? 'success' : 'error'
+            }
+          >
+            {alert.message}
+          </AlertMessage>
         </AlertRoot>
       ))}
     </>

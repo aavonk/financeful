@@ -35,7 +35,11 @@ function AddAccountFormController() {
           <PlusIcon />
         </IconButton>
       ) : (
-        <Button variant="primary" onClick={() => setDisplayModal(true)}>
+        <Button
+          variant="primary"
+          onClick={() => setDisplayModal(true)}
+          data-testid="add-account-button"
+        >
           Add account
         </Button>
       )}

@@ -1,3 +1,4 @@
+import { PrismaClient } from '.prisma/client';
 import { Account } from '../../src/shared/types';
 import { randomNumber } from './balances';
 
@@ -34,3 +35,23 @@ export const accounts = [
     bankName: 'Discover',
   },
 ];
+
+export const createBankAccounts = async (
+  userId: string,
+  prisma: PrismaClient,
+): Promise<Account[]> => {
+  const bankAccounts = accounts.map((account) => ({
+    ...account,
+    userId: userId,
+  }));
+
+  const acct: Account[] = [];
+  for (let account of bankAccounts) {
+    const newAccount = await prisma.account.create({
+      data: account,
+    });
+    acct.push(newAccount);
+  }
+
+  return acct;
+};

@@ -1,3 +1,7 @@
+import { PrismaClient } from '.prisma/client';
+import { getRandomAccountId } from './accounts';
+import { Account } from '../../src/shared/types/Account';
+
 type Balance = {
   amount: number;
   date: Date | string;
@@ -41,4 +45,25 @@ export const generateBalanceObjects = (): Balance[] => {
   }
 
   return arr;
+};
+
+export const createBankBalances = async (
+  userId: string,
+  accounts: Account[],
+  prisma: PrismaClient,
+): Promise<void> => {
+  const bankBalances = generateBalanceObjects().map((item) => {
+    const accountId = getRandomAccountId(accounts);
+    return {
+      ...item,
+      userId: userId,
+      accountId,
+    };
+  });
+
+  for (let balance of bankBalances) {
+    await prisma.dailyBalances.create({
+      data: balance,
+    });
+  }
 };

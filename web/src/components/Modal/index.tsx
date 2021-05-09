@@ -41,7 +41,13 @@ export function ModalTitle({
   return (
     <Header>
       <HeaderLeft>
-        <IconButton blue small onClick={onClose} ariaText="Close">
+        <IconButton
+          blue
+          small
+          onClick={onClose}
+          ariaText="Close"
+          data-testid="close-modal-button"
+        >
           <CloseIcon />
         </IconButton>
         <Title>{title}</Title>

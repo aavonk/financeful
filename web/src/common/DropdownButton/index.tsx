@@ -9,12 +9,14 @@ type DropdownProps = {
   id: string;
   items: DropdownItems;
   small?: boolean;
+  'data-testid'?: string;
 };
 
-function Dropdown({ selected, items, id, small }: DropdownProps) {
+function Dropdown(props: DropdownProps) {
+  const { selected, items, id, small } = props;
   return (
     <Menu>
-      <StyledMenuButton id={id} $small={small}>
+      <StyledMenuButton id={id} $small={small} data-testid={props['data-testid']}>
         {selected}
       </StyledMenuButton>
       <StyledMenuList>

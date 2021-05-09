@@ -1,12 +1,8 @@
-import { Category } from '../../src/shared/types';
-
-import { randomNumber as generateRandomNumber } from './balances';
+import { PrismaClient } from '.prisma/client';
 import faker from 'faker';
-/*
-  Add:
-  userId,
-  categoryId
-*/
+import { Category, Account } from '../../src/shared/types';
+import { getRandomAccountId } from './accounts';
+import { randomNumber as generateRandomNumber } from './balances';
 
 export const getRandomCategoryId = (categories: Category[]): string => {
   const index = generateRandomNumber(0, categories.length - 1);
@@ -22,6 +18,7 @@ type TransactionTemplate = {
   isTransfer: boolean;
   transferId: null;
 };
+
 export const makeTransactions = (amount: number): TransactionTemplate[] => {
   const arr = [];
 
@@ -36,4 +33,30 @@ export const makeTransactions = (amount: number): TransactionTemplate[] => {
     });
   }
   return arr;
+};
+
+export const createTransactions = async (
+  userId: string,
+  accounts: Account[],
+  categories: Category[],
+  prisma: PrismaClient,
+): Promise<void> => {
+  const transactionTemplates = makeTransactions(100).map((item) => ({
+    ...item,
+    categoryId: getRandomCategoryId(categories),
+    isCashIn: item.amount > 0,
+    isCashOut: item.amount < 0,
+    isUncategorized: false,
+    userId: userId,
+    accountId: getRandomAccountId(accounts),
+    amount: Number(item.amount) * 100,
+    type: item.amount > 0 ? 'INCOME' : 'EXPENSE',
+  }));
+
+  for (let item of transactionTemplates) {
+    await prisma.transaction.create({
+      //@ts-ignore
+      data: item,
+    });
+  }
 };

@@ -7,8 +7,8 @@ import {
   EditAccountInput,
   useEditAccountMutation,
   useToggleAccountActiveStatusMutation,
-  useDeleteAccountMutation,
 } from '@Generated/graphql';
+import { useDeleteAccount } from './mutations/useDeleteAccount';
 import AccountListError from './AccountList/AccountListError';
 import { useConfirmation } from '@Context/confirmation/confirmationContext';
 import { useAlert } from '@Context/alert/alertContext';
@@ -23,7 +23,7 @@ function AccountActionsController() {
   const { data, loading: loadingAccounts, error: accountsError } = useGetAccountsQuery();
   const [editAccount, { loading: submittingEdit }] = useEditAccountMutation();
   const [toggleActiveStatus] = useToggleAccountActiveStatusMutation();
-  const [deleteAccount] = useDeleteAccountMutation();
+  const [deleteAccount] = useDeleteAccount();
 
   const handleEdit = (account: Account) => {
     setAccountToEdit(account);

@@ -28,7 +28,11 @@ function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
   const [showSelect, setShowSelect] = useState(true);
   return (
     <>
-      <SmallButton onClick={() => setShowSelect(!showSelect)} aria-label="Add new type">
+      <SmallButton
+        onClick={() => setShowSelect(!showSelect)}
+        aria-label="Add new type"
+        data-testid="add-new-button"
+      >
         {showSelect ? 'Add new' : 'Cancel'}
       </SmallButton>
       {showSelect ? (
@@ -56,6 +60,7 @@ function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
           type="text"
           ariaDescribedBy={ariaDescribedBy}
           required
+          data-testid="account-type-input"
         >
           New Type
         </BorderedInput>

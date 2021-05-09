@@ -45,6 +45,7 @@ function BalanceHistoryChartController() {
           withOverlappingMessage
           heading="Woah there"
           subheading="It looks like you don't have enough balance history yet."
+          errorTestId="networth-chart-empty"
         />
       ) : (
         <BalanceHistoryChart data={data.getBalanceHistories} />

@@ -99,6 +99,7 @@ function EditAccountForm({
               ariaDescribedBy="name-errors"
               required
               ref={inputRef}
+              data-testid="edit-account-name-input"
             >
               Account name
             </BorderedInput>
