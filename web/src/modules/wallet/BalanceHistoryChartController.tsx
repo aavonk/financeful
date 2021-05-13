@@ -3,13 +3,7 @@ import { useGetBalanceHistoriesQuery } from '@Generated/graphql';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
 import { getDateRange } from '@Lib/date-formatting';
 import BalanceHistoryChart from './BalanceHistoryChart';
-import DateRangeFilter from './DateRangeFilter';
-
-export type DateRangeState = {
-  startDate: Date;
-  endDate: Date;
-  label: string;
-};
+import DateRangeFilter, { DateRangeState } from '@Components/DateFilter/DateRangeFilter';
 
 function BalanceHistoryChartController() {
   const [range, setRange] = useState<DateRangeState>(() => {
@@ -39,7 +33,7 @@ function BalanceHistoryChartController() {
   }
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <DateRangeFilter setRange={setRange} selected={range.label} />
+      <DateRangeFilter setRange={setRange} selected={range.label} range={range} />
       {!data.getBalanceHistories.length ? (
         <AreaChartSkeleton
           withOverlappingMessage

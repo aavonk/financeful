@@ -148,3 +148,17 @@ export const BorderedDatePicker = React.forwardRef<HTMLLabelElement, DateProps>(
     );
   },
 );
+
+export function SecondaryDatePicker(props: DateProps) {
+  return (
+    <DatePickerStyles secondary>
+      <DatePicker
+        selected={props.selected}
+        onChange={props.onChange}
+        calendarClassName="fin"
+        className="fin--input"
+        popperPlacement="bottom-end"
+      />
+    </DatePickerStyles>
+  );
+}

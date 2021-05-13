@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import '@reach/menu-button/styles.css';
 import { Menu } from '@reach/menu-button';
 import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';
@@ -10,13 +11,19 @@ type DropdownProps = {
   items: DropdownItems;
   small?: boolean;
   'data-testid'?: string;
+  overrideButtonStyle?: CSSProperties;
 };
 
 function Dropdown(props: DropdownProps) {
-  const { selected, items, id, small } = props;
+  const { selected, items, id, small, overrideButtonStyle } = props;
   return (
     <Menu>
-      <StyledMenuButton id={id} $small={small} data-testid={props['data-testid']}>
+      <StyledMenuButton
+        id={id}
+        $small={small}
+        data-testid={props['data-testid']}
+        style={overrideButtonStyle}
+      >
         {selected}
       </StyledMenuButton>
       <StyledMenuList>
