@@ -38,6 +38,10 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
   }
+
+  body button {
+    font-family: inherit;
+  }
  
   #root {
     height: 100%;

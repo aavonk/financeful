@@ -25,7 +25,7 @@ export const DatePickerStyles = styled.div<Props>`
           secondary &&
           css`
             background: ${({ theme }) => theme.colors.darkThree};
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             padding: 0 6px;
             height: 32px;
             width: 82px;
