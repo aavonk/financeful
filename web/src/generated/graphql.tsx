@@ -25,9 +25,9 @@ export type Query = {
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
-  getAccountDailyBalances: Array<DailyBalance>;
+  getAccountDailyBalances: Array<HistoryObject>;
   getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
-  getBalanceHistories: Array<HistoryObject>;
+  getAggregatedDailyBalances: Array<HistoryObject>;
 };
 
 
@@ -57,7 +57,7 @@ export type QueryGetAccountDailyBalancesArgs = {
 };
 
 
-export type QueryGetBalanceHistoriesArgs = {
+export type QueryGetAggregatedDailyBalancesArgs = {
   input: RangeParams;
 };
 
@@ -138,14 +138,12 @@ export type AccountQueryFilters = {
   isInactive: Scalars['Boolean'];
 };
 
-export type DailyBalance = {
-  __typename?: 'DailyBalance';
-  id: Scalars['ID'];
-  userId: Scalars['ID'];
-  amount: Scalars['Int'];
+export type HistoryObject = {
+  __typename?: 'HistoryObject';
+  /** Date formated in mm/dd/yyyy format */
   date: Scalars['String'];
-  accountId: Scalars['ID'];
-  account?: Maybe<Account>;
+  /** The aggregated balance formatted in $120.00 */
+  balance: Scalars['Float'];
 };
 
 export type GetBalanceParams = {
@@ -171,14 +169,6 @@ export type LiabilityDetails = {
   __typename?: 'LiabilityDetails';
   amount: Scalars['Float'];
   percentOfAssets: Scalars['Int'];
-};
-
-export type HistoryObject = {
-  __typename?: 'HistoryObject';
-  /** Date formated in mm/dd/yyyy format */
-  date: Scalars['String'];
-  /** The aggregated balance formatted in $120.00 */
-  balance: Scalars['Float'];
 };
 
 export type Mutation = {
@@ -682,7 +672,7 @@ export type GetBalanceHistoriesQueryVariables = Exact<{
 
 export type GetBalanceHistoriesQuery = (
   { __typename?: 'Query' }
-  & { getBalanceHistories: Array<(
+  & { getAggregatedDailyBalances: Array<(
     { __typename?: 'HistoryObject' }
     & Pick<HistoryObject, 'date' | 'balance'>
   )> }
@@ -696,8 +686,8 @@ export type GetDailyBalancesQueryVariables = Exact<{
 export type GetDailyBalancesQuery = (
   { __typename?: 'Query' }
   & { getAccountDailyBalances: Array<(
-    { __typename?: 'DailyBalance' }
-    & Pick<DailyBalance, 'id' | 'amount' | 'date'>
+    { __typename?: 'HistoryObject' }
+    & Pick<HistoryObject, 'date' | 'balance'>
   )> }
 );
 
@@ -1603,7 +1593,7 @@ export type GetAssetsAndLiabilitiesLazyQueryHookResult = ReturnType<typeof useGe
 export type GetAssetsAndLiabilitiesQueryResult = Apollo.QueryResult<GetAssetsAndLiabilitiesQuery, GetAssetsAndLiabilitiesQueryVariables>;
 export const GetBalanceHistoriesDocument = gql`
     query GetBalanceHistories($input: RangeParams!) {
-  getBalanceHistories(input: $input) {
+  getAggregatedDailyBalances(input: $input) {
     date
     balance
   }
@@ -1640,9 +1630,8 @@ export type GetBalanceHistoriesQueryResult = Apollo.QueryResult<GetBalanceHistor
 export const GetDailyBalancesDocument = gql`
     query GetDailyBalances($input: GetBalanceParams!) {
   getAccountDailyBalances(input: $input) {
-    id
-    amount
     date
+    balance
   }
 }
     `;

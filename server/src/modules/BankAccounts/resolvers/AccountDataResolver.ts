@@ -17,11 +17,11 @@ import {
 @Resolver(() => DailyBalance)
 export class AccountDataResolver {
   @Authorized()
-  @Query(() => [DailyBalance])
+  @Query(() => [HistoryObject])
   async getAccountDailyBalances(
     @Arg('input') input: GetBalanceParams,
     @Ctx() { user, accountDataRepo }: Context,
-  ): Promise<DailyBalance[]> {
+  ): Promise<HistoryObject[]> {
     return await accountDataRepo.getBalances(input, user.id);
   }
 
@@ -43,10 +43,13 @@ export class AccountDataResolver {
 
   @Authorized()
   @Query(() => [HistoryObject])
-  async getBalanceHistories(
+  async getAggregatedDailyBalances(
     @Arg('input') input: RangeParams,
     @Ctx() { aggregateAccountDataRepo, user }: Context,
   ): Promise<HistoryObject[]> {
-    return await aggregateAccountDataRepo.getBalanceHistories(user.id, input);
+    return await aggregateAccountDataRepo.getAggregatedDailyBalances(
+      user.id,
+      input,
+    );
   }
 }

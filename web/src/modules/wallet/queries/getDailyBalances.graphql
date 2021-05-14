@@ -1,7 +1,6 @@
 query GetDailyBalances($input: GetBalanceParams!) {
   getAccountDailyBalances(input: $input) {
-    id
-    amount
     date
+    balance
   }
 }

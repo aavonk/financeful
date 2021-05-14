@@ -34,7 +34,7 @@ function BalanceHistoryChartController() {
   return (
     <div style={{ position: 'relative', width: '100%' }}>
       <DateRangeFilter setRange={setRange} selected={range.label} range={range} />
-      {!data.getBalanceHistories.length ? (
+      {!data.getAggregatedDailyBalances.length ? (
         <AreaChartSkeleton
           withOverlappingMessage
           heading="Woah there"
@@ -42,7 +42,7 @@ function BalanceHistoryChartController() {
           errorTestId="networth-chart-empty"
         />
       ) : (
-        <BalanceHistoryChart data={data.getBalanceHistories} />
+        <BalanceHistoryChart data={data.getAggregatedDailyBalances} />
       )}
     </div>
   );

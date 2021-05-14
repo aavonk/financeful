@@ -1,5 +1,5 @@
 query GetBalanceHistories($input: RangeParams!) {
-  getBalanceHistories(input: $input) {
+  getAggregatedDailyBalances(input: $input) {
     date
     balance
   }
