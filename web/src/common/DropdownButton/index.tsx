@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import '@reach/menu-button/styles.css';
 import { Menu } from '@reach/menu-button';
 import { StyledMenuButton, StyledMenuList, StyledMenuItem } from './style';

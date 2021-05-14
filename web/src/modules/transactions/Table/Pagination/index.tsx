@@ -1,11 +1,6 @@
+import React from 'react';
 import { TableInstance } from 'react-table';
-import {
-  Container,
-  PageCountWrapper,
-  ActionsWrapper,
-  Actions,
-  Text,
-} from './style';
+import { Container, PageCountWrapper, ActionsWrapper, Actions, Text } from './style';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
 
 function TablePagination<T extends Record<string, unknown>>({

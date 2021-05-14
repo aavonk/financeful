@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AccountList from '@Modules/wallet/AccountList';
 import AccountListLoader from '@Modules/wallet/AccountList/AccountListLoader';
 import {

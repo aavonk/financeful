@@ -1,3 +1,4 @@
+import React from 'react';
 import { PulseBar } from './style';
 
 type Props = {

@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name */
+import * as React from 'react';
 import DatePicker from 'react-datepicker';
 import { DatePickerStyles } from '@Globals/datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import * as React from 'react';
 import {
   StyledUnderlineInput,
   StyledLabel,

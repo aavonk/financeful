@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import React, { useState } from 'react';
 import '@reach/dialog/styles.css';
-import { useState } from 'react';
 import { Overlay, Content } from '../style';
 import Button from '@Common/Button';
 import { useMediaQuery } from '@Hooks/useMediaQuery';

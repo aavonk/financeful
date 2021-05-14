@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import { MenuIcon, ScheduleIcon } from '@Common/Icons';
@@ -7,12 +7,7 @@ import IconButton from '@Common/IconButton';
 import PageTitle from '@Common/PageTitle';
 import NotificationsMenu from './NotificationsMenu';
 import UserMenu from './UserMenu';
-import {
-  AppbarRoot,
-  AppbarContainer,
-  AppbarMenu,
-  AppbarActions,
-} from './style';
+import { AppbarRoot, AppbarContainer, AppbarMenu, AppbarActions } from './style';
 
 type Props = {
   isSidebarOpen: boolean;

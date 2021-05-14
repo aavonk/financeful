@@ -1,3 +1,4 @@
+import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import AccountActionsController from '@Modules/wallet/AccountActionsController';
 import AccountListError from '@Modules/wallet/AccountList/AccountListError';

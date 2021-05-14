@@ -1,3 +1,4 @@
+import React from 'react';
 import { HeaderContainer, Title } from './style';
 import AddAccountFormController from '../Forms/AddAccountFormController';
 function AccountListHeader() {

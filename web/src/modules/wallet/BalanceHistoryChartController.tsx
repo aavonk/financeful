@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useGetBalanceHistoriesQuery } from '@Generated/graphql';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
 import { getDateRange } from '@Lib/date-formatting';

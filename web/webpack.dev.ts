@@ -9,6 +9,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 const config: webpack.Configuration = {
   mode: 'development',
   entry: './src/index.tsx',
+  // output: {
+  //   filename: 'bundle.js',
+  //   path: path.join(__dirname, 'public'),
+  //   publicPath: '/',
+  // },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],

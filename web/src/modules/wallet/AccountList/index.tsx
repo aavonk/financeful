@@ -1,3 +1,4 @@
+import React from 'react';
 import { Container, StyledPaper } from './style';
 import { Account } from '@Generated/graphql';
 import AccountListHeader from './AccountListHeader';

@@ -1,3 +1,4 @@
+import React from 'react';
 import '@reach/menu-button/styles.css';
 import styled from 'styled-components';
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button';

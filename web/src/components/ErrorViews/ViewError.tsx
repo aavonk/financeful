@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '@Common/Button';
 import { Emoji, Heading, Description, Container } from './style';
 

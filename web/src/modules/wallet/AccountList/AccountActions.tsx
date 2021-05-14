@@ -1,3 +1,4 @@
+import React from 'react';
 import { ErrorIcon, InfoIcon, VerticalMenuIcon, PlusIcon } from '@Common/Icons';
 import IconDropdown, { DropdownItems } from '@Common/IconDropdown';
 import { Account } from '@Generated/graphql';

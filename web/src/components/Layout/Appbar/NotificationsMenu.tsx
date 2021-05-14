@@ -1,3 +1,4 @@
+import React from 'react';
 import IconDropdown from '@Common/IconDropdown';
 import { NotificationsIcon } from '@Common/Icons';
 

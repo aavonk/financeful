@@ -1,3 +1,4 @@
+import React from 'react';
 import { RangeBar as Bar, RangeLabel, RangeContainer } from './style';
 
 type Props = {

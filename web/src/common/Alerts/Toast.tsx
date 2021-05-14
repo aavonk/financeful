@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InfoIcon, ErrorIcon, CheckCircleIcon } from '@Common/Icons';
 import { AlertRoot, AlertIcon, AlertMessage } from './style';
 

@@ -8,13 +8,7 @@ type TooltipProps = {
   autoWidth?: boolean | undefined;
 };
 
-function Tooltip({
-  children,
-  content,
-  direction,
-  autoWidth,
-  ...props
-}: TooltipProps) {
+function Tooltip({ children, content, direction, autoWidth, ...props }: TooltipProps) {
   const [active, setActive] = useState(false);
   let timeout: ReturnType<typeof setTimeout>;
 
