@@ -1,9 +1,8 @@
-import { DailyBalance } from '@Shared/types/DailyBalance';
-import { GetBalanceParams } from '../types/accountData.types';
+import { GetBalanceParams, HistoryObject } from '../types/accountData.types';
 
 export interface IAccountDataRepo {
   getBalances(
     params: GetBalanceParams,
     userId: string,
-  ): Promise<DailyBalance[]>;
+  ): Promise<HistoryObject[]>;
 }
