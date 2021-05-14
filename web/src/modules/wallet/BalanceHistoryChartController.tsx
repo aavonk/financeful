@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useGetBalanceHistoriesQuery } from '@Generated/graphql';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
 import { getDateRange } from '@Lib/date-formatting';
-import BalanceHistoryChart from './BalanceHistoryChart';
+import { GradientAreaChart } from '@Components/Charts';
 import DateRangeFilter, { DateRangeState } from '@Components/DateFilter/DateRangeFilter';
 
 function BalanceHistoryChartController() {
@@ -42,7 +42,12 @@ function BalanceHistoryChartController() {
           errorTestId="networth-chart-empty"
         />
       ) : (
-        <BalanceHistoryChart data={data.getAggregatedDailyBalances} />
+        <GradientAreaChart
+          data={data.getAggregatedDailyBalances}
+          XAxisKey="date"
+          YAxisKey="balance"
+          AreaDataKey="balance"
+        />
       )}
     </div>
   );

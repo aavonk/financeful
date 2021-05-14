@@ -11,10 +11,15 @@ import {
 import { CustomXAxisTick, CustomTooltip, CustomYAxisTick } from '@Components/Charts';
 import { HistoryObject } from '@Generated/graphql';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
+
 type Props = {
   data: HistoryObject[];
+  XAxisKey: string;
+  YAxisKey: string;
+  AreaDataKey: string;
 };
-function BalanceHistoryChart({ data }: Props) {
+
+function GradientAreaChart({ data, XAxisKey, YAxisKey, AreaDataKey }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1601px)');
   return (
     <ResponsiveContainer width="100%" height={isDesktop ? 420 : 300}>
@@ -26,7 +31,7 @@ function BalanceHistoryChart({ data }: Props) {
           </linearGradient>
         </defs>
         <XAxis
-          dataKey="date"
+          dataKey={XAxisKey}
           axisLine={false}
           tickLine={false}
           tick={<CustomXAxisTick />}
@@ -34,7 +39,7 @@ function BalanceHistoryChart({ data }: Props) {
         />
         <YAxis
           type="number"
-          dataKey="balance"
+          dataKey={YAxisKey}
           axisLine={false}
           tickLine={false}
           tickCount={4}
@@ -44,7 +49,7 @@ function BalanceHistoryChart({ data }: Props) {
         />
         <Tooltip content={<CustomTooltip />} />
         <Area
-          dataKey="balance"
+          dataKey={AreaDataKey}
           type="monotone"
           stackId="1"
           stroke="#2451B7"
@@ -57,4 +62,4 @@ function BalanceHistoryChart({ data }: Props) {
   );
 }
 
-export default BalanceHistoryChart;
+export default GradientAreaChart;

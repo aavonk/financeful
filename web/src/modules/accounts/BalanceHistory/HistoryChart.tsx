@@ -1,7 +1,5 @@
-import React from 'react';
-
 function HistoryChart() {
-  return <div>History Chart!!!</div>;
+  return <div></div>;
 }
 
 export default HistoryChart;
