@@ -1,4 +1,4 @@
-![Financeful Logo](./assets/logo-original.png)
+![Financeful Logo](./assets/logo.png)
 <h2 align="center" >Get a little bit richer every day.</h2>
 
 Financeful is a personal finance web application that provides people with a better way to track and manage their money. It's an alternative to spreadsheets or traditional apps like Quicken, Mint and YNAB that can be complicated and overwhelming for new users. 
