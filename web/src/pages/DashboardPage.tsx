@@ -7,10 +7,7 @@ function DashboardPage() {
       <div>
         TODO:
         <ul>
-          <li>
-            Change Y Axis on areas to include low and high value, using type number and
-            domain prop
-          </li>
+          <li>Add test for DateRangeFilter</li>
         </ul>
       </div>
     </>
