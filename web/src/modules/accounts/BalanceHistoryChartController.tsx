@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetDailyBalancesQuery as useGetBalances } from '@Generated/graphql';
 import { GradientAreaChart } from '@Components/Charts';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
-import { getDateRange } from '@Lib/date-formatting';
 import { theme } from '@Constants/theme';
-import DateRangeFilter, { DateRangeState } from '@Components/DateFilter/DateRangeFilter';
+import DateRangeFilter from '@Components/DateFilter/DateRangeFilter';
+import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
 
 const chartColor = {
   stroke: theme.charts.greenStroke,
@@ -14,12 +14,7 @@ const chartColor = {
 
 function BalanceHistoryChartController() {
   const { id } = useParams<{ id: string }>();
-
-  const [range, setRange] = useState<DateRangeState>(() => {
-    const { startDate, endDate } = getDateRange('90-days');
-    return { startDate, endDate, label: '90 days' };
-  });
-
+  const { range, setRange } = useDateRangeContext();
   const { data, loading, error } = useGetBalances({
     variables: {
       input: { startDate: range.startDate, endDate: range.endDate, accountId: id },

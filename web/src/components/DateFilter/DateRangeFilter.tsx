@@ -1,19 +1,18 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
 import { getDateRange } from '@Lib/date-formatting';
 import { SecondaryDatePicker } from '@Common/FormElements';
+import { DateRangeContext } from '@Context/daterange/DateRangeContext';
+
+interface Props extends DateRangeContext {
+  selected: string;
+}
 
 export type DateRangeState = {
   startDate: Date;
   endDate: Date;
   label: string;
-};
-
-type Props = {
-  setRange: Dispatch<SetStateAction<DateRangeState>>;
-  selected: string;
-  range: DateRangeState;
 };
 
 function DateRangeFilter({ setRange, selected, range }: Props) {

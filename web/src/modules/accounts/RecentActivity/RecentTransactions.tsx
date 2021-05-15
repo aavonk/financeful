@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Column, Cell } from 'react-table';
 import { useParams } from 'react-router-dom';
-import { getDateRange, formatDate } from '@Lib/date-formatting';
+import { formatDate } from '@Lib/date-formatting';
 import { useGetTransactionsRangeQuery, Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import TransactionTable from '@Modules/transactions/Table';
@@ -10,17 +10,15 @@ import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell
 import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
 import NoTransactions from '@Modules/transactions/Table/NoTransactions';
 import { TableError } from '@Components/ErrorViews';
-
-type DateRangeState = {
-  startDate: Date;
-  endDate: Date;
-};
+import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
 
 function RecentTransactions() {
   const { id } = useParams<{ id: string }>();
-  const [{ startDate, endDate }] = useState<DateRangeState>(() =>
-    getDateRange('current-month'),
-  );
+
+  const {
+    range: { startDate, endDate },
+    setRange,
+  } = useDateRangeContext();
   const { data, loading, error } = useGetTransactionsRangeQuery({
     variables: { input: { startDate, endDate }, accountId: id },
   });
@@ -78,6 +76,7 @@ function RecentTransactions() {
       columns={columns}
       data={data.getTransactionsRange}
       elevate={false}
+      limitHeight={false}
     />
   );
 }

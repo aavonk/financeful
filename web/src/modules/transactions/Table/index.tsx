@@ -39,7 +39,13 @@ function Table<T extends Record<string, unknown>>({
   limitHeight = true,
 }: TableProperties<T>) {
   const instance = useTable<T>(
-    { columns, data },
+    {
+      columns,
+      data,
+      initialState: {
+        pageSize: withPagination ? 10 : 10000,
+      },
+    },
     useGlobalFilter,
     useFilters,
     useSortBy,
