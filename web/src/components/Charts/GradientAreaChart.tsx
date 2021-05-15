@@ -23,6 +23,7 @@ type Props = {
   YAxisKey: string;
   AreaDataKey: string;
   color?: ColorProp;
+  'data-testid'?: string;
 };
 
 const defaultColors: ColorProp = {
@@ -36,11 +37,16 @@ function GradientAreaChart({
   YAxisKey,
   AreaDataKey,
   color = defaultColors,
+  ...props
 }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1601px)');
 
   return (
-    <ResponsiveContainer width="100%" height={isDesktop ? 420 : 300}>
+    <ResponsiveContainer
+      width="100%"
+      height={isDesktop ? 420 : 300}
+      data-testid={props['data-testid']}
+    >
       <AreaChart data={data}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">

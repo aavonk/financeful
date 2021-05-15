@@ -38,7 +38,7 @@ function BalanceHistoryChartController() {
         <AreaChartSkeleton
           withOverlappingMessage
           heading="Woah there"
-          subheading="It looks like you don't have enough balance history yet."
+          subheading="It looks like your balance history doesn't go that far back"
           errorTestId="networth-chart-empty"
         />
       ) : (

@@ -32,7 +32,7 @@ function Appbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
             >
               <MenuIcon />
             </IconButton>
-            <PageTitle location={pathname} />
+            <PageTitle location={pathname.split('/')[1]} />
           </AppbarMenu>
           <AppbarActions>
             {!mobileDevice && (
