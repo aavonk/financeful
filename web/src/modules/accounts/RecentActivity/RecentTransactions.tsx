@@ -17,7 +17,6 @@ function RecentTransactions() {
 
   const {
     range: { startDate, endDate },
-    setRange,
   } = useDateRangeContext();
   const { data, loading, error } = useGetTransactionsRangeQuery({
     variables: { input: { startDate, endDate }, accountId: id },
@@ -29,17 +28,14 @@ function RecentTransactions() {
         Header: 'Date',
         accessor: 'date',
         Cell: ({ value }: Cell<Transaction>) => {
-          return <span>{formatDate(value, 'MMM do yyyy')}</span>;
+          return <span>{formatDate(value, 'M/d/yyyy')}</span>;
         },
       },
       {
         Header: 'Payee',
         accessor: 'payee',
       },
-      {
-        Header: 'Description',
-        accessor: 'description',
-      },
+
       {
         Header: 'Type',
         accessor: 'type',
@@ -59,7 +55,7 @@ function RecentTransactions() {
   );
 
   if (loading) {
-    return <TableSkeleton columns={5} rows={8} />;
+    return <TableSkeleton columns={3} rows={8} />;
   }
 
   if (error) {
@@ -76,7 +72,7 @@ function RecentTransactions() {
       columns={columns}
       data={data.getTransactionsRange}
       elevate={false}
-      limitHeight={false}
+      limitHeight={true}
     />
   );
 }
