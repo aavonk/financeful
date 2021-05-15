@@ -24,8 +24,12 @@ const theme: DefaultTheme = {
     turqouise: 'rgb(2,164,153)',
   },
   charts: {
+    greenFill: '#34c38f',
+    greenStroke: '#1BAA76',
     purpleFill: '#8884d8',
     purpleStroke: '#5551A5',
+    blueFill: '#2451B7',
+    blueStroke: '#2451B7',
     strokeWidth: 4,
   },
   effects: {

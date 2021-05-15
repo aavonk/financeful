@@ -1,11 +1,11 @@
 import React from 'react';
 
-import HistoryChart from '@Modules/accounts/BalanceHistory/HistoryChart';
+import BalanceHistoryChartController from '@Modules/accounts/BalanceHistoryChartController';
 
 function AccountPage() {
   return (
     <div>
-      <HistoryChart />
+      <BalanceHistoryChartController />
     </div>
   );
 }
