@@ -16,7 +16,9 @@ function AccountItem({ account, children }: Props) {
 
   return (
     <AccountItemBox data-testid="account-item" $inactive={account.isInactive!}>
-      <TextWrapper onClick={() => history.push(`/account/${account.id}`)}>
+      <TextWrapper
+        onClick={() => history.push(`/account/${account.id}?name=${account.accountName}`)}
+      >
         <ItemName>
           <p>Nickname</p>
           <p>{account.accountName}</p>
