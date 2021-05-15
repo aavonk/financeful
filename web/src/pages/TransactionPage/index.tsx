@@ -13,7 +13,7 @@ import TableActions from '@Modules/transactions/Table/Actions';
 import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-import NoTransactions from './components/NoTransactions';
+import NoTransactions from '@Modules/transactions/Table/NoTransactions';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();

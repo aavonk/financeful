@@ -5,6 +5,15 @@ type TablePaperProps = {
   limitHeight?: boolean;
 };
 
+export const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  margin-top: 8rem;
+`;
+
 export const TablePaper = styled(StyledPaper)<TablePaperProps>`
   max-height: ${(props) => (props.limitHeight === true ? '450px' : 'none')};
 

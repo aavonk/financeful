@@ -4,8 +4,12 @@ import { Column, Cell } from 'react-table';
 import { useParams } from 'react-router-dom';
 import { getDateRange, formatDate } from '@Lib/date-formatting';
 import { useGetTransactionsRangeQuery, Transaction } from '@Generated/graphql';
-import TransactionTable from '@Modules/transactions/Table';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
+import TransactionTable from '@Modules/transactions/Table';
+import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
+import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
+import NoTransactions from '@Modules/transactions/Table/NoTransactions';
+import { TableError } from '@Components/ErrorViews';
 
 type DateRangeState = {
   startDate: Date;
@@ -39,6 +43,13 @@ function RecentTransactions() {
         accessor: 'description',
       },
       {
+        Header: 'Type',
+        accessor: 'type',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <TransactionTypeCell type={value} />;
+        },
+      },
+      {
         Header: () => <span className="align-right">Amount</span>,
         accessor: 'amount',
         Cell: ({ value }: Cell<Transaction>) => {
@@ -49,18 +60,17 @@ function RecentTransactions() {
     [],
   );
 
-  if (!data) {
-    return null;
-  }
-
   if (loading) {
-    return null;
-  }
-  if (error) {
-    console.error(error);
-    return null;
+    return <TableSkeleton columns={5} rows={8} />;
   }
 
+  if (error) {
+    return <TableError error={error} />;
+  }
+
+  if (!data?.getTransactionsRange.length) {
+    return <NoTransactions heading="No recent transactions" />;
+  }
   return (
     <TransactionTable
       withPagination={false}
