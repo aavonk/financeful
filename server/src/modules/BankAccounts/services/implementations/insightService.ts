@@ -1,4 +1,4 @@
-import { IInsightsService } from '../insightsService';
+import { IInsightsService, ComparisonResult } from '../insightsService';
 import { InsightDetails } from '../../types/accountData.types';
 import { Transaction } from '@Shared/types';
 
@@ -34,6 +34,24 @@ export class InsightsService implements IInsightsService {
     }
     return amount / 100;
   }
+
+  /* 
+    Takes in the previous months number and a current number and calculates the percentage of differences
+    example: Current Month: 100, Previous Month: 50 -- returns 100 (100% more than previous month).
+    example: Curent Month: 50, Previouse Month: 100 -- returns -50 (50% less than previous month).
+
+    In formula: 
+    ((Current - Previous) * 100)/Previous
+  */
+  private calculatePercentageOfDifferences(
+    current: number,
+    previous: number,
+  ): number {
+    const amount = ((current - previous) * 100) / previous;
+
+    return Number(amount.toFixed(2));
+  }
+
   public calculateTotalTransactionTypes(
     transactions: Transaction[],
   ): InsightDetails {
@@ -43,6 +61,27 @@ export class InsightsService implements IInsightsService {
       income: this.calculateTotal(income),
       expenses: this.calculateTotal(expenses),
       transfers: this.calculateTotal(transfers),
+    };
+  }
+
+  public compareCurrentAndPreviousMonths(
+    currentTotals: InsightDetails,
+    previousTotals: InsightDetails,
+  ): ComparisonResult {
+    const incomeDifference = this.calculatePercentageOfDifferences(
+      currentTotals.income,
+      previousTotals.income,
+    );
+    const expenseDifference = this.calculatePercentageOfDifferences(
+      currentTotals.expenses,
+      previousTotals.expenses,
+    );
+
+    return {
+      percentageOfIncome: incomeDifference,
+      percentageOfExpenses: expenseDifference,
+      lastMonthsExpenses: previousTotals.expenses,
+      lastMonthsIncome: previousTotals.income,
     };
   }
 }

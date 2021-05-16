@@ -7,19 +7,15 @@ import {
   Root,
   FieldResolver,
 } from 'type-graphql';
-import {
-  Context,
-  DailyBalance,
-  Account,
-  RangeParams,
-  RangeWithAccountID,
-} from '@Shared/types';
+import { Context, DailyBalance, Account, RangeParams } from '@Shared/types';
 import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
   HistoryObject,
   InsightDetails,
 } from '../types/accountData.types';
+
+import { DateUtils } from '@Shared/utils/DateUtils';
 
 @Resolver(() => DailyBalance)
 export class AccountDataResolver {
@@ -61,12 +57,19 @@ export class AccountDataResolver {
   }
 
   @Authorized()
-  @Query(() => InsightDetails)
+  @Query(() => InsightDetails, {
+    description:
+      'Returns the total Income, expense, and transfers for the specified account in the current month',
+  })
   async getAccountInsightDetails(
-    @Arg('input') input: RangeWithAccountID,
+    @Arg('accountId') accountId: string,
     @Ctx() { user, transactionRepo, services: { insightService } }: Context,
   ): Promise<InsightDetails> {
-    const { startDate, endDate, accountId } = input;
+    const today = new Date();
+    const { startDate, endDate } = DateUtils.getMonthStartAndEnd(today);
+    const testDates = DateUtils.getPreviousMonthStartAndEnd(today);
+
+    console.log(testDates);
     const transactions = await transactionRepo.getRange(
       { startDate, endDate },
       user.id,
