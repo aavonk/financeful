@@ -59,9 +59,9 @@ export class AccountDataResolver {
   @Authorized()
   @Query(() => InsightDetailsResponse, {
     description:
-      'Returns the total Income, expense, and transfers for the specified account in the current month',
+      'Returns the total Income, expense, and transfers for the specified account in the current month, as well with a formatted description',
   })
-  async getAccountInsightDetails(
+  async getAccountInsights(
     @Arg('accountId') accountId: string,
     @Ctx() { user, transactionRepo, services: { insightService } }: Context,
   ): Promise<InsightDetailsResponse> {
