@@ -52,3 +52,19 @@ export class HistoryObject {
   })
   balance: number;
 }
+
+@ObjectType()
+export class InsightDetails {
+  @Field(() => Float, { description: 'The total income for the current month' })
+  income: number;
+
+  @Field(() => Float, {
+    description: 'The total expenses for the current month',
+  })
+  expenses: number;
+
+  @Field(() => Float, {
+    description: 'The total transfers for the current month',
+  })
+  transfers: number;
+}

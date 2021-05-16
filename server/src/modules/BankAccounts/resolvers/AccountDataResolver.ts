@@ -18,6 +18,7 @@ import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
   HistoryObject,
+  InsightDetails,
 } from '../types/accountData.types';
 
 @Resolver(() => DailyBalance)
@@ -60,11 +61,11 @@ export class AccountDataResolver {
   }
 
   @Authorized()
-  @Query(() => String)
+  @Query(() => InsightDetails)
   async getAccountInsightDetails(
     @Arg('input') input: RangeWithAccountID,
-    @Ctx() { user, transactionRepo }: Context,
-  ): Promise<string> {
+    @Ctx() { user, transactionRepo, services: { insightService } }: Context,
+  ): Promise<InsightDetails> {
     const { startDate, endDate, accountId } = input;
     const transactions = await transactionRepo.getRange(
       { startDate, endDate },
@@ -72,7 +73,6 @@ export class AccountDataResolver {
       accountId,
     );
 
-    console.log(transactions);
-    return 'Success';
+    return await insightService.calculateTotalTransactionTypes(transactions);
   }
 }

@@ -1,12 +1,8 @@
 import { Transaction } from '@Shared/types';
+import { InsightDetails } from '../types/accountData.types';
 
-type TotalTypesResponse = {
-  income: number;
-  expenses: number;
-  transfers: number;
-};
 export interface IInsightsService {
   calculateTotalTransactionTypes(
     transactions: Transaction[],
-  ): Promise<TotalTypesResponse>;
+  ): Promise<InsightDetails>;
 }
