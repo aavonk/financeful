@@ -8,6 +8,24 @@ import {
 
 describe('Insight Service Calculations', () => {
   const insightService = new InsightsService();
+  const currentMonth: InsightDetails = {
+    income: 50,
+    expenses: 80,
+    transfers: 0,
+  };
+
+  const previousMonth: InsightDetails = {
+    income: 100,
+    expenses: 50,
+    transfers: 0,
+  };
+
+  const expectedResult: ComparisonResult = {
+    percentageOfIncome: -50,
+    percentageOfExpenses: 60,
+    lastMonthsIncome: 100,
+    lastMonthsExpenses: 50,
+  };
 
   it('Calculates total Income, Expense, and Transfers', () => {
     const value = insightService.calculateTotalTransactionTypes(
@@ -24,24 +42,6 @@ describe('Insight Service Calculations', () => {
   });
 
   it('Calculates current vs previous months percentages', () => {
-    const currentMonth: InsightDetails = {
-      income: 50,
-      expenses: 80,
-      transfers: 0,
-    };
-
-    const previousMonth: InsightDetails = {
-      income: 100,
-      expenses: 50,
-      transfers: 0,
-    };
-
-    const expectedResult: ComparisonResult = {
-      percentageOfIncome: -50,
-      percentageOfExpenses: 60,
-      lastMonthsIncome: 100,
-      lastMonthsExpenses: 50,
-    };
     const value = insightService.compareCurrentAndPreviousMonths(
       currentMonth,
       previousMonth,
@@ -52,5 +52,16 @@ describe('Insight Service Calculations', () => {
       expectedResult.percentageOfExpenses,
     );
     expect(value).toEqual(expectedResult);
+  });
+
+  it('Correctly displays the insight message with the correct values', () => {
+    const message = insightService.formatInsightMessage(
+      currentMonth,
+      previousMonth,
+    );
+
+    expect(message).toBe(
+      `So far you've spent $80, which is 60% more than last month. Last month, you brought in $100, which is 50% more than this month.`,
+    );
   });
 });

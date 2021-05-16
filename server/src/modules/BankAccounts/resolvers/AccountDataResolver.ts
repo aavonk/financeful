@@ -12,7 +12,7 @@ import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
   HistoryObject,
-  InsightDetails,
+  InsightDetailsResponse,
 } from '../types/accountData.types';
 
 import { DateUtils } from '@Shared/utils/DateUtils';
@@ -57,25 +57,44 @@ export class AccountDataResolver {
   }
 
   @Authorized()
-  @Query(() => InsightDetails, {
+  @Query(() => InsightDetailsResponse, {
     description:
       'Returns the total Income, expense, and transfers for the specified account in the current month',
   })
   async getAccountInsightDetails(
     @Arg('accountId') accountId: string,
     @Ctx() { user, transactionRepo, services: { insightService } }: Context,
-  ): Promise<InsightDetails> {
+  ): Promise<InsightDetailsResponse> {
     const today = new Date();
     const { startDate, endDate } = DateUtils.getMonthStartAndEnd(today);
-    const testDates = DateUtils.getPreviousMonthStartAndEnd(today);
+    const previousMonth = DateUtils.getPreviousMonthStartAndEnd(today);
 
-    console.log(testDates);
-    const transactions = await transactionRepo.getRange(
+    const currentMonthTransactions = await transactionRepo.getRange(
       { startDate, endDate },
       user.id,
       accountId,
     );
 
-    return insightService.calculateTotalTransactionTypes(transactions);
+    const previousMonthTransactions = await transactionRepo.getRange(
+      { startDate: previousMonth.startDate, endDate: previousMonth.endDate },
+      user.id,
+      accountId,
+    );
+
+    const currentMonthDetails = insightService.calculateTotalTransactionTypes(
+      currentMonthTransactions,
+    );
+
+    const previousMonthDetails = insightService.calculateTotalTransactionTypes(
+      previousMonthTransactions,
+    );
+
+    return {
+      ...currentMonthDetails,
+      message: insightService.formatInsightMessage(
+        currentMonthDetails,
+        previousMonthDetails,
+      ),
+    };
   }
 }

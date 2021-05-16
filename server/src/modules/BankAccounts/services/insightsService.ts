@@ -14,4 +14,8 @@ export interface IInsightsService {
     currentTotals: InsightDetails,
     previousTotals: InsightDetails,
   ): ComparisonResult;
+  formatInsightMessage(
+    currentTotals: InsightDetails,
+    previousTotals: InsightDetails,
+  ): string;
 }

@@ -70,3 +70,12 @@ export class InsightDetails {
   })
   transfers: number;
 }
+
+@ObjectType()
+export class InsightDetailsResponse extends InsightDetails {
+  @Field(() => String, {
+    description:
+      'A formatted message comparing the current month with previous',
+  })
+  message: string;
+}

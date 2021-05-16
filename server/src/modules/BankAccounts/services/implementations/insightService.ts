@@ -84,4 +84,33 @@ export class InsightsService implements IInsightsService {
       lastMonthsIncome: previousTotals.income,
     };
   }
+
+  public formatInsightMessage(
+    currentTotals: InsightDetails,
+    previousTotals: InsightDetails,
+  ): string {
+    const {
+      percentageOfIncome,
+      percentageOfExpenses,
+      lastMonthsIncome,
+    } = this.compareCurrentAndPreviousMonths(currentTotals, previousTotals);
+
+    const isExpenseNegative = percentageOfExpenses < 0;
+    const isIncomeNegative = percentageOfIncome < 0;
+
+    const formattedPercentageOfExpenses = isExpenseNegative
+      ? percentageOfExpenses * -1
+      : percentageOfExpenses;
+    const formattedPercentageOfIncome =
+      percentageOfIncome < 0 ? percentageOfIncome * -1 : percentageOfIncome;
+
+    return `So far you've spent $${
+      currentTotals.expenses
+    }, which is ${formattedPercentageOfExpenses}% ${
+      isExpenseNegative ? 'less' : 'more'
+    } than last month. Last month, you brought in $${lastMonthsIncome}, which is ${formattedPercentageOfIncome}% ${
+      isIncomeNegative ? 'more' : 'less'
+    } than this month.
+      `.trim();
+  }
 }
