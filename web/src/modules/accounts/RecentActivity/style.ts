@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 // Containers
 export const Container = styled.div`
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
@@ -18,14 +18,15 @@ export const BottomHalf = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 0 auto;
+  padding-top: 28px;
+  justify-content: space-between;
 `;
 
 export const TextWrapper = styled.div`
   flex-basis: 60%;
-  border: 1px solid blue;
-
-  & > :nth-child(1) {
-    margin-bottom: 10px;
+  & > :nth-child(2) {
+    padding-top: 16px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -58,4 +59,38 @@ export const Text = styled.p<TextProps>`
       font-size: 0.875rem;
       font-weight: 400;
     `}
+`;
+
+// Insight Pill
+
+export const PillContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+  align-items: flex-start;
+`;
+
+export const PillLeft = styled.div`
+  height: 100%;
+  width: 15px;
+  & > span {
+    width: 10px;
+    height: 30px;
+    background: ${({ theme }) => theme.colors.primary};
+    display: inline-block;
+    border-radius: 10px;
+  }
+`;
+
+export const PillRight = styled.div`
+  padding-left: 8px;
+  & > h4 {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  & > p {
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-size: 0.875rem;
+  }
 `;

@@ -1,5 +1,7 @@
 import React from 'react';
 import Paper from '@Common/Paper';
+import InsightPill from './InsightPill';
+
 import {
   Container,
   TopHalf,
@@ -19,13 +21,17 @@ function Insights() {
             <Header>Insights</Header>
             <Text secondary>Your monthly digest</Text>
             <Text>
-              You’ve spent 24% more this month than the previous. Last month, you brought
-              in $2,000 in income, which is 23% more than this month.
+              Todo: You’ve spent 24% more this month than the previous. Last month, you
+              brought in $2,000 in income, which is 23% more than this month.
             </Text>
           </TextWrapper>
           <GraphWrapper>Graph</GraphWrapper>
         </TopHalf>
-        <BottomHalf> bottom half</BottomHalf>
+        <BottomHalf>
+          <InsightPill />
+          <InsightPill />
+          <InsightPill />
+        </BottomHalf>
       </Container>
     </Paper>
   );
