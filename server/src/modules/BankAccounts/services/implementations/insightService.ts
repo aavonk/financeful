@@ -34,9 +34,9 @@ export class InsightsService implements IInsightsService {
     }
     return amount / 100;
   }
-  async calculateTotalTransactionTypes(
+  public calculateTotalTransactionTypes(
     transactions: Transaction[],
-  ): Promise<InsightDetails> {
+  ): InsightDetails {
     const { income, expenses, transfers } = this.seperateTypes(transactions);
 
     return {

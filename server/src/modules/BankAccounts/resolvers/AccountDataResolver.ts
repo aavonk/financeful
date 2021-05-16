@@ -73,6 +73,6 @@ export class AccountDataResolver {
       accountId,
     );
 
-    return await insightService.calculateTotalTransactionTypes(transactions);
+    return insightService.calculateTotalTransactionTypes(transactions);
   }
 }
