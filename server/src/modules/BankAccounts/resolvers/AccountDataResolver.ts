@@ -7,7 +7,13 @@ import {
   Root,
   FieldResolver,
 } from 'type-graphql';
-import { Context, DailyBalance, Account, RangeParams } from '@Shared/types';
+import {
+  Context,
+  DailyBalance,
+  Account,
+  RangeParams,
+  RangeWithAccountID,
+} from '@Shared/types';
 import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
@@ -51,5 +57,22 @@ export class AccountDataResolver {
       user.id,
       input,
     );
+  }
+
+  @Authorized()
+  @Query(() => String)
+  async getAccountInsightDetails(
+    @Arg('input') input: RangeWithAccountID,
+    @Ctx() { user, transactionRepo }: Context,
+  ): Promise<string> {
+    const { startDate, endDate, accountId } = input;
+    const transactions = await transactionRepo.getRange(
+      { startDate, endDate },
+      user.id,
+      accountId,
+    );
+
+    console.log(transactions);
+    return 'Success';
   }
 }

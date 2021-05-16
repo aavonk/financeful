@@ -40,12 +40,16 @@ export class TransactionRepo implements ITransactionRepo {
     if (accountId) {
       return await this.client.transaction.findMany({
         where: {
-          userId,
-          accountId,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
+          AND: [
+            {
+              userId,
+              accountId,
+              date: {
+                gte: new Date(startDate),
+                lte: new Date(endDate),
+              },
+            },
+          ],
         },
         orderBy: {
           date: 'desc',
