@@ -28,9 +28,9 @@ function Insights() {
           <GraphWrapper>Graph</GraphWrapper>
         </TopHalf>
         <BottomHalf>
-          <InsightPill />
-          <InsightPill />
-          <InsightPill />
+          <InsightPill amount={4000.21} label="Income" />
+          <InsightPill amount={2000} label="Expenses" />
+          <InsightPill amount={500} label="Transfers" />
         </BottomHalf>
       </Container>
     </Paper>

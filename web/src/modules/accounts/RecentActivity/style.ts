@@ -70,13 +70,17 @@ export const PillContainer = styled.div`
   align-items: flex-start;
 `;
 
-export const PillLeft = styled.div`
+type PillLeftProps = {
+  $color: string;
+};
+
+export const PillLeft = styled.div<PillLeftProps>`
   height: 100%;
   width: 15px;
   & > span {
     width: 10px;
     height: 30px;
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ $color }) => $color};
     display: inline-block;
     border-radius: 10px;
   }

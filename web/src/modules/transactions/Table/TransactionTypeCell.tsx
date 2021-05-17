@@ -24,14 +24,14 @@ const ArrowContainer = styled.span<{ type?: TransactionTypes['type'] }>`
   ${({ type }) =>
     type === 'EXPENSE' &&
     css`
-      background-color: rgba(255, 46, 46, 0.08);
-      color: #fd5353;
+      background-color: rgba(236, 69, 97, 0.08);
+      color: ${({ theme }) => theme.colors.red};
     `};
   ${({ type }) =>
     type === 'INCOME' &&
     css`
-      background-color: rgba(43, 193, 85, 0.08);
-      color: #2bc155;
+      background-color: rgba(27, 170, 118, 0.08);
+      color: ${({ theme }) => theme.colors.green};
     `};
   ${({ type }) =>
     type === 'TRANSFER' &&
@@ -45,9 +45,9 @@ const ArrowContainer = styled.span<{ type?: TransactionTypes['type'] }>`
 const renderIcon = (type: TransactionTypes['type']) => {
   switch (type) {
     case 'INCOME':
-      return <DownArrowCircle />;
-    case 'EXPENSE':
       return <UpArrowCircle />;
+    case 'EXPENSE':
+      return <DownArrowCircle />;
     case 'TRANSFER':
       return <RepeatingArrow />;
     default:

@@ -20,7 +20,7 @@ const theme: DefaultTheme = {
     tooltip: '#3E4954',
     red: 'rgb(236,69,97)',
     yellow: 'rgb(241,180,76)',
-    green: 'rgb(52,195,143)',
+    green: 'rgb(27, 170, 118, 1)',
     turqouise: 'rgb(2,164,153)',
   },
   charts: {
