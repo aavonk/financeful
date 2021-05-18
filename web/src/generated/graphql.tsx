@@ -28,6 +28,8 @@ export type Query = {
   getAccountDailyBalances: Array<HistoryObject>;
   getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
   getAggregatedDailyBalances: Array<HistoryObject>;
+  /** Returns the total Income, expense, and transfers for the specified account in the current month, as well with a formatted description */
+  getAccountInsights: InsightDetailsResponse;
 };
 
 
@@ -59,6 +61,11 @@ export type QueryGetAccountDailyBalancesArgs = {
 
 export type QueryGetAggregatedDailyBalancesArgs = {
   input: RangeParams;
+};
+
+
+export type QueryGetAccountInsightsArgs = {
+  accountId: Scalars['String'];
 };
 
 export type User = {
@@ -169,6 +176,18 @@ export type LiabilityDetails = {
   __typename?: 'LiabilityDetails';
   amount: Scalars['Float'];
   percentOfAssets: Scalars['Int'];
+};
+
+export type InsightDetailsResponse = {
+  __typename?: 'InsightDetailsResponse';
+  /** The total income for the current month */
+  income: Scalars['Float'];
+  /** The total expenses for the current month */
+  expenses: Scalars['Float'];
+  /** The total transfers for the current month */
+  transfers: Scalars['Float'];
+  /** A formatted message comparing the current month with previous */
+  message: Scalars['String'];
 };
 
 export type Mutation = {
@@ -327,6 +346,32 @@ export type EditAccountInput = {
   bankName?: Maybe<Scalars['String']>;
   classification: AccountType;
 };
+
+export type GetAccountInsightsQueryVariables = Exact<{
+  accountId: Scalars['String'];
+}>;
+
+
+export type GetAccountInsightsQuery = (
+  { __typename?: 'Query' }
+  & { getAccountInsights: (
+    { __typename?: 'InsightDetailsResponse' }
+    & Pick<InsightDetailsResponse, 'income' | 'expenses' | 'transfers' | 'message'>
+  ) }
+);
+
+export type GetDailyBalancesQueryVariables = Exact<{
+  input: GetBalanceParams;
+}>;
+
+
+export type GetDailyBalancesQuery = (
+  { __typename?: 'Query' }
+  & { getAccountDailyBalances: Array<(
+    { __typename?: 'HistoryObject' }
+    & Pick<HistoryObject, 'date' | 'balance'>
+  )> }
+);
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -678,19 +723,6 @@ export type GetBalanceHistoriesQuery = (
   )> }
 );
 
-export type GetDailyBalancesQueryVariables = Exact<{
-  input: GetBalanceParams;
-}>;
-
-
-export type GetDailyBalancesQuery = (
-  { __typename?: 'Query' }
-  & { getAccountDailyBalances: Array<(
-    { __typename?: 'HistoryObject' }
-    & Pick<HistoryObject, 'date' | 'balance'>
-  )> }
-);
-
 export const TransactionFieldsFragmentDoc = gql`
     fragment TransactionFields on Transaction {
   id
@@ -710,6 +742,80 @@ export const TransactionFieldsFragmentDoc = gql`
   }
 }
     `;
+export const GetAccountInsightsDocument = gql`
+    query GetAccountInsights($accountId: String!) {
+  getAccountInsights(accountId: $accountId) {
+    income
+    expenses
+    transfers
+    message
+  }
+}
+    `;
+
+/**
+ * __useGetAccountInsightsQuery__
+ *
+ * To run a query within a React component, call `useGetAccountInsightsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAccountInsightsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAccountInsightsQuery({
+ *   variables: {
+ *      accountId: // value for 'accountId'
+ *   },
+ * });
+ */
+export function useGetAccountInsightsQuery(baseOptions: Apollo.QueryHookOptions<GetAccountInsightsQuery, GetAccountInsightsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAccountInsightsQuery, GetAccountInsightsQueryVariables>(GetAccountInsightsDocument, options);
+      }
+export function useGetAccountInsightsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAccountInsightsQuery, GetAccountInsightsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAccountInsightsQuery, GetAccountInsightsQueryVariables>(GetAccountInsightsDocument, options);
+        }
+export type GetAccountInsightsQueryHookResult = ReturnType<typeof useGetAccountInsightsQuery>;
+export type GetAccountInsightsLazyQueryHookResult = ReturnType<typeof useGetAccountInsightsLazyQuery>;
+export type GetAccountInsightsQueryResult = Apollo.QueryResult<GetAccountInsightsQuery, GetAccountInsightsQueryVariables>;
+export const GetDailyBalancesDocument = gql`
+    query GetDailyBalances($input: GetBalanceParams!) {
+  getAccountDailyBalances(input: $input) {
+    date
+    balance
+  }
+}
+    `;
+
+/**
+ * __useGetDailyBalancesQuery__
+ *
+ * To run a query within a React component, call `useGetDailyBalancesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDailyBalancesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDailyBalancesQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetDailyBalancesQuery(baseOptions: Apollo.QueryHookOptions<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>(GetDailyBalancesDocument, options);
+      }
+export function useGetDailyBalancesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>(GetDailyBalancesDocument, options);
+        }
+export type GetDailyBalancesQueryHookResult = ReturnType<typeof useGetDailyBalancesQuery>;
+export type GetDailyBalancesLazyQueryHookResult = ReturnType<typeof useGetDailyBalancesLazyQuery>;
+export type GetDailyBalancesQueryResult = Apollo.QueryResult<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -1627,39 +1733,3 @@ export function useGetBalanceHistoriesLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetBalanceHistoriesQueryHookResult = ReturnType<typeof useGetBalanceHistoriesQuery>;
 export type GetBalanceHistoriesLazyQueryHookResult = ReturnType<typeof useGetBalanceHistoriesLazyQuery>;
 export type GetBalanceHistoriesQueryResult = Apollo.QueryResult<GetBalanceHistoriesQuery, GetBalanceHistoriesQueryVariables>;
-export const GetDailyBalancesDocument = gql`
-    query GetDailyBalances($input: GetBalanceParams!) {
-  getAccountDailyBalances(input: $input) {
-    date
-    balance
-  }
-}
-    `;
-
-/**
- * __useGetDailyBalancesQuery__
- *
- * To run a query within a React component, call `useGetDailyBalancesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDailyBalancesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetDailyBalancesQuery({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useGetDailyBalancesQuery(baseOptions: Apollo.QueryHookOptions<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>(GetDailyBalancesDocument, options);
-      }
-export function useGetDailyBalancesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>(GetDailyBalancesDocument, options);
-        }
-export type GetDailyBalancesQueryHookResult = ReturnType<typeof useGetDailyBalancesQuery>;
-export type GetDailyBalancesLazyQueryHookResult = ReturnType<typeof useGetDailyBalancesLazyQuery>;
-export type GetDailyBalancesQueryResult = Apollo.QueryResult<GetDailyBalancesQuery, GetDailyBalancesQueryVariables>;

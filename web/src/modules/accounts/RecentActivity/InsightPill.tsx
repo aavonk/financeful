@@ -3,10 +3,10 @@ import { PillContainer, PillRight, PillLeft } from './style';
 import { formatCurrency } from '@Lib/money-utils';
 import { theme } from '@Constants/theme';
 
-type Props = {
+interface Props {
   amount: number;
   label: 'Income' | 'Expenses' | 'Transfers';
-};
+}
 
 const generateColor = (label: Props['label']) => {
   switch (label) {

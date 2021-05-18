@@ -1,7 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import Paper from '@Common/Paper';
 import InsightPill from './InsightPill';
-
+import { useGetAccountInsightsQuery } from '@Generated/graphql';
+import InsightSkeleton from './skeletons/InsightSkeleton';
+import InsightsPieChart from './InsightsPieChart';
 import {
   Container,
   TopHalf,
@@ -13,6 +16,19 @@ import {
 } from './style';
 
 function Insights() {
+  const { id } = useParams<{ id: string }>();
+  const { data, loading, error } = useGetAccountInsightsQuery({
+    variables: { accountId: id },
+  });
+
+  if (loading) {
+    return <InsightSkeleton />;
+  }
+
+  if (!data?.getAccountInsights) {
+    return null;
+  }
+  const { message, income, expenses, transfers } = data.getAccountInsights;
   return (
     <Paper>
       <Container>
@@ -20,12 +36,11 @@ function Insights() {
           <TextWrapper>
             <Header>Insights</Header>
             <Text secondary>Your monthly digest</Text>
-            <Text>
-              Todo: You’ve spent 24% more this month than the previous. Last month, you
-              brought in $2,000 in income, which is 23% more than this month.
-            </Text>
+            <Text>{message}</Text>
           </TextWrapper>
-          <GraphWrapper>Graph</GraphWrapper>
+          <GraphWrapper>
+            <InsightsPieChart data={{ income, expenses, transfers }} />
+          </GraphWrapper>
         </TopHalf>
         <BottomHalf>
           <InsightPill amount={4000.21} label="Income" />
