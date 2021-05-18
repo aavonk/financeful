@@ -7,12 +7,19 @@ import {
   Root,
   FieldResolver,
 } from 'type-graphql';
-import { Context, DailyBalance, Account, RangeParams } from '@Shared/types';
+import {
+  Context,
+  DailyBalance,
+  Account,
+  RangeParams,
+  TransactionTypes,
+} from '@Shared/types';
 import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
   HistoryObject,
   InsightDetailsResponse,
+  InsightPieChartData,
 } from '../types/accountData.types';
 
 import { DateUtils } from '@Shared/utils/DateUtils';
@@ -89,8 +96,17 @@ export class AccountDataResolver {
       previousMonthTransactions,
     );
 
+    const data: InsightPieChartData[] = [
+      { name: TransactionTypes.INCOME, value: currentMonthDetails.income },
+      { name: TransactionTypes.EXPENSES, value: currentMonthDetails.expenses },
+      {
+        name: TransactionTypes.TRANSFERS,
+        value: currentMonthDetails.transfers,
+      },
+    ];
+
     return {
-      ...currentMonthDetails,
+      data: data,
       message: insightService.formatInsightMessage(
         currentMonthDetails,
         previousMonthDetails,

@@ -1,5 +1,6 @@
 import { Field, InputType, ID, ObjectType, Float, Int } from 'type-graphql';
-import { RangeParams } from '@Shared/types';
+
+import { RangeParams, TransactionTypes } from '@Shared/types';
 
 @InputType()
 export class GetBalanceParams extends RangeParams {
@@ -72,7 +73,19 @@ export class InsightDetails {
 }
 
 @ObjectType()
-export class InsightDetailsResponse extends InsightDetails {
+export class InsightPieChartData {
+  @Field(() => TransactionTypes)
+  name: TransactionTypes;
+
+  @Field(() => Float)
+  value: number;
+}
+
+@ObjectType()
+export class InsightDetailsResponse {
+  @Field(() => [InsightPieChartData])
+  data: InsightPieChartData[];
+
   @Field(() => String, {
     description:
       'A formatted message comparing the current month with previous',

@@ -47,11 +47,17 @@ function InsightsPieChart({ data }: Props) {
       return obj;
     });
     return newData;
-  }, [data]);
+  }, []);
 
   useLayoutEffect(() => {
     const data = formatData();
-    setChartData(data as FormattedObject[]);
+    // Add an "empty" spaceholder incase all values are 0, so that
+    // an empty pie chart still appears
+    const newData = [
+      ...data,
+      { name: 'No value', value: 1, fill: theme.colors.darkThree },
+    ];
+    setChartData(newData as FormattedObject[]);
   }, [formatData]);
   return (
     <ResponsiveContainer height={150} width="100%">
@@ -64,9 +70,9 @@ function InsightsPieChart({ data }: Props) {
           dataKey="value"
           stroke={theme.colors.darkTwo}
         >
-          {chartData.map((item, index) => (
-            <Cell key={`cell-${index}`} fill={theme.colors.darkThree} />
-          ))}
+          {chartData.map((item, index) => {
+            return <Cell key={`cell-${index}`} fill={item.fill} />;
+          })}
         </Pie>
       </PieChart>
     </ResponsiveContainer>

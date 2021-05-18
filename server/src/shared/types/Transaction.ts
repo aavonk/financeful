@@ -1,7 +1,18 @@
-import { Field, ObjectType, ID, Int } from 'type-graphql';
+import { Field, ObjectType, ID, Int, registerEnumType } from 'type-graphql';
 import { User } from './User';
 import { Account } from './Account';
 import { Category } from './Category';
+
+export enum TransactionTypes {
+  INCOME = 'income',
+  EXPENSES = 'expenses',
+  TRANSFERS = 'transfers',
+}
+
+registerEnumType(TransactionTypes, {
+  name: 'TransactionTypes',
+  description: 'Income, Expenses, or Transfers',
+});
 
 @ObjectType()
 export class Transaction {
