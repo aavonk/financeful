@@ -23,10 +23,8 @@ export const ItemsContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-
-  /* @media ${({ theme }) => theme.device.tabletAndDown} {
-    flex-direction: column-reverse;
-  } */
+  margin-top: 20px;
+  margin-bottom: 50px;
 
   @media (max-width: 1023px) {
     flex-direction: column-reverse;
@@ -51,11 +49,4 @@ export const InsightsContainer = styled.section`
   @media (max-width: 1023px) {
     padding-left: 0;
   }
-  /* @media ${({ theme }) => theme.device.tabletAndDown} {
-    display: flex;
-    flex-direction: row;
-    flex: 1 0 auto;
-    width: 100%;
-    padding-left: 0;
-  } */
 `;
