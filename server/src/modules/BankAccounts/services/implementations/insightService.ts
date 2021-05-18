@@ -1,6 +1,7 @@
 import { IInsightsService, ComparisonResult } from '../insightsService';
 import { InsightDetails } from '../../types/accountData.types';
 import { Transaction } from '@Shared/types';
+import { MoneyUtils } from '@Shared/utils/MoneyUtils';
 
 type SeperatedTransactions = {
   income: Transaction[];
@@ -104,11 +105,13 @@ export class InsightsService implements IInsightsService {
     const formattedPercentageOfIncome =
       percentageOfIncome < 0 ? percentageOfIncome * -1 : percentageOfIncome;
 
-    return `So far you've spent $${
-      currentTotals.expenses
-    }, which is ${formattedPercentageOfExpenses}% ${
+    return `So far you've spent ${MoneyUtils.formatCurrency(
+      currentTotals.expenses,
+    )}, which is ${formattedPercentageOfExpenses}% ${
       isExpenseNegative ? 'less' : 'more'
-    } than last month. Last month, you brought in $${lastMonthsIncome}, which is ${formattedPercentageOfIncome}% ${
+    } than last month. Last month, you brought in ${MoneyUtils.formatCurrency(
+      lastMonthsIncome,
+    )}, which is ${formattedPercentageOfIncome}% ${
       isIncomeNegative ? 'more' : 'less'
     } than this month.
       `.trim();

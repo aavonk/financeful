@@ -61,7 +61,7 @@ describe('Insight Service Calculations', () => {
     );
 
     expect(message).toBe(
-      `So far you've spent $80, which is 60% more than last month. Last month, you brought in $100, which is 50% more than this month.`,
+      `So far you've spent $80.00, which is 60% more than last month. Last month, you brought in $100.00, which is 50% more than this month.`,
     );
   });
 });
