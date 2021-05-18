@@ -75,8 +75,6 @@ function RecentTransactions() {
       withToolbar={false}
       columns={columns}
       data={data.getTransactionsRange}
-      elevate={false}
-      limitHeight={true}
     />
   );
 }

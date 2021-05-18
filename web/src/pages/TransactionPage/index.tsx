@@ -79,7 +79,7 @@ function TransactionPage() {
   );
 
   if (loading) {
-    return <TableSkeleton columns={6} rows={8} />;
+    return <TableSkeleton columns={6} rows={20} />;
   }
 
   if (error) {
