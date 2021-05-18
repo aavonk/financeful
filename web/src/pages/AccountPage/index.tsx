@@ -9,26 +9,29 @@ import {
   InsightsContainer,
   GridContainer,
   ItemsContainer,
+  PageContainer,
 } from './style';
 import Insights from '@Modules/accounts/RecentActivity/Insights';
 
 function AccountPage() {
   return (
-    <GridContainer>
-      <DateRangeProvider>
-        <ChartContainer>
-          <BalanceHistoryChartController />
-        </ChartContainer>
-        <ItemsContainer>
-          <TransactionsContainer>
-            <RecentTransactions />
-          </TransactionsContainer>
-          <InsightsContainer>
-            <Insights />
-          </InsightsContainer>
-        </ItemsContainer>
-      </DateRangeProvider>
-    </GridContainer>
+    <PageContainer>
+      <GridContainer>
+        <DateRangeProvider>
+          <ChartContainer>
+            <BalanceHistoryChartController />
+          </ChartContainer>
+          <ItemsContainer>
+            <TransactionsContainer>
+              <RecentTransactions />
+            </TransactionsContainer>
+            <InsightsContainer>
+              <Insights />
+            </InsightsContainer>
+          </ItemsContainer>
+        </DateRangeProvider>
+      </GridContainer>
+    </PageContainer>
   );
 }
 

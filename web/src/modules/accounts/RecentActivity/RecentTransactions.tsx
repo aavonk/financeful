@@ -67,7 +67,9 @@ function RecentTransactions() {
   }
 
   if (!data?.getTransactionsRange.length) {
-    return <NoTransactions heading="No recent transactions" />;
+    return (
+      <NoTransactions heading="No recent transactions" data-testid="empty-transactions" />
+    );
   }
   return (
     <TransactionTable

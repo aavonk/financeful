@@ -7,6 +7,7 @@ import { theme } from '@Constants/theme';
 
 interface Props {
   data: InsightPieChartData;
+  'data-testid'?: string;
 }
 
 const generateColor = (label: TransactionTypes) => {
@@ -20,9 +21,10 @@ const generateColor = (label: TransactionTypes) => {
   }
 };
 
-function InsightPill({ data }: Props) {
+function InsightPill(props: Props) {
+  const { data } = props;
   return (
-    <PillContainer>
+    <PillContainer data-testid={props['data-testid']}>
       <PillLeft $color={generateColor(data.name)}>
         <span />
       </PillLeft>

@@ -47,7 +47,7 @@ function BalanceHistoryChartController() {
           withOverlappingMessage
           heading="Woah there"
           subheading="It looks like your balance history doesn't go that far back."
-          errorTestId="history-chart-empty"
+          errorTestId="account-history-chart-empty"
         />
       ) : (
         <GradientAreaChart
@@ -56,6 +56,7 @@ function BalanceHistoryChartController() {
           XAxisKey="date"
           data={data.getAccountDailyBalances}
           color={chartColor}
+          data-testid="account-history-chart"
         />
       )}
     </div>

@@ -7,15 +7,17 @@ import { ViewError } from '@Components/ErrorViews';
 type Props = {
   heading?: string;
   subheading?: string;
+  'data-testid'?: string;
 };
 
 const NoTransactions: React.FC<Props> = ({
   heading = 'No transactions yet!',
   subheading = "When you add some, you'll see them here.",
+  ...props
 }) => {
   return (
     <Paper minHeight="450px">
-      <EmptyContainer>
+      <EmptyContainer data-testid={props['data-testid']}>
         <ViewError emoji="🤑" heading={heading} subheading={subheading} />
         <div style={{ marginTop: '1rem' }}>
           <TransactionForm />

@@ -56,7 +56,11 @@ function Insights() {
         </MiddleRow>
         <BottomRow>
           {data.getAccountInsights.data.map((item, index) => (
-            <InsightPill data={item} key={`insight-${index}`} />
+            <InsightPill
+              data={item}
+              key={`insight-${index}`}
+              data-testid={`insight-pill-${index}`}
+            />
           ))}
         </BottomRow>
       </Container>
