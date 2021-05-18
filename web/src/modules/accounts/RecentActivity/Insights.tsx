@@ -1,8 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Paper from '@Common/Paper';
-import InsightPill from './InsightPill';
 import { useGetAccountInsightsQuery } from '@Generated/graphql';
+import { ViewError } from '@Components/ErrorViews';
+import InsightPill from './InsightPill';
+import Paper from '@Common/Paper';
 import InsightSkeleton from './skeletons/InsightSkeleton';
 import InsightsPieChart from './InsightsPieChart';
 import {
@@ -25,10 +26,17 @@ function Insights() {
     return <InsightSkeleton />;
   }
 
+  if (error) {
+    return (
+      <Paper minHeight="300px" center>
+        <ViewError containerHeight="300px" />
+      </Paper>
+    );
+  }
+
   if (!data?.getAccountInsights) {
     return null;
   }
-  const { message, income, expenses, transfers } = data.getAccountInsights;
   return (
     <Paper>
       <Container>
@@ -36,16 +44,16 @@ function Insights() {
           <TextWrapper>
             <Header>Insights</Header>
             <Text secondary>Your monthly digest</Text>
-            <Text>{message}</Text>
+            <Text>{data.getAccountInsights.message}</Text>
           </TextWrapper>
           <GraphWrapper>
-            <InsightsPieChart data={{ income, expenses, transfers }} />
+            <InsightsPieChart data={data.getAccountInsights.data} />
           </GraphWrapper>
         </TopHalf>
         <BottomHalf>
-          <InsightPill amount={4000.21} label="Income" />
-          <InsightPill amount={2000} label="Expenses" />
-          <InsightPill amount={500} label="Transfers" />
+          {data.getAccountInsights.data.map((item, index) => (
+            <InsightPill data={item} key={`insight-${index}`} />
+          ))}
         </BottomHalf>
       </Container>
     </Paper>

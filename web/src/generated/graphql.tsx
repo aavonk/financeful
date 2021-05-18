@@ -180,15 +180,23 @@ export type LiabilityDetails = {
 
 export type InsightDetailsResponse = {
   __typename?: 'InsightDetailsResponse';
-  /** The total income for the current month */
-  income: Scalars['Float'];
-  /** The total expenses for the current month */
-  expenses: Scalars['Float'];
-  /** The total transfers for the current month */
-  transfers: Scalars['Float'];
+  data: Array<InsightPieChartData>;
   /** A formatted message comparing the current month with previous */
   message: Scalars['String'];
 };
+
+export type InsightPieChartData = {
+  __typename?: 'InsightPieChartData';
+  name: TransactionTypes;
+  value: Scalars['Float'];
+};
+
+/** Income, Expenses, or Transfers */
+export enum TransactionTypes {
+  Income = 'INCOME',
+  Expenses = 'EXPENSES',
+  Transfers = 'TRANSFERS'
+}
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -356,7 +364,11 @@ export type GetAccountInsightsQuery = (
   { __typename?: 'Query' }
   & { getAccountInsights: (
     { __typename?: 'InsightDetailsResponse' }
-    & Pick<InsightDetailsResponse, 'income' | 'expenses' | 'transfers' | 'message'>
+    & Pick<InsightDetailsResponse, 'message'>
+    & { data: Array<(
+      { __typename?: 'InsightPieChartData' }
+      & Pick<InsightPieChartData, 'name' | 'value'>
+    )> }
   ) }
 );
 
@@ -745,10 +757,11 @@ export const TransactionFieldsFragmentDoc = gql`
 export const GetAccountInsightsDocument = gql`
     query GetAccountInsights($accountId: String!) {
   getAccountInsights(accountId: $accountId) {
-    income
-    expenses
-    transfers
     message
+    data {
+      name
+      value
+    }
   }
 }
     `;

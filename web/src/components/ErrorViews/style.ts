@@ -30,12 +30,15 @@ export const Description = styled.p<{ whiteText?: boolean }>`
     `}
 `;
 
-export const Container = styled.div`
+type ContainerProps = {
+  $height?: string;
+};
+export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: ${({ $height }) => ($height ? $height : '100%')};
   width: 100%;
 `;
 

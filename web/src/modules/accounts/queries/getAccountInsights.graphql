@@ -1,8 +1,9 @@
 query GetAccountInsights($accountId: String!) {
   getAccountInsights(accountId: $accountId) {
-    income
-    expenses
-    transfers
     message
+    data {
+      name
+      value
+    }
   }
 }

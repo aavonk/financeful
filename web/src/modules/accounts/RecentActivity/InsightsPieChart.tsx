@@ -1,64 +1,48 @@
 import React, { useState, useLayoutEffect, useCallback } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { InsightPieChartData, TransactionTypes } from '@Generated/graphql';
 import { theme } from '@Constants/theme';
 
-type Data = {
-  income: number;
-  expenses: number;
-  transfers: number;
-};
 type Props = {
-  data: Data;
+  data: InsightPieChartData[];
 };
 
-type FormattedObject = {
-  name: PossibleKeys;
-  value: string;
-  fill: string;
+const getColor = (name: TransactionTypes) => {
+  switch (name) {
+    case TransactionTypes.Income:
+      return theme.colors.green;
+    case TransactionTypes.Expenses:
+      return theme.colors.red;
+    case TransactionTypes.Transfers:
+      return theme.colors.primary;
+    default:
+      return theme.colors.darkThree;
+  }
 };
-
-type Empty = Record<string, unknown>;
-
-type PossibleKeys = 'income' | 'expenses' | 'transfers';
-
-type State = FormattedObject[];
 
 function InsightsPieChart({ data }: Props) {
-  const [chartData, setChartData] = useState<State>([]);
+  const [chartData, setChartData] = useState<InsightPieChartData[]>([]);
+  const getTotals = useCallback(() => {
+    const value = data.reduce((total, current) => current.value + total, 0);
+    return value;
+  }, [data]);
 
-  const getFillColor = (key: PossibleKeys) => {
-    switch (key) {
-      case 'income':
-        return theme.colors.green;
-      case 'expenses':
-        return theme.colors.red;
-      case 'transfers':
-        return theme.colors.primary;
-    }
-  };
-
-  const formatData = useCallback(() => {
-    const newData = Object.entries(data).map((item) => {
-      const obj: FormattedObject | Empty = {};
-      obj.name = item[0];
-      obj.value = item[1];
-      //@ts-ignore
-      obj.fill = getFillColor(obj.name);
-      return obj;
-    });
-    return newData;
-  }, []);
-
+  // If all the values are 0 recharts wont render anything.
+  // Check to make sure the total isn't 0, and if it is,
+  // create a fake data point that will render an "empty" pie chart.
   useLayoutEffect(() => {
-    const data = formatData();
-    // Add an "empty" spaceholder incase all values are 0, so that
-    // an empty pie chart still appears
-    const newData = [
-      ...data,
-      { name: 'No value', value: 1, fill: theme.colors.darkThree },
-    ];
-    setChartData(newData as FormattedObject[]);
-  }, [formatData]);
+    const value = getTotals();
+    if (value === 0) {
+      return setChartData([
+        {
+          name: 'No Data' as TransactionTypes,
+          value: 1,
+        },
+      ]);
+    }
+
+    setChartData(data);
+  }, [data, getTotals]);
   return (
     <ResponsiveContainer height={150} width="100%">
       <PieChart>
@@ -68,10 +52,12 @@ function InsightsPieChart({ data }: Props) {
           outerRadius={65}
           paddingAngle={5}
           dataKey="value"
+          cx="50%"
+          cy="50%"
           stroke={theme.colors.darkTwo}
         >
           {chartData.map((item, index) => {
-            return <Cell key={`cell-${index}`} fill={item.fill} />;
+            return <Cell key={`cell-${index}`} fill={getColor(item.name)} />;
           })}
         </Pie>
       </PieChart>

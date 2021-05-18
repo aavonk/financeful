@@ -1,33 +1,34 @@
 import React from 'react';
 import { PillContainer, PillRight, PillLeft } from './style';
+import { TransactionTypes, InsightPieChartData } from '@Generated/graphql';
+import { capitalizeFirstLetter } from '@Lib/string-formating';
 import { formatCurrency } from '@Lib/money-utils';
 import { theme } from '@Constants/theme';
 
 interface Props {
-  amount: number;
-  label: 'Income' | 'Expenses' | 'Transfers';
+  data: InsightPieChartData;
 }
 
-const generateColor = (label: Props['label']) => {
+const generateColor = (label: TransactionTypes) => {
   switch (label) {
-    case 'Income':
+    case TransactionTypes.Income:
       return theme.colors.green;
-    case 'Expenses':
+    case TransactionTypes.Expenses:
       return theme.colors.red;
-    case 'Transfers':
+    case TransactionTypes.Transfers:
       return theme.colors.primary;
   }
 };
 
-function InsightPill({ amount, label }: Props) {
+function InsightPill({ data }: Props) {
   return (
     <PillContainer>
-      <PillLeft $color={generateColor(label)}>
+      <PillLeft $color={generateColor(data.name)}>
         <span />
       </PillLeft>
       <PillRight>
-        <h4>{formatCurrency(amount)}</h4>
-        <p>{label}</p>
+        <h4>{formatCurrency(data.value)}</h4>
+        <p>{capitalizeFirstLetter(data.name)}</p>
       </PillRight>
     </PillContainer>
   );
