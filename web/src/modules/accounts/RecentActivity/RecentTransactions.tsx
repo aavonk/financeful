@@ -71,10 +71,11 @@ function RecentTransactions() {
   }
   return (
     <TransactionTable
-      withPagination={false}
+      withPagination={true}
       withToolbar={false}
       columns={columns}
       data={data.getTransactionsRange}
+      rowCount={10}
     />
   );
 }

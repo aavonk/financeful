@@ -18,6 +18,7 @@ export interface TableProperties<T extends Record<string, unknown>>
   name?: string;
   withPagination?: boolean;
   withToolbar?: boolean;
+  rowCount?: number;
 }
 
 function Table<T extends Record<string, unknown>>({
@@ -25,13 +26,14 @@ function Table<T extends Record<string, unknown>>({
   columns,
   withPagination = true,
   withToolbar = true,
+  rowCount,
 }: TableProperties<T>) {
   const instance = useTable<T>(
     {
       columns,
       data,
       initialState: {
-        pageSize: withPagination ? 50 : 10000,
+        pageSize: withPagination ? (rowCount ? rowCount : 50) : 10000,
       },
     },
     useGlobalFilter,
