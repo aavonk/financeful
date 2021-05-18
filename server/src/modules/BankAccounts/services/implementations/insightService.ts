@@ -49,7 +49,8 @@ export class InsightsService implements IInsightsService {
     previous: number,
   ): number {
     const amount = ((current - previous) * 100) / previous;
-
+    if (Number.isNaN(amount)) return 0;
+    if (!Number.isFinite(amount)) return 0;
     return Number(amount.toFixed(2));
   }
 

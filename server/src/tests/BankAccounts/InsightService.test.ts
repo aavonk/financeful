@@ -64,4 +64,18 @@ describe('Insight Service Calculations', () => {
       `So far you've spent $80.00, which is 60% more than last month. Last month, you brought in $100.00, which is 50% more than this month.`,
     );
   });
+
+  it('Returns the correct insight message when all values are 0', () => {
+    const zeroValues: InsightDetails = {
+      income: 0,
+      expenses: 0,
+      transfers: 0,
+    };
+
+    const message = insightService.formatInsightMessage(zeroValues, zeroValues);
+
+    expect(message).toBe(
+      `So far you've spent $0.00, which is 0% more than last month. Last month, you brought in $0.00, which is 0% less than this month.`,
+    );
+  });
 });
