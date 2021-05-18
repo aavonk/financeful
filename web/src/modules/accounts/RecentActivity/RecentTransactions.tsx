@@ -32,8 +32,12 @@ function RecentTransactions() {
         },
       },
       {
-        Header: 'Payee',
+        Header: () => <span className="hide-small">Payee</span>,
         accessor: 'payee',
+        className: 'hide-small',
+        Cell: ({ value }: Cell<Transaction>) => {
+          return <span className="hide-small">{value}</span>;
+        },
       },
 
       {

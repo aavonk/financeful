@@ -8,13 +8,27 @@ export const Container = styled.div`
   flex: 1 0 auto;
 `;
 
-export const TopHalf = styled.div`
+export const TopRow = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 0 auto;
 `;
+export const MiddleRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 100%;
 
-export const BottomHalf = styled.div`
+  @media ${({ theme }) => theme.device.tabletAndUp} {
+    flex-direction: row;
+    flex: 1 0 100%;
+    align-items: flex-start;
+    & > p {
+      flex-basis: 60%;
+    }
+  }
+`;
+
+export const BottomRow = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1 0 auto;
@@ -23,18 +37,19 @@ export const BottomHalf = styled.div`
 `;
 
 export const TextWrapper = styled.div`
-  flex-basis: 60%;
+  width: 100%;
   & > :nth-child(2) {
-    padding-top: 16px;
+    padding-top: 6px;
     margin-bottom: 5px;
   }
 `;
 
 export const GraphWrapper = styled.div`
-  flex-basis: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 10px;
+  @media ${({ theme }) => theme.device.tabletAndUp} {
+    flex-basis: 40%;
+    margin-top: 0;
+  }
 `;
 
 //Text Styles
@@ -50,7 +65,7 @@ type TextProps = {
 
 export const Text = styled.p<TextProps>`
   color: ${({ theme }) => theme.colors.textPrimary};
-  font-size: 0.938rem;
+  font-size: 1rem;
   ${({ secondary }) =>
     secondary &&
     css`
@@ -83,6 +98,14 @@ export const PillLeft = styled.div<PillLeftProps>`
     display: inline-block;
     border-radius: 10px;
   }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 10px;
+
+    & > span {
+      width: 6px;
+    }
+  }
 `;
 
 export const PillRight = styled.div`
@@ -95,5 +118,16 @@ export const PillRight = styled.div`
   & > p {
     color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 0.875rem;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    padding-left: 0;
+    & > h4 {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    & > p {
+      font-size: 0.725rem;
+    }
   }
 `;

@@ -15,12 +15,17 @@ export const ItemsContainer = styled.div`
   flex-direction: row;
   width: 100%;
 
-  @media ${({ theme }) => theme.device.tabletAndDown} {
+  /* @media ${({ theme }) => theme.device.tabletAndDown} {
+    flex-direction: column-reverse;
+  } */
+
+  @media (max-width: 1023px) {
     flex-direction: column-reverse;
   }
 `;
+
 export const TransactionsContainer = styled.section`
-  flex-basis: 45%;
+  flex-basis: 50%;
   @media ${({ theme }) => theme.device.tabletAndDown} {
     display: flex;
     flex-direction: row;
@@ -30,13 +35,18 @@ export const TransactionsContainer = styled.section`
 `;
 
 export const InsightsContainer = styled.section`
-  flex-basis: 55%;
+  flex-basis: 50%;
   padding-left: 20px;
-  @media ${({ theme }) => theme.device.tabletAndDown} {
+  margin-bottom: 20px;
+
+  @media (max-width: 1023px) {
+    padding-left: 0;
+  }
+  /* @media ${({ theme }) => theme.device.tabletAndDown} {
     display: flex;
     flex-direction: row;
     flex: 1 0 auto;
     width: 100%;
     padding-left: 0;
-  }
+  } */
 `;

@@ -27,6 +27,10 @@ export const TableRoot = styled.table`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
+
+  & > .hide-small {
+    display: none !important;
+  }
 `;
 
 export const TableHead = styled.thead`
@@ -71,6 +75,12 @@ export const Header = styled.th`
     font-size: 1.375rem;
     font-weight: bold;
   }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    & .hide-small {
+      display: none !important;
+    }
+  }
 `;
 
 export const TableBody = styled.tbody`
@@ -94,6 +104,12 @@ export const TableCell = styled.td`
   & .number {
     font-weight: 600;
     text-align: right;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    & .hide-small {
+      display: none !important;
+    }
   }
 `;
 

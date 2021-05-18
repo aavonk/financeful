@@ -45,7 +45,7 @@ function InsightsPieChart({ data }: Props) {
   }, [data, getTotals]);
   return (
     <ResponsiveContainer height={150} width="100%">
-      <PieChart>
+      <PieChart margin={{ bottom: 20 }}>
         <Pie
           data={chartData}
           innerRadius={45}
