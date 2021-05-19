@@ -83,7 +83,7 @@ If for some reason the `yarn studio` throws an error, try running `npx prisma st
 ##### Accounts:
   - [X] CRUD
   - [X] Account Overview
-  - [ ] Account Details Page
+  - [X] Account Details Page
 
 ##### Dashboard:
  - [ ] Networth Chart
