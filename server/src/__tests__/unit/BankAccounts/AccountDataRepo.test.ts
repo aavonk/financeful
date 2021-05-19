@@ -4,30 +4,42 @@ import { prismaMock } from '../../../testSetup';
 import MockDate from 'mockdate';
 
 let repo: AccountDataRepo;
+const accountId = 'accountId';
+const userId = 'userId';
 
 describe('AccountDataRepo implements db calls correctly', () => {
   beforeEach(() => {
     //@ts-ignore
     repo = new AccountDataRepo(prismaMock);
   });
-  test(' Fetches correct balances', async () => {
+
+  it('Fetches daily balances given a date range', async () => {
     MockDate.set('5/18/2021');
-    const testDate = new Date();
-    const accountId = 'accountId';
-    const userId = 'userId';
+    const startDate = new Date();
+
+    MockDate.set('6/21/2021');
+    const endDate = new Date();
+
     const balances = [
       {
         id: '123',
         userId,
         amount: 30,
-        date: testDate,
+        date: startDate,
+        accountId,
+      },
+      {
+        id: '456',
+        userId,
+        amount: 30000,
+        date: endDate,
         accountId,
       },
     ];
 
     const params: GetBalanceParams = {
-      startDate: testDate,
-      endDate: testDate,
+      startDate,
+      endDate,
       accountId: accountId,
     };
 
@@ -41,6 +53,28 @@ describe('AccountDataRepo implements db calls correctly', () => {
         date: '5/18/2021',
         balance: 0.3,
       },
+      {
+        id: '456',
+        userId,
+        amount: 30000,
+        accountId,
+        date: '6/21/2021',
+        balance: 300,
+      },
     ]);
+  });
+
+  it('Returns an empty array when none are found', async () => {
+    const date = new Date();
+
+    const params: GetBalanceParams = {
+      startDate: date,
+      endDate: date,
+      accountId,
+    };
+
+    prismaMock.dailyBalances.findMany.mockResolvedValue([]);
+
+    await expect(repo.getBalances(params, userId)).resolves.toEqual([]);
   });
 });
