@@ -1,16 +1,20 @@
 import { AccountDataRepo } from '@Modules/BankAccounts/repos/implementations/accountDataRepo';
 import { GetBalanceParams } from '@Modules/BankAccounts/types/accountData.types';
-import { prismaMock } from '../../../testSetup';
+import { Context, MockContext, createMockContext } from '../../../testSetup';
 import MockDate from 'mockdate';
 
 let repo: AccountDataRepo;
+let ctx: Context;
+let mockCtx: MockContext;
 const accountId = 'accountId';
 const userId = 'userId';
 
 describe('AccountDataRepo implements db calls correctly', () => {
   beforeEach(() => {
-    //@ts-ignore
-    repo = new AccountDataRepo(prismaMock);
+    mockCtx = createMockContext();
+    ctx = (mockCtx as unknown) as Context;
+
+    repo = new AccountDataRepo(ctx.prisma);
   });
 
   it('Fetches daily balances given a date range', async () => {
@@ -43,7 +47,7 @@ describe('AccountDataRepo implements db calls correctly', () => {
       accountId: accountId,
     };
 
-    prismaMock.dailyBalances.findMany.mockResolvedValue(balances);
+    mockCtx.prisma.dailyBalances.findMany.mockResolvedValue(balances);
     await expect(repo.getBalances(params, userId)).resolves.toEqual([
       {
         id: '123',
@@ -73,7 +77,7 @@ describe('AccountDataRepo implements db calls correctly', () => {
       accountId,
     };
 
-    prismaMock.dailyBalances.findMany.mockResolvedValue([]);
+    mockCtx.prisma.dailyBalances.findMany.mockResolvedValue([]);
 
     await expect(repo.getBalances(params, userId)).resolves.toEqual([]);
   });
