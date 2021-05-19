@@ -75,7 +75,7 @@ export class AggregateAccountData implements IAggregateAccountData {
     };
   }
 
-  public async getBalanceHistories(
+  public async getAggregatedDailyBalances(
     userId: string,
     range: RangeParams,
   ): Promise<HistoryObject[]> {

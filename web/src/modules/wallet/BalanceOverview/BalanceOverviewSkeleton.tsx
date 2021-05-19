@@ -1,3 +1,4 @@
+import React from 'react';
 import Skeleton from '@Common/Skeleton';
 import Paper from '@Common/Paper';
 import { Container, Header, RangeContainer, RangeLabel } from './style';

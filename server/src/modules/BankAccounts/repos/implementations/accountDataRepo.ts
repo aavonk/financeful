@@ -1,8 +1,9 @@
-import { IDataBase, DailyBalance } from '@Shared/types/';
+import { IDataBase } from '@Shared/types/';
 import { IAccountDataRepo } from '../accountDataRepo';
-import { GetBalanceParams } from '../../types/accountData.types';
+import { GetBalanceParams, HistoryObject } from '../../types/accountData.types';
 import { DateUtils } from '@Shared/utils/DateUtils';
-// import { MoneyUtils } from '@Shared/utils/MoneyUtils';
+import { MoneyUtils } from '@Shared/utils/MoneyUtils';
+
 export class AccountDataRepo implements IAccountDataRepo {
   private client: IDataBase;
 
@@ -13,7 +14,7 @@ export class AccountDataRepo implements IAccountDataRepo {
   async getBalances(
     params: GetBalanceParams,
     userId: string,
-  ): Promise<DailyBalance[]> {
+  ): Promise<HistoryObject[]> {
     const { accountId, startDate, endDate } = params;
     const balances = await this.client.dailyBalances.findMany({
       where: {
@@ -33,6 +34,7 @@ export class AccountDataRepo implements IAccountDataRepo {
     return balances.map((item) => ({
       ...item,
       date: DateUtils.formatNumericDate(item.date),
+      balance: MoneyUtils.convertToFloat(item.amount),
     }));
   }
 }

@@ -7,21 +7,31 @@ import {
   Root,
   FieldResolver,
 } from 'type-graphql';
-import { Context, DailyBalance, Account, RangeParams } from '@Shared/types';
+import {
+  Context,
+  DailyBalance,
+  Account,
+  RangeParams,
+  TransactionTypes,
+} from '@Shared/types';
 import {
   GetBalanceParams,
   AssetsAndLiabilitesResponse,
   HistoryObject,
+  InsightDetailsResponse,
+  InsightPieChartData,
 } from '../types/accountData.types';
+
+import { DateUtils } from '@Shared/utils/DateUtils';
 
 @Resolver(() => DailyBalance)
 export class AccountDataResolver {
   @Authorized()
-  @Query(() => [DailyBalance])
+  @Query(() => [HistoryObject])
   async getAccountDailyBalances(
     @Arg('input') input: GetBalanceParams,
     @Ctx() { user, accountDataRepo }: Context,
-  ): Promise<DailyBalance[]> {
+  ): Promise<HistoryObject[]> {
     return await accountDataRepo.getBalances(input, user.id);
   }
 
@@ -43,10 +53,64 @@ export class AccountDataResolver {
 
   @Authorized()
   @Query(() => [HistoryObject])
-  async getBalanceHistories(
+  async getAggregatedDailyBalances(
     @Arg('input') input: RangeParams,
     @Ctx() { aggregateAccountDataRepo, user }: Context,
   ): Promise<HistoryObject[]> {
-    return await aggregateAccountDataRepo.getBalanceHistories(user.id, input);
+    return await aggregateAccountDataRepo.getAggregatedDailyBalances(
+      user.id,
+      input,
+    );
+  }
+
+  @Authorized()
+  @Query(() => InsightDetailsResponse, {
+    description:
+      'Returns the total Income, expense, and transfers for the specified account in the current month, as well with a formatted description',
+  })
+  async getAccountInsights(
+    @Arg('accountId') accountId: string,
+    @Ctx() { user, transactionRepo, services: { insightService } }: Context,
+  ): Promise<InsightDetailsResponse> {
+    const today = new Date();
+    const { startDate, endDate } = DateUtils.getMonthStartAndEnd(today);
+    const previousMonth = DateUtils.getPreviousMonthStartAndEnd(today);
+
+    const currentMonthTransactions = await transactionRepo.getRange(
+      { startDate, endDate },
+      user.id,
+      accountId,
+    );
+
+    const previousMonthTransactions = await transactionRepo.getRange(
+      { startDate: previousMonth.startDate, endDate: previousMonth.endDate },
+      user.id,
+      accountId,
+    );
+
+    const currentMonthDetails = insightService.calculateTotalTransactionTypes(
+      currentMonthTransactions,
+    );
+
+    const previousMonthDetails = insightService.calculateTotalTransactionTypes(
+      previousMonthTransactions,
+    );
+
+    const data: InsightPieChartData[] = [
+      { name: TransactionTypes.INCOME, value: currentMonthDetails.income },
+      { name: TransactionTypes.EXPENSES, value: currentMonthDetails.expenses },
+      {
+        name: TransactionTypes.TRANSFERS,
+        value: currentMonthDetails.transfers,
+      },
+    ];
+
+    return {
+      data: data,
+      message: insightService.formatInsightMessage(
+        currentMonthDetails,
+        previousMonthDetails,
+      ),
+    };
   }
 }

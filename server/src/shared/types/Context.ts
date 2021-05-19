@@ -7,6 +7,11 @@ import { ICategoryRepo } from '@Modules/Transactions/repos/categoryRepo';
 import { ITransactionRepo } from '@Modules/Transactions/repos/transactionRepo';
 import { IUserRepo } from '@Modules/Users/repos/userRepo';
 import { IAggregateAccountData } from '@Modules/BankAccounts/repos/aggregateAccountData';
+import { IInsightsService } from '@Modules/BankAccounts/services/insightsService';
+
+interface Services {
+  insightService: IInsightsService;
+}
 
 export interface Context extends ExpressContext {
   user: {
@@ -20,4 +25,5 @@ export interface Context extends ExpressContext {
   categoryRepo: ICategoryRepo;
   transactionRepo: ITransactionRepo;
   userRepo: IUserRepo;
+  services: Services;
 }

@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name */
+import * as React from 'react';
 import DatePicker from 'react-datepicker';
 import { DatePickerStyles } from '@Globals/datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import * as React from 'react';
 import {
   StyledUnderlineInput,
   StyledLabel,
@@ -148,3 +148,17 @@ export const BorderedDatePicker = React.forwardRef<HTMLLabelElement, DateProps>(
     );
   },
 );
+
+export function SecondaryDatePicker(props: DateProps) {
+  return (
+    <DatePickerStyles secondary>
+      <DatePicker
+        selected={props.selected}
+        onChange={props.onChange}
+        calendarClassName="fin"
+        className="fin--input"
+        popperPlacement="bottom-end"
+      />
+    </DatePickerStyles>
+  );
+}

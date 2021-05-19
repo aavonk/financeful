@@ -1,3 +1,4 @@
+import React from 'react';
 import Paper from '@Common/Paper';
 import { __DEV__ } from '@Constants/environment';
 import ViewError from './ViewError';

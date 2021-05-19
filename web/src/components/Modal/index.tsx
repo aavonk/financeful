@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
 import { DialogProps } from '@reach/dialog';

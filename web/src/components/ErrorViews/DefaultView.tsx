@@ -1,3 +1,4 @@
+import React from 'react';
 import ViewError from './ViewError';
 function DefaultView() {
   return (

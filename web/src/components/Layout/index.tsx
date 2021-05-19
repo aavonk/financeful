@@ -16,14 +16,8 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Appbar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <Appbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
       <PageContainer isSidebarOpen={isSidebarOpen}>{children}</PageContainer>
     </>
   );

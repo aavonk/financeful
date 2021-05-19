@@ -1,10 +1,8 @@
+import React from 'react';
+
 function LogoSvg({ ...props }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="6.23 159.99 487.73 255"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="6.23 159.99 487.73 255" {...props}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="363.16 132.5 273.68 735"

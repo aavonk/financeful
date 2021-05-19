@@ -4,7 +4,8 @@ const theme: DefaultTheme = {
   colors: {
     background: '#0b0e11',
     darkOne: '#0b0e11',
-    darkTwo: '#151a21',
+    // darkTwo: '#151a21',
+    darkTwo: '#131619',
     darkThree: '#242c37',
     darkFour: '#323d4d',
     primary: '#1e88e5',
@@ -20,12 +21,16 @@ const theme: DefaultTheme = {
     tooltip: '#3E4954',
     red: 'rgb(236,69,97)',
     yellow: 'rgb(241,180,76)',
-    green: 'rgb(52,195,143)',
+    green: 'rgb(27, 170, 118, 1)',
     turqouise: 'rgb(2,164,153)',
   },
   charts: {
+    greenFill: '#34c38f',
+    greenStroke: '#1BAA76',
     purpleFill: '#8884d8',
     purpleStroke: '#5551A5',
+    blueFill: '#2451B7',
+    blueStroke: '#2451B7',
     strokeWidth: 4,
   },
   effects: {

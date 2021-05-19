@@ -1,16 +1,12 @@
 import styled from 'styled-components';
-import { StyledPaper } from '@Common/Paper';
 
-type TablePaperProps = {
-  limitHeight?: boolean;
-};
-
-export const TablePaper = styled(StyledPaper)<TablePaperProps>`
-  max-height: ${(props) => (props.limitHeight === true ? '450px' : 'none')};
-
-  @media ${({ theme }) => theme.device.desktop} {
-    max-height: 100%;
-  } ;
+export const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  margin-top: 8rem;
 `;
 
 export const TableRoot = styled.table`
@@ -18,6 +14,10 @@ export const TableRoot = styled.table`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
+
+  & > .hide-small {
+    display: none !important;
+  }
 `;
 
 export const TableHead = styled.thead`
@@ -62,6 +62,12 @@ export const Header = styled.th`
     font-size: 1.375rem;
     font-weight: bold;
   }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    & .hide-small {
+      display: none !important;
+    }
+  }
 `;
 
 export const TableBody = styled.tbody`
@@ -85,6 +91,12 @@ export const TableCell = styled.td`
   & .number {
     font-weight: 600;
     text-align: right;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    & .hide-small {
+      display: none !important;
+    }
   }
 `;
 

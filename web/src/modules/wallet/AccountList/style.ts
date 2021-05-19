@@ -25,7 +25,7 @@ export const TextWrapper = styled.div`
 export const Title = styled.div`
   display: flex;
   flex-direction: column;
-  & > h3 {
+  & > h2 {
     color: ${({ theme }) => theme.colors.textPrimary};
     font-size: 1.2rem;
     font-weight: 600;

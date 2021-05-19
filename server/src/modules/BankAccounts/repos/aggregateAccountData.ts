@@ -6,7 +6,7 @@ import { RangeParams } from '@Shared/types';
 
 export interface IAggregateAccountData {
   getAssetsAndLiabilites(userId: string): Promise<AssetsAndLiabilitesResponse>;
-  getBalanceHistories(
+  getAggregatedDailyBalances(
     userId: string,
     range: RangeParams,
   ): Promise<HistoryObject[]>;

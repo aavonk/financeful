@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Account } from '@Generated/graphql';
 import { AccountItemBox, ItemName, MenuContainer, TextWrapper } from './style';
@@ -16,7 +16,9 @@ function AccountItem({ account, children }: Props) {
 
   return (
     <AccountItemBox data-testid="account-item" $inactive={account.isInactive!}>
-      <TextWrapper onClick={() => history.push(`/account/${account.id}`)}>
+      <TextWrapper
+        onClick={() => history.push(`/account/${account.id}?name=${account.accountName}`)}
+      >
         <ItemName>
           <p>Nickname</p>
           <p>{account.accountName}</p>

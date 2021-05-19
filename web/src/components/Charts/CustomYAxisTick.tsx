@@ -1,3 +1,4 @@
+import React from 'react';
 import { theme } from '@Constants/theme';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 

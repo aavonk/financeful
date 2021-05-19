@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const DatePickerStyles = styled.div`
+type Props = {
+  secondary?: boolean;
+};
+export const DatePickerStyles = styled.div<Props>`
   & > .react-datepicker-wrapper {
     width: 100%;
 
@@ -18,15 +21,27 @@ export const DatePickerStyles = styled.div`
         margin-top: 2px;
         box-shadow: none;
         color: ${({ theme }) => theme.colors.textPrimary};
+        ${({ secondary }) =>
+          secondary &&
+          css`
+            background: ${({ theme }) => theme.colors.darkThree};
+            font-size: 0.7rem;
+            padding: 0 6px;
+            height: 32px;
+            width: 82px;
+            text-align: center;
+            font-weight: 600;
+            font-family: inherit;
+          `}
       }
     }
   }
   & .fin {
     background: ${({ theme }) => theme.colors.darkTwo};
     border: 1px solid ${({ theme }) => theme.colors.primary};
-    font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont,
-      'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-      'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
 
     & > .react-datepicker__triangle {
       border-bottom-color: ${({ theme }) => theme.colors.darkTwo};
@@ -38,10 +53,22 @@ export const DatePickerStyles = styled.div`
     & > button.react-datepicker__navigation.react-datepicker__navigation--next {
       border-left-color: ${({ theme }) => theme.colors.textSecondary};
     }
-    &
-      > button.react-datepicker__navigation.react-datepicker__navigation--previous {
+    & > button.react-datepicker__navigation.react-datepicker__navigation--previous {
       border-right-color: ${({ theme }) => theme.colors.textSecondary};
     }
+
+    ${({ secondary }) =>
+      secondary &&
+      css`
+        border: 1px solid ${({ theme }) => theme.colors.darkThree};
+        & > .react-datepicker__triangle {
+          border-bottom-color: ${({ theme }) => theme.colors.darkTwo};
+
+          &::before {
+            border-bottom-color: ${({ theme }) => theme.colors.darkThree};
+          }
+        }
+      `}
   }
 
   & .react-datepicker__header {

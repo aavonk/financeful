@@ -1,3 +1,4 @@
+import React from 'react';
 import Paper from '@Common/Paper';
 import Skeleton from '@Common/Skeleton';
 import { AccountItemBox, ItemName, Container } from './style';

@@ -1,3 +1,4 @@
+import React from 'react';
 import IconDropdown, { DropdownItems } from '@Common/IconDropdown';
 import { VerticalMenuIcon, InfoIcon, ErrorIcon } from '@Common/Icons';
 import { AlignRight } from '../style';

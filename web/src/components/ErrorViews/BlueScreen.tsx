@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  This component is shows as a full replacement for the entire app in 
  production whenever an error happens that would otherwise crash

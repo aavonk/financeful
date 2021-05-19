@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useContext,
   ReactNode,
@@ -62,9 +62,7 @@ function AlertProvider({ children }: AlertProviderProps) {
   );
   const value = { alerts: state, showAlert };
 
-  return (
-    <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
-  );
+  return <AlertContext.Provider value={value}>{children}</AlertContext.Provider>;
 }
 
 function useAlert() {

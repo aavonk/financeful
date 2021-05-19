@@ -1,15 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useGetBalanceHistoriesQuery } from '@Generated/graphql';
 import { AreaChartSkeleton } from '@Components/ChartSkeletons';
 import { getDateRange } from '@Lib/date-formatting';
-import BalanceHistoryChart from './BalanceHistoryChart';
-import DateRangeFilter from './DateRangeFilter';
-
-export type DateRangeState = {
-  startDate: Date;
-  endDate: Date;
-  label: string;
-};
+import { GradientAreaChart } from '@Components/Charts';
+import DateRangeFilter, { DateRangeState } from '@Components/DateFilter/DateRangeFilter';
 
 function BalanceHistoryChartController() {
   const [range, setRange] = useState<DateRangeState>(() => {
@@ -39,16 +33,21 @@ function BalanceHistoryChartController() {
   }
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <DateRangeFilter setRange={setRange} selected={range.label} />
-      {!data.getBalanceHistories.length ? (
+      <DateRangeFilter setRange={setRange} selected={range.label} range={range} />
+      {!data.getAggregatedDailyBalances.length ? (
         <AreaChartSkeleton
           withOverlappingMessage
           heading="Woah there"
-          subheading="It looks like you don't have enough balance history yet."
+          subheading="It looks like your balance history doesn't go that far back"
           errorTestId="networth-chart-empty"
         />
       ) : (
-        <BalanceHistoryChart data={data.getBalanceHistories} />
+        <GradientAreaChart
+          data={data.getAggregatedDailyBalances}
+          XAxisKey="date"
+          YAxisKey="balance"
+          AreaDataKey="balance"
+        />
       )}
     </div>
   );

@@ -4,11 +4,17 @@ import HtmlWebPackPlugin from 'html-webpack-plugin';
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './public/index.html',
+  inject: false,
 });
 
 const config: webpack.Configuration = {
   mode: 'development',
   entry: './src/index.tsx',
+  output: {
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'public'),
+    publicPath: '/',
+  },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],

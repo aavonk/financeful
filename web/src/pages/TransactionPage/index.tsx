@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
@@ -13,7 +13,7 @@ import TableActions from '@Modules/transactions/Table/Actions';
 import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-import NoTransactions from './components/NoTransactions';
+import NoTransactions from '@Modules/transactions/Table/NoTransactions';
 
 function TransactionPage() {
   const { data, error, loading } = useGetTransactionsQuery();
@@ -79,7 +79,7 @@ function TransactionPage() {
   );
 
   if (loading) {
-    return <TableSkeleton columns={6} rows={8} />;
+    return <TableSkeleton columns={6} rows={20} />;
   }
 
   if (error) {

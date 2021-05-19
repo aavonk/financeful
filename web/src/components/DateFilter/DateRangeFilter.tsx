@@ -1,15 +1,21 @@
-import { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
 import { getDateRange } from '@Lib/date-formatting';
-import { DateRangeState } from './BalanceHistoryChartController';
+import { SecondaryDatePicker } from '@Common/FormElements';
+import { DateRangeContext } from '@Context/daterange/DateRangeContext';
 
-type Props = {
-  setRange: Dispatch<SetStateAction<DateRangeState>>;
+interface Props extends DateRangeContext {
   selected: string;
+}
+
+export type DateRangeState = {
+  startDate: Date;
+  endDate: Date;
+  label: string;
 };
 
-function DateRangeFilter({ setRange, selected }: Props) {
+function DateRangeFilter({ setRange, selected, range }: Props) {
   const dateRanges: DropdownItems = [
     {
       label: 'This month',
@@ -54,6 +60,14 @@ function DateRangeFilter({ setRange, selected }: Props) {
       },
     },
   ];
+
+  const onCustomDateChange = (date: Date, item: 'start' | 'end') => {
+    if (item === 'start') {
+      return setRange((old) => ({ ...old, startDate: date, label: 'Custom' }));
+    }
+    setRange((old) => ({ ...old, endDate: date, label: 'Custom' }));
+  };
+
   return (
     <Container>
       <DropdownButton
@@ -62,7 +76,24 @@ function DateRangeFilter({ setRange, selected }: Props) {
         selected={selected}
         small
         data-testid="date-range-button"
+        overrideButtonStyle={{
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+        }}
       />
+      <InputContainer>
+        <SecondaryDatePicker
+          selected={range.startDate}
+          onChange={(date: Date) => onCustomDateChange(date, 'start')}
+          label="Date *"
+        />
+        <FillerText>to</FillerText>
+        <SecondaryDatePicker
+          selected={range.endDate}
+          onChange={(date: Date) => onCustomDateChange(date, 'end')}
+          label="Date *"
+        />
+      </InputContainer>
     </Container>
   );
 }
@@ -70,9 +101,23 @@ function DateRangeFilter({ setRange, selected }: Props) {
 export default DateRangeFilter;
 
 const Container = styled.div`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
   padding-right: 10px;
+`;
+
+const FillerText = styled.label`
+  background: ${({ theme }) => theme.colors.darkThree};
+  font-size: 0.8rem;
+  height: 32px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+`;
+
+const InputContainer = styled.div`
+  display: inline-flex;
+  /* position: relative; */
 `;

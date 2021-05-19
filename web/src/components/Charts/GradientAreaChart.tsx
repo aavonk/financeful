@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ResponsiveContainer,
   Area,
@@ -10,22 +11,51 @@ import {
 import { CustomXAxisTick, CustomTooltip, CustomYAxisTick } from '@Components/Charts';
 import { HistoryObject } from '@Generated/graphql';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
+import { theme } from '@Constants/theme';
+
+type ColorProp = {
+  stroke: string;
+  fill: string;
+};
 type Props = {
   data: HistoryObject[];
+  XAxisKey: string;
+  YAxisKey: string;
+  AreaDataKey: string;
+  color?: ColorProp;
+  'data-testid'?: string;
 };
-function BalanceHistoryChart({ data }: Props) {
+
+const defaultColors: ColorProp = {
+  stroke: theme.charts.blueStroke,
+  fill: theme.charts.blueFill,
+};
+
+function GradientAreaChart({
+  data,
+  XAxisKey,
+  YAxisKey,
+  AreaDataKey,
+  color = defaultColors,
+  ...props
+}: Props) {
   const isDesktop = useMediaQuery('(min-width: 1601px)');
+
   return (
-    <ResponsiveContainer width="100%" height={isDesktop ? 420 : 300}>
+    <ResponsiveContainer
+      width="100%"
+      height={isDesktop ? 420 : 300}
+      data-testid={props['data-testid']}
+    >
       <AreaChart data={data}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2451B7" stopOpacity={0.4} />
-            <stop offset="75%" stopColor="#2451B7" stopOpacity={0.15} />
+            <stop offset="0%" stopColor={color.fill} stopOpacity={0.4} />
+            <stop offset="75%" stopColor={color.fill} stopOpacity={0.15} />
           </linearGradient>
         </defs>
         <XAxis
-          dataKey="date"
+          dataKey={XAxisKey}
           axisLine={false}
           tickLine={false}
           tick={<CustomXAxisTick />}
@@ -33,7 +63,7 @@ function BalanceHistoryChart({ data }: Props) {
         />
         <YAxis
           type="number"
-          dataKey="balance"
+          dataKey={YAxisKey}
           axisLine={false}
           tickLine={false}
           tickCount={4}
@@ -43,10 +73,10 @@ function BalanceHistoryChart({ data }: Props) {
         />
         <Tooltip content={<CustomTooltip />} />
         <Area
-          dataKey="balance"
+          dataKey={AreaDataKey}
           type="monotone"
           stackId="1"
-          stroke="#2451B7"
+          stroke={color.stroke}
           strokeWidth={2}
           fill="url(#color)"
         />
@@ -56,4 +86,4 @@ function BalanceHistoryChart({ data }: Props) {
   );
 }
 
-export default BalanceHistoryChart;
+export default GradientAreaChart;

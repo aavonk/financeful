@@ -1,11 +1,20 @@
 import styled from 'styled-components';
 
+export const PageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 0.4fr 1fr;
   grid-template-rows: repeat(auto-fill, minmax(0, 1fr));
   grid-column-gap: 20px;
   grid-row-gap: 10px;
+  max-width: 1440px;
+  width: 100%;
 `;
 
 export const CardViewContainer = styled.section`

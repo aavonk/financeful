@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "webpack serve",
-    "dev": "webpack serve --open --config webpack.dev.ts",
+    "dev": "webpack serve --open --config webpack.dev.ts --history-api-fallback",
     "build": "webpack --mode production --config webpack.prod.ts",
     "watch": "webpack --watch",
     "test": "jest",

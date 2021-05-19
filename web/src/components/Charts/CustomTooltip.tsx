@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { parseISO, format } from 'date-fns';
 import { formatCurrency } from '@Lib/money-utils';

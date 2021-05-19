@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '@Common/Button';
 import { Emoji, Heading, Description, Container } from './style';
 
@@ -8,6 +9,7 @@ interface Props {
   emoji?: string;
   whiteText?: boolean;
   reloadFunction?: () => void;
+  containerHeight?: string;
 }
 function ViewError(props: Props) {
   const {
@@ -17,9 +19,10 @@ function ViewError(props: Props) {
     reload,
     reloadFunction,
     whiteText,
+    containerHeight,
   } = props;
   return (
-    <Container>
+    <Container $height={containerHeight}>
       <Emoji role="img" aria-label="Oops">
         {emoji}
       </Emoji>

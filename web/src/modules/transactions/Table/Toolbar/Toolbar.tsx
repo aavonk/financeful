@@ -1,3 +1,4 @@
+import React from 'react';
 import { ToolbarRoot, ActionsContainer } from './style';
 import { TableInstance } from 'react-table';
 import TransactionFormController from '../../Forms/TransactionForm/TransactionFormController';

@@ -1,0 +1,9 @@
+query GetAccountInsights($accountId: String!) {
+  getAccountInsights(accountId: $accountId) {
+    message
+    data {
+      name
+      value
+    }
+  }
+}

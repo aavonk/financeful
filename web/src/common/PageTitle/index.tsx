@@ -1,5 +1,6 @@
+import React from 'react';
 import styled from 'styled-components';
-
+import { useQuery } from '@Hooks/useQuery';
 const TitleRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -21,26 +22,28 @@ const Title = styled.div`
   }
 `;
 
-const renderTitle = (path: string) => {
-  switch (path) {
-    case '/dashboard':
-      return 'Dashboard';
-    case '/transactions':
-      return 'Transactions';
-    case '/calendar':
-      return 'Calendar';
-    case '/bills':
-      return 'Bills';
-    case '/settings':
-      return 'Settings';
-    case '/my-wallet':
-      return 'My Wallet';
-    default:
-      return 'Financeful';
-  }
-};
-
 function PageTitle({ location }: { location: string }) {
+  const query = useQuery();
+  const renderTitle = (path: string) => {
+    switch (path) {
+      case 'dashboard':
+        return 'Dashboard';
+      case 'transactions':
+        return 'Transactions';
+      case 'calendar':
+        return 'Calendar';
+      case 'bills':
+        return 'Bills';
+      case 'settings':
+        return 'Settings';
+      case 'my-wallet':
+        return 'My Wallet';
+      case 'account':
+        return query.get('name');
+      default:
+        return 'Financeful';
+    }
+  };
   return (
     <TitleRow>
       <Title>

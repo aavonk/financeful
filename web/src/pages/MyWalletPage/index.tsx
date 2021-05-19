@@ -1,3 +1,4 @@
+import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import AccountActionsController from '@Modules/wallet/AccountActionsController';
 import AccountListError from '@Modules/wallet/AccountList/AccountListError';
@@ -8,23 +9,26 @@ import {
   CardViewContainer,
   WidgetViewContainer,
   AccountViewContainer,
+  PageContainer,
 } from './style';
 
 function MyWalletPage() {
   return (
-    <GridContainer>
-      <CardViewContainer data-testid="networth-chart">
-        <BalanceHistoryChartController />
-      </CardViewContainer>
-      <WidgetViewContainer>
-        <BalanceOverviewController />
-      </WidgetViewContainer>
-      <AccountViewContainer>
-        <ErrorBoundary FallbackComponent={AccountListError}>
-          <AccountActionsController />
-        </ErrorBoundary>
-      </AccountViewContainer>
-    </GridContainer>
+    <PageContainer>
+      <GridContainer>
+        <CardViewContainer data-testid="networth-chart">
+          <BalanceHistoryChartController />
+        </CardViewContainer>
+        <WidgetViewContainer>
+          <BalanceOverviewController />
+        </WidgetViewContainer>
+        <AccountViewContainer>
+          <ErrorBoundary FallbackComponent={AccountListError}>
+            <AccountActionsController />
+          </ErrorBoundary>
+        </AccountViewContainer>
+      </GridContainer>
+    </PageContainer>
   );
 }
 

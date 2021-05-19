@@ -18,7 +18,7 @@ import { TransactionRepo } from '@Modules/Transactions/repos/implementations/tra
 import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
 import { AccountDataRepo } from '@Modules/BankAccounts/repos/implementations/accountDataRepo';
 import { AggregateAccountData } from '@Modules/BankAccounts/repos/implementations/aggregateAccountData';
-
+import { InsightsService } from '@Modules/BankAccounts/services/implementations/insightService';
 import { AccountDataResolver } from '@Modules/BankAccounts/resolvers/AccountDataResolver';
 import prisma from '@Shared/database/prisma';
 
@@ -48,6 +48,9 @@ const main = async () => {
       userRepo: new UserRepo(prisma),
       accountDataRepo: new AccountDataRepo(prisma),
       aggregateAccountDataRepo: new AggregateAccountData(prisma),
+      services: {
+        insightService: new InsightsService(),
+      },
     }),
   });
 

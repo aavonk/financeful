@@ -26,8 +26,12 @@ declare module 'styled-components' {
       tooltip: string;
     };
     charts: {
+      greenFill: string;
+      greenStroke: string;
       purpleFill: string;
       purpleStroke: string;
+      blueFill: string;
+      blueStroke: string;
       strokeWidth: number;
     };
     effects: {

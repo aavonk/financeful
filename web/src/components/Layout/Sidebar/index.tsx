@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import {
   SidebarRoot,
   SidebarBrand,
@@ -15,6 +15,7 @@ import {
   BillsIcon,
   CreditCardIcon,
   ChevronLeftIcon,
+  WalletIcon,
 } from '@Common/Icons';
 import Tooltip from '@Common/Tooltip';
 import IconButton from '@Common/IconButton';
@@ -40,6 +41,14 @@ const items = [
     text: 'Transactions',
     icon: <CreditCardIcon />,
     ariaLabel: 'Transactions page',
+  },
+  {
+    tooltip: 'My Wallet',
+    tooltipDirection: 'right',
+    path: '/my-wallet',
+    text: 'My Wallet',
+    icon: <WalletIcon />,
+    ariaLabel: 'My wallet page',
   },
   {
     tooltip: 'Calendar',
@@ -68,10 +77,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
           <h2>financeful</h2>
         </Logo>
         <span>
-          <IconButton
-            onClick={() => setIsSidebarOpen(false)}
-            ariaText="Close sidebar"
-          >
+          <IconButton onClick={() => setIsSidebarOpen(false)} ariaText="Close sidebar">
             <ChevronLeftIcon />
           </IconButton>
         </span>
@@ -79,11 +85,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
       <NavWrapper>
         <NavigationItems>
           {items.map((item, index) => (
-            <Tooltip
-              content={item.tooltip}
-              direction={item.tooltipDirection}
-              key={index}
-            >
+            <Tooltip content={item.tooltip} direction={item.tooltipDirection} key={index}>
               <NavItem to={item.path} exact aria-label={item.ariaLabel}>
                 {item.icon}
                 <span>{item.text}</span>

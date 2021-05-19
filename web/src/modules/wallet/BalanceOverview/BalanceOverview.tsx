@@ -1,3 +1,4 @@
+import React from 'react';
 import Paper from '@Common/Paper';
 import { Header, Container } from './style';
 import { AssetsAndLiabilitesResponse } from '@Generated/graphql';

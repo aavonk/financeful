@@ -1,3 +1,4 @@
+import React from 'react';
 import { ViewError } from '@Components/ErrorViews/';
 import Paper from '@Common/Paper';
 function AccountListError() {

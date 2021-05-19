@@ -1,3 +1,4 @@
+import React from 'react';
 import { InfoIcon, ErrorIcon, CheckCircleIcon } from '@Common/Icons';
 import { useAlert, IAlert } from '@Context/alert/alertContext';
 import { AlertRoot, AlertIcon, AlertMessage } from './style';

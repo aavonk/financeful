@@ -20,9 +20,9 @@ export type Dispatch = (action: Action) => void;
 
 export type AuthFunction = () => void;
 
-const AuthContext = React.createContext<
-  { state: State; dispatch: Dispatch } | undefined
->(undefined);
+const AuthContext = React.createContext<{ state: State; dispatch: Dispatch } | undefined>(
+  undefined,
+);
 
 type AuthProviderProps = {
   children: React.ReactNode;
