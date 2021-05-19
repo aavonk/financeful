@@ -4,7 +4,7 @@ import { InsightsService } from '@Modules/BankAccounts/services/implementations/
 import {
   TRANSACTION_TOTALS,
   MOCK_TRANSACTIONS,
-} from '../fixtures/transactions';
+} from '../../__mocks__/fixtures/transactions';
 
 describe('Insight Service Calculations', () => {
   const insightService = new InsightsService();

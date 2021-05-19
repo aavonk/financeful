@@ -1,4 +1,4 @@
-import { Transaction } from '../../shared/types';
+import { Transaction } from '../../../shared/types';
 
 // The sum of each transaction type from the transactions below
 export const TRANSACTION_TOTALS = {

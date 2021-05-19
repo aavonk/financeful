@@ -10,8 +10,8 @@
     "studio": "yarn prisma studio",
     "seed:db": "yarn prisma db seed --preview-feature",
     "reset:db": "yarn prisma migrate reset --skip-seed",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest -i",
+    "test:watch": "jest -i --watch"
   },
   "keywords": [],
   "author": "Aaron von Kreisler",
@@ -37,6 +37,8 @@
     "eslint-plugin-node": "^11.1.0",
     "faker": "^5.5.3",
     "jest": "^26.6.3",
+    "jest-mock-extended": "^1.0.14",
+    "mockdate": "^3.0.5",
     "prettier": "^2.2.1",
     "prisma": "^2.22.1",
     "prompt": "^1.1.0",
