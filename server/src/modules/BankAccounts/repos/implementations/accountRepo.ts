@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { IAccountRepo } from '../accountRepo';
-import { Account } from '@Shared/types/Account';
+import { Account, BalanceUpdateInfo, SuccessOrError } from '@Shared/types';
 import {
   CreateAccountInput,
   EditAccountInput,
@@ -65,6 +65,7 @@ export class AccountRepo implements IAccountRepo {
     if (account.userId !== userId) {
       throw new Error('Unauthorized');
     }
+
     const { classification, ...inputData } = input;
     return await this.accountModel.update({
       where: {
@@ -130,5 +131,24 @@ export class AccountRepo implements IAccountRepo {
         },
       },
     });
+  }
+
+  public async updateBalance(
+    updateInfo: BalanceUpdateInfo,
+    accountId: string,
+  ): Promise<SuccessOrError> {
+    try {
+      await this.client.account.update({
+        where: { id: accountId },
+        data: {
+          balance: updateInfo,
+        },
+      });
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+    return {
+      success: true,
+    };
   }
 }

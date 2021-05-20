@@ -1,4 +1,4 @@
-import { Account } from '@Shared/types/Account';
+import { Account, BalanceUpdateInfo, SuccessOrError } from '@Shared/types';
 import { CreateAccountInput, EditAccountInput } from '../types/account.types';
 
 export interface IAccountRepo {
@@ -15,4 +15,8 @@ export interface IAccountRepo {
     userId: string,
     accountId: string,
   ): Promise<Account>;
+  updateBalance(
+    updateInfo: BalanceUpdateInfo,
+    accountId: string,
+  ): Promise<SuccessOrError>;
 }

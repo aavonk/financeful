@@ -1,6 +1,6 @@
 import { Field, InputType, Int, registerEnumType } from 'type-graphql';
 
-enum AccountClassification {
+export enum AccountClassification {
   asset = 'ASSET',
   liability = 'LIABILITY',
 }

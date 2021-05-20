@@ -70,4 +70,70 @@ export class DateUtils {
       return date;
     }
   }
+
+  public static min(dirtyDatesArray: Date[] | number[]): Date {
+    let datesArray: Date[] | number[];
+    // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
+    if (dirtyDatesArray && typeof dirtyDatesArray.forEach === 'function') {
+      datesArray = dirtyDatesArray;
+      // If `dirtyDatesArray` is Array-like Object, convert to Array.
+    } else if (
+      typeof dirtyDatesArray === 'object' &&
+      dirtyDatesArray !== null
+    ) {
+      datesArray = Array.prototype.slice.call(dirtyDatesArray);
+    } else {
+      // `dirtyDatesArray` is non-iterable, return Invalid Date
+      return new Date(NaN);
+    }
+
+    let result: Date | undefined;
+
+    datesArray.forEach(function (dirtyDate: Date | number) {
+      let currentDate = new Date(dirtyDate);
+
+      if (
+        result === undefined ||
+        result > currentDate ||
+        isNaN(currentDate.getDate())
+      ) {
+        result = currentDate;
+      }
+    });
+
+    return result || new Date(NaN);
+  }
+
+  public static max(dirtyDatesArray: Date[] | string[] | number[]): Date {
+    let datesArray;
+    // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
+    if (dirtyDatesArray && typeof dirtyDatesArray.forEach === 'function') {
+      datesArray = dirtyDatesArray;
+
+      // If `dirtyDatesArray` is Array-like Object, convert to Array.
+    } else if (
+      typeof dirtyDatesArray === 'object' &&
+      dirtyDatesArray !== null
+    ) {
+      datesArray = Array.prototype.slice.call(dirtyDatesArray);
+    } else {
+      // `dirtyDatesArray` is non-iterable, return Invalid Date
+      return new Date(NaN);
+    }
+
+    let result: Date | undefined;
+    datesArray.forEach(function (dirtyDate: any) {
+      const currentDate = new Date(dirtyDate);
+
+      if (
+        result === undefined ||
+        result < currentDate ||
+        isNaN(Number(currentDate))
+      ) {
+        result = currentDate;
+      }
+    });
+
+    return result || new Date(NaN);
+  }
 }

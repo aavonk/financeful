@@ -1,6 +1,13 @@
 import { Field, ObjectType, ID, Int } from 'type-graphql';
 import { User } from './User';
 
+export type BalanceUpdateInfo =
+  | { increment: number; decrement?: never }
+  | {
+      decrement: number;
+      increment?: never;
+    };
+
 @ObjectType()
 export class Account {
   @Field(() => ID)

@@ -70,19 +70,19 @@ export class AccountDataResolver {
   })
   async getAccountInsights(
     @Arg('accountId') accountId: string,
-    @Ctx() { user, transactionRepo, services: { insightService } }: Context,
+    @Ctx() { user, services: { insightService, transactionService } }: Context,
   ): Promise<InsightDetailsResponse> {
     const today = new Date();
     const { startDate, endDate } = DateUtils.getMonthStartAndEnd(today);
     const previousMonth = DateUtils.getPreviousMonthStartAndEnd(today);
 
-    const currentMonthTransactions = await transactionRepo.getRange(
+    const currentMonthTransactions = await transactionService.getRange(
       { startDate, endDate },
       user.id,
       accountId,
     );
 
-    const previousMonthTransactions = await transactionRepo.getRange(
+    const previousMonthTransactions = await transactionService.getRange(
       { startDate: previousMonth.startDate, endDate: previousMonth.endDate },
       user.id,
       accountId,
