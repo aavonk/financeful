@@ -1,11 +1,18 @@
-import { Account } from './Account';
-import { Category } from './Category';
-import { Context } from './Context';
-import { User } from './User';
-import { DailyBalance } from './DailyBalance';
 import { IDataBase } from '../database/IDataBase';
 
 export * from './inputTypes';
 export * from './Transaction';
+export * from './Account';
+export * from './Category';
+export * from './Context';
+export * from './User';
+export * from './DailyBalance';
 
-export { Account, Category, Context, User, DailyBalance, IDataBase };
+type Success = { success: boolean };
+type PossibleError =
+  | { success: true; message?: never }
+  | { success: false; message: string };
+
+type SuccessOrError = Success & PossibleError;
+
+export { IDataBase, SuccessOrError };

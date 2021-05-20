@@ -131,4 +131,29 @@ describe('Account mutations', () => {
       accountRepo.deleteAccount(account.userId, account.id),
     ).resolves.not.toThrow();
   });
+
+  it('Successful balance update returns success flag', () => {
+    const account = getAccount();
+
+    mock.prisma.account.update.mockResolvedValue(account);
+
+    const info = { increment: 100 };
+    expect(accountRepo.updateBalance(info, account.id)).resolves.toEqual({
+      success: true,
+    });
+  });
+
+  it('Error balance update returns success flag', () => {
+    const account = getAccount();
+
+    mock.prisma.account.update.mockRejectedValue(
+      new Error('Some Error Message'),
+    );
+
+    const info = { increment: 100 };
+    expect(accountRepo.updateBalance(info, account.id)).resolves.toEqual({
+      success: false,
+      message: 'Some Error Message',
+    });
+  });
 });

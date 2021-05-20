@@ -14,12 +14,12 @@ import { TransferRepo } from '@Modules/Transactions/repos/implementations/transf
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
 import { AuthRepo } from '@Modules/Auth/repos/implementations/authRepo';
 import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
-import { TransactionRepo } from '@Modules/Transactions/repos/implementations/transactionRepo';
 import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
 import { AccountDataRepo } from '@Modules/BankAccounts/repos/implementations/accountDataRepo';
 import { AggregateAccountData } from '@Modules/BankAccounts/repos/implementations/aggregateAccountData';
 import { InsightsService } from '@Modules/BankAccounts/services/implementations/insightService';
 import { AccountDataResolver } from '@Modules/BankAccounts/resolvers/AccountDataResolver';
+import { transactionService } from '@Modules/Transactions/services';
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -44,12 +44,12 @@ const main = async () => {
       accountRepo: new AccountRepo(prisma),
       authRepo: new AuthRepo(prisma),
       categoryRepo: new CategoryRepo(prisma),
-      transactionRepo: new TransactionRepo(prisma),
       userRepo: new UserRepo(prisma),
       accountDataRepo: new AccountDataRepo(prisma),
       aggregateAccountDataRepo: new AggregateAccountData(prisma),
       services: {
         insightService: new InsightsService(),
+        transactionService,
       },
     }),
   });
