@@ -65,6 +65,7 @@ export class AccountRepo implements IAccountRepo {
     if (account.userId !== userId) {
       throw new Error('Unauthorized');
     }
+
     const { classification, ...inputData } = input;
     return await this.accountModel.update({
       where: {
