@@ -1,3 +1,8 @@
+/**
+ * @desription
+ * Accounts used in mocking the repos that user Prisma to fetch accounts from the DB
+ *
+ */
 export const accounts = [
   {
     id: 'ckorlgy3500523sqsc6akvfnf',
