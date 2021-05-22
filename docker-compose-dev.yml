@@ -26,7 +26,7 @@ services:
       - ./server/:/app/src
       - /usr/src/app/node_modules
     depends_on:
-      - postgres
+      - database
   database:
     image: postgres:13
     container_name: postgres

@@ -4,62 +4,61 @@
 Financeful is a personal finance web application that provides people with a better way to track and manage their money. It's an alternative to spreadsheets or traditional apps like Quicken, Mint and YNAB that can be complicated and overwhelming for new users. 
 
 ## Run locally:
+This project uses Docker to create different environments that already have all the tools and services needed configured and ready to go. 
 
-To run this project locally you need to have a few things installed.
+_Prerequisite: [Install Docker](https://docs.docker.com/install) on your local environment._
 
-### PostgreSQL
+If you have Make installed on your OS, you can make use of the Makefile scripts to build and run the docker images. If not, the required commands are located in the Makefile in, the Server, Web, and root directories
 
-##### Install PostgreSQL:
+## 1. Build the Images 
 
-- macOS: Run brew install postgresql.
-- Windows: Follow [this](https://www.postgresqltutorial.com/install-postgresql/) guide.
-- Linux: Follow [this](https://www.postgresqltutorial.com/install-postgresql-linux/) guide.
-
-##### Start PostgreSQL:
-
-- macOS: Run brew services start postgresql.
-- Windows: Start PostgreSQL through the control panel or run net start postgresql-{version}.
-- Linux: Run /etc/rc.d/init.d/postgresql start.
-
-##### Create a DB named financeful:
-
-`$ psql postgres`
-
-`$ CREATE DATABASE financeful`
-
-### Install Dependencies
-
-Navigate to both /server and /web and install dependencies using `YARN` and run `yarn dev`. This will start the development servers.
-
+_With make -- from the root directory_
 ```
-$ cd server
-$ yarn install
+$ make build-dev
 ```
+
+_without make installed_
 
 ```
 $ cd web
-$ yarn install
+$ docker build -t react-app -f Dockerfile.dev .
+
+------------------------------------------------
+
+$ cd server 
+$ docker build -t server .
 ```
 
-### Run the dev servers
-To run the dev servers, cd into both the /server and /web directories and run ```yarn dev```;
+## 2. Start the dev container
 
-Ex: 
-
-Server:
+_With Make -- from the root directory_
 ```
-$ cd *your-path-to-financeful*/server
-$ yarn dev
+$ make run-dev
 ```
 
-Client:
+_without make -- from the root directory_
 ```
-$ cd *your-path-to-financeful*/web
-$ yarn dev
+$ docker-compose -f docker-compose-dev.yml up
+```
+
+## 3. Verify things are running
+If you want to make sure that things are up in running you can check to see which containers are up. 
+
+In a new terminal type 
+``` 
+docker ps 
+```
+
+It should output something like this:
+```
+CONTAINER ID   IMAGE         COMMAND                  CREATED              STATUS              PORTS                                       NAMES
+a47ac3e22ac3   server        "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:4000->4000/tcp, :::4000->4000/tcp   financeful_server_1
+bc918c61c9e4   react-app     "docker-entrypoint.s…"   2 minutes ago        Up About a minute   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp   financeful_react-app_1
+b1f3f4f649c0   postgres:13   "docker-entrypoint.s…"   2 minutes ago        Up About a minute   0.0.0.0:5433->5432/tcp, :::5433->5432/tcp   postgres
 ```
 
 
-### Interact with the DB and GraphQL Schema
+## 4. Interact with the DB and GraphQL Schema
 
 Once the development server is running, you can view the GraphQL schema at
 
@@ -75,17 +74,3 @@ $ yarn studio
 If for some reason the `yarn studio` throws an error, try running `npx prisma studio`.
 
 
-### v1 Minimum Requirements:
-##### Transactions 
-   - [X] CRUD
-   - [ ] Import CSV
-
-##### Accounts:
-  - [X] CRUD
-  - [X] Account Overview
-  - [X] Account Details Page
-
-##### Dashboard:
- - [ ] Networth Chart
- - [ ] Recent Transactions
- - [ ] Upcoming Bills/Reminders
