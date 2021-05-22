@@ -11,7 +11,8 @@
     "seed:db": "yarn prisma db seed --preview-feature",
     "reset:db": "yarn prisma migrate reset --skip-seed",
     "test": "jest -i",
-    "test:watch": "jest -i --watch"
+    "test:watch": "jest -i --watch",
+    "prisma:generate": "npx prisma generate"
   },
   "keywords": [],
   "author": "Aaron von Kreisler",

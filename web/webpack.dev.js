@@ -1,13 +1,12 @@
-import path from 'path';
-import webpack from 'webpack';
-import HtmlWebPackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './public/index.html',
   inject: false,
 });
 
-const config: webpack.Configuration = {
+const config  = {
   mode: 'development',
   entry: './src/index.tsx',
   output: {
@@ -17,7 +16,7 @@ const config: webpack.Configuration = {
   },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: {
       '@Components': path.resolve(__dirname, 'src/components/'),
       '@Common': path.resolve(__dirname, 'src/common'),
@@ -69,4 +68,4 @@ const config: webpack.Configuration = {
   plugins: [htmlPlugin],
 };
 
-export default config;
+module.exports = config;

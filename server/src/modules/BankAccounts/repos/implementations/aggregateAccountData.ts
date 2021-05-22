@@ -4,7 +4,7 @@ import {
 } from '@Modules/BankAccounts/types/accountData.types';
 import { IDataBase, Account, RangeParams } from '@Shared/types';
 import { IAggregateAccountData } from '../aggregateAccountData';
-import { MoneyUtils } from '@Shared/utils/moneyUtils';
+import { MoneyUtils } from '@Shared/utils/MoneyUtils';
 import { DateUtils } from '@Shared/utils/DateUtils';
 
 export class AggregateAccountData implements IAggregateAccountData {

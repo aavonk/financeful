@@ -1,22 +1,21 @@
-import * as path from 'path';
-import * as webpack from 'webpack';
-import * as HtmlWebPackPlugin from 'html-webpack-plugin';
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './public/index.html',
   filename: './index.html',
 });
 
-const config: webpack.Configuration = {
+const config = {
   mode: 'production',
-  entry: './src/index.tsx',
+  entry: path.resolve(__dirname) + '/src/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, './build'),
     filename: 'bundle.js',
   },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.tsx','.ts', '.js', '.json'],
     alias: {
       '@Components': path.resolve(__dirname, 'src/components/'),
       '@Common': path.resolve(__dirname, 'src/common'),
@@ -59,4 +58,4 @@ const config: webpack.Configuration = {
   plugins: [htmlPlugin],
 };
 
-export default config;
+module.eports = config;

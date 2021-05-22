@@ -1,0 +1,49 @@
+version: '3'
+services:
+  react-app:
+    image: react-app
+    build: ./web/
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    networks:
+      - financeful
+    volumes:
+      - ./web/:/app/src
+      - /app/src/node_modules
+  server:
+    image: server
+    build: ./server/
+    ports:
+      - '4000:4000'
+    environment: 
+      DATABASE_URL: "postgresql://dev:dev@postgres/dev"
+      JWT_SECRET: "supersecretpassword"
+      JWT_EXP: "1d"
+    networks:
+      - financeful
+    volumes:
+      - ./server/:/app/src
+      - /usr/src/app/node_modules
+    depends_on:
+      - postgres
+  database:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: dev
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+
+    networks:
+      - financeful
+networks:
+  financeful:
+    driver: bridge
+volumes: 
+  pgdata:
