@@ -1,5 +1,5 @@
 build: 
-	docker build -t server .
+	docker build -t server -f Dockerfile.dev .
 
 
 
