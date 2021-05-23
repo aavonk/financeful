@@ -1,14 +1,15 @@
 import { UserRepo } from '@Modules/Users/repos/implementations/userRepo'
-// import prisma from '@Shared/database/prisma'
 import { PrismaClient } from '@prisma/client'
+import { setupEnv } from '../helpers/setupEnv'
+
 
 let userRepo: UserRepo
 let prisma: PrismaClient
 
 beforeAll(() => {
+  setupEnv()
   prisma = new PrismaClient()
   jest.setTimeout(10000);
-  process.env.DATABASE_URL="postgresql://prisma:prisma@localhost:5433/tests"
 })
 
 afterAll(() => {
