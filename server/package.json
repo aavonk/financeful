@@ -7,11 +7,12 @@
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "build": "tsc",
     "migrate": "yarn prisma migrate dev --preview-feature",
+    "migrate:init": "yarn prisma migrate dev --name init",
     "studio": "yarn prisma studio",
     "seed:db": "yarn prisma db seed --preview-feature",
     "reset:db": "yarn prisma migrate reset --skip-seed",
     "test": "jest -i",
-    "test:watch": "jest -i --watch",
+    "test:watch": "jest -i --watchAll",
     "prisma:generate": "npx prisma generate"
   },
   "keywords": [],

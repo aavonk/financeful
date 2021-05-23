@@ -54,11 +54,12 @@ const main = async () => {
     }),
   });
 
-  app.listen({ port: PORT }, () =>
+  app.listen({ port: PORT }, () => 
     console.log(
       `👍 Server ready at http://localhost:${PORT}${server.graphqlPath}`,
     ),
   );
+
   server.applyMiddleware({ app });
 };
 

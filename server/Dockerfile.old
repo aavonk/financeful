@@ -1,0 +1,39 @@
+FROM node:14-slim AS base
+
+# install openssl
+RUN apt-get update && apt-get install --no-install-recommends --yes openssl
+
+RUN mkdir -p /app/src
+WORKDIR /app/src
+
+FROM base AS builder
+
+# install dependencies
+COPY ./package.json ./
+COPY ./yarn.lock ./
+
+
+RUN yarn install --pure-lockfile
+RUN cp -RL ./node_modules/ /tmp/node_modules/
+
+
+
+
+
+### RUNNER ###
+FROM base
+
+# Copy runtime dependencies
+COPY --from=builder /tmp/node_modules/ ./node_modules/
+COPY --from=builder /app/src/node_modules/@prisma/client/ ./node_modules/@prisma/client/
+COPY --from=builder /app/src/node_modules/.prisma/client/ ./node_modules/.prisma/client/
+
+# Copy runtime project
+COPY --from=builder /app/src/ ./src
+COPY package.json ./
+
+#RUN yarn prisma generate
+
+EXPOSE 4000
+
+CMD [ "yarn", "test:watch"]

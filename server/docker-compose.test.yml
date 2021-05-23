@@ -1,0 +1,43 @@
+version: '3'
+
+services: 
+  server-test:
+    container_name: test-server
+    image: server-test
+    build: ./
+    ports:
+      - '4000:4000'
+    environment: 
+      DATABASE_URL: "postgresql://test:test@database-test/test?schema=public"
+      JWT_SECRET: "supersecretpassword"
+      JWT_EXP: "1d"
+      NODE_ENV: "testing"
+    networks:
+      - test
+    volumes: 
+      - ./:/app/src
+      - './scripts/:/app/src/scripts'
+      - /usr/src/app/node_modules
+    depends_on: 
+      - database-test
+
+
+  database-test:
+    container_name: database-test
+    image: postgres:13
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - test
+networks: 
+  test:
+    driver: bridge
+volumes: 
+  pgdata:
