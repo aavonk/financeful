@@ -24,7 +24,6 @@ beforeAll(async () => {
 afterEach(async () => {
   const transactionDelete = prisma.transaction.deleteMany()
   const accountDelete = prisma.account.deleteMany()
-
   await prisma.$transaction([transactionDelete, accountDelete])
 })
 

@@ -3,7 +3,9 @@
 
 Financeful is a personal finance web application that provides people with a better way to track and manage their money. It's an alternative to spreadsheets or traditional apps like Quicken, Mint and YNAB that can be complicated and overwhelming for new users. 
 
-## Run locally:
+Running locally:
+====================
+
 This project uses Docker to create different environments that already have all the tools and services needed configured and ready to go. 
 
 _Prerequisite: [Install Docker](https://docs.docker.com/install) on your local environment._
@@ -86,16 +88,18 @@ If for some reason the `yarn studio` throws an error, try running
 npx prisma studio
 ```
 
-# Testing
+
+Testing
+====================
 We use Cypress to run E2E tests. The Cypress folder is located in the web directory. In order for cypress to work, both the server and the react app must be running localy. 
 
 ## Testing the API / Server
-There are two types of tests that we run when testing the API: `unit` and `integration`. 
+There are two types of tests that we run when testing the API: *unit* and *integration*. 
 
 ### Unit Tests
-The unit tests are tests for pure functions, or anything that doesn't require a database. You can also mock the database client -- [Prisma Client](https://www.prisma.io/) -- using the Mock which can be found in `/server.testSetup.ts`.
+The unit tests are tests for pure functions, or anything that doesn't require a database. You can also mock the database client -- [Prisma Client](https://www.prisma.io/) -- using the Mock which can be found in `/server/testSetup.ts`.
 
-__Note: These tests must be placed in tests/unit directory__
+__<p align="center">Note: These tests must be placed in tests/unit directory</p>__
 
 #### _Scripts for unit tests_
 
@@ -112,7 +116,27 @@ yarn test:unit:watch
 ## Integration Tests
 When running integration tests, we spin up a new Database using Docker Compose, run a migration, and begin the tests. 
 
-__Note: These test must be placed in the tests/integration directory__
+__<p align="center">Note: These test must be placed in the tests/integration directory</p>__
+
+In each test, we create a new instance of Prisma, and pass it to whatever service/repo needs it. 
+
+After thes tests, we make sure to delete everything. As of right now, and until we find a better way of doing it, it might look something like this:
+```typescript
+let prisma: PrismaClient;
+let transactionService: TransactionService
+let transactionRepo: TransactionRepo
+let accountRepo: AccountRepo
+let user: User
+
+beforeAll(async () => {
+  setupEnv()
+  prisma = new PrismaClient()
+  transactionRepo = new TransactionRepo(prisma)
+  accountRepo = new AccountRepo(prisma)
+  transactionService = new TransactionService(transactionRepo, accountRepo)
+  user = await createUser(prisma)
+})
+```
 
 #### _Scripts for integration tests_
 
