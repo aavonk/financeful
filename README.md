@@ -136,6 +136,18 @@ beforeAll(async () => {
   transactionService = new TransactionService(transactionRepo, accountRepo)
   user = await createUser(prisma)
 })
+
+afterEach(async () => {
+  const transactionDelete = prisma.transaction.deleteMany()
+  const accountDelete = prisma.account.deleteMany()
+  await prisma.$transaction([transactionDelete, accountDelete])
+})
+
+afterAll(async () => {
+  console.log('⚡ 🎯 Deleting Tables ...')
+  await prisma.user.deleteMany()
+  await prisma.$disconnect()
+})
 ```
 
 #### _Scripts for integration tests_
