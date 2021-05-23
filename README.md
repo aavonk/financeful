@@ -10,14 +10,24 @@ _Prerequisite: [Install Docker](https://docs.docker.com/install) on your local e
 
 If you have Make installed on your OS, you can make use of the Makefile scripts to build and run the docker images. If not, the required commands are located in the Makefile in, the Server, Web, and root directories
 
-## 1. Build the Images 
+## 1. Install dependencies locally
+```
+$ cd server
+$ yarn install
+
+-----------------------------------------------
+
+$ cd web
+$ yarn install
+```
+## 2. Build the Images 
 
 _With make -- from the root directory_
 ```
 $ make build-dev
 ```
 
-_without make installed_
+_Without make installed_
 
 ```
 $ cd web
@@ -29,7 +39,7 @@ $ cd server
 $ docker build -t server .
 ```
 
-## 2. Start the dev container
+## 3. Start the dev container
 
 _With Make -- from the root directory_
 ```
@@ -41,7 +51,7 @@ _without make -- from the root directory_
 $ docker-compose -f docker-compose-dev.yml up
 ```
 
-## 3. Verify things are running
+## 4. Verify things are running
 If you want to make sure that things are up in running you can check to see which containers are up. 
 
 In a new terminal type 
@@ -58,11 +68,11 @@ b1f3f4f649c0   postgres:13   "docker-entrypoint.s…"   2 minutes ago        Up 
 ```
 
 
-## 4. Interact with the DB and GraphQL Schema
+## 5. Interact with the DB and GraphQL Schema
 
 Once the development server is running, you can view the GraphQL schema at
 
-`http://localhost:4000/graphql`
+[http://localhost:4000/graphql](http://localhost:4000/graphql)
 
 If you want to view the contents of the DB in a GUI, open a new shell window and run these commands:
 
@@ -71,6 +81,53 @@ $ cd *your-path-to-financeful*/server
 $ yarn studio
 ```
 
-If for some reason the `yarn studio` throws an error, try running `npx prisma studio`.
+If for some reason the `yarn studio` throws an error, try running 
+```
+npx prisma studio
+```
+
+# Testing
+We use Cypress to run E2E tests. The Cypress folder is located in the web directory. In order for cypress to work, both the server and the react app must be running localy. 
+
+## Testing the API / Server
+There are two types of tests that we run when testing the API: `unit` and `integration`. 
+
+### Unit Tests
+The unit tests are tests for pure functions, or anything that doesn't require a database. You can also mock the database client -- [Prisma Client](https://www.prisma.io/) -- using the Mock which can be found in `/server.testSetup.ts`.
+
+__Note: These tests must be placed in tests/unit directory__
+
+#### _Scripts for unit tests_
+
+_run once_
+```
+yarn test:unit
+```
+_run in watch mode_
+
+```
+yarn test:unit:watch
+```
+
+## Integration Tests
+When running integration tests, we spin up a new Database using Docker Compose, run a migration, and begin the tests. 
+
+__Note: These test must be placed in the tests/integration directory__
+
+#### _Scripts for integration tests_
+
+_run once_
+```
+yarn test:integration
+```
+_run in watch mode_
+```
+yarn test:integration:watch
+```
+
+_Drop the docker container_
+```
+yarn kill:tests
+```
 
 
