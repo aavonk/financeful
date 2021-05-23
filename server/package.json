@@ -7,12 +7,16 @@
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "build": "tsc",
     "migrate": "yarn prisma migrate dev --preview-feature",
+    "migrate:test": "DATABASE_URL=postgresql://prisma:prisma@localhost:5433/tests yarn prisma migrate dev --name init",
     "studio": "yarn prisma studio",
     "seed:db": "yarn prisma db seed --preview-feature",
     "reset:db": "yarn prisma migrate reset --skip-seed",
+    "docker:testdb": "docker compose -f docker-compose.test.yml up -d",
     "test": "jest -i",
     "test:watch": "jest -i --watch",
-    "prisma:generate": "npx prisma generate"
+    "test:integration": "yarn docker:testdb && yarn migrate:test && jest -i",
+    "test:integration:watch": "yarn docker:testdb && yarn migrate:test && yarn test:watch",
+    "kill:tests": "docker compose -f docker-compose.test.yml down"
   },
   "keywords": [],
   "author": "Aaron von Kreisler",

@@ -36,8 +36,8 @@ describe('getAssetsAndLiabilites', () => {
 
   it('Handles NaN and Infinite values correctly', async () => {
     // In JS dividing 0 by 0 return NaN
-    const asset = accounts.filter((a) => a.isAsset && !a.isLiability)[0];
-    const liability = accounts.filter((b) => b.isLiability && !b.isAsset)[0];
+    const asset = accounts.filter((a: any) => a.isAsset && !a.isLiability)[0];
+    const liability = accounts.filter((b: any) => b.isLiability && !b.isAsset)[0];
 
     const account1 = { ...asset, balance: 0 };
     const account2 = { ...liability, balance: 0 };

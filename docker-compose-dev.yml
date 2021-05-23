@@ -11,6 +11,7 @@ services:
     volumes:
       - ./web/:/app/src
       - /app/src/node_modules
+
   server:
     image: server
     build: ./server/
@@ -20,13 +21,16 @@ services:
       DATABASE_URL: "postgresql://dev:dev@postgres/dev"
       JWT_SECRET: "supersecretpassword"
       JWT_EXP: "1d"
+      NODE_ENV: "develpopment"
     networks:
       - financeful
     volumes:
       - ./server/:/app/src
       - /usr/src/app/node_modules
     depends_on:
-      - postgres
+      - database
+
+      
   database:
     image: postgres:13
     container_name: postgres
