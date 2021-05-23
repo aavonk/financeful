@@ -26,7 +26,7 @@ $ docker build -t react-app -f Dockerfile.dev .
 ------------------------------------------------
 
 $ cd server 
-$ docker build -t server .
+$ docker build -t server Dockerfile.dev .
 ```
 
 ## 2. Start the dev container
