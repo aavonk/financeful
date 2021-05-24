@@ -3,10 +3,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { InputFields, ValidationResponse, IAuthUtils } from '../authUtils';
 import { RegisterInput } from '../../resolvers/types';
-//TODO: Delete Lib/validators.ts
 
-class AuthUtils implements IAuthUtils {
-  constructor() {}
+export class AuthUtils implements IAuthUtils {
 
   generateToken(user: User): string {
     return jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {

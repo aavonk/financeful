@@ -1,6 +1,6 @@
 import { IDataBase } from '@Shared/database/IDataBase';
 import { User } from '@Shared/types';
-import { IUserRepo } from '../userRepo';
+import { IUserRepo, ICreateUser } from '../userRepo';
 
 export class UserRepo implements IUserRepo {
   private client: IDataBase;
@@ -14,5 +14,20 @@ export class UserRepo implements IUserRepo {
         id: userId,
       },
     });
+  }
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.client.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
+
+  async createOne(input: ICreateUser): Promise<User> {
+    return await this.client.user.create({
+      data: {
+        ...input
+      }
+    })
   }
 }
