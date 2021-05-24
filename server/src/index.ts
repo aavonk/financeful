@@ -12,7 +12,6 @@ import { AccountResolver } from '@Modules/BankAccounts/resolvers/AccountResolver
 import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
 import { TransferRepo } from '@Modules/Transactions/repos/implementations/transferRepo';
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
-import { AuthRepo } from '@Modules/Auth/repos/implementations/authRepo';
 import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
 import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
 import { AccountDataRepo } from '@Modules/BankAccounts/repos/implementations/accountDataRepo';
@@ -20,6 +19,7 @@ import { AggregateAccountData } from '@Modules/BankAccounts/repos/implementation
 import { InsightsService } from '@Modules/BankAccounts/services/implementations/insightService';
 import { AccountDataResolver } from '@Modules/BankAccounts/resolvers/AccountDataResolver';
 import { transactionService } from '@Modules/Transactions/services';
+import { authService } from '@Modules/Auth/services'
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -42,7 +42,6 @@ const main = async () => {
       req,
       transferRepo: new TransferRepo(prisma),
       accountRepo: new AccountRepo(prisma),
-      authRepo: new AuthRepo(prisma),
       categoryRepo: new CategoryRepo(prisma),
       userRepo: new UserRepo(prisma),
       accountDataRepo: new AccountDataRepo(prisma),
@@ -50,6 +49,7 @@ const main = async () => {
       services: {
         insightService: new InsightsService(),
         transactionService,
+        authService,
       },
     }),
   });

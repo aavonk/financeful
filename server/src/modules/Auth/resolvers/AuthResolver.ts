@@ -8,16 +8,16 @@ export class AuthResolver {
   async login(
     @Arg('email', () => String) email: string,
     @Arg('password', () => String) password: string,
-    @Ctx() { authRepo }: Context,
+    @Ctx() { services: { authService } }: Context,
   ): Promise<User> {
-    return await authRepo.handleLogin(email, password);
+    return await authService.handleLogin(email, password);
   }
 
   @Mutation(() => User)
   async register(
     @Arg('input') input: RegisterInput,
-    @Ctx() { authRepo }: Context,
+    @Ctx() { services: { authService } }: Context,
   ): Promise<User> {
-    return await authRepo.handleRegister(input);
+    return await authService.handleRegister(input);
   }
 }
