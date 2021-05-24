@@ -20,7 +20,7 @@ type TransactionTemplate = {
 };
 
 export const makeTransactions = (amount: number): TransactionTemplate[] => {
-  const arr = [];
+  const arr: TransactionTemplate[] = [];
 
   for (let i = 0; i < amount; i++) {
     arr.push({

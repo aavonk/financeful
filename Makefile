@@ -7,6 +7,13 @@ build-dev:
 run-dev:
 	docker-compose -f docker-compose-dev.yml up
 
+
 stop-dev:
-	docker compose down
+	docker compose -f docker-compose-dev.yml down
+
+seed-db:
+	docker compose -f docker-compose-dev.yml run --rm server yarn seed:db
+
+reset-db:
+	docker compose -f docker-compose-dev.yml run --rm server yarn reset:db
 

@@ -9,7 +9,7 @@ type Balance = {
 
 const getDaysInMonth = (month: number, year: number): Date[] => {
   const date = new Date(year, month, 1);
-  const days = [];
+  const days: Date[] = [];
 
   while (date.getMonth() === month) {
     days.push(new Date(date));
@@ -27,7 +27,7 @@ export const generateBalanceObjects = (): Balance[] => {
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
   // const dates = getDaysInMonth(month, year);
-  const dates = [];
+  const dates: Date[] = [];
   for (let i = 0; i < 4; i++) {
     const temp = getDaysInMonth(month - i, year);
     dates.push(...temp);
