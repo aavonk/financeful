@@ -77,7 +77,7 @@ export const TableBody = styled.tbody`
 export const TableCell = styled.td`
   display: table-cell;
   padding: 0.75rem;
-  font-size: 0.825rem;
+  font-size: 0.725rem;
   text-align: left;
   font-weight: 400;
   line-height: 1.43;

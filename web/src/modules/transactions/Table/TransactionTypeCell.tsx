@@ -9,9 +9,9 @@ type TransactionTypes = {
 };
 
 const ArrowContainer = styled.span<{ type?: TransactionTypes['type'] }>`
-  height: 1.875rem;
-  width: 1.875rem;
-  font-size: 1rem;
+  height: 1.475rem;
+  width: 1.475rem;
+  font-size: 0.875rem;
 
   border-radius: 50%;
   margin-right: 8px;
