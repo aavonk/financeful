@@ -4,7 +4,10 @@ import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
-import { useGetTransactionsQuery } from '@Generated/graphql';
+import {
+  useGetTransactionsQuery,
+  useGetTransactionsRangeQuery,
+} from '@Generated/graphql';
 import { format } from 'date-fns';
 import Table from '@Modules/transactions/Table';
 import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
@@ -14,9 +17,13 @@ import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from '@Modules/transactions/Table/NoTransactions';
-
+import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
 function TransactionPage() {
-  const { data, error, loading } = useGetTransactionsQuery();
+  const { range } = useDateRangeContext();
+  const { data, error, loading } = useGetTransactionsRangeQuery({
+    variables: { input: { startDate: range.startDate, endDate: range.endDate } },
+  });
+  // const { data, error, loading } = useGetTransactionsQuery();
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
       {
@@ -86,7 +93,7 @@ function TransactionPage() {
     return <TableError error={error} />;
   }
 
-  if (!data?.getTransactions?.length) {
+  if (!data?.getTransactionsRange?.length) {
     return <NoTransactions />;
   }
 
@@ -94,7 +101,7 @@ function TransactionPage() {
     <>
       <TableContainer>
         <ErrorBoundary FallbackComponent={TableError}>
-          <Table data={data.getTransactions} columns={columns} />
+          <Table data={data.getTransactionsRange} columns={columns} />
         </ErrorBoundary>
       </TableContainer>
     </>

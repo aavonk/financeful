@@ -7,7 +7,10 @@ function DashboardPage() {
       <div>
         TODO:
         <ul>
-          <li>Add test for DateRangeFilter</li>
+          <li>
+            !!!!! Make the Toolbar visible when Transactions are loading -- causes big
+            shift
+          </li>
         </ul>
       </div>
     </>

@@ -4,6 +4,7 @@ import { TableInstance } from 'react-table';
 import TransactionFormController from '../../Forms/TransactionForm/TransactionFormController';
 import Searchbox from './Searchbox';
 import DateRangeFilter from '@Components/DateFilter/DateRangeFilter';
+import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
 
 type ToolbarProps<T extends Record<string, unknown>> = {
   instance: TableInstance<T>;
@@ -11,7 +12,7 @@ type ToolbarProps<T extends Record<string, unknown>> = {
 
 function Toolbar<T extends Record<string, unknown>>({ instance }: ToolbarProps<T>) {
   const { allColumns } = instance;
-
+  const { range, setRange } = useDateRangeContext();
   return (
     <ToolbarRoot>
       <ToolbarTop>
@@ -22,9 +23,9 @@ function Toolbar<T extends Record<string, unknown>>({ instance }: ToolbarProps<T
           ))}
         <ToolbarActions>
           <DateRangeFilter
-            selected="90 days"
-            range={{ startDate: new Date(), endDate: new Date(), label: '90 days' }}
-            setRange={() => console.log('date')}
+            selected={range.label}
+            range={range}
+            setRange={setRange}
             containerStyle={{ paddingRight: 0 }}
           />
         </ToolbarActions>

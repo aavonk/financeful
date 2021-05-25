@@ -14,7 +14,7 @@ import { useFetchUserQuery } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
 import { AlertProvider } from '@Context/alert/alertContext';
 import { ConfirmationProvider } from '@Context/confirmation/confirmationContext';
-
+import { DateRangeProvider } from '@Context/daterange/DateRangeContext';
 import Alerts from '@Common/Alerts';
 import AccountPage from '@Pages/AccountPage';
 
@@ -52,11 +52,13 @@ function Routes() {
                 <ConfirmationProvider>
                   <PrivateRoute exact path="/dashboard" component={DashboardPage} />
                   <ErrorBoundary FallbackComponent={DefaultView}>
-                    <PrivateRoute
-                      exact
-                      path="/transactions"
-                      component={TransactionPage}
-                    />
+                    <DateRangeProvider>
+                      <PrivateRoute
+                        exact
+                        path="/transactions"
+                        component={TransactionPage}
+                      />
+                    </DateRangeProvider>
                   </ErrorBoundary>
                   <PrivateRoute path="/my-wallet" component={MyWalletPage} exact />
                   <PrivateRoute
