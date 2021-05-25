@@ -1,20 +1,44 @@
 import styled, { css } from 'styled-components';
 import { FlexRow } from '@Globals/index';
 
-export const ActionsContainer = styled(FlexRow)`
-  flex: 1 0 auto;
-  justify-content: flex-end;
+export const ToolbarTop = styled(FlexRow)`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  justify-content: space-between;
+`;
+export const ToolbarBottom = styled(FlexRow)`
+  width: 100%;
+  margin-top: 10px;
+  justify-content: space-between;
+  /* @media (max-width: 800px) {
+    justify-content: space-between;
+  } */
+`;
+
+export const ToolbarActions = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  & > :firstt-child() {
+    margin-right: 10px;
+  }
 `;
 
 export const SearchContainer = styled.div`
   position: relative;
-  display: flex;
   align-items: center;
+  flex-basis: 40%;
+  display: flex;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 9px;
   padding: 0 0.25rem;
   margin-right: 1.25rem;
   height: 2.5rem;
+  min-width: 200px;
+  max-width: 410px;
+  width: 400px;
 
   & > svg {
     margin-right: 0.75rem;
@@ -78,6 +102,10 @@ export const TabContainer = styled(FlexRow)`
   ::-webkit-scrollbar-corner {
     background-color: transparent;
   }
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const TabLabel = styled.span`
@@ -132,7 +160,8 @@ export const TabItem = styled.button`
 
 export const ToolbarRoot = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 100%;
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 1rem;
@@ -141,12 +170,11 @@ export const ToolbarRoot = styled.div`
     flex-direction: column;
     align-items: stretch;
 
-    ${ActionsContainer} {
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
     ${SearchContainer} {
       margin-left: 0;
+      position: relative;
+      align-items: center;
+      display: flex;
     }
 
     ${TabLabel} {

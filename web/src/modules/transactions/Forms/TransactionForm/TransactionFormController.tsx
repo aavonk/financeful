@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import '@reach/dialog/styles.css';
 import { Overlay, Content } from '../style';
 import Button from '@Common/Button';
+import IconButton from '@Common/IconButton';
+import { PlusIcon } from '@Common/Icons';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 import {
   useFetchAccountsAndCategoriesQuery,
@@ -16,7 +18,11 @@ import TransferForm from './TransferForm';
 import { useCreateTransfer } from '../../mutations/useCreateTransfer';
 import { useCreateTransaction } from '../../mutations/useCreateTransaction';
 
-function TransactionFormController() {
+type Props = {
+  asIcon?: boolean;
+};
+
+function TransactionFormController({ asIcon = false }: Props) {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const { mutate: createTransfer, loading: submittingTransfer } = useCreateTransfer();
   const {
@@ -60,10 +66,17 @@ function TransactionFormController() {
   };
 
   return (
-    <div>
-      <Button onClick={open} variant="primary">
-        {smallDevice ? 'New' : 'New Transaction'}
-      </Button>
+    <>
+      {asIcon ? (
+        <IconButton blue onClick={open} ariaText="Add transaction">
+          <PlusIcon />
+        </IconButton>
+      ) : (
+        <Button onClick={open} variant="primary">
+          {smallDevice ? 'New' : 'New Transaction'}
+        </Button>
+      )}
+
       <Overlay isOpen={showDialog} onDismiss={close}>
         <Content aria-label="Add transaction form">
           <Form isFetchingData={loading} fetchError={error}>
@@ -89,7 +102,7 @@ function TransactionFormController() {
           </Form>
         </Content>
       </Overlay>
-    </div>
+    </>
   );
 }
 

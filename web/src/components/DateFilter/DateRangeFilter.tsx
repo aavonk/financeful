@@ -7,6 +7,7 @@ import { DateRangeContext } from '@Context/daterange/DateRangeContext';
 
 interface Props extends DateRangeContext {
   selected: string;
+  containerStyle?: React.CSSProperties
 }
 
 export type DateRangeState = {
@@ -15,7 +16,7 @@ export type DateRangeState = {
   label: string;
 };
 
-function DateRangeFilter({ setRange, selected, range }: Props) {
+function DateRangeFilter({ setRange, selected, range, containerStyle }: Props) {
   const dateRanges: DropdownItems = [
     {
       label: 'This month',
@@ -69,7 +70,7 @@ function DateRangeFilter({ setRange, selected, range }: Props) {
   };
 
   return (
-    <Container>
+    <Container style={containerStyle}>
       <DropdownButton
         id="date-filter"
         items={dateRanges}
