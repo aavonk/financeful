@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React, { useMemo } from 'react';
-import { TableContainer } from './style';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
@@ -18,12 +17,14 @@ import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import NoTransactions from '@Modules/transactions/Table/NoTransactions';
 import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
+import { TableContainer, ContentContainer, Left, Right } from './style';
+
 function TransactionPage() {
   const { range } = useDateRangeContext();
   const { data, error, loading } = useGetTransactionsRangeQuery({
     variables: { input: { startDate: range.startDate, endDate: range.endDate } },
   });
-  // const { data, error, loading } = useGetTransactionsQuery();
+
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
       {
@@ -98,13 +99,16 @@ function TransactionPage() {
   }
 
   return (
-    <>
-      <TableContainer>
-        <ErrorBoundary FallbackComponent={TableError}>
-          <Table data={data.getTransactionsRange} columns={columns} />
-        </ErrorBoundary>
-      </TableContainer>
-    </>
+    <ContentContainer>
+      <Left>
+        <TableContainer>
+          <ErrorBoundary FallbackComponent={TableError}>
+            <Table data={data.getTransactionsRange} columns={columns} />
+          </ErrorBoundary>
+        </TableContainer>
+      </Left>
+      <Right>Right side of transactions</Right>
+    </ContentContainer>
   );
 }
 
