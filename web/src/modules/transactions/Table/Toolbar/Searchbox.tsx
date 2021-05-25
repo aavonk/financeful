@@ -14,7 +14,7 @@ function Searchbox<T extends Record<string, unknown>>({ instance }: SearchProps<
 
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
-  }, 500);
+  }, 200);
 
   return (
     <SearchContainer>
