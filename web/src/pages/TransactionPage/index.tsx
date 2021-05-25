@@ -1,23 +1,23 @@
-/* eslint-disable react/display-name */
 import React, { useMemo } from 'react';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
-import {
-  useGetTransactionsQuery,
-  useGetTransactionsRangeQuery,
-} from '@Generated/graphql';
+import { useGetTransactionsRangeQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
-import Table from '@Modules/transactions/Table';
 import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
-import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
-import TableActions from '@Modules/transactions/Table/Actions';
-import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-import NoTransactions from '@Modules/transactions/Table/NoTransactions';
 import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
 import { TableContainer, ContentContainer, Left, Right } from './style';
+import { ReactTableProvider } from '@Context/react-table/reactTableContext';
+import {
+  TableRows,
+  TableActions,
+  TableSkeleton,
+  TransactionTypeCell,
+  NoTransactionsView,
+  TablePagination,
+} from '@Modules/transactions/Table';
 
 function TransactionPage() {
   const { range } = useDateRangeContext();
@@ -49,17 +49,17 @@ function TransactionPage() {
         disableFilters: true,
       },
       {
-        Header: 'Description',
-        accessor: 'description',
-        Filter: SelectTypeFilter,
-        disableFilters: true,
-      },
-      {
         Header: () => <span className="align-right">Amount</span>,
         accessor: 'amount',
         Cell: ({ value }: Cell<Transaction>) => {
           return <div className="number">{formatMoneyFromCentsToDollars(value)}</div>;
         },
+        Filter: SelectTypeFilter,
+        disableFilters: true,
+      },
+      {
+        Header: 'Category',
+        accessor: 'category.name',
         Filter: SelectTypeFilter,
         disableFilters: true,
       },
@@ -71,12 +71,6 @@ function TransactionPage() {
         },
         Filter: SelectTypeFilter,
         filter: 'includes',
-      },
-      {
-        Header: 'Category',
-        accessor: 'category.name',
-        Filter: SelectTypeFilter,
-        disableFilters: true,
       },
       {
         Header: 'Actions',
@@ -95,7 +89,7 @@ function TransactionPage() {
   }
 
   if (!data?.getTransactionsRange?.length) {
-    return <NoTransactions />;
+    return <NoTransactionsView />;
   }
 
   return (
@@ -103,7 +97,14 @@ function TransactionPage() {
       <Left>
         <TableContainer>
           <ErrorBoundary FallbackComponent={TableError}>
-            <Table data={data.getTransactionsRange} columns={columns} />
+            <ReactTableProvider
+              withPagination={true}
+              columns={columns}
+              data={data.getTransactionsRange}
+            >
+              <TableRows />
+              <TablePagination />
+            </ReactTableProvider>
           </ErrorBoundary>
         </TableContainer>
       </Left>

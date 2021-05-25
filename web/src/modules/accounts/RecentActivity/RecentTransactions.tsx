@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom';
 import { formatDate } from '@Lib/date-formatting';
 import { useGetTransactionsRangeQuery, Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
-import TransactionTable from '@Modules/transactions/Table';
 import TransactionTypeCell from '@Modules/transactions/Table/TransactionTypeCell';
 import TableSkeleton from '@Modules/transactions/Table/TableSkeleton';
 import NoTransactions from '@Modules/transactions/Table/NoTransactions';
 import { TableError } from '@Components/ErrorViews';
 import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
+import { ReactTableProvider } from '@Context/react-table/reactTableContext';
+import TableRows from '@Modules/transactions/Table/TableRows';
+import TablePagination from '@Modules/transactions/Table/Pagination';
 
 function RecentTransactions() {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +61,7 @@ function RecentTransactions() {
   );
 
   if (loading) {
-    return <TableSkeleton columns={3} rows={8} />;
+    return <TableSkeleton columns={3} rows={10} />;
   }
 
   if (error) {
@@ -72,13 +74,15 @@ function RecentTransactions() {
     );
   }
   return (
-    <TransactionTable
+    <ReactTableProvider
       withPagination={true}
-      withToolbar={false}
+      rowCount={10}
       columns={columns}
       data={data.getTransactionsRange}
-      rowCount={10}
-    />
+    >
+      <TableRows />
+      <TablePagination />
+    </ReactTableProvider>
   );
 }
 

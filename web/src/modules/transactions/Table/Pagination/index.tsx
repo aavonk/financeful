@@ -2,17 +2,14 @@ import React from 'react';
 import { TableInstance } from 'react-table';
 import { Container, PageCountWrapper, ActionsWrapper, Actions, Text } from './style';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
+import { useTableContext } from '@Context/react-table/reactTableContext';
 
-function TablePagination<T extends Record<string, unknown>>({
-  instance,
-}: {
-  instance: TableInstance<T>;
-}) {
+function TablePagination() {
   const {
     pageOptions,
     gotoPage,
     state: { pageIndex },
-  } = instance;
+  } = useTableContext();
 
   const pageItems: DropdownItems = pageOptions.map((page) => ({
     label: `Page ${page + 1}`,
