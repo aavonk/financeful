@@ -102,13 +102,15 @@ function TransactionPage() {
               columns={columns}
               data={data.getTransactionsRange}
             >
-              <TableRows />
+              <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
+                <TableRows stackedDisplayMobile={true} />
+              </div>
               <TablePagination />
             </ReactTableProvider>
           </ErrorBoundary>
         </TableContainer>
       </Left>
-      <Right>Right side of transactions</Right>
+      <Right style={{ display: 'none' }}>Right side of transactions</Right>
     </ContentContainer>
   );
 }

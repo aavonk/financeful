@@ -2,7 +2,11 @@ import { useTableContext } from '@Context/react-table/reactTableContext';
 import { TableRoot, TableHead, TableRow, Header, TableBody, TableCell } from './style';
 import { UpArrow, DownArrow } from '@Common/Icons';
 
-function TableRows() {
+type Props = {
+  stackedDisplayMobile?: boolean;
+};
+
+function TableRows({ stackedDisplayMobile = false }: Props) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -12,7 +16,7 @@ function TableRows() {
   } = useTableContext();
 
   return (
-    <TableRoot {...getTableProps()}>
+    <TableRoot {...getTableProps()} $stackedDisplay={stackedDisplayMobile}>
       <TableHead>
         {headerGroups.map((headerGroup) => (
           <TableRow {...headerGroup.getHeaderGroupProps()}>

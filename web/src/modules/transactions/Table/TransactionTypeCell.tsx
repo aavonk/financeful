@@ -4,11 +4,11 @@ import { UpArrowCircle, DownArrowCircle, RepeatingArrow } from '@Common/Icons';
 import { capitalizeFirstLetter } from '@Lib/string-formating';
 import { FlexRow } from '@Globals/index';
 
-type TransactionTypes = {
+type Props = {
   type: 'INCOME' | 'EXPENSE' | 'TRANSFER';
 };
 
-const ArrowContainer = styled.span<{ type?: TransactionTypes['type'] }>`
+const ArrowContainer = styled.span<{ type?: Props['type'] }>`
   height: 1.475rem;
   width: 1.475rem;
   font-size: 0.875rem;
@@ -42,7 +42,9 @@ const ArrowContainer = styled.span<{ type?: TransactionTypes['type'] }>`
 `;
 //
 
-const renderIcon = (type: TransactionTypes['type']) => {
+
+
+const renderIcon = (type: Props['type']) => {
   switch (type) {
     case 'INCOME':
       return <UpArrowCircle />;
@@ -55,7 +57,7 @@ const renderIcon = (type: TransactionTypes['type']) => {
   }
 };
 
-function TransactionTypeCell({ type }: TransactionTypes) {
+function TransactionTypeCell({ type, reverseFlex = false }: Props) {
   return (
     <FlexRow>
       <ArrowContainer aria-hidden="true" type={type}>

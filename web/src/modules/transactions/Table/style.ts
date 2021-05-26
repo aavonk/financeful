@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const EmptyContainer = styled.div`
   display: flex;
@@ -9,7 +9,11 @@ export const EmptyContainer = styled.div`
   margin-top: 8rem;
 `;
 
-export const TableRoot = styled.table`
+type ResponsiveProps = {
+  $stackedDisplay?: boolean;
+};
+
+export const TableRoot = styled.table<ResponsiveProps>`
   width: 100%;
   display: table;
   border-spacing: 0;
@@ -18,6 +22,49 @@ export const TableRoot = styled.table`
   & > .hide-small {
     display: none !important;
   }
+
+  // Responsive sizes for mobile
+  ${(props) =>
+    props.$stackedDisplay &&
+    css`
+  @media screen and (max-width: 600px) {
+    border: 0;
+    & thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    & tr {
+      border-bottom: 3px solid ${({ theme }) => theme.colors.darkThree};
+      display: block;
+      margin-bottom: 0.625em;
+    }
+
+    & td {
+      /* border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree}; */
+      display: block;
+      font-size: 0.8em;
+      text-align: left !important;
+      max-width: 100%;
+    }
+
+    & td.number,
+    div.number {
+      text-align: left !important;
+    }
+
+    td:last-child {
+      border-bottom: 0;
+    }
+
+
+  `}
 `;
 
 export const TableHead = styled.thead`
