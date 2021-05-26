@@ -42,8 +42,6 @@ const ArrowContainer = styled.span<{ type?: Props['type'] }>`
 `;
 //
 
-
-
 const renderIcon = (type: Props['type']) => {
   switch (type) {
     case 'INCOME':
@@ -57,7 +55,7 @@ const renderIcon = (type: Props['type']) => {
   }
 };
 
-function TransactionTypeCell({ type, reverseFlex = false }: Props) {
+function TransactionTypeCell({ type }: Props) {
   return (
     <FlexRow>
       <ArrowContainer aria-hidden="true" type={type}>
