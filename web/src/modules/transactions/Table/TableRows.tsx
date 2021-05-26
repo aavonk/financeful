@@ -1,12 +1,21 @@
+import type { Row, RowPropGetter } from 'react-table';
 import { useTableContext } from '@Context/react-table/reactTableContext';
 import { TableRoot, TableHead, TableRow, Header, TableBody, TableCell } from './style';
 import { UpArrow, DownArrow } from '@Common/Icons';
 
+type RowParam = Row<Record<string, unknown>>;
+
 type Props = {
   stackedDisplayMobile?: boolean;
+  getRowProps?: (row: RowParam) => Record<string, unknown>;
 };
 
-function TableRows({ stackedDisplayMobile = false }: Props) {
+const defaultPropGetter = () => ({});
+
+function TableRows({
+  stackedDisplayMobile = false,
+  getRowProps = defaultPropGetter,
+}: Props) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -22,7 +31,15 @@ function TableRows({ stackedDisplayMobile = false }: Props) {
           <TableRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <Header
-                {...column.getHeaderProps(column.getSortByToggleProps())}
+                {...column.getHeaderProps([
+                  column.getSortByToggleProps(),
+                  {
+                    //@ts-ignore
+                    className: column.className,
+                    //@ts-ignore
+                    style: column.style,
+                  },
+                ])}
                 className={
                   column.getHeaderProps().key === 'header_amount'
                     ? 'amount-header'
@@ -57,10 +74,21 @@ function TableRows({ stackedDisplayMobile = false }: Props) {
         {page.map((row) => {
           prepareRow(row);
           return (
-            <TableRow {...row.getRowProps()}>
+            <TableRow {...row.getRowProps(getRowProps(row))}>
               {row.cells.map((cell) => {
                 return (
-                  <TableCell {...cell.getCellProps()}>{cell.render('Cell')}</TableCell>
+                  <TableCell
+                    {...cell.getCellProps([
+                      {
+                        //@ts-ignore
+                        className: cell.column.className,
+                        //@ts-ignore
+                        style: cell.column.style,
+                      },
+                    ])}
+                  >
+                    {cell.render('Cell')}
+                  </TableCell>
                 );
               })}
             </TableRow>

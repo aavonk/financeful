@@ -5,7 +5,7 @@ export const Overlay = styled(DialogOverlay)`
   background: rgba(91, 112, 131, 0.35);
   z-index: 1200;
   > [data-reach-dialog-content] {
-    margin: 5vh auto;
+    margin: 0;
   }
 
   @media (max-width: 705px) {
@@ -16,11 +16,14 @@ export const Overlay = styled(DialogOverlay)`
 `;
 
 export const Content = styled(DialogContent)`
-  background: ${({ theme }) => theme.colors.darkTwo};
-  border-radius: 1rem;
-  max-height: 90vh;
-  min-width: 600px;
-  max-width: 600px;
+  /* background: ${({ theme }) => theme.colors.darkTwo}; */
+  background: #21222d;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 33%;
+  max-width: 450px;
   padding: 0;
   overflow-y: auto;
 
@@ -45,7 +48,7 @@ export const Header = styled.div`
   position: sticky;
   top: 0;
   padding: 0 0.825rem;
-  background-color: ${({ theme }) => theme.colors.darkTwo};
+  background-color: ${({ theme }) => theme.colors.cardLight};
   border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   & > button {
     margin-left: 1rem;
@@ -77,8 +80,7 @@ export const Body = styled.div`
   justify-content: center;
   width: 100%;
   padding: 0.825rem 1rem 3rem 0.825rem;
-  /* overflow-y: auto;
-  max-height: 80vh; */
+  background-color: ${({ theme }) => theme.colors.cardDark};
 `;
 
 export const Footer = styled.div`
@@ -91,7 +93,9 @@ export const Footer = styled.div`
   z-index: 2;
   position: sticky;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.darkTwo};
+  background-color: ${({ theme }) => theme.colors.cardLight};
+  /* background: #21222d; */
+
   border-top: 1px solid ${({ theme }) => theme.colors.darkThree};
   padding: 0 1rem;
 `;

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
@@ -18,8 +18,13 @@ import {
   NoTransactionsView,
   TablePagination,
 } from '@Modules/transactions/Table';
+import ActionsContainer from '@Modules/transactions/Table/Actions/ActionsContainer.v2';
 
 function TransactionPage() {
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(
+    null,
+  );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { range } = useDateRangeContext();
   const { data, error, loading } = useGetTransactionsRangeQuery({
     variables: { input: { startDate: range.startDate, endDate: range.endDate } },
@@ -35,6 +40,7 @@ function TransactionPage() {
         },
         Filter: SelectTypeFilter,
         disableFilters: true,
+        className: 'Test-class-name',
       },
       {
         Header: 'Account',
@@ -72,10 +78,10 @@ function TransactionPage() {
         Filter: SelectTypeFilter,
         filter: 'includes',
       },
-      {
-        Header: 'Actions',
-        Cell: ({ row }: Cell<Transaction>) => <TableActions transaction={row.original} />,
-      },
+      // {
+      //   Header: 'Actions',
+      //   Cell: ({ row }: Cell<Transaction>) => <TableActions transaction={row.original} />,
+      // },
     ],
     [],
   );
@@ -93,25 +99,41 @@ function TransactionPage() {
   }
 
   return (
-    <ContentContainer>
-      <Left>
-        <TableContainer>
-          <ErrorBoundary FallbackComponent={TableError}>
-            <ReactTableProvider
-              withPagination={true}
-              columns={columns}
-              data={data.getTransactionsRange}
-            >
-              <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
-                <TableRows stackedDisplayMobile={true} />
-              </div>
-              <TablePagination />
-            </ReactTableProvider>
-          </ErrorBoundary>
-        </TableContainer>
-      </Left>
-      <Right style={{ display: 'none' }}>Right side of transactions</Right>
-    </ContentContainer>
+    <>
+      <ActionsContainer
+        isModalOpen={isEditModalOpen}
+        transaction={selectedTransaction}
+        setIsModalOpen={setIsEditModalOpen}
+      />
+      <ContentContainer>
+        <Left>
+          <TableContainer>
+            <ErrorBoundary FallbackComponent={TableError}>
+              <ReactTableProvider
+                withPagination={true}
+                columns={columns}
+                data={data.getTransactionsRange}
+              >
+                <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
+                  <TableRows
+                    stackedDisplayMobile={true}
+                    getRowProps={(row) => ({
+                      onClick: () => {
+                        setSelectedTransaction(row.original as Transaction);
+                        setIsEditModalOpen(true);
+                      },
+                      className: 'hoverable',
+                    })}
+                  />
+                </div>
+                <TablePagination />
+              </ReactTableProvider>
+            </ErrorBoundary>
+          </TableContainer>
+        </Left>
+        <Right style={{ display: 'none' }}>Right side of transactions</Right>
+      </ContentContainer>
+    </>
   );
 }
 
