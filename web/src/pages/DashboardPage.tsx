@@ -13,8 +13,6 @@ function DashboardPage() {
             !!!!! Make the Toolbar visible when Transactions are loading -- causes big
             shift
           </li>
-          <li>Put Pagination on account page transactions!!!</li>
-          <li>Update Cache on Add transaction/transfer</li>
           <li> Update Form Loader to represent new layou</li>
         </ul>
         <div

@@ -26,11 +26,14 @@ export const StyledInsetInput = styled.input<InputProps>`
   border-top: none;
   border-bottom: 1px solid #131619;
   background: ${({ theme }) => theme.colors.darkOne};
-  color: #fff;
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-family: inherit;
   font-size: 1rem;
   padding: 0.5rem 0.5rem;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.39), 0 -1px 1px #131619, 0 1px 0 #131619;
+  ::placeholder {
+    color: #88909f !important;
+  }
   ${(props) =>
     props.disabled &&
     css`
@@ -46,12 +49,13 @@ export const StyledInsetSelect = styled.select<LabelProps>`
   outline: 0;
   border-top: none;
   border-bottom: 1px solid #131619;
-  background: ${({ theme }) => theme.colors.darkOne};
-  color: #fff;
   font-family: inherit;
+  background: ${({ theme }) => theme.colors.darkOne};
   font-size: 1rem;
   padding: 0.5rem 0.5rem;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.39), 0 -1px 1px #131619, 0 1px 0 #131619;
+  color: ${({ theme }) => theme.colors.textPrimary};
+
   ${(props) =>
     props.disabled &&
     css`

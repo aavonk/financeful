@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useRef, useEffect, useState } from 'react';
-import { BorderedInput, BorderedSelect, ErrorMessage } from '@Common/FormElements';
-import { Row, Col } from '@Globals/index';
+import {
+  BorderedInput,
+  BorderedSelect,
+  ErrorMessage,
+  InsetInput,
+  InsetSelect,
+} from '@Common/FormElements';
+import { Row, Col, FormRow } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { EditAccountInput, AccountType } from '@Generated/graphql';
 import { ModalRoot, ModalBody, ModalTitle } from '@Components/Modal';
@@ -42,7 +48,7 @@ function EditAccountForm({
   const [initialValue, setInitialValue] = useState<FormState>(initialFormState);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { values, handleChange, errors, handleSubmit } = useForm<FormState>({
+  const { values, handleChange, errors, handleSubmit, handleTrim } = useForm<FormState>({
     initialValue,
     useEffectOnMount: true,
     validations: {
@@ -91,64 +97,67 @@ function EditAccountForm({
       {isSubmitting && <Progressbar />}
       <ModalBody overrideStyle={{ padding: '0.825rem 1rem 0 1rem' }}>
         <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
-          <Row>
-            <BorderedInput
+          <FormRow>
+            <InsetInput
               type="text"
               value={values.accountName}
               onChange={handleChange('accountName')}
+              onBlur={handleTrim('accountName')}
               ariaDescribedBy="name-errors"
               required
               ref={inputRef}
               data-testid="edit-account-name-input"
             >
               Account name
-            </BorderedInput>
+            </InsetInput>
             {errors.accountName && (
               <ErrorMessage id="name-errors">{errors.accountName}</ErrorMessage>
             )}
-          </Row>
-          <Row>
-            <BorderedInput
+          </FormRow>
+          <FormRow>
+            <InsetInput
               type="text"
               value={values.bankName}
               onChange={handleChange('bankName')}
+              onBlur={handleTrim('bankName')}
               ariaDescribedBy="bank-errors"
             >
               Bank Name
-            </BorderedInput>
-          </Row>
-          <Row>
-            <Col width="50%" paddingRightOnly>
-              <BorderedInput
-                type="text"
-                value={values.accountType}
-                onChange={handleChange('accountType')}
-                ariaDescribedBy="type-errors"
-              >
-                Type
-              </BorderedInput>
-            </Col>
-            <Col width="50%" paddingLeftOnly>
-              <BorderedSelect
-                label="Classification"
-                value={values.classification}
-                onChange={handleChange('classification')}
-                ariaDescribedBy="classification-errors"
-                required
-              >
-                <option value="" disabled></option>
-                <option value={AccountType.Asset}>Asset</option>
-                <option value={AccountType.Liability}>Liability</option>
-              </BorderedSelect>
-              {errors.classification && (
-                <ErrorMessage id="classification-errors">
-                  {errors.classification}
-                </ErrorMessage>
-              )}
-            </Col>
-          </Row>
-          <Footer style={{ padding: '0', marginTop: '20px' }}>
-            <Button variant="primary" type="submit">
+            </InsetInput>
+          </FormRow>
+
+          <FormRow>
+            <InsetInput
+              type="text"
+              value={values.accountType}
+              onChange={handleChange('accountType')}
+              onBlur={handleTrim('accountType')}
+              ariaDescribedBy="type-errors"
+            >
+              Type
+            </InsetInput>
+          </FormRow>
+          <FormRow>
+            <InsetSelect
+              label="Classification"
+              value={values.classification}
+              onChange={handleChange('classification')}
+              ariaDescribedBy="classification-errors"
+              required
+            >
+              <option value="" disabled></option>
+              <option value={AccountType.Asset}>Asset</option>
+              <option value={AccountType.Liability}>Liability</option>
+            </InsetSelect>
+            {errors.classification && (
+              <ErrorMessage id="classification-errors">
+                {errors.classification}
+              </ErrorMessage>
+            )}
+          </FormRow>
+
+          <Footer>
+            <Button variant="primary" type="submit" fullWidth>
               Save
             </Button>
           </Footer>
