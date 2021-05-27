@@ -7,7 +7,7 @@ export const FormRow = styled(Row)`
 `;
 
 export const Overlay = styled(DialogOverlay)`
-  background: rgba(91, 112, 131, 0.35);
+  background: rgba(0, 0, 0, 0.67);
   z-index: 1200;
   > [data-reach-dialog-content] {
     margin: 0;
