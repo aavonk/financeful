@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 type Props = {
   secondary?: boolean;
+  inset?: boolean;
 };
 export const DatePickerStyles = styled.div<Props>`
   & > .react-datepicker-wrapper {
@@ -32,6 +33,25 @@ export const DatePickerStyles = styled.div<Props>`
             text-align: center;
             font-weight: 600;
             font-family: inherit;
+          `}
+
+        ${({ inset }) =>
+          inset &&
+          css`
+            height: 38px;
+            width: 100%;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            outline: 0;
+            border-top: none;
+            border-bottom: 1px solid #131619;
+            background: ${({ theme }) => theme.colors.darkOne};
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 0.5rem 0.5rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.39), 0 -1px 1px #131619,
+              0 1px 0 #131619;
           `}
       }
     }
