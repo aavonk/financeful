@@ -63,7 +63,7 @@ function PaymentForm({
             <InsetDatePicker
               selected={transDate}
               onChange={(date: Date) => setTransDate(date)}
-              label="Date *"
+              label="Date"
             />
             <ErrorMessage>{errors.date ? errors.date : null}</ErrorMessage>
           </FormRow>
@@ -72,7 +72,7 @@ function PaymentForm({
             <InsetSelect
               value={values.accountId}
               onChange={handleChange('accountId')}
-              label="Account *"
+              label="Account"
             >
               <option value="" disabled></option>
               {accounts.map((acct) => (
@@ -84,11 +84,7 @@ function PaymentForm({
             <ErrorMessage>{errors.accountId ? errors.accountId : null}</ErrorMessage>
           </FormRow>
           <FormRow>
-            <InsetSelect
-              value={values.type}
-              onChange={handleChange('type')}
-              label="Type *"
-            >
+            <InsetSelect value={values.type} onChange={handleChange('type')} label="Type">
               <option value="" disabled></option>
               <option value="INCOME">Income</option>
               <option value="EXPENSE">Expense</option>
@@ -113,7 +109,7 @@ function PaymentForm({
               onChange={handleChange('description')}
               onBlur={handleTrim('description')}
             >
-              Description
+              Description (optional)
             </InsetInput>
           </FormRow>
           <FormRow>
@@ -122,7 +118,6 @@ function PaymentForm({
               type="text"
               onChange={handleChange('amount')}
               onBlur={handleTrim('amount')}
-              withPrefix
             >
               Amount
             </InsetInput>
@@ -132,7 +127,7 @@ function PaymentForm({
             <InsetSelect
               value={values.categoryId}
               onChange={handleChange('categoryId')}
-              label="Category"
+              label="Category (optional)"
             >
               <option value="" disabled></option>
               {categories.map((cat) => (

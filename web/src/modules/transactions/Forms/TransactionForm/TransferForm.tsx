@@ -4,11 +4,14 @@ import {
   BorderedSelect,
   ErrorMessage,
   BorderedDatePicker,
+  InsetDatePicker,
+  InsetInput,
+  InsetSelect,
 } from '@Common/FormElements';
 import { convertInputAmountToCents } from '@Lib/money-utils';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
-import { Body, Footer } from '../style';
+import { Body, Footer, FormRow } from '../style';
 import { Category, Account, TransferInput } from '@Generated/graphql';
 import Button from '@Common/Button';
 import Progressbar from '@Common/Progressbar';
@@ -60,31 +63,30 @@ function TransferForm({
       {isSubmitting && <Progressbar />}
       <form onSubmit={handleSubmit}>
         <Body>
-          <Row>
-            <Col width="50%">
-              <BorderedDatePicker
-                selected={transferDate}
-                onChange={(date: Date) => setTransferDate(date)}
-                label="Date *"
-              />
-            </Col>
-            <Col width="50%">
-              <BorderedInput
-                type="text"
-                value={values.amount}
-                onChange={handleChange('amount')}
-                onBlur={handleTrim('amount')}
-              >
-                Amount
-              </BorderedInput>
-              {errors?.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
-            </Col>
-          </Row>
-          <Row>
-            <BorderedSelect
+          <FormRow>
+            <InsetDatePicker
+              selected={transferDate}
+              onChange={(date: Date) => setTransferDate(date)}
+              label="Date"
+            />
+          </FormRow>
+          <FormRow>
+            <InsetInput
+              type="text"
+              value={values.amount}
+              onChange={handleChange('amount')}
+              onBlur={handleTrim('amount')}
+            >
+              Amount
+            </InsetInput>
+            {errors?.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
+          </FormRow>
+
+          <FormRow>
+            <InsetSelect
               value={values.fromAccount}
               onChange={handleChange('fromAccount')}
-              label="From Account *"
+              label="From account"
             >
               <option disabled value=""></option>
               {accounts.map((account: Account) => (
@@ -92,14 +94,14 @@ function TransferForm({
                   {account.accountName}
                 </option>
               ))}
-            </BorderedSelect>
+            </InsetSelect>
             {errors?.fromAccount && <ErrorMessage>{errors.fromAccount}</ErrorMessage>}
-          </Row>
-          <Row>
-            <BorderedSelect
+          </FormRow>
+          <FormRow>
+            <InsetSelect
               value={values.toAccount}
               onChange={handleChange('toAccount')}
-              label="To Account *"
+              label="To account"
             >
               <option disabled value=""></option>
               {accounts.map((account: Account) => (
@@ -107,14 +109,14 @@ function TransferForm({
                   {account.accountName}
                 </option>
               ))}
-            </BorderedSelect>
+            </InsetSelect>
             {errors?.toAccount && <ErrorMessage>{errors.toAccount}</ErrorMessage>}
-          </Row>
-          <Row>
-            <BorderedSelect
+          </FormRow>
+          <FormRow>
+            <InsetSelect
               value={values.categoryId}
               onChange={handleChange('categoryId')}
-              label="Category"
+              label="Category (optional)"
             >
               <option value="" disabled></option>
               {categories.map((cat: Category) => (
@@ -122,21 +124,21 @@ function TransferForm({
                   {cat.name}
                 </option>
               ))}
-            </BorderedSelect>
-          </Row>
-          <Row>
-            <BorderedInput
+            </InsetSelect>
+          </FormRow>
+          <FormRow>
+            <InsetInput
               type="text"
               value={values.description}
               onChange={handleChange('description')}
               onBlur={handleTrim('description')}
             >
-              Description
-            </BorderedInput>
-          </Row>
+              Description (optional)
+            </InsetInput>
+          </FormRow>
         </Body>
         <Footer>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" fullWidth>
             Save
           </Button>
         </Footer>
