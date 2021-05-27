@@ -7,6 +7,7 @@ type RowParam = Row<Record<string, unknown>>;
 
 type Props = {
   stackedDisplayMobile?: boolean;
+  hoverable?: boolean;
   getRowProps?: (row: RowParam) => Record<string, unknown>;
 };
 
@@ -14,6 +15,7 @@ const defaultPropGetter = () => ({});
 
 function TableRows({
   stackedDisplayMobile = false,
+  hoverable = false,
   getRowProps = defaultPropGetter,
 }: Props) {
   const {
@@ -25,7 +27,11 @@ function TableRows({
   } = useTableContext();
 
   return (
-    <TableRoot {...getTableProps()} $stackedDisplay={stackedDisplayMobile}>
+    <TableRoot
+      {...getTableProps()}
+      $stackedDisplay={stackedDisplayMobile}
+      $hoverable={hoverable}
+    >
       <TableHead>
         {headerGroups.map((headerGroup) => (
           <TableRow {...headerGroup.getHeaderGroupProps()}>

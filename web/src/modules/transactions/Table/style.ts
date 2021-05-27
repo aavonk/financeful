@@ -9,11 +9,12 @@ export const EmptyContainer = styled.div`
   margin-top: 8rem;
 `;
 
-type ResponsiveProps = {
+type RootProps = {
   $stackedDisplay?: boolean;
+  $hoverable?: boolean;
 };
 
-export const TableRoot = styled.table<ResponsiveProps>`
+export const TableRoot = styled.table<RootProps>`
   width: 100%;
   display: table;
   border-spacing: 0;
@@ -22,6 +23,17 @@ export const TableRoot = styled.table<ResponsiveProps>`
   & > .hide-small {
     display: none !important;
   }
+
+  ${(props) =>
+    props.$hoverable &&
+    css`
+      cursor: pointer;
+
+      tbody tr:hover {
+        transition: background-color 0.2s ease-in;
+        background: ${({ theme }) => theme.colors.darkTwo};
+      }
+    `}
 
   // Responsive sizes for mobile
   ${(props) =>

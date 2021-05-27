@@ -117,12 +117,12 @@ function TransactionPage() {
                 <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
                   <TableRows
                     stackedDisplayMobile={true}
+                    hoverable={true}
                     getRowProps={(row) => ({
                       onClick: () => {
                         setSelectedTransaction(row.original as Transaction);
                         setIsEditModalOpen(true);
                       },
-                      className: 'hoverable',
                     })}
                   />
                 </div>
