@@ -77,10 +77,6 @@ function TransactionPage() {
         Filter: SelectTypeFilter,
         filter: 'includes',
       },
-      // {
-      //   Header: 'Actions',
-      //   Cell: ({ row }: Cell<Transaction>) => <TableActions transaction={row.original} />,
-      // },
     ],
     [],
   );
@@ -130,7 +126,7 @@ function TransactionPage() {
             </ErrorBoundary>
           </TableContainer>
         </Left>
-        <Right style={{ display: 'none' }}>Right side of transactions</Right>
+        <Right>Right side of transactions</Right>
       </ContentContainer>
     </>
   );
