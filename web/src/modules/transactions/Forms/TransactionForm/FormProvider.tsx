@@ -5,7 +5,7 @@ import { CloseIcon } from '@Common/Icons';
 import ToggleSwitch from '@Common/ToggleSwitch';
 
 import { Header, Title as StyledTitle, HeaderLeft, HeaderRight } from '../style';
-import FormLoader from '../FormLoader';
+import FormLoader from '@Components/FormSkeletons/FormLoader';
 import { ViewError } from '@Components/ErrorViews';
 
 interface ContextType {
