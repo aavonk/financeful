@@ -13,6 +13,10 @@ export const ContentContainer = styled.div`
     margin-left: auto;
     width: 90%;
   }
+
+  @media (max-width: 905px) {
+    flex-direction: column;
+  }
 `;
 
 export const Left = styled.div`

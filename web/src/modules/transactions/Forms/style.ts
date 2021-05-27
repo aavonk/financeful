@@ -99,7 +99,7 @@ export const Footer = styled.div<FooterProps>`
   justify-content: ${({ justify }) => justify || 'flex-end'};
   width: 100%;
   z-index: 2;
-  position: sticky;
+  position: absolute;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.cardLight};
   /* background: #21222d; */
