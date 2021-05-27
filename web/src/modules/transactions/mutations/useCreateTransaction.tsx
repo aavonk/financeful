@@ -5,7 +5,7 @@ export function useCreateTransaction() {
     update(cache, { data }) {
       cache.modify({
         fields: {
-          getTransactions: (existingFieldData = []) => {
+          getTransactionsRange: (existingFieldData = []) => {
             const newTransactionRef = cache.writeQuery({
               data: data?.createTransaction,
               query: GetTransactionsDocument,

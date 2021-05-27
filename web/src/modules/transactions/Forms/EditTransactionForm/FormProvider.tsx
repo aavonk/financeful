@@ -93,7 +93,7 @@ const Title: React.FC<TitleProps> = ({ onClose }) => {
           <CloseIcon />
         </IconButton>
         <StyledTitle>
-          {formToDisplay === 'payment' ? 'Edit Transaction' : 'Edit Transfer'}
+          {formToDisplay === 'payment' ? 'Transaction Details' : 'Transfer Details'}
         </StyledTitle>
       </HeaderLeft>
     </Header>
