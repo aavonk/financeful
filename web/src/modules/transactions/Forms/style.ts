@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 import { DialogOverlay, DialogContent } from '@reach/dialog';
+import { Row } from '@Globals/index';
+
+export const FormRow = styled(Row)`
+  padding: 8px 0;
+`;
 
 export const Overlay = styled(DialogOverlay)`
   background: rgba(91, 112, 131, 0.35);

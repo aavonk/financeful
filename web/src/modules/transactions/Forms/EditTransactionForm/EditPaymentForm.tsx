@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@Common/Button';
 import { Transaction, Category, Account, TransactionInput } from '@Generated/graphql';
-import { Body, Footer } from '../style';
+import { Body, Footer, FormRow } from '../style';
 import {
   ErrorMessage,
   InsetInput,
   InsetSelect,
   InsetDatePicker,
 } from '@Common/FormElements';
-import { Row } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import {
   formatMoneyFromCentsToDollars,
@@ -173,7 +172,3 @@ function EditPaymentForm({
 }
 
 export default EditPaymentForm;
-
-const FormRow = styled(Row)`
-  padding: 8px 0;
-`;

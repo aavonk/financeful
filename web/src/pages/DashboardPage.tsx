@@ -1,6 +1,5 @@
 import React from 'react';
 import Paper from '@Common/Paper';
-import { InsetInput } from '@Common/FormElements';
 import Button from '@Common/Button';
 function DashboardPage() {
   return (
@@ -15,6 +14,8 @@ function DashboardPage() {
             shift
           </li>
           <li>Put Pagination on account page transactions!!!</li>
+          <li>Update Cache on Add transaction/transfer</li>
+          <li> Update Form Loader to represent new layou</li>
         </ul>
         <div
           style={{

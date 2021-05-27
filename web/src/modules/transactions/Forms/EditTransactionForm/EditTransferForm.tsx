@@ -6,6 +6,9 @@ import {
   BorderedSelect,
   ErrorMessage,
   BorderedDatePicker,
+  InsetInput,
+  InsetSelect,
+  InsetDatePicker,
 } from '@Common/FormElements';
 import {
   convertInputAmountToCents,
@@ -15,7 +18,7 @@ import { useForm } from '@Hooks/useForm';
 import { Category, Account, TransferInput, Transfer } from '@Generated/graphql';
 import { TransferFormFields } from '../types';
 import { transferFormValidations } from '../formValidations';
-import { Body, Footer } from '../style';
+import { Body, Footer, FormRow } from '../style';
 import Progressbar from '@Common/Progressbar';
 import Button from '@Common/Button';
 
@@ -76,30 +79,28 @@ function EditTransferForm({
       {isSubmitting && <Progressbar />}
       <form onSubmit={handleSubmit}>
         <Body>
-          <Row>
-            <Col width="50%">
-              <BorderedDatePicker
-                selected={transferDate}
-                onChange={(date: Date) => setTransferDate(date)}
-                label="Date *"
-              />
-            </Col>
-            <Col width="50%">
-              <BorderedInput
-                type="text"
-                value={values.amount}
-                onChange={handleChange('amount')}
-                onBlur={handleTrim('amount')}
-                withPrefix
-                prefix="$"
-              >
-                Amount
-              </BorderedInput>
-              {errors?.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
-            </Col>
-          </Row>
-          <Row>
-            <BorderedSelect
+          <FormRow>
+            <InsetDatePicker
+              selected={transferDate}
+              onChange={(date: Date) => setTransferDate(date)}
+              label="Date"
+            />
+          </FormRow>
+          <FormRow>
+            <InsetInput
+              type="text"
+              value={values.amount}
+              onChange={handleChange('amount')}
+              onBlur={handleTrim('amount')}
+              withPrefix
+              prefix="$"
+            >
+              Amount
+            </InsetInput>
+            {errors?.amount && <ErrorMessage>{errors.amount}</ErrorMessage>}
+          </FormRow>
+          <FormRow>
+            <InsetSelect
               value={values.fromAccount}
               onChange={handleChange('fromAccount')}
               label="From Account *"
@@ -110,14 +111,14 @@ function EditTransferForm({
                   {account.accountName}
                 </option>
               ))}
-            </BorderedSelect>
+            </InsetSelect>
             {errors?.fromAccount && <ErrorMessage>{errors.fromAccount}</ErrorMessage>}
-          </Row>
-          <Row>
-            <BorderedSelect
+          </FormRow>
+          <FormRow>
+            <InsetSelect
               value={values.toAccount}
               onChange={handleChange('toAccount')}
-              label="To Account *"
+              label="To Account"
             >
               <option disabled value=""></option>
               {accounts.map((account: Account) => (
@@ -125,11 +126,11 @@ function EditTransferForm({
                   {account.accountName}
                 </option>
               ))}
-            </BorderedSelect>
+            </InsetSelect>
             {errors?.toAccount && <ErrorMessage>{errors.toAccount}</ErrorMessage>}
-          </Row>
-          <Row>
-            <BorderedSelect
+          </FormRow>
+          <FormRow>
+            <InsetSelect
               value={values.categoryId}
               onChange={handleChange('categoryId')}
               label="Category"
@@ -140,20 +141,20 @@ function EditTransferForm({
                   {cat.name}
                 </option>
               ))}
-            </BorderedSelect>
-          </Row>
-          <Row>
-            <BorderedInput
+            </InsetSelect>
+          </FormRow>
+          <FormRow>
+            <InsetInput
               type="text"
               value={values.description}
               onChange={handleChange('description')}
               onBlur={handleTrim('description')}
             >
               Description
-            </BorderedInput>
-          </Row>
+            </InsetInput>
+          </FormRow>
         </Body>
-        <Footer>
+        <Footer justify="space-between">
           <Button
             variant="danger-secondary"
             onClick={(e: any) => {
