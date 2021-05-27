@@ -15,13 +15,15 @@ import { Overlay, Content } from '../style';
 import EditPaymentForm from './EditPaymentForm';
 import EditTransferForm from './EditTransferForm';
 import { useUpdateTransaction } from '@Modules/transactions/mutations/useUpdateTransaction';
+
 type Props = {
   transaction: Transaction;
   isOpen: boolean;
   closeModal: () => void;
+  onDelete: () => Promise<void> | undefined;
 };
 
-function EditFormController({ transaction, isOpen, closeModal }: Props) {
+function EditFormController({ transaction, isOpen, closeModal, onDelete }: Props) {
   const { data, loading: fetchingAccounts, error } = useFetchAccountsAndCategoriesQuery();
   const [
     getTransfer,
@@ -118,6 +120,7 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
               isSubmitting={submittingTransfer}
               transfer={transfer?.getTransfer}
               onFormSubmit={handleTransferEdit}
+              onDelete={onDelete}
             />
           </EditForm.Transfer>
           <EditForm.Payment>
@@ -127,6 +130,7 @@ function EditFormController({ transaction, isOpen, closeModal }: Props) {
               categories={data?.getCategories}
               accounts={data?.getAccounts}
               isSubmitting={submittingPayment}
+              onDelete={onDelete}
             />
           </EditForm.Payment>
         </EditForm>

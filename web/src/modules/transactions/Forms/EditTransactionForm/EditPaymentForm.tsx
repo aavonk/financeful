@@ -24,6 +24,7 @@ type Props = {
   categories: Category[] | undefined;
   accounts: Account[] | undefined;
   onFormSubmit: (values: TransactionInput) => void;
+  onDelete: () => Promise<void> | undefined;
   isSubmitting: boolean;
 };
 
@@ -33,6 +34,7 @@ function EditPaymentForm({
   accounts = [],
   onFormSubmit,
   isSubmitting,
+  onDelete,
 }: Props) {
   const [transDate, setTransDate] = useState(new Date(transaction.date));
   const initialValue = {
@@ -156,7 +158,7 @@ function EditPaymentForm({
             variant="danger-secondary"
             onClick={(e: any) => {
               e.preventDefault();
-              alert('button click');
+              onDelete();
             }}
           >
             Delete

@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { EditFormController } from '@Modules/transactions/Forms/EditTransactionForm';
 import {
   Transaction,
   useDeleteTransactionMutation,
   useDeleteTransferMutation,
 } from '@Generated/graphql';
-import ActionsMenu from './ActionsMenu';
-import { EditFormController } from '@Modules/transactions/Forms/EditTransactionForm';
 import { useAlert } from '@Context/alert/alertContext';
 
-function ActionsContainer({ transaction }: { transaction: Transaction }) {
-  const [showEditForm, setShowEditForm] = useState(false);
+type Props = {
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  transaction: Transaction | null;
+};
+
+function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
   const [deleteTransaction] = useDeleteTransactionMutation();
   const [deleteTransfer] = useDeleteTransferMutation();
   const { showAlert } = useAlert();
-  const { id } = transaction;
+
+  if (!transaction) {
+    return null;
+  }
 
   const onDelete = () => {
-    if (transaction.isTransfer) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return handleTransferDelete(transaction.transferId!);
+    if (transaction.isTransfer && transaction.transferId) {
+      return handleTransferDelete(transaction.transferId);
     }
 
     handlePaymentDelete();
@@ -26,12 +32,16 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
 
   const handlePaymentDelete = async () => {
     try {
+      const { id } = transaction;
       const { data } = await deleteTransaction({
         variables: { id },
         update(cache) {
           cache.modify({
             fields: {
-              getTransactions(existingTransactionsRef: Transaction[], { readField }) {
+              getTransactionsRange(
+                existingTransactionsRef: Transaction[],
+                { readField },
+              ) {
                 return existingTransactionsRef.filter(
                   (transactionRef) => id !== readField('id', transactionRef),
                 );
@@ -41,14 +51,16 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
         },
       });
 
+      setIsModalOpen(false);
       if (data?.deleteTransaction) {
         showAlert(data.deleteTransaction, 'info');
       }
     } catch (err) {
+      setIsModalOpen(false);
+
       showAlert('Please try again later', 'error', 5000);
     }
   };
-
   const handleTransferDelete = async (transferId: string) => {
     try {
       const { data } = await deleteTransfer({
@@ -56,7 +68,10 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
         update(cache) {
           cache.modify({
             fields: {
-              getTransactions(existingTransactionsRef: Transaction[], { readField }) {
+              getTransactionsRange(
+                existingTransactionsRef: Transaction[],
+                { readField },
+              ) {
                 return existingTransactionsRef.filter(
                   (transactionRef) =>
                     transferId !== readField('transferId', transactionRef),
@@ -66,24 +81,24 @@ function ActionsContainer({ transaction }: { transaction: Transaction }) {
           });
         },
       });
+      setIsModalOpen(false);
 
       if (data?.deleteTransfer) {
         showAlert(data.deleteTransfer, 'info');
       }
     } catch (error) {
+      setIsModalOpen(false);
       showAlert('Please try again later', 'error', 5000);
     }
   };
 
   return (
-    <>
-      <ActionsMenu onDelete={onDelete} onEditClick={() => setShowEditForm(true)} />
-      <EditFormController
-        transaction={transaction}
-        closeModal={() => setShowEditForm(false)}
-        isOpen={showEditForm}
-      />
-    </>
+    <EditFormController
+      transaction={transaction}
+      closeModal={() => setIsModalOpen(false)}
+      isOpen={isModalOpen}
+      onDelete={onDelete}
+    />
   );
 }
 

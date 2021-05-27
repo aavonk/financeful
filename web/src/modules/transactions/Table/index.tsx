@@ -1,5 +1,5 @@
 export { default as TableRows } from './TableRows';
-export { default as TableActions } from './Actions/index';
+export { default as ActionsContainer } from './Actions/index';
 export { default as TableSkeleton } from './TableSkeleton';
 export { default as SelectTypeFilter } from './Toolbar/SelectTypeFilter';
 export { default as Searchbox } from './Toolbar/Searchbox';

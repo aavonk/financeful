@@ -12,13 +12,12 @@ import { TableContainer, ContentContainer, Left, Right } from './style';
 import { ReactTableProvider } from '@Context/react-table/reactTableContext';
 import {
   TableRows,
-  TableActions,
   TableSkeleton,
   TransactionTypeCell,
   NoTransactionsView,
   TablePagination,
+  ActionsContainer,
 } from '@Modules/transactions/Table';
-import ActionsContainer from '@Modules/transactions/Table/Actions/ActionsContainer.v2';
 
 function TransactionPage() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(

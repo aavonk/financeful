@@ -25,6 +25,7 @@ interface FormProps {
   transfer: Transfer | undefined;
   isSubmitting: boolean;
   onFormSubmit: (values: TransferInput, id: string) => void;
+  onDelete: () => Promise<void> | undefined;
 }
 
 function EditTransferForm({
@@ -33,6 +34,7 @@ function EditTransferForm({
   isSubmitting,
   transfer,
   onFormSubmit,
+  onDelete,
 }: FormProps) {
   const [transferDate, setTransferDate] = useState(new Date());
   const initialValue: TransferFormFields = {
@@ -152,6 +154,15 @@ function EditTransferForm({
           </Row>
         </Body>
         <Footer>
+          <Button
+            variant="danger-secondary"
+            onClick={(e: any) => {
+              e.preventDefault();
+              onDelete();
+            }}
+          >
+            Delete
+          </Button>
           <Button type="submit" variant="primary" disabled={isSubmitting}>
             Save
           </Button>
