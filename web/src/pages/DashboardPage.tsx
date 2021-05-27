@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from '@Common/Paper';
 import { InsetInput } from '@Common/FormElements';
+import Button from '@Common/Button';
 function DashboardPage() {
   return (
     <>
@@ -26,13 +27,9 @@ function DashboardPage() {
         >
           <Paper>
             <div style={{ width: '100%', padding: '10px' }}>
-              <InsetInput
-                value="hi there mister"
-                type="text"
-                onChange={() => console.log('hi')}
-              >
-                Account Name
-              </InsetInput>
+              <Button variant="danger-secondary" onClick={() => console.log('hi')}>
+                Delete
+              </Button>
             </div>
           </Paper>
         </div>

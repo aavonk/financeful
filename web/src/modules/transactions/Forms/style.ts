@@ -82,12 +82,16 @@ export const Body = styled.div`
   background-color: ${({ theme }) => theme.colors.cardDark};
 `;
 
-export const Footer = styled.div`
+type FooterProps = {
+  justify?: 'space-between' | 'space-evenly' | 'flex-start' | 'flex-end';
+};
+
+export const Footer = styled.div<FooterProps>`
   height: 53px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: ${({ justify }) => justify || 'flex-end'};
   width: 100%;
   z-index: 2;
   position: sticky;

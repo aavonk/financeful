@@ -151,7 +151,16 @@ function EditPaymentForm({
             </InsetSelect>
           </FormRow>
         </Body>
-        <Footer>
+        <Footer justify="space-between">
+          <Button
+            variant="danger-secondary"
+            onClick={(e: any) => {
+              e.preventDefault();
+              alert('button click');
+            }}
+          >
+            Delete
+          </Button>
           <Button type="submit" variant="primary" disabled={isSubmitting}>
             Save
           </Button>
