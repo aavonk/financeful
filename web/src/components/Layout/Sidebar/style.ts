@@ -68,7 +68,7 @@ export const SidebarRoot = styled.div<{ $open: boolean }>`
 `;
 
 export const SidebarBrand = styled.div`
-  height: 75px;
+  height: 64px;
   width: 75px;
   overflow: hidden;
   display: flex;

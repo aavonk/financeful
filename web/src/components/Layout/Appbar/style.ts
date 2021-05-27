@@ -10,7 +10,7 @@ export const AppbarRoot = styled.header<Props>`
   left: 75px;
   z-index: 1005;
   background-color: ${({ theme }) => theme.colors.darkOne};
-  height: 75px;
+  height: 64px;
   transition: left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
   @media ${({ theme }) => theme.device.mobile} {
     left: 0;
