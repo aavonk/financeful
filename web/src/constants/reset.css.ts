@@ -42,10 +42,31 @@ export const GlobalStyle = createGlobalStyle`
   body button {
     font-family: inherit;
   }
- 
+
   #root {
     height: 100%;
     width: 100%;
     display: flex;
   }
+
+  /* Chrome, Edge, and Safari scrollbar */
+    *::-webkit-scrollbar{
+    width: 12px;               /* width of the entire scrollbar */
+  }
+
+  *::-webkit-scrollbar-track{
+    background: ${theme.colors.darkTwo};        /* color of the tracking area */
+  }
+
+  *::-webkit-scrollbar-thumb{
+    background-color: ${theme.colors.darkThree};    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid ${theme.colors.darkTwo};  /* creates padding around scroll thumb */
+  }
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${theme.colors.darkThree} ${theme.colors.darkTwo};
+  }
+
 `;

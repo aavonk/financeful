@@ -16,7 +16,6 @@ export const Overlay = styled(DialogOverlay)`
 `;
 
 export const Content = styled(DialogContent)`
-  /* background: ${({ theme }) => theme.colors.darkTwo}; */
   background: #21222d;
   height: 100vh;
   position: fixed;
