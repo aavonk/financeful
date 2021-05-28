@@ -17,7 +17,9 @@ import {
   NoTransactionsView,
   TablePagination,
   ActionsContainer,
+  Toolbar,
 } from '@Modules/transactions/Table';
+import { ActivityContainer } from '@Modules/transactions/ActivityBar'
 
 function TransactionPage() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(
@@ -94,41 +96,42 @@ function TransactionPage() {
   }
 
   return (
-    <>
+    <ReactTableProvider
+      withPagination={true}
+      columns={columns}
+      data={data.getTransactionsRange}
+    >
       <ActionsContainer
         isModalOpen={isEditModalOpen}
         transaction={selectedTransaction}
         setIsModalOpen={setIsEditModalOpen}
       />
+      <Toolbar />
       <ContentContainer>
         <Left>
           <TableContainer>
             <ErrorBoundary FallbackComponent={TableError}>
-              <ReactTableProvider
-                withPagination={true}
-                columns={columns}
-                data={data.getTransactionsRange}
-              >
-                <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
-                  <TableRows
-                    stackedDisplayMobile={true}
-                    hoverable={true}
-                    getRowProps={(row) => ({
-                      onClick: () => {
-                        setSelectedTransaction(row.original as Transaction);
-                        setIsEditModalOpen(true);
-                      },
-                    })}
-                  />
-                </div>
-                <TablePagination />
-              </ReactTableProvider>
+              <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
+                <TableRows
+                  stackedDisplayMobile={true}
+                  hoverable={true}
+                  getRowProps={(row) => ({
+                    onClick: () => {
+                      setSelectedTransaction(row.original as Transaction);
+                      setIsEditModalOpen(true);
+                    },
+                  })}
+                />
+              </div>
+              <TablePagination />
             </ErrorBoundary>
           </TableContainer>
         </Left>
-        <Right>Right side of transactions</Right>
+        <Right>
+          <ActivityContainer />
+        </Right>
       </ContentContainer>
-    </>
+    </ReactTableProvider>
   );
 }
 

@@ -29,10 +29,9 @@ export const Left = styled.div`
 export const Right = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  padding-left: 1rem;
+  align-items: flex-start;
+  padding: 0 0.5rem;
   min-width: calc(260px + 1rem);
-  border: 1px solid blue;
 `;
 
 export const TableContainer = styled.div`

@@ -5,13 +5,10 @@ import TransactionFormController from '../../Forms/TransactionForm/TransactionFo
 import Searchbox from './Searchbox';
 import DateRangeFilter from '@Components/DateFilter/DateRangeFilter';
 import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
+import { useTableContext } from '@Context/react-table/reactTableContext';
 
-type ToolbarProps<T extends Record<string, unknown>> = {
-  instance: TableInstance<T>;
-};
-
-function Toolbar<T extends Record<string, unknown>>({ instance }: ToolbarProps<T>) {
-  const { allColumns } = instance;
+function Toolbar() {
+  const { allColumns } = useTableContext();
   const { range, setRange } = useDateRangeContext();
   return (
     <ToolbarRoot>
@@ -30,10 +27,10 @@ function Toolbar<T extends Record<string, unknown>>({ instance }: ToolbarProps<T
           />
         </ToolbarActions>
       </ToolbarTop>
-      <ToolbarBottom>
-        <Searchbox instance={instance} />
+      {/* <ToolbarBottom>
+        <Searchbox />
         <TransactionFormController asIcon />
-      </ToolbarBottom>
+      </ToolbarBottom> */}
     </ToolbarRoot>
   );
 }

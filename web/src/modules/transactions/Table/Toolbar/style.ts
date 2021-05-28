@@ -21,7 +21,7 @@ export const ToolbarActions = styled.div`
   display: flex;
   align-items: center;
   flex: 0 0 auto;
-  & > :firstt-child() {
+  & > :first-child() {
     margin-right: 10px;
   }
 `;
@@ -29,17 +29,14 @@ export const ToolbarActions = styled.div`
 export const SearchContainer = styled.div`
   position: relative;
   align-items: center;
-  flex-basis: 40%;
+  /* flex-basis: 40%; */
   display: flex;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   border-radius: 9px;
   padding: 0 0.25rem;
   margin-right: 1.25rem;
-  height: 2.5rem;
-  min-width: 200px;
-  max-width: 410px;
-  width: 400px;
-
+  height: 34px;
+  width: 100%;
   & > svg {
     margin-right: 0.75rem;
     height: 1.25rem;
@@ -51,13 +48,13 @@ export const SearchContainer = styled.div`
 export const SearchInput = styled.input`
   background: ${({ theme }) => theme.colors.darkTwo};
   font-weight: 500;
-  width: 100%;
   font-size: 18px;
   border-radius: 4px;
   padding: 8px 12px;
   box-shadow: none;
   color: ${({ theme }) => theme.colors.textPrimary};
   width: 100%;
+  height: 34px;
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: ${({ theme }) => theme.colors.textSecondary};
@@ -78,31 +75,6 @@ export const SearchInput = styled.input`
 export const TabContainer = styled(FlexRow)`
   border-bottom: 1.5px solid ${({ theme }) => theme.colors.darkThree};
   overflow-x: auto;
-  ::-webkit-scrollbar {
-    width: 14px;
-    height: 16px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    height: 4px;
-    border: 4px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    background-color: rgba(255, 255, 255, 0.2);
-    -webkit-border-radius: 16px;
-    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
-      inset 1px 1px 0px rgba(0, 0, 0, 0.05);
-  }
-
-  ::-webkit-scrollbar-button {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-
-  ::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
-
   @media (max-width: 800px) {
     display: none;
   }
@@ -139,7 +111,7 @@ export const TabItem = styled.button`
   font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
       sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   }
-  & :focus :focus-visible {
+  & :focus :focus-visible, :focus-within {
      & > span {
        color: ${({ theme }) => theme.colors.textPrimary};
      }
@@ -165,6 +137,13 @@ export const ToolbarRoot = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 1rem;
+
+  @media ${({ theme }) => theme.device.desktop} {
+    max-width: 1440px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
   //1005px
   @media (max-width: 1195px) {
     flex-direction: column;
