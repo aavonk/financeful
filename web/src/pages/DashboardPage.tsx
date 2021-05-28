@@ -8,9 +8,9 @@ function DashboardPage() {
         TODO:
         <ul>
           <li>
-            !!!!! Make the Toolbar visible when Transactions are loading -- causes big
-            shift
+            Make the Toolbar visible when Transactions are loading -- causes big shift
           </li>
+          <li>Add Arrow to Selects for Accessibility reasons</li>
         </ul>
         <div
           style={{

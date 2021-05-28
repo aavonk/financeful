@@ -17,3 +17,8 @@ export const TaskContainer = styled.div`
     background-color: #171f26;
   }
 `;
+
+export const TaskTitle = styled.h3`
+  font-weight: 600;
+  font-size: 1rem;
+`;

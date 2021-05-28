@@ -1,5 +1,20 @@
 import styled from 'styled-components';
 
+export const Left = styled.div`
+  min-height: 350px;
+  overflow-x: hidden;
+  overflow-y: visible;
+  flex-grow: 1;
+`;
+
+export const Right = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 0.5rem;
+  min-width: calc(260px + 1rem);
+`;
+
 export const ContentContainer = styled.div`
   min-height: 350px;
   padding-bottom: 1rem;
@@ -15,23 +30,12 @@ export const ContentContainer = styled.div`
   }
 
   @media (max-width: 905px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
+
+    ${Right} {
+      margin-bottom: 40px;
+    }
   }
-`;
-
-export const Left = styled.div`
-  min-height: 350px;
-  overflow-x: hidden;
-  overflow-y: visible;
-  flex-grow: 1;
-`;
-
-export const Right = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 0 0.5rem;
-  min-width: calc(260px + 1rem);
 `;
 
 export const TableContainer = styled.div`

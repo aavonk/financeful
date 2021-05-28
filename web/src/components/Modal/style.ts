@@ -101,7 +101,5 @@ export const Footer = styled.div<FooterProps>`
   bottom: 0;
   padding: 0.825rem;
   background-color: ${({ theme }) => theme.colors.cardLight};
-  /* background: #21222d; */
-
   border-top: 1px solid ${({ theme }) => theme.colors.darkThree};
 `;

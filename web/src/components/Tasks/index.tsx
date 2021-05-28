@@ -1,11 +1,10 @@
 import React from 'react';
-import Paper from '@Common/Paper';
-import { TaskContainer } from './style';
+import { TaskContainer, TaskTitle } from './style';
 
 function Task() {
   return (
     <TaskContainer>
-      <p>A Task Item</p>
+      <TaskTitle>Review transactions</TaskTitle>
       <p> And another </p>
     </TaskContainer>
   );

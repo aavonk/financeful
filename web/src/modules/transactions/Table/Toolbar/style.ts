@@ -32,7 +32,7 @@ export const SearchContainer = styled.div`
   /* flex-basis: 40%; */
   display: flex;
   background-color: ${({ theme }) => theme.colors.darkTwo};
-  border-radius: 9px;
+  border-radius: 4px;
   padding: 0 0.25rem;
   margin-right: 1.25rem;
   height: 34px;
