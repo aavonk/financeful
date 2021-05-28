@@ -11,14 +11,29 @@ export const TaskContainer = styled.div`
   border-radius: 2px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   cursor: pointer;
+  max-width: 275px;
 
   :hover {
     transition: background-color 0.2s ease-in-out;
     background-color: #171f26;
+  }
+
+  & > svg {
+    height: 2rem;
+    width: 2rem;
+    color: ${({ theme }) => theme.colors.green};
+    fill: ${({ theme }) => theme.colors.green};
   }
 `;
 
 export const TaskTitle = styled.h3`
   font-weight: 600;
   font-size: 1rem;
+  text-align: center;
+`;
+
+export const SecondaryText = styled.p`
+  font-size: 0.75rem;
+  color: #8c91a1;
+  text-align: center;
 `;
