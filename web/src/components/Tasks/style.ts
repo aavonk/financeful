@@ -30,10 +30,24 @@ export const TaskTitle = styled.h3`
   font-weight: 600;
   font-size: 1rem;
   text-align: center;
+  width: 100%;
+
+  /* Styles for loading skeleton */
+  & > span {
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 export const SecondaryText = styled.p`
   font-size: 0.75rem;
   color: #8c91a1;
   text-align: center;
+  width: 100%;
+
+  /* Styles for loading skeleton */
+  & > span {
+    margin-bottom: 1rem;
+  }
 `;
