@@ -3,12 +3,17 @@ import { Searchbox } from '@Modules/transactions/Table';
 import TransactionFormController from '@Modules/transactions/Forms/TransactionForm/TransactionFormController';
 import { ActionsWrapper } from './style';
 
-function Actions() {
+type Props = {
+  disableSearch?: boolean;
+  disableButton?: boolean;
+};
+
+function Actions({ disableSearch, disableButton }: Props) {
   return (
     <>
       <ActionsWrapper>
-        <Searchbox />
-        <TransactionFormController fullWidth />
+        {disableSearch ? null : <Searchbox />}
+        <TransactionFormController fullWidth disableButton={disableButton} />
       </ActionsWrapper>
     </>
   );

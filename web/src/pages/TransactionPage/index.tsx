@@ -19,7 +19,8 @@ import {
   ActionsContainer,
   Toolbar,
 } from '@Modules/transactions/Table';
-import { ActivityContainer } from '@Modules/transactions/ActivityBar'
+import { ActivityContainer } from '@Modules/transactions/ActivityBar';
+import TransactionsLoadingView from './TransactionsLoadingView';
 
 function TransactionPage() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(
@@ -84,7 +85,7 @@ function TransactionPage() {
   );
 
   if (loading) {
-    return <TableSkeleton columns={6} rows={20} />;
+    return <TransactionsLoadingView />;
   }
 
   if (error) {

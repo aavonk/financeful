@@ -6,13 +6,14 @@ type Props = {
   active?: boolean;
   grey?: boolean;
   blue?: boolean;
+  disabled?: boolean;
   children: React.ReactNode;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   ariaText: string;
   'data-testid'?: string;
 };
 
-function IconButton({ small, active, grey, blue, ariaText, ...props }: Props) {
+function IconButton({ small, active, grey, blue, ariaText, disabled, ...props }: Props) {
   return (
     <>
       <StyledButton
@@ -21,6 +22,7 @@ function IconButton({ small, active, grey, blue, ariaText, ...props }: Props) {
         $active={active}
         $blue={blue}
         {...props}
+        disabled={disabled}
         data-testid={props['data-testid']}
       >
         <VisuallyHidden>{ariaText}</VisuallyHidden>

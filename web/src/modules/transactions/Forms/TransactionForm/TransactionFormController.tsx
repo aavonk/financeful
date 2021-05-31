@@ -21,9 +21,10 @@ import { useCreateTransaction } from '../../mutations/useCreateTransaction';
 type Props = {
   asIcon?: boolean;
   fullWidth?: boolean;
+  disableButton?: boolean;
 };
 
-function TransactionFormController({ asIcon = false, fullWidth = false }: Props) {
+function TransactionFormController({ asIcon = false, fullWidth = false, disableButton = false }: Props) {
   const { data, loading, error } = useFetchAccountsAndCategoriesQuery();
   const { mutate: createTransfer, loading: submittingTransfer } = useCreateTransfer();
   const {
@@ -69,11 +70,11 @@ function TransactionFormController({ asIcon = false, fullWidth = false }: Props)
   return (
     <>
       {asIcon ? (
-        <IconButton blue onClick={open} ariaText="Add transaction">
+        <IconButton blue onClick={open} ariaText="Add transaction" disabled={disableButton}>
           <PlusIcon />
         </IconButton>
       ) : (
-        <Button onClick={open} variant="primary" fullWidth={fullWidth}>
+        <Button onClick={open} variant="primary" fullWidth={fullWidth} disabled={disableButton}>
           {smallDevice ? 'New' : 'New Transaction'}
         </Button>
       )}

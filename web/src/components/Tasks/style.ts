@@ -45,6 +45,7 @@ export const SecondaryText = styled.p`
   color: #8c91a1;
   text-align: center;
   width: 100%;
+  margin-bottom: 0.5rem;
 
   /* Styles for loading skeleton */
   & > span {

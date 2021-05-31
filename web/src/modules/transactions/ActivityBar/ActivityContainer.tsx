@@ -3,10 +3,15 @@ import Actions from './Actions';
 import { ActivityContainerWrapper, TasksContainer } from './style';
 import TaskList from './TaskList';
 
-function ActivityContainer() {
+type Props = {
+  disableSearch?: boolean;
+  disableButton?: boolean;
+};
+
+function ActivityContainer({ disableSearch, disableButton }: Props) {
   return (
     <ActivityContainerWrapper>
-      <Actions />
+      <Actions disableSearch={disableSearch} disableButton={disableButton} />
       <TasksContainer>
         <TaskList />
       </TasksContainer>
