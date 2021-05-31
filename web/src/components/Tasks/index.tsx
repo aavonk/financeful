@@ -2,12 +2,18 @@ import React from 'react';
 import { TaskContainer, TaskTitle, SecondaryText } from './style';
 import { LineChart as LineChartSVG } from '@Common/Icons';
 
-function Task() {
+type Props = {
+  heading: string;
+  subheading: string;
+  onClick?: () => void;
+};
+
+function Task({ heading, subheading, onClick }: Props) {
   return (
-    <TaskContainer>
+    <TaskContainer onClick={onClick}>
       <LineChartSVG />
-      <TaskTitle>Review 4 transactions</TaskTitle>
-      <SecondaryText>Ensure your transactions are categorized properly</SecondaryText>
+      <TaskTitle>{heading}</TaskTitle>
+      <SecondaryText>{subheading}</SecondaryText>
     </TaskContainer>
   );
 }

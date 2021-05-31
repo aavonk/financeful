@@ -1,11 +1,19 @@
-import { Resolver, Authorized, Mutation, Ctx, Arg, Query } from 'type-graphql';
+import {
+  Resolver,
+  Authorized,
+  Mutation,
+  Ctx,
+  Arg,
+  Query,
+  Int,
+} from 'type-graphql';
 import { Context, Transaction } from '@Shared/types';
 import { TransactionInput } from '../types/transaction.types';
 import { RangeParams } from '@Shared/types';
+import { transactionService } from '../services';
 
 @Resolver()
 export class TransactionResolver {
-  //TODO: Pagination
   @Authorized()
   @Query(() => [Transaction], { nullable: true })
   async getTransactions(
@@ -63,5 +71,11 @@ export class TransactionResolver {
     @Ctx() { user, services: { transactionService } }: Context,
   ): Promise<Transaction[]> {
     return await transactionService.getRange(input, user.id, accountId);
+  }
+
+  @Authorized()
+  @Query(() => Int)
+  async getUncategorizedLength(@Ctx() { user }: Context): Promise<number> {
+    return await transactionService.getUncategorizedLength(user.id);
   }
 }

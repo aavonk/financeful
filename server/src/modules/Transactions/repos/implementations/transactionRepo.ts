@@ -133,4 +133,19 @@ export class TransactionRepo implements ITransactionRepo {
 
     return transaction;
   }
+
+  public async getUncategorizedLength(userId: string): Promise<number> {
+    return await this.client.transaction.count({
+      where: {
+        AND: [
+          {
+            userId,
+            isUncategorized: {
+              equals: true,
+            },
+          },
+        ],
+      },
+    });
+  }
 }

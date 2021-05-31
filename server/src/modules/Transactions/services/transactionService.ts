@@ -17,4 +17,5 @@ export interface ITransactionService {
     userId: string,
     accountId?: string,
   ): Promise<Transaction[]>;
+  getUncategorizedLength(userId: string): Promise<number>;
 }

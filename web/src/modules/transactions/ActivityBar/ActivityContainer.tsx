@@ -8,7 +8,10 @@ function ActivityContainer() {
     <ActivityContainerWrapper>
       <Actions />
       <TasksContainer>
-        <Task />
+        <Task
+          heading="Review 4 transactions"
+          subheading="Ensure your transactions are categorized"
+        />
       </TasksContainer>
     </ActivityContainerWrapper>
   );
