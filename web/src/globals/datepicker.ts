@@ -58,7 +58,7 @@ export const DatePickerStyles = styled.div<Props>`
   }
   & .fin {
     background: ${({ theme }) => theme.colors.darkTwo};
-    border: 1px solid ${({ theme }) => theme.colors.primary};
+    border: 1px solid transparent;
     font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
       'Segoe UI Symbol';

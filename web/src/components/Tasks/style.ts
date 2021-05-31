@@ -19,8 +19,8 @@ export const TaskContainer = styled.div`
   }
 
   & > svg {
-    height: 2rem;
-    width: 2rem;
+    height: 1.75rem;
+    width: 1.75rem;
     color: ${({ theme }) => theme.colors.green};
     fill: ${({ theme }) => theme.colors.green};
   }
