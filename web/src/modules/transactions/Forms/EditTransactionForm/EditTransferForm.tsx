@@ -103,7 +103,7 @@ function EditTransferForm({
             <InsetSelect
               value={values.fromAccount}
               onChange={handleChange('fromAccount')}
-              label="From Account *"
+              label="From Account"
             >
               <option disabled value=""></option>
               {accounts.map((account: Account) => (
@@ -133,7 +133,7 @@ function EditTransferForm({
             <InsetSelect
               value={values.categoryId}
               onChange={handleChange('categoryId')}
-              label="Category"
+              label="Category (optional)"
             >
               <option value="" disabled></option>
               {categories.map((cat: Category) => (
@@ -150,7 +150,7 @@ function EditTransferForm({
               onChange={handleChange('description')}
               onBlur={handleTrim('description')}
             >
-              Description
+              Description (optional)
             </InsetInput>
           </FormRow>
         </Body>

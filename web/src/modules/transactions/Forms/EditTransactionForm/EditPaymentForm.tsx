@@ -71,7 +71,7 @@ function EditPaymentForm({
             <InsetDatePicker
               selected={transDate}
               onChange={(date: Date) => setTransDate(date)}
-              label="Date *"
+              label="Date"
             />
 
             <ErrorMessage>{errors.date ? errors.date : null}</ErrorMessage>
@@ -80,7 +80,7 @@ function EditPaymentForm({
             <InsetSelect
               value={values.accountId}
               onChange={handleChange('accountId')}
-              label="Account *"
+              label="Account"
             >
               <option value="" disabled></option>
               {accounts.map((acct) => (
@@ -92,11 +92,7 @@ function EditPaymentForm({
             <ErrorMessage>{errors.accountId ? errors.accountId : null}</ErrorMessage>
           </FormRow>
           <FormRow>
-            <InsetSelect
-              value={values.type}
-              onChange={handleChange('type')}
-              label="Type *"
-            >
+            <InsetSelect value={values.type} onChange={handleChange('type')} label="Type">
               <option value="" disabled></option>
               <option value="INCOME">Income</option>
               <option value="EXPENSE">Expense</option>
@@ -111,7 +107,7 @@ function EditPaymentForm({
               onChange={handleChange('payee')}
               onBlur={handleTrim('payee')}
             >
-              Payee *
+              Payee
             </InsetInput>
             <ErrorMessage>{errors.payee ? errors.payee : null}</ErrorMessage>
           </FormRow>
@@ -123,7 +119,7 @@ function EditPaymentForm({
               onChange={handleChange('description')}
               onBlur={handleTrim('description')}
             >
-              Description
+              Description (optional)
             </InsetInput>
           </FormRow>
           <FormRow>
@@ -133,7 +129,7 @@ function EditPaymentForm({
               onChange={handleChange('amount')}
               onBlur={handleTrim('amount')}
             >
-              Amount *
+              Amount
             </InsetInput>
             <ErrorMessage>{errors.amount ? errors.amount : null}</ErrorMessage>
           </FormRow>
@@ -141,7 +137,7 @@ function EditPaymentForm({
             <InsetSelect
               value={values.categoryId}
               onChange={handleChange('categoryId')}
-              label="Category"
+              label="Category (optional)"
             >
               <option value="" disabled></option>
               {categories.map((cat) => (
