@@ -1,6 +1,7 @@
 import {
   useCreateTransferMutation,
   GetTransactionsRangeDocument,
+  GetUncategorizedLengthDocument,
 } from '@Generated/graphql';
 
 export function useCreateTransfer() {
@@ -15,6 +16,22 @@ export function useCreateTransfer() {
             });
 
             return [newTransactionsRef, ...existingFieldData];
+          },
+          getUncategorizedLength: () => {
+            //@ts-ignore
+            const { getUncategorizedLength } = cache.readQuery({
+              query: GetUncategorizedLengthDocument,
+            });
+            const isUnCategorized =
+              data?.createTransfer.transactions &&
+              data?.createTransfer.transactions[0].category === null;
+
+            if (!isUnCategorized) return;
+
+            cache.writeQuery({
+              data: getUncategorizedLength + 1,
+              query: GetUncategorizedLengthDocument,
+            });
           },
         },
       });

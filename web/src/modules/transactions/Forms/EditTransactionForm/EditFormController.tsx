@@ -8,6 +8,7 @@ import {
   TransferInput,
   GetTransactionsDocument,
   GetTransactionsRangeDocument,
+  GetUncategorizedLengthDocument,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import Toast from '@Common/Alerts/Toast';
@@ -86,6 +87,22 @@ function EditFormController({ transaction, isOpen, closeModal, onDelete }: Props
                   query: GetTransactionsRangeDocument,
                 });
                 return [newTransactionsRef, ...filteredTransactions];
+              },
+              getUncategorizedLength: () => {
+                //@ts-ignore
+                const { getUncategorizedLength } = cache.readQuery({
+                  query: GetUncategorizedLengthDocument,
+                });
+                const isUnCategorized =
+                  data?.updateTransfer.transactions &&
+                  data?.updateTransfer.transactions[0].category === null;
+
+                if (!isUnCategorized) return;
+
+                cache.writeQuery({
+                  data: getUncategorizedLength + 1,
+                  query: GetUncategorizedLengthDocument,
+                });
               },
             },
           });

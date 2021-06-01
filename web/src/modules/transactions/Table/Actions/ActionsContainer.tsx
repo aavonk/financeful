@@ -6,6 +6,7 @@ import {
   useDeleteTransferMutation,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
+import { useDeleteTransaction } from '@Modules/transactions/mutations/useDeleteTransaction';
 
 type Props = {
   isModalOpen: boolean;
@@ -14,13 +15,14 @@ type Props = {
 };
 
 function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
-  const [deleteTransaction] = useDeleteTransactionMutation();
-  const [deleteTransfer] = useDeleteTransferMutation();
-  const { showAlert } = useAlert();
-
   if (!transaction) {
     return null;
   }
+
+  const { mutate: deleteTransaction } = useDeleteTransaction(transaction.id);
+  // const [deleteTransaction] = useDeleteTransactionMutation();
+  const [deleteTransfer] = useDeleteTransferMutation();
+  const { showAlert } = useAlert();
 
   const onDelete = () => {
     if (transaction.isTransfer && transaction.transferId) {
@@ -32,23 +34,8 @@ function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
 
   const handlePaymentDelete = async () => {
     try {
-      const { id } = transaction;
       const { data } = await deleteTransaction({
-        variables: { id },
-        update(cache) {
-          cache.modify({
-            fields: {
-              getTransactionsRange(
-                existingTransactionsRef: Transaction[],
-                { readField },
-              ) {
-                return existingTransactionsRef.filter(
-                  (transactionRef) => id !== readField('id', transactionRef),
-                );
-              },
-            },
-          });
-        },
+        variables: { id: transaction.id },
       });
 
       setIsModalOpen(false);
