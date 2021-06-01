@@ -11,12 +11,14 @@ function TaskList() {
 
   return (
     <>
-      <Task
-        heading={`Review ${data?.getUncategorizedLength} transactions`}
-        subheading="Ensure your transactions are categorized"
-        loading={loading}
-        onClick={() => console.log('hi')}
-      />
+      {data?.getUncategorizedLength && data.getUncategorizedLength > 0 ? (
+        <Task
+          heading={`Review ${data?.getUncategorizedLength} transactions`}
+          subheading="Ensure your transactions are categorized"
+          loading={loading}
+          onClick={() => console.log('hi')}
+        />
+      ) : null}
     </>
   );
 }

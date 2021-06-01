@@ -1,6 +1,6 @@
 import {
   useUpdateTransactionMutation,
-  GetTransactionsDocument,
+  GetTransactionsRangeDocument,
 } from '@Generated/graphql';
 
 export function useUpdateTransaction() {
@@ -8,10 +8,10 @@ export function useUpdateTransaction() {
     update(cache, { data }) {
       cache.modify({
         fields: {
-          getTransactions: (existingFieldData = []) => {
+          getTransactionsRange: (existingFieldData = []) => {
             const newTransactionRef = cache.writeQuery({
               data: data?.updateTransaction,
-              query: GetTransactionsDocument,
+              query: GetTransactionsRangeDocument,
             });
             return [newTransactionRef, ...existingFieldData];
           },

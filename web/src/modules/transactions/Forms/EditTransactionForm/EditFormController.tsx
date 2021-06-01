@@ -7,6 +7,7 @@ import {
   useGetTransferLazyQuery,
   TransferInput,
   GetTransactionsDocument,
+  GetTransactionsRangeDocument,
 } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import Toast from '@Common/Alerts/Toast';
@@ -33,6 +34,7 @@ function EditFormController({ transaction, isOpen, closeModal, onDelete }: Props
     mutate: updateTransaction,
     loading: submittingPayment,
   } = useUpdateTransaction();
+  // const { mutate: updateTransfer, loading: submittingTransfer} = useUpdateTransfer()
 
   const [updateTransfer, { loading: submittingTransfer }] = useUpdateTransferMutation();
   const { showAlert } = useAlert();
@@ -74,14 +76,14 @@ function EditFormController({ transaction, isOpen, closeModal, onDelete }: Props
         update(cache, { data }) {
           cache.modify({
             fields: {
-              getTransactions(existingTransactionsRef = [], { readField }) {
+              getTransactionsRange(existingTransactionsRef = [], { readField }) {
                 const filteredTransactions = existingTransactionsRef.filter(
                   (transactionRef: Transaction) =>
                     id !== readField('transferId', transactionRef),
                 );
                 const newTransactionsRef = cache.writeQuery({
                   data: data?.updateTransfer,
-                  query: GetTransactionsDocument,
+                  query: GetTransactionsRangeDocument,
                 });
                 return [newTransactionsRef, ...filteredTransactions];
               },

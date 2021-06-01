@@ -1,4 +1,7 @@
-import { useAddTransactionMutation, GetTransactionsDocument } from '@Generated/graphql';
+import {
+  useAddTransactionMutation,
+  GetTransactionsRangeDocument,
+} from '@Generated/graphql';
 
 export function useCreateTransaction() {
   const [mutate, { data, error, loading }] = useAddTransactionMutation({
@@ -8,7 +11,7 @@ export function useCreateTransaction() {
           getTransactionsRange: (existingFieldData = []) => {
             const newTransactionRef = cache.writeQuery({
               data: data?.createTransaction,
-              query: GetTransactionsDocument,
+              query: GetTransactionsRangeDocument,
             });
             return [newTransactionRef, ...existingFieldData];
           },
