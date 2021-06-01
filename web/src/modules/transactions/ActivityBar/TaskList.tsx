@@ -1,5 +1,5 @@
-import Task from '@Components/Tasks';
 import React from 'react';
+import Task from '@Components/Tasks';
 import { useGetUncategorizedLengthQuery } from '@Generated/graphql';
 
 function TaskList() {
@@ -11,14 +11,12 @@ function TaskList() {
 
   return (
     <>
-      {data?.getUncategorizedLength && data.getUncategorizedLength > 0 ? (
-        <Task
-          heading={`Review ${data?.getUncategorizedLength} transactions`}
-          subheading="Ensure your transactions are categorized"
-          loading={loading}
-          onClick={() => console.log('hi')}
-        />
-      ) : null}
+      <Task
+        heading={`Review ${data?.getUncategorizedLength} transactions`}
+        subheading="Ensure your transactions are categorized"
+        loading={loading}
+        onClick={() => console.log('hi')}
+      />
     </>
   );
 }
