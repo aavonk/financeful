@@ -1,12 +1,9 @@
 import React from 'react';
 import { EditFormController } from '@Modules/transactions/Forms/EditTransactionForm';
-import {
-  Transaction,
-  useDeleteTransactionMutation,
-  useDeleteTransferMutation,
-} from '@Generated/graphql';
+import { Transaction } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { useDeleteTransaction } from '@Modules/transactions/mutations/useDeleteTransaction';
+import { useDeleteTransfer } from '@Modules/transactions/mutations/useDeleteTransfer';
 
 type Props = {
   isModalOpen: boolean;
@@ -18,10 +15,8 @@ function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
   if (!transaction) {
     return null;
   }
-
   const { mutate: deleteTransaction } = useDeleteTransaction(transaction.id);
-  // const [deleteTransaction] = useDeleteTransactionMutation();
-  const [deleteTransfer] = useDeleteTransferMutation();
+  const { mutate: deleteTransfer } = useDeleteTransfer(transaction.transferId!);
   const { showAlert } = useAlert();
 
   const onDelete = () => {
@@ -52,21 +47,6 @@ function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
     try {
       const { data } = await deleteTransfer({
         variables: { transferId },
-        update(cache) {
-          cache.modify({
-            fields: {
-              getTransactionsRange(
-                existingTransactionsRef: Transaction[],
-                { readField },
-              ) {
-                return existingTransactionsRef.filter(
-                  (transactionRef) =>
-                    transferId !== readField('transferId', transactionRef),
-                );
-              },
-            },
-          });
-        },
       });
       setIsModalOpen(false);
 
