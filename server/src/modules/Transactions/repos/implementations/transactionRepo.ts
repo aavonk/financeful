@@ -148,4 +148,21 @@ export class TransactionRepo implements ITransactionRepo {
       },
     });
   }
+
+  public async getUncategorizedTransactions(
+    userId: string,
+  ): Promise<Transaction[]> {
+    return await this.client.transaction.findMany({
+      where: {
+        AND: [
+          {
+            userId,
+            isUncategorized: {
+              equals: true,
+            },
+          },
+        ],
+      },
+    });
+  }
 }

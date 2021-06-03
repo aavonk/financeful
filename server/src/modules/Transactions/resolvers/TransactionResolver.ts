@@ -78,4 +78,12 @@ export class TransactionResolver {
   async getUncategorizedLength(@Ctx() { user }: Context): Promise<number> {
     return await transactionService.getUncategorizedLength(user.id);
   }
+
+  @Authorized()
+  @Query(() => [Transaction])
+  async getUncategorizedTransactions(
+    @Ctx() { user }: Context,
+  ): Promise<Transaction[]> {
+    return await transactionService.getUncategorizedTransactions(user.id);
+  }
 }

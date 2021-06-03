@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Task from '@Components/Tasks';
 import { useGetUncategorizedLengthQuery } from '@Generated/graphql';
+import Task from '@Components/Tasks';
 
 function ReviewTransactionsTask() {
   const { data, loading, error } = useGetUncategorizedLengthQuery();

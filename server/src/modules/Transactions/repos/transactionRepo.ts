@@ -18,4 +18,5 @@ export interface ITransactionRepo {
     userId: string,
   ): Promise<Transaction[]>;
   getUncategorizedLength(userId: string): Promise<number>;
+  getUncategorizedTransactions(userId: string): Promise<Transaction[]>;
 }

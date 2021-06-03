@@ -108,4 +108,10 @@ export class TransactionService implements ITransactionService {
   public async getUncategorizedLength(userId: string): Promise<number> {
     return await this.transactionRepo.getUncategorizedLength(userId);
   }
+
+  public async getUncategorizedTransactions(
+    userId: string,
+  ): Promise<Transaction[]> {
+    return await this.transactionRepo.getUncategorizedTransactions(userId);
+  }
 }
