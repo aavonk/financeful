@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Task from '@Components/Tasks';
 import { useGetUncategorizedLengthQuery } from '@Generated/graphql';
 
@@ -6,6 +7,7 @@ function ReviewTransactionsTask() {
   const { data, loading, error } = useGetUncategorizedLengthQuery();
   const [heading, setHeading] = React.useState<string>('');
   const [subheading, setSubheading] = React.useState<string>('');
+  const history = useHistory();
 
   React.useEffect(() => {
     setHeading(`Review ${data?.getUncategorizedLength || ''} transactions`);
@@ -31,7 +33,9 @@ function ReviewTransactionsTask() {
         heading={heading}
         subheading={subheading}
         loading={loading}
-        onClick={() => console.log('hi')}
+        onClick={() => {
+          history.push('/transactions?search=uncategorized');
+        }}
       />
     </>
   );

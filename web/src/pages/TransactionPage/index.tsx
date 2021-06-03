@@ -21,6 +21,7 @@ import {
 } from '@Modules/transactions/Table';
 import { ActivityContainer } from '@Modules/transactions/ActivityBar';
 import TransactionsLoadingView from './TransactionsLoadingView';
+import { useQuery } from '@Hooks/useQuery';
 
 function TransactionPage() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(
@@ -31,6 +32,13 @@ function TransactionPage() {
   const { data, error, loading } = useGetTransactionsRangeQuery({
     variables: { input: { startDate: range.startDate, endDate: range.endDate } },
   });
+
+  const query = useQuery();
+  const params = query.get('search');
+
+  if (params) {
+    alert('Params!!');
+  }
 
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
