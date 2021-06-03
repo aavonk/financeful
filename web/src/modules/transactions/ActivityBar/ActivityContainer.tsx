@@ -1,7 +1,7 @@
 import React from 'react';
 import Actions from './Actions';
 import { ActivityContainerWrapper, TasksContainer } from './style';
-import TaskList from './TaskList';
+import TaskList from './TaskList/TaskList';
 
 type Props = {
   disableSearch?: boolean;

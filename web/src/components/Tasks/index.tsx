@@ -4,7 +4,7 @@ import { LineChart as LineChartSVG } from '@Common/Icons';
 import Skeleton from '@Common/Skeleton';
 
 type Props = {
-  heading: string;
+  heading: string | null;
   subheading: string;
   onClick?: () => void;
   loading?: boolean;
