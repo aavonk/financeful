@@ -3,16 +3,28 @@ import { TaskContainer, TaskTitle, SecondaryText } from './style';
 import { LineChart as LineChartSVG } from '@Common/Icons';
 import Skeleton from '@Common/Skeleton';
 
-type Props = {
+type BaseProps = {
   heading: string | null;
   subheading: string;
-  onClick?: () => void;
   loading?: boolean;
 };
 
-function Task({ heading, subheading, onClick, loading }: Props) {
+type ActionProps =
+  | { isClickable: true; onClick: () => void }
+  | { isClickable?: false; onClick?: never }
+  | { isClickable: boolean; onClick?: () => void };
+
+type Props = BaseProps & ActionProps;
+
+function Task({ heading, subheading, onClick, loading, isClickable }: Props) {
+  const handleClick = () => {
+    if (!isClickable || !onClick) return;
+    if (loading) return;
+
+    return onClick();
+  };
   return (
-    <TaskContainer onClick={loading ? undefined : onClick}>
+    <TaskContainer onClick={handleClick} isClickable={isClickable}>
       {loading ? (
         <>
           <TaskTitle>

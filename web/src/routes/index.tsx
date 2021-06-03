@@ -53,11 +53,7 @@ function Routes() {
                   <PrivateRoute exact path="/dashboard" component={DashboardPage} />
                   <ErrorBoundary FallbackComponent={DefaultView}>
                     <DateRangeProvider>
-                      <PrivateRoute
-                        exact
-                        path="/transactions"
-                        component={TransactionPage}
-                      />
+                      <PrivateRoute path="/transactions" component={TransactionPage} />
                     </DateRangeProvider>
                   </ErrorBoundary>
                   <PrivateRoute path="/my-wallet" component={MyWalletPage} exact />

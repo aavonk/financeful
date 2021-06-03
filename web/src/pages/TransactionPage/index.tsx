@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
@@ -33,12 +34,9 @@ function TransactionPage() {
     variables: { input: { startDate: range.startDate, endDate: range.endDate } },
   });
 
-  const query = useQuery();
-  const params = query.get('search');
+  const { url, path } = useRouteMatch();
 
-  if (params) {
-    alert('Params!!');
-  }
+  console.log({ url, path });
 
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
@@ -50,14 +48,8 @@ function TransactionPage() {
         },
         Filter: SelectTypeFilter,
         disableFilters: true,
-        className: 'Test-class-name',
       },
-      {
-        Header: 'Account',
-        accessor: 'account.accountName',
-        Filter: SelectTypeFilter,
-        disableFilters: true,
-      },
+
       {
         Header: 'Payee',
         accessor: 'payee',
@@ -87,6 +79,12 @@ function TransactionPage() {
         },
         Filter: SelectTypeFilter,
         filter: 'includes',
+      },
+      {
+        Header: 'Account',
+        accessor: 'account.accountName',
+        Filter: SelectTypeFilter,
+        disableFilters: true,
       },
     ],
     [],
@@ -121,16 +119,23 @@ function TransactionPage() {
           <TableContainer>
             <ErrorBoundary FallbackComponent={TableError}>
               <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
-                <TableRows
-                  stackedDisplayMobile={true}
-                  hoverable={true}
-                  getRowProps={(row) => ({
-                    onClick: () => {
-                      setSelectedTransaction(row.original as Transaction);
-                      setIsEditModalOpen(true);
-                    },
-                  })}
-                />
+                <Switch>
+                  <Route exact path={path}>
+                    <TableRows
+                      stackedDisplayMobile={true}
+                      hoverable={true}
+                      getRowProps={(row) => ({
+                        onClick: () => {
+                          setSelectedTransaction(row.original as Transaction);
+                          setIsEditModalOpen(true);
+                        },
+                      })}
+                    />
+                  </Route>
+                  <Route path={`${path}/uncategorized`}>
+                    <div>Uncategorized!!!!</div>
+                  </Route>
+                </Switch>
               </div>
               <TablePagination />
             </ErrorBoundary>
