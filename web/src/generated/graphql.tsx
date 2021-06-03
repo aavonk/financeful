@@ -23,6 +23,7 @@ export type Query = {
   getTransaction?: Maybe<Transaction>;
   getTransactionsRange: Array<Transaction>;
   getUncategorizedLength: Scalars['Int'];
+  getUncategorizedTransactions: Array<Transaction>;
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
@@ -648,6 +649,18 @@ export type GetUncategorizedLengthQueryVariables = Exact<{ [key: string]: never;
 export type GetUncategorizedLengthQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'getUncategorizedLength'>
+);
+
+export type GetUncategorizedTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUncategorizedTransactionsQuery = (
+  { __typename?: 'Query' }
+  & { getUncategorizedTransactions: Array<(
+    { __typename?: 'Transaction' }
+    & Pick<Transaction, 'isCashIn' | 'isCashOut' | 'isUncategorized' | 'isTransfer' | 'transferId'>
+    & TransactionFieldsFragment
+  )> }
 );
 
 export type CreateAccountMutationVariables = Exact<{
@@ -1519,6 +1532,45 @@ export function useGetUncategorizedLengthLazyQuery(baseOptions?: Apollo.LazyQuer
 export type GetUncategorizedLengthQueryHookResult = ReturnType<typeof useGetUncategorizedLengthQuery>;
 export type GetUncategorizedLengthLazyQueryHookResult = ReturnType<typeof useGetUncategorizedLengthLazyQuery>;
 export type GetUncategorizedLengthQueryResult = Apollo.QueryResult<GetUncategorizedLengthQuery, GetUncategorizedLengthQueryVariables>;
+export const GetUncategorizedTransactionsDocument = gql`
+    query GetUncategorizedTransactions {
+  getUncategorizedTransactions {
+    ...TransactionFields
+    isCashIn
+    isCashOut
+    isUncategorized
+    isTransfer
+    transferId
+  }
+}
+    ${TransactionFieldsFragmentDoc}`;
+
+/**
+ * __useGetUncategorizedTransactionsQuery__
+ *
+ * To run a query within a React component, call `useGetUncategorizedTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUncategorizedTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUncategorizedTransactionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUncategorizedTransactionsQuery(baseOptions?: Apollo.QueryHookOptions<GetUncategorizedTransactionsQuery, GetUncategorizedTransactionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUncategorizedTransactionsQuery, GetUncategorizedTransactionsQueryVariables>(GetUncategorizedTransactionsDocument, options);
+      }
+export function useGetUncategorizedTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUncategorizedTransactionsQuery, GetUncategorizedTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUncategorizedTransactionsQuery, GetUncategorizedTransactionsQueryVariables>(GetUncategorizedTransactionsDocument, options);
+        }
+export type GetUncategorizedTransactionsQueryHookResult = ReturnType<typeof useGetUncategorizedTransactionsQuery>;
+export type GetUncategorizedTransactionsLazyQueryHookResult = ReturnType<typeof useGetUncategorizedTransactionsLazyQuery>;
+export type GetUncategorizedTransactionsQueryResult = Apollo.QueryResult<GetUncategorizedTransactionsQuery, GetUncategorizedTransactionsQueryVariables>;
 export const CreateAccountDocument = gql`
     mutation CreateAccount($input: CreateAccountInput!) {
   createAccount(input: $input) {

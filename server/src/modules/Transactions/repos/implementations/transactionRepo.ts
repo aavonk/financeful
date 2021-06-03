@@ -152,6 +152,8 @@ export class TransactionRepo implements ITransactionRepo {
   public async getUncategorizedTransactions(
     userId: string,
   ): Promise<Transaction[]> {
+    const options = this.createQueryOptions();
+
     return await this.client.transaction.findMany({
       where: {
         AND: [
@@ -163,6 +165,7 @@ export class TransactionRepo implements ITransactionRepo {
           },
         ],
       },
+      ...options,
     });
   }
 }
