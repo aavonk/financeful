@@ -4,14 +4,15 @@ import { Transaction } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
 import { useDeleteTransaction } from '@Modules/transactions/mutations/useDeleteTransaction';
 import { useDeleteTransfer } from '@Modules/transactions/mutations/useDeleteTransfer';
+import type { Action } from '@Pages/TransactionPage/transactionsPageReducer';
 
 type Props = {
   isModalOpen: boolean;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   transaction: Transaction | null;
+  dispatch: React.Dispatch<Action>;
 };
 
-function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
+function ActionsContainer({ isModalOpen, transaction, dispatch }: Props) {
   if (!transaction) {
     return null;
   }
@@ -27,18 +28,20 @@ function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
     handlePaymentDelete();
   };
 
+  const closeModal = () => dispatch({ type: 'TOGGLE_MODAL', payload: false });
+
   const handlePaymentDelete = async () => {
     try {
       const { data } = await deleteTransaction({
         variables: { id: transaction.id },
       });
 
-      setIsModalOpen(false);
+      closeModal();
       if (data?.deleteTransaction) {
         showAlert(data.deleteTransaction, 'info');
       }
     } catch (err) {
-      setIsModalOpen(false);
+      closeModal();
 
       showAlert('Please try again later', 'error', 5000);
     }
@@ -48,13 +51,13 @@ function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
       const { data } = await deleteTransfer({
         variables: { transferId },
       });
-      setIsModalOpen(false);
+      closeModal();
 
       if (data?.deleteTransfer) {
         showAlert(data.deleteTransfer, 'info');
       }
     } catch (error) {
-      setIsModalOpen(false);
+      closeModal();
       showAlert('Please try again later', 'error', 5000);
     }
   };
@@ -62,7 +65,8 @@ function ActionsContainer({ isModalOpen, setIsModalOpen, transaction }: Props) {
   return (
     <EditFormController
       transaction={transaction}
-      closeModal={() => setIsModalOpen(false)}
+      // closeModal={() => setIsModalOpen(false)}
+      dispatch={dispatch}
       isOpen={isModalOpen}
       onDelete={onDelete}
     />

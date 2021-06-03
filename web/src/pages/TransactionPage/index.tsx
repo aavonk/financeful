@@ -1,19 +1,15 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useEffect, useReducer } from 'react';
 import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
-import { useGetTransactionsRangeQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
 import { TableContainer, ContentContainer, Left, Right } from './style';
 import { ReactTableProvider } from '@Context/react-table/reactTableContext';
 import {
-  TableRows,
   TransactionTypeCell,
-  NoTransactionsView,
   TablePagination,
   ActionsContainer,
   Toolbar,
@@ -21,27 +17,31 @@ import {
 import { ActivityContainer } from '@Modules/transactions/ActivityBar';
 import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
 import TransactionsLoadingView from './TransactionsLoadingView';
+import { transactionsReducer } from './transactionsPageReducer';
+import { DefaultView, ReviewView } from './views';
+
+import type { State } from './transactionsPageReducer';
+
+const initialState: State = {
+  selectedTransaction: null,
+  isEditModalOpen: false,
+  isSubrouteShown: false,
+  isDefaultViewLoading: true,
+  data: [],
+};
 
 function TransactionPage() {
   const { path } = useRouteMatch();
   const { pathname } = useLocation();
-  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(
-    null,
-  );
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isSubrouteShown, setIsSubrouteShown] = useState(
-    () => pathname === '/transactions/uncategorized',
-  );
-  const { range } = useDateRangeContext();
-  const { data, error, loading } = useGetTransactionsRangeQuery({
-    variables: { input: { startDate: range.startDate, endDate: range.endDate } },
-  });
+  const [state, dispatch] = useReducer(transactionsReducer, initialState);
+  console.log({ state });
 
   useEffect(() => {
-    setIsSubrouteShown(pathname === '/transactions/uncategorized');
+    dispatch({
+      type: 'SUBROUTE_SHOWN',
+      payload: pathname === '/transactions/uncategorized',
+    });
   }, [pathname]);
-
-  console.log({ isSubrouteShown });
 
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
@@ -95,30 +95,18 @@ function TransactionPage() {
     [],
   );
 
-  if (loading) {
-    return <TransactionsLoadingView />;
-  }
-
-  if (error) {
-    return <TableError error={error} />;
-  }
-
-  if (!data?.getTransactionsRange?.length) {
-    return <NoTransactionsView />;
-  }
-
   return (
     <ReactTableProvider
       withPagination={true}
       columns={columns}
-      data={data.getTransactionsRange}
+      data={state.data as Record<string, unknown>[]}
     >
       <ActionsContainer
-        isModalOpen={isEditModalOpen}
-        transaction={selectedTransaction}
-        setIsModalOpen={setIsEditModalOpen}
+        isModalOpen={state.isEditModalOpen}
+        transaction={state.selectedTransaction}
+        dispatch={dispatch}
       />
-      <Toolbar hide={isSubrouteShown} />
+      <Toolbar hide={state.isSubrouteShown} />
       <ContentContainer>
         <Left>
           <TableContainer>
@@ -126,28 +114,19 @@ function TransactionPage() {
               <div style={{ width: '100%', maxHeight: '680px', overflowY: 'auto' }}>
                 <Switch>
                   <Route exact path={path}>
-                    <TableRows
-                      stackedDisplayMobile={true}
-                      hoverable={true}
-                      getRowProps={(row) => ({
-                        onClick: () => {
-                          setSelectedTransaction(row.original as Transaction);
-                          setIsEditModalOpen(true);
-                        },
-                      })}
-                    />
+                    <DefaultView dispatch={dispatch} state={state} />
                   </Route>
                   <Route path={`${path}/uncategorized`}>
-                    <div>Uncategorized!!!!</div>
+                    <ReviewView />
                   </Route>
                 </Switch>
               </div>
-              <TablePagination hide={isSubrouteShown} />
+              <TablePagination hide={state.isSubrouteShown} />
             </ErrorBoundary>
           </TableContainer>
         </Left>
         <Right>
-          <ActivityContainer disableSearch={isSubrouteShown} />
+          <ActivityContainer disableSearch={state.isSubrouteShown} />
         </Right>
       </ContentContainer>
     </ReactTableProvider>

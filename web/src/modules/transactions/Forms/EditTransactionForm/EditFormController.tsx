@@ -6,7 +6,6 @@ import {
   useUpdateTransferMutation,
   useGetTransferLazyQuery,
   TransferInput,
-  GetTransactionsDocument,
   GetTransactionsRangeDocument,
   GetUncategorizedLengthDocument,
 } from '@Generated/graphql';
@@ -17,15 +16,16 @@ import { Overlay, Content } from '../style';
 import EditPaymentForm from './EditPaymentForm';
 import EditTransferForm from './EditTransferForm';
 import { useUpdateTransaction } from '@Modules/transactions/mutations/useUpdateTransaction';
+import type { Action } from '@Pages/TransactionPage/transactionsPageReducer';
 
 type Props = {
   transaction: Transaction;
   isOpen: boolean;
-  closeModal: () => void;
   onDelete: () => Promise<void> | undefined;
+  dispatch: React.Dispatch<Action>;
 };
 
-function EditFormController({ transaction, isOpen, closeModal, onDelete }: Props) {
+function EditFormController({ transaction, isOpen, onDelete, dispatch }: Props) {
   const { data, loading: fetchingAccounts, error } = useFetchAccountsAndCategoriesQuery();
   const [
     getTransfer,
@@ -35,10 +35,11 @@ function EditFormController({ transaction, isOpen, closeModal, onDelete }: Props
     mutate: updateTransaction,
     loading: submittingPayment,
   } = useUpdateTransaction();
-  // const { mutate: updateTransfer, loading: submittingTransfer} = useUpdateTransfer()
 
   const [updateTransfer, { loading: submittingTransfer }] = useUpdateTransferMutation();
   const { showAlert } = useAlert();
+
+  const closeModal = () => dispatch({ type: 'TOGGLE_MODAL', payload: false });
 
   useEffect(() => {
     if (isOpen && transaction.isTransfer) {
