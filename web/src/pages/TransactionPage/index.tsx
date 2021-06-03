@@ -1,11 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import React, { useMemo, useState, useEffect } from 'react';
+import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
 import { Column, Cell } from 'react-table';
 import { Transaction } from '@Generated/graphql';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { useGetTransactionsRangeQuery } from '@Generated/graphql';
 import { format } from 'date-fns';
-import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useDateRangeContext } from '@Context/daterange/DateRangeContext';
@@ -13,7 +12,6 @@ import { TableContainer, ContentContainer, Left, Right } from './style';
 import { ReactTableProvider } from '@Context/react-table/reactTableContext';
 import {
   TableRows,
-  TableSkeleton,
   TransactionTypeCell,
   NoTransactionsView,
   TablePagination,
@@ -21,22 +19,29 @@ import {
   Toolbar,
 } from '@Modules/transactions/Table';
 import { ActivityContainer } from '@Modules/transactions/ActivityBar';
+import SelectTypeFilter from '@Modules/transactions/Table/Toolbar/SelectTypeFilter';
 import TransactionsLoadingView from './TransactionsLoadingView';
-import { useQuery } from '@Hooks/useQuery';
 
 function TransactionPage() {
+  const { path } = useRouteMatch();
+  const { pathname } = useLocation();
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(
     null,
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSubrouteShown, setIsSubrouteShown] = useState(
+    () => pathname === '/transactions/uncategorized',
+  );
   const { range } = useDateRangeContext();
   const { data, error, loading } = useGetTransactionsRangeQuery({
     variables: { input: { startDate: range.startDate, endDate: range.endDate } },
   });
 
-  const { url, path } = useRouteMatch();
+  useEffect(() => {
+    setIsSubrouteShown(pathname === '/transactions/uncategorized');
+  }, [pathname]);
 
-  console.log({ url, path });
+  console.log({ isSubrouteShown });
 
   const columns = useMemo<Column<Record<string, unknown>>[]>(
     () => [
@@ -113,7 +118,7 @@ function TransactionPage() {
         transaction={selectedTransaction}
         setIsModalOpen={setIsEditModalOpen}
       />
-      <Toolbar />
+      <Toolbar hide={isSubrouteShown} />
       <ContentContainer>
         <Left>
           <TableContainer>
@@ -137,12 +142,12 @@ function TransactionPage() {
                   </Route>
                 </Switch>
               </div>
-              <TablePagination />
+              <TablePagination hide={isSubrouteShown} />
             </ErrorBoundary>
           </TableContainer>
         </Left>
         <Right>
-          <ActivityContainer />
+          <ActivityContainer disableSearch={isSubrouteShown} />
         </Right>
       </ContentContainer>
     </ReactTableProvider>

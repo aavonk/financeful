@@ -1,10 +1,11 @@
 import React from 'react';
-import { TableInstance } from 'react-table';
 import { Container, PageCountWrapper, ActionsWrapper, Actions, Text } from './style';
 import DropdownButton, { DropdownItems } from '@Common/DropdownButton';
 import { useTableContext } from '@Context/react-table/reactTableContext';
 
-function TablePagination() {
+type Props = { hide?: boolean };
+
+function TablePagination({ hide }: Props) {
   const {
     pageOptions,
     gotoPage,
@@ -17,22 +18,26 @@ function TablePagination() {
   }));
 
   return (
-    <Container>
-      <PageCountWrapper>
-        <Text>
-          Viewing page {pageIndex + 1} of {pageOptions.length}
-        </Text>
-      </PageCountWrapper>
-      <ActionsWrapper>
-        <Actions>
-          <DropdownButton
-            selected={`Page ${pageIndex + 1}`}
-            id="transaction-page"
-            items={pageItems}
-          />
-        </Actions>
-      </ActionsWrapper>
-    </Container>
+    <>
+      {hide ? null : (
+        <Container>
+          <PageCountWrapper>
+            <Text>
+              Viewing page {pageIndex + 1} of {pageOptions.length}
+            </Text>
+          </PageCountWrapper>
+          <ActionsWrapper>
+            <Actions>
+              <DropdownButton
+                selected={`Page ${pageIndex + 1}`}
+                id="transaction-page"
+                items={pageItems}
+              />
+            </Actions>
+          </ActionsWrapper>
+        </Container>
+      )}
+    </>
   );
 }
 
