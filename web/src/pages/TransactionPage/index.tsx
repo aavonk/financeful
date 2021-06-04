@@ -117,7 +117,7 @@ function TransactionPage() {
                     <DefaultView dispatch={dispatch} state={state} />
                   </Route>
                   <Route path={`${path}/uncategorized`}>
-                    <ReviewView />
+                    <ReviewView dispatch={dispatch} />
                   </Route>
                 </Switch>
               </div>
