@@ -2,6 +2,7 @@ import {
   useUpdateTransactionMutation,
   GetTransactionsRangeDocument,
   GetUncategorizedLengthDocument,
+  GetUncategorizedTransactionsDocument,
 } from '@Generated/graphql';
 
 export function useUpdateTransaction() {
@@ -29,6 +30,13 @@ export function useUpdateTransaction() {
               data: getUncategorizedLength + 1,
               query: GetUncategorizedLengthDocument,
             });
+          },
+          getUncategorizedTransactions: (existingFieldData = []) => {
+            const newTransactionRef = cache.writeQuery({
+              data: data?.updateTransaction,
+              query: GetUncategorizedTransactionsDocument,
+            });
+            return [newTransactionRef, ...existingFieldData];
           },
         },
       });

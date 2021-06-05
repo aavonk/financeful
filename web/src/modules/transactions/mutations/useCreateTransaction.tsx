@@ -2,6 +2,7 @@ import {
   useAddTransactionMutation,
   GetTransactionsRangeDocument,
   GetUncategorizedLengthDocument,
+  GetUncategorizedTransactionsDocument,
 } from '@Generated/graphql';
 
 export function useCreateTransaction() {
@@ -28,6 +29,16 @@ export function useCreateTransaction() {
             cache.writeQuery({
               data: getUncategorizedLength + 1,
               query: GetUncategorizedLengthDocument,
+            });
+          },
+          getUncategorizedTransactions: () => {
+            const isUnCategorized = data?.createTransaction.category === null;
+
+            if (!isUnCategorized) return;
+
+            cache.writeQuery({
+              data: data?.createTransaction,
+              query: GetUncategorizedTransactionsDocument,
             });
           },
         },
