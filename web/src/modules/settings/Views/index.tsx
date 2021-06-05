@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Categories from './Categories';
 
 function SettingsViews() {
   return (
@@ -12,7 +13,7 @@ function SettingsViews() {
         Bank Accounts{' '}
       </Route>
       <Route exact path="/settings/categories">
-        Category Settings
+        <Categories />
       </Route>
       <Route exact path="/settings/security">
         Security Settings
