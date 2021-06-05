@@ -17,4 +17,13 @@ export const ActivityContainerWrapper = styled.div`
 export const TasksContainer = styled.div`
   width: 100%;
   padding-top: 20px;
+  padding-bottom: 20px;
+`;
+
+export const ReceiptContainer = styled.div`
+  display: none;
+
+  @media (min-width: 905px) {
+    display: inline-flex;
+  }
 `;
