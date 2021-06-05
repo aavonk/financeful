@@ -67,7 +67,7 @@ export const DatePickerStyles = styled.div<Props>`
       border-bottom-color: ${({ theme }) => theme.colors.darkTwo};
 
       &::before {
-        border-bottom-color: ${({ theme }) => theme.colors.primary};
+        border-bottom-color: ${({ theme }) => theme.colors.darkThree};
       }
     }
     & > button.react-datepicker__navigation.react-datepicker__navigation--next {
