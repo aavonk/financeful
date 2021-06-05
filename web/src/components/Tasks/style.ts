@@ -11,7 +11,7 @@ export const TaskContainer = styled.div<Props>`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.darkTwo};
   padding: 0.75rem;
-  border: 1px solid ${({ theme }) => theme.colors.darkThree};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 2px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   max-width: 275px;
@@ -50,7 +50,7 @@ export const TaskTitle = styled.h3`
 
 export const SecondaryText = styled.p`
   font-size: 0.75rem;
-  color: #8c91a1;
+  color: ${({ theme }) => theme.colors.textGrey};
   text-align: center;
   width: 100%;
   margin-bottom: 0.5rem;

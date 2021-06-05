@@ -51,12 +51,12 @@ const items = [
     ariaLabel: 'My wallet page',
   },
   {
-    tooltip: 'Calendar',
+    tooltip: 'Budget',
     tooltipDirection: 'right',
-    path: '/calendar',
-    text: 'Calendar',
+    path: '/budget',
+    text: 'Budget',
     icon: <CalendarIcon />,
-    ariaLabel: 'Calendar page',
+    ariaLabel: 'Budget page',
   },
   {
     tooltip: 'Bills',

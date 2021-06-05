@@ -6,7 +6,9 @@ import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { format } from 'date-fns';
 import { TableError } from '@Components/ErrorViews';
 import { ErrorBoundary } from 'react-error-boundary';
-import { TableContainer, ContentContainer, Left, Right } from './style';
+import { TableContainer } from './style';
+import { ContentContainer, Left, Right } from '@Components/Layout/styles';
+
 import { ReactTableProvider } from '@Context/react-table/reactTableContext';
 import {
   TransactionTypeCell,

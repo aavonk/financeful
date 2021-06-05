@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableSkeleton } from '@Modules/transactions/Table';
-import { ContentContainer, Left, Right } from './style';
+import { ContentContainer, Left, Right } from '@Components/Layout/styles';
 import { ActivityContainer } from '@Modules/transactions/ActivityBar';
 
 function TransactionsLoadingView() {

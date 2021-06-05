@@ -17,7 +17,7 @@ const theme: DefaultTheme = {
     paper: '#202020',
     textPrimary: '#fff',
     textPrimaryInversed: '#000000',
-    textGrey: '#D7D7D7',
+    textGrey: '#8c91a1',
     textGreyMuted: '#9699a8',
     textSecondary: '#5d7292',
     textError: 'rgb(224, 36, 94)',
@@ -26,6 +26,7 @@ const theme: DefaultTheme = {
     yellow: 'rgb(241,180,76)',
     green: 'rgb(27, 170, 118, 1)',
     turqouise: 'rgb(2,164,153)',
+    border: '#242c37',
   },
   charts: {
     greenFill: '#34c38f',

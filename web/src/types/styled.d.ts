@@ -26,6 +26,7 @@ declare module 'styled-components' {
       tooltip: string;
       cardLight: string;
       cardDark: string;
+      border: string;
     };
     charts: {
       greenFill: string;

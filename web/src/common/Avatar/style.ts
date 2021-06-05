@@ -12,7 +12,7 @@ export const AvatarRoot = styled.div<AvatarRootProps>`
   font-size: 1.25rem;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 50%;
   justify-content: center;
   cursor: pointer;
   width: ${(props) => (props.size ? props.size : '40px')};

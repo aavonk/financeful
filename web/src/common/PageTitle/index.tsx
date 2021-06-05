@@ -30,8 +30,8 @@ function PageTitle({ location }: { location: string }) {
         return 'Dashboard';
       case 'transactions':
         return 'Transactions';
-      case 'calendar':
-        return 'Calendar';
+      case 'budget':
+        return 'Budget';
       case 'bills':
         return 'Bills';
       case 'settings':
