@@ -38,6 +38,7 @@ export const Link = styled(NavLink).attrs({ activeClassName })<NavLinkProps>`
   padding: 8px 16px;
   &.${activeClassName} {
     background-color: var(--menu-bg-active);
+    border-left: 2px solid ${({ theme }) => theme.colors.primary};
   }
 
   :hover {

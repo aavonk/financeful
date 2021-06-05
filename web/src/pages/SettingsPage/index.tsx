@@ -6,6 +6,7 @@ import {
   Right as Left,
 } from '@Components/Layout/styles';
 import SettingsMenu from '@Modules/settings/SettingsMenu';
+import SettingsViews from '@Modules/settings/Views';
 
 function SettingsPage() {
   return (
@@ -14,9 +15,7 @@ function SettingsPage() {
         <SettingsMenu />
       </Left>
       <Right>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti nesciunt eaque
-        quas nam fugit libero nihil suscipit ullam saepe explicabo ducimus odit,
-        temporibus animi quae laboriosam ad consectetur modi iste.
+        <SettingsViews />
       </Right>
     </Container>
   );

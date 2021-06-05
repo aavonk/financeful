@@ -8,8 +8,12 @@ type SettingsItem = {
 
 const items: SettingsItem[] = [
   {
-    subpath: '/accounts',
-    text: 'Accounts',
+    subpath: '/profile',
+    text: 'Profile',
+  },
+  {
+    subpath: '/bank-accounts',
+    text: 'Bank Accounts',
   },
   {
     subpath: '/categories',
@@ -26,9 +30,11 @@ function SettingsMenu() {
     <NavMenu>
       <ul>
         <li>Account settings</li>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li>
-            <Link to={`/settings${item.subpath}`}>{item.text}</Link>
+            <Link to={`/settings${item.subpath}`} key={index}>
+              {item.text}
+            </Link>
           </li>
         ))}
       </ul>

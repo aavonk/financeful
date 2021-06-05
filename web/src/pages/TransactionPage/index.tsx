@@ -36,7 +36,6 @@ function TransactionPage() {
   const { path } = useRouteMatch();
   const { pathname } = useLocation();
   const [state, dispatch] = useReducer(transactionsReducer, initialState);
-  console.log({ state });
 
   useEffect(() => {
     dispatch({

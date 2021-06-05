@@ -95,7 +95,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
         </NavigationItems>
         {/* Bottom */}
         <Tooltip content="Settings" direction="top">
-          <NavItem to="/settings" $last aria-label="Settings page">
+          <NavItem to="/settings/profile" $last aria-label="Settings page">
             <SettingsIcon />
             <span>Settings</span>
           </NavItem>
