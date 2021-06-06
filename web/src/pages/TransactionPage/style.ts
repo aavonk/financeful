@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const TableContainer = styled.div`
   width: 100%;
-  margin-top: 1.5rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  height: auto;
 `;
 
 export const EmptyContainer = styled.div`

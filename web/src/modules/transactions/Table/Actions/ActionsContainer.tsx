@@ -1,89 +1,75 @@
-import React, { useState } from 'react';
-import {
-  Transaction,
-  useDeleteTransactionMutation,
-  useDeleteTransferMutation,
-} from '@Generated/graphql';
-import ActionsMenu from './ActionsMenu';
+import React from 'react';
 import { EditFormController } from '@Modules/transactions/Forms/EditTransactionForm';
+import { Transaction } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
+import { useDeleteTransaction } from '@Modules/transactions/mutations/useDeleteTransaction';
+import { useDeleteTransfer } from '@Modules/transactions/mutations/useDeleteTransfer';
+import type { Action } from '@Pages/TransactionPage/transactionsPageReducer';
 
-function ActionsContainer({ transaction }: { transaction: Transaction }) {
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [deleteTransaction] = useDeleteTransactionMutation();
-  const [deleteTransfer] = useDeleteTransferMutation();
+type Props = {
+  isModalOpen: boolean;
+  transaction: Transaction | null;
+  dispatch: React.Dispatch<Action>;
+};
+
+function ActionsContainer({ isModalOpen, transaction, dispatch }: Props) {
+  if (!transaction) {
+    return null;
+  }
+  const { mutate: deleteTransaction } = useDeleteTransaction(transaction.id);
+  const { mutate: deleteTransfer } = useDeleteTransfer(transaction.transferId!);
   const { showAlert } = useAlert();
-  const { id } = transaction;
 
   const onDelete = () => {
-    if (transaction.isTransfer) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return handleTransferDelete(transaction.transferId!);
+    if (transaction.isTransfer && transaction.transferId) {
+      return handleTransferDelete(transaction.transferId);
     }
 
     handlePaymentDelete();
   };
 
+  const closeModal = () => dispatch({ type: 'TOGGLE_MODAL', payload: false });
+
   const handlePaymentDelete = async () => {
     try {
       const { data } = await deleteTransaction({
-        variables: { id },
-        update(cache) {
-          cache.modify({
-            fields: {
-              getTransactions(existingTransactionsRef: Transaction[], { readField }) {
-                return existingTransactionsRef.filter(
-                  (transactionRef) => id !== readField('id', transactionRef),
-                );
-              },
-            },
-          });
-        },
+        variables: { id: transaction.id },
       });
 
+      closeModal();
       if (data?.deleteTransaction) {
         showAlert(data.deleteTransaction, 'info');
       }
     } catch (err) {
+      closeModal();
+
       showAlert('Please try again later', 'error', 5000);
     }
   };
-
   const handleTransferDelete = async (transferId: string) => {
     try {
       const { data } = await deleteTransfer({
         variables: { transferId },
-        update(cache) {
-          cache.modify({
-            fields: {
-              getTransactions(existingTransactionsRef: Transaction[], { readField }) {
-                return existingTransactionsRef.filter(
-                  (transactionRef) =>
-                    transferId !== readField('transferId', transactionRef),
-                );
-              },
-            },
-          });
-        },
       });
+      closeModal();
 
       if (data?.deleteTransfer) {
         showAlert(data.deleteTransfer, 'info');
       }
     } catch (error) {
+      closeModal();
       showAlert('Please try again later', 'error', 5000);
     }
   };
 
   return (
-    <>
-      <ActionsMenu onDelete={onDelete} onEditClick={() => setShowEditForm(true)} />
-      <EditFormController
-        transaction={transaction}
-        closeModal={() => setShowEditForm(false)}
-        isOpen={showEditForm}
-      />
-    </>
+    <EditFormController
+      transaction={transaction}
+      // closeModal={() => setIsModalOpen(false)}
+      dispatch={dispatch}
+      isOpen={isModalOpen}
+      onDelete={onDelete}
+    />
   );
 }
 

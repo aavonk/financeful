@@ -7,6 +7,8 @@ import LoginPage from '@Pages/LoginPage';
 import DashboardPage from '@Pages/DashboardPage';
 import TransactionPage from '@Pages/TransactionPage';
 import MyWalletPage from '@Pages/MyWalletPage';
+import AccountPage from '@Pages/AccountPage';
+import SettingsPage from '@Pages/SettingsPage';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
 import { BlueScreen, DefaultView } from '@Components/ErrorViews';
@@ -16,7 +18,6 @@ import { AlertProvider } from '@Context/alert/alertContext';
 import { ConfirmationProvider } from '@Context/confirmation/confirmationContext';
 import { DateRangeProvider } from '@Context/daterange/DateRangeContext';
 import Alerts from '@Common/Alerts';
-import AccountPage from '@Pages/AccountPage';
 
 function Routes() {
   const { data, error } = useFetchUserQuery();
@@ -53,11 +54,7 @@ function Routes() {
                   <PrivateRoute exact path="/dashboard" component={DashboardPage} />
                   <ErrorBoundary FallbackComponent={DefaultView}>
                     <DateRangeProvider>
-                      <PrivateRoute
-                        exact
-                        path="/transactions"
-                        component={TransactionPage}
-                      />
+                      <PrivateRoute path="/transactions" component={TransactionPage} />
                     </DateRangeProvider>
                   </ErrorBoundary>
                   <PrivateRoute path="/my-wallet" component={MyWalletPage} exact />
@@ -68,6 +65,7 @@ function Routes() {
                   />
                 </ConfirmationProvider>
                 <PrivateRoute exact path="/account/:id" component={AccountPage} />
+                <PrivateRoute exact={false} path="/settings" component={SettingsPage} />
               </Layout>
             </Switch>
           </AlertProvider>

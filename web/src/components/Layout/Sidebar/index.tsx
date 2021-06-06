@@ -51,12 +51,12 @@ const items = [
     ariaLabel: 'My wallet page',
   },
   {
-    tooltip: 'Calendar',
+    tooltip: 'Budget',
     tooltipDirection: 'right',
-    path: '/calendar',
-    text: 'Calendar',
+    path: '/budget',
+    text: 'Budget',
     icon: <CalendarIcon />,
-    ariaLabel: 'Calendar page',
+    ariaLabel: 'Budget page',
   },
   {
     tooltip: 'Bills',
@@ -95,7 +95,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
         </NavigationItems>
         {/* Bottom */}
         <Tooltip content="Settings" direction="top">
-          <NavItem to="/settings" $last aria-label="Settings page">
+          <NavItem to="/settings/profile" $last aria-label="Settings page">
             <SettingsIcon />
             <span>Settings</span>
           </NavItem>

@@ -52,7 +52,7 @@ function AddAccountFormController() {
       >
         <ModalTitle title="Add account" onClose={close} />
         {loading && <Progressbar />}
-        <ModalBody overrideStyle={{ padding: '0.825rem 1rem 0 1rem' }}>
+        <ModalBody>
           <AddAccountForm onFormSubmit={onFormSubmit} inputRef={accountNameInputRef} />
         </ModalBody>
       </ModalRoot>

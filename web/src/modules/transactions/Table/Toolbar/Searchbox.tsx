@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { SearchIcon } from '@Common/Icons';
 import { SearchInput, SearchContainer } from './style';
-import { TableInstance, useAsyncDebounce } from 'react-table';
+import { useAsyncDebounce } from 'react-table';
+import { useTableContext } from '@Context/react-table/reactTableContext'
 
-type SearchProps<T extends Record<string, unknown>> = {
-  instance: TableInstance<T>;
-};
 
-function Searchbox<T extends Record<string, unknown>>({ instance }: SearchProps<T>) {
-  const { state, setGlobalFilter } = instance;
+function Searchbox() {
+  const { state, setGlobalFilter } = useTableContext();
   const { globalFilter } = state;
   const [value, setValue] = useState(globalFilter);
 

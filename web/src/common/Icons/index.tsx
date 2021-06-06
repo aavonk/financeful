@@ -32,6 +32,8 @@ import {
   MdInfoOutline,
 } from 'react-icons/md';
 
+export * from './LineChart';
+
 export const VerticalMenuIcon = ({ ...props }) => {
   return <BsThreeDotsVertical {...props} aria-hidden="true" />;
 };

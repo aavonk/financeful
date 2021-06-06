@@ -12,6 +12,9 @@ import {
   TransparentSelect,
   Prefix,
   StyledError,
+  StyledInsetInput,
+  InsetLabel,
+  StyledInsetSelect,
 } from './style';
 
 type InputTypes = {
@@ -31,6 +34,47 @@ type InputTypes = {
   required?: boolean;
   'data-testid'?: string;
 };
+
+export const InsetInput = React.forwardRef<HTMLInputElement, InputTypes>((props, ref) => {
+  return (
+    <InsetLabel>
+      {props.children}
+
+      <StyledInsetInput
+        type={props.type}
+        id={props.id}
+        placeholder={props.placeholder}
+        value={props.value}
+        onChange={props.onChange}
+        autoFocus={props.autoFocus}
+        disabled={props.disabled}
+        aria-describedby={props.ariaDescribedBy}
+        aria-required={props.required}
+        data-testid={props['data-testid']}
+        ref={ref}
+      />
+    </InsetLabel>
+  );
+});
+
+export function InsetSelect(props: SelectProps) {
+  return (
+    <InsetLabel>
+      {props.label}
+      <StyledInsetSelect
+        value={props.value}
+        onChange={props.onChange}
+        defaultValue={props.defaultValue}
+        aria-describedby={props.ariaDescribedBy}
+        aria-required={props.required}
+        id={props.id}
+        data-testid={props['data-testid']}
+      >
+        {props.children}
+      </StyledInsetSelect>
+    </InsetLabel>
+  );
+}
 
 export function UnderlineInput(props: InputTypes) {
   return (
@@ -94,6 +138,7 @@ type SelectProps = {
   id?: string;
   'data-testid'?: string;
 };
+
 export function BorderedSelect(props: SelectProps) {
   return (
     <BorderedLabel>
@@ -145,6 +190,24 @@ export const BorderedDatePicker = React.forwardRef<HTMLLabelElement, DateProps>(
           />
         </DatePickerStyles>
       </BorderedLabel>
+    );
+  },
+);
+
+export const InsetDatePicker = React.forwardRef<HTMLLabelElement, DateProps>(
+  (props, ref) => {
+    return (
+      <InsetLabel ref={ref}>
+        {props.label}
+        <DatePickerStyles inset>
+          <DatePicker
+            selected={props.selected}
+            onChange={props.onChange}
+            calendarClassName="fin"
+            className="fin--input"
+          />
+        </DatePickerStyles>
+      </InsetLabel>
     );
   },
 );

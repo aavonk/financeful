@@ -1,5 +1,11 @@
 import React, { Ref } from 'react';
-import { BorderedInput, BorderedSelect, ErrorMessage } from '@Common/FormElements';
+import {
+  BorderedInput,
+  BorderedSelect,
+  ErrorMessage,
+  InsetInput,
+  InsetSelect,
+} from '@Common/FormElements';
 import { Row, Col } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import AccountTypeToggle from './AccountTypeToggle';
@@ -7,6 +13,7 @@ import { CreateAccountInput, AccountType } from '@Generated/graphql';
 import { convertInputAmountToCents, isValidCurrencyFormat } from '@Lib/money-utils';
 import Button from '@Common/Button';
 import { Footer } from '@Components/Modal/style';
+import { FormRow } from '@Globals/index';
 
 type AddAccountProps = {
   onFormSubmit: (values: CreateAccountInput) => void;
@@ -24,13 +31,13 @@ type FormState = {
 const initialValue = {
   accountName: '',
   bankName: '',
-  accountType: '',
+  accountType: ' ',
   classification: '',
   balance: '',
 };
 
 function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
-  const { values, handleChange, errors, handleSubmit } = useForm<FormState>({
+  const { values, handleChange, errors, handleSubmit, handleTrim } = useForm<FormState>({
     initialValue,
     validations: {
       accountName: {
@@ -39,6 +46,7 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
           message: 'Account name is required',
         },
       },
+
       accountType: {
         required: {
           value: true,
@@ -73,62 +81,64 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
   });
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
-      <Row>
-        <BorderedInput
-          type="text"
-          value={values.accountName}
-          onChange={handleChange('accountName')}
-          ariaDescribedBy="name-errors"
-          required
-          ref={inputRef}
-          data-testid="account-name-input"
-        >
-          Account name
-        </BorderedInput>
-        {errors.accountName && (
-          <ErrorMessage id="name-errors">{errors.accountName}</ErrorMessage>
-        )}
-      </Row>
-      <Row style={{ marginBottom: '10px' }}>
-        <BorderedInput
-          type="text"
-          value={values.bankName}
-          onChange={handleChange('bankName')}
-          data-testid="bank-name-input"
-        >
-          Bank name
-        </BorderedInput>
-      </Row>
-      <Row style={{ position: 'relative', marginTop: '4px' }}>
-        <AccountTypeToggle
-          value={values.accountType}
-          onChange={handleChange('accountType')}
-          ariaDescribedBy="account-type-errors"
-        />
-        {errors.accountType && (
-          <ErrorMessage id="account-type-errors">{errors.accountType}</ErrorMessage>
-        )}
-      </Row>
-      <Row>
-        <Col width="50%" paddingRightOnly>
-          <BorderedInput
+      <div>
+        <FormRow>
+          <InsetInput
             type="text"
-            withPrefix
-            prefix="$"
+            value={values.accountName}
+            onChange={handleChange('accountName')}
+            onBlur={handleTrim('accountName')}
+            ariaDescribedBy="name-errors"
+            required
+            ref={inputRef}
+            data-testid="account-name-input"
+          >
+            Account name
+          </InsetInput>
+          {errors.accountName && (
+            <ErrorMessage id="name-errors">{errors.accountName}</ErrorMessage>
+          )}
+        </FormRow>
+        <FormRow>
+          <InsetInput
+            type="text"
+            value={values.bankName}
+            onChange={handleChange('bankName')}
+            onBlur={handleTrim('bankName')}
+            data-testid="bank-name-input"
+          >
+            Bank name
+          </InsetInput>
+        </FormRow>
+        <FormRow>
+          <AccountTypeToggle
+            value={values.accountType}
+            onChange={handleChange('accountType')}
+            onBlur={handleTrim('accountType')}
+            ariaDescribedBy="account-type-errors"
+          />
+          {errors.accountType && (
+            <ErrorMessage id="account-type-errors">{errors.accountType}</ErrorMessage>
+          )}
+        </FormRow>
+        <FormRow>
+          <InsetInput
+            type="text"
             value={values.balance}
             onChange={handleChange('balance')}
+            onBlur={handleTrim('balance')}
             ariaDescribedBy="balance-errors"
             required
             data-testid="starting-balance-input"
           >
             Starting Balance
-          </BorderedInput>
+          </InsetInput>
           {errors.balance && (
             <ErrorMessage id="balance-errors">{errors.balance}</ErrorMessage>
           )}
-        </Col>
-        <Col width="50%" paddingLeftOnly>
-          <BorderedSelect
+        </FormRow>
+        <FormRow>
+          <InsetSelect
             label="Classification"
             value={values.classification}
             onChange={handleChange('classification')}
@@ -136,19 +146,26 @@ function AddAccountForm({ onFormSubmit, inputRef }: AddAccountProps) {
             required
             data-testid="classification-select"
           >
-            <option value="" disabled></option>
+            <option value="" disabled>
+              {' '}
+            </option>
             <option value={AccountType.Asset}>Asset</option>
             <option value={AccountType.Liability}>Liability</option>
-          </BorderedSelect>
+          </InsetSelect>
           {errors.classification && (
             <ErrorMessage id="classification-errors">
               {errors.classification}
             </ErrorMessage>
           )}
-        </Col>
-      </Row>
-      <Footer style={{ padding: '0', marginTop: '20px' }}>
-        <Button variant="primary" type="submit" data-testid="submit-account-button">
+        </FormRow>
+      </div>
+      <Footer>
+        <Button
+          variant="primary"
+          type="submit"
+          data-testid="submit-account-button"
+          fullWidth
+        >
           Save
         </Button>
       </Footer>

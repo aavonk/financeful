@@ -62,3 +62,7 @@ export const Col = styled.div<ColProps>`
       padding-left: 0;
     `}
 `;
+
+export const FormRow = styled(Row)`
+  padding: 8px 0;
+`;

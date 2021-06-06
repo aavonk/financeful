@@ -24,6 +24,10 @@ declare module 'styled-components' {
       textSecondary: string;
       textError: string;
       tooltip: string;
+      cardLight: string;
+      cardDark: string;
+      border: string;
+      list: string;
     };
     charts: {
       greenFill: string;

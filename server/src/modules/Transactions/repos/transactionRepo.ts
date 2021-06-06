@@ -17,4 +17,6 @@ export interface ITransactionRepo {
     range: RangeParams,
     userId: string,
   ): Promise<Transaction[]>;
+  getUncategorizedLength(userId: string): Promise<number>;
+  getUncategorizedTransactions(userId: string): Promise<Transaction[]>;
 }

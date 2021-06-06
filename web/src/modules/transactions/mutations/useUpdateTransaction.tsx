@@ -1,6 +1,8 @@
 import {
   useUpdateTransactionMutation,
-  GetTransactionsDocument,
+  GetTransactionsRangeDocument,
+  GetUncategorizedLengthDocument,
+  GetUncategorizedTransactionsDocument,
 } from '@Generated/graphql';
 
 export function useUpdateTransaction() {
@@ -8,10 +10,31 @@ export function useUpdateTransaction() {
     update(cache, { data }) {
       cache.modify({
         fields: {
-          getTransactions: (existingFieldData = []) => {
+          getTransactionsRange: (existingFieldData = []) => {
             const newTransactionRef = cache.writeQuery({
               data: data?.updateTransaction,
-              query: GetTransactionsDocument,
+              query: GetTransactionsRangeDocument,
+            });
+            return [newTransactionRef, ...existingFieldData];
+          },
+          getUncategorizedLength: () => {
+            //@ts-ignore
+            const { getUncategorizedLength } = cache.readQuery({
+              query: GetUncategorizedLengthDocument,
+            });
+            const isUnCategorized = data?.updateTransaction.category === null;
+
+            if (!isUnCategorized) return;
+
+            cache.writeQuery({
+              data: getUncategorizedLength + 1,
+              query: GetUncategorizedLengthDocument,
+            });
+          },
+          getUncategorizedTransactions: (existingFieldData = []) => {
+            const newTransactionRef = cache.writeQuery({
+              data: data?.updateTransaction,
+              query: GetUncategorizedTransactionsDocument,
             });
             return [newTransactionRef, ...existingFieldData];
           },

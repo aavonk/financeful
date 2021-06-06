@@ -10,10 +10,16 @@ import {
   endOfYear,
 } from 'date-fns';
 
-type FormatOptions = 'MMM do yyyy' | 'M/d/yyyy';
+type FormatOptions = 'MMM do yyyy' | 'M/d/yyyy' | 'MMMM do yyyy';
 
 export const formatDate = (date: Date | string, options: FormatOptions): string => {
   return format(new Date(date), options);
+};
+
+export const getCurrentMonthName = () => {
+  const today = new Date();
+  const date = formatDate(today, 'MMMM do yyyy');
+  return date.split(' ')[0];
 };
 
 export const addDays = (date: Date, duration: Duration) => {

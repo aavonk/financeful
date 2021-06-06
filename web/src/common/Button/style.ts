@@ -74,6 +74,19 @@ export const StyledButton = styled.button<ButtonProps>`
         background-color: rgb(202, 32, 85);
       }
     `}
+    ${({ variant }) =>
+    variant === 'danger-secondary' &&
+    css`
+      background-color: ${({ theme }) => theme.colors.darkTwo};
+      color: ${({ theme }) => theme.colors.textError};
+
+      &:hover,
+      :focus {
+        transition: background-color color 0.2s ease-in;
+        background-color: ${({ theme }) => theme.colors.textError};
+        color: #fff;
+      }
+    `}
   ${(props) =>
     props.fullWidth &&
     css`

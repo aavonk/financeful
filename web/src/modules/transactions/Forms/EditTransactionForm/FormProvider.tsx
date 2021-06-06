@@ -1,7 +1,7 @@
 import React, { useState, useContext, createContext, useMemo } from 'react';
 import IconButton from '@Common/IconButton';
 import { CloseIcon } from '@Common/Icons';
-import FormLoader from '../FormLoader';
+import FormLoader from '@Components/FormSkeletons/FormLoader';
 import { Header, Title as StyledTitle, HeaderLeft } from '../style';
 
 type PossibleFormViews = 'payment' | 'transfer';
@@ -93,7 +93,7 @@ const Title: React.FC<TitleProps> = ({ onClose }) => {
           <CloseIcon />
         </IconButton>
         <StyledTitle>
-          {formToDisplay === 'payment' ? 'Edit Transaction' : 'Edit Transfer'}
+          {formToDisplay === 'payment' ? 'Transaction Details' : 'Transfer Details'}
         </StyledTitle>
       </HeaderLeft>
     </Header>

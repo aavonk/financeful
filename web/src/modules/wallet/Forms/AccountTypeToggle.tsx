@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BorderedSelect, BorderedInput } from '@Common/FormElements';
+import { InsetInput, InsetSelect } from '@Common/FormElements';
 import { ACCOUNT_OPTIONS } from '@Constants/accountOptions';
 
 type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>) => void;
+  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   ariaDescribedBy: string;
 };
 
 const SmallButton = styled.div`
   position: absolute;
-  bottom: 85%;
-  right: 8px;
+  right: 18px;
   font-size: 12px;
   background-color: transparent;
   outline: none;
@@ -24,7 +24,7 @@ const SmallButton = styled.div`
   }
 `;
 
-function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
+function AccountTypeToggle({ value, onChange, ariaDescribedBy, onBlur }: Props) {
   const [showSelect, setShowSelect] = useState(true);
   return (
     <>
@@ -36,7 +36,7 @@ function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
         {showSelect ? 'Add new' : 'Cancel'}
       </SmallButton>
       {showSelect ? (
-        <BorderedSelect
+        <InsetSelect
           label="Type"
           onChange={onChange}
           value={value}
@@ -44,26 +44,27 @@ function AccountTypeToggle({ value, onChange, ariaDescribedBy }: Props) {
           required
           data-testid="account-type-select"
         >
-          <option value="" disabled>
-            Select a type
+          <option value=" " disabled>
+            {' '}
           </option>
           {ACCOUNT_OPTIONS.map((type, index) => (
             <option key={index} value={type.value}>
               {type.value}
             </option>
           ))}
-        </BorderedSelect>
+        </InsetSelect>
       ) : (
-        <BorderedInput
+        <InsetInput
           onChange={onChange}
           value={value}
+          onBlur={onBlur}
           type="text"
           ariaDescribedBy={ariaDescribedBy}
           required
           data-testid="account-type-input"
         >
           New Type
-        </BorderedInput>
+        </InsetInput>
       )}
     </>
   );

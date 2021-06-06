@@ -1,0 +1,10 @@
+query GetUncategorizedTransactions {
+  getUncategorizedTransactions {
+    ...TransactionFields
+    isCashIn
+    isCashOut
+    isUncategorized
+    isTransfer
+    transferId
+  }
+}
