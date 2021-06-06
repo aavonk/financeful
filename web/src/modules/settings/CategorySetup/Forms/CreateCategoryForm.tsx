@@ -1,8 +1,8 @@
 import React from 'react';
-import { CategoryCreateInput } from '@Generated/graphql'
+import { CategoryCreateInput } from '@Generated/graphql';
 import { InsetInput } from '@Common/FormElements';
 import { FormRow } from '@Globals/index';
-import { useForm } from '@Hooks/useForm'
+import { useForm } from '@Hooks/useForm';
 import ToggleSwitch from '@Common/ToggleSwitch';
 
 type Props = {
@@ -14,14 +14,14 @@ const initialState: CategoryCreateInput = {
   description: '',
   excludeFromBudget: false,
   isIncome: false,
-}
+};
 
 function CreateCategoryForm({ initialFocusRef }: Props) {
   // const {} = useForm<CategoryCreateInput>({
 
   // })
   return (
-    <C>
+    <>
       <FormRow>
         <InsetInput
           type="text"
@@ -45,7 +45,7 @@ function CreateCategoryForm({ initialFocusRef }: Props) {
           onChange={(e: any) => console.log(e)}
         />
       </FormRow>
-    </CategoryCreateInput>
+    </>
   );
 }
 
