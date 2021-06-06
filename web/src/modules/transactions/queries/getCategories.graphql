@@ -2,5 +2,9 @@ query fetchCategories {
   getCategories {
     id
     name
+    description
+    excludeFromBudget
+    isHidden
+    isIncome
   }
 }

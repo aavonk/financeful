@@ -109,6 +109,10 @@ export type Category = {
   user?: Maybe<User>;
   userId?: Maybe<Scalars['ID']>;
   name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  excludeFromBudget?: Maybe<Scalars['Boolean']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  isIncome?: Maybe<Scalars['Boolean']>;
 };
 
 export type Account = {
@@ -285,7 +289,7 @@ export type MutationDeleteAccountArgs = {
 
 
 export type MutationCreateCategoryArgs = {
-  name: Scalars['String'];
+  input: CategoryCreateInput;
 };
 
 
@@ -355,6 +359,13 @@ export type EditAccountInput = {
   accountType: Scalars['String'];
   bankName?: Maybe<Scalars['String']>;
   classification: AccountType;
+};
+
+export type CategoryCreateInput = {
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  isIncome: Scalars['Boolean'];
+  excludeFromBudget: Scalars['Boolean'];
 };
 
 export type GetAccountInsightsQueryVariables = Exact<{
@@ -583,7 +594,7 @@ export type FetchCategoriesQuery = (
   { __typename?: 'Query' }
   & { getCategories: Array<(
     { __typename?: 'Category' }
-    & Pick<Category, 'id' | 'name'>
+    & Pick<Category, 'id' | 'name' | 'description' | 'excludeFromBudget' | 'isHidden' | 'isIncome'>
   )> }
 );
 
@@ -1326,6 +1337,10 @@ export const FetchCategoriesDocument = gql`
   getCategories {
     id
     name
+    description
+    excludeFromBudget
+    isHidden
+    isIncome
   }
 }
     `;
