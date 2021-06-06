@@ -1,8 +1,12 @@
 {
   "name": "financeful-server",
   "version": "1.0.0",
-  "description": "GraphQL server for financeful",
+  "description": "Backend for financeful",
   "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronvonkreisler/financeful"
+  },
   "scripts": {
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "build": "tsc",
@@ -18,9 +22,14 @@
     "test:integration:watch": "yarn docker:testdb && yarn migrate:test && jest -i --watch --testPathPattern=src/__tests__/integration",
     "kill:tests": "docker compose -f docker-compose.test.yml down"
   },
-  "keywords": [],
+  "keywords": [
+    "Personal Finance",
+    "GraphQL",
+    "Node",
+    "TypeScript"
+  ],
   "author": "Aaron von Kreisler",
-  "license": "ISC",
+  "license": "BSD 3-Clause",
   "_moduleAliases": {
     "@Modules": "dist/modules",
     "@Lib": "dist/lib",

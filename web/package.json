@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/aaronvonkreisler/financeful"
   },
   "scripts": {
     "start": "webpack serve",
@@ -19,9 +19,14 @@
     "test:cypress": "yarn cypress open",
     "generate": "graphql-codegen --config codegen.yml"
   },
-  "keywords": [],
+  "keywords": [
+    "Personal Finance",
+    "GraphQL",
+    "Node",
+    "TypeScript"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "BSD 3-Clause",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
