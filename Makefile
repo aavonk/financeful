@@ -17,3 +17,6 @@ seed-db:
 reset-db:
 	docker compose -f docker-compose-dev.yml run --rm server yarn reset:db
 
+migrate-db:
+	docker compose -f docker-compose-dev.yml run --rm server yarn migrate
+

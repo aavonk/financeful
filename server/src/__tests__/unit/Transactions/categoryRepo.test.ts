@@ -1,5 +1,5 @@
 import { MockContext, Context, createMockContext } from '../../../testSetup';
-import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
+import { CategoryRepo } from '@Modules/Categories/repos/implementations/categoryRepo';
 import { categories } from '../../__mocks__/fixtures';
 
 let ctx: Context;
@@ -48,7 +48,15 @@ describe('Category Repo CRUD Operations', () => {
   });
 
   it('createOne', async () => {
-    const data = { name: 'New Category', userId: USER_ID, id: '123' };
+    const data = {
+      name: 'New Category',
+      userId: USER_ID,
+      id: '123',
+      isIncome: false,
+      isHidden: false,
+      excludeFromBudget: false,
+      description: null,
+    };
 
     mock.prisma.category.create.mockResolvedValue(data);
 
