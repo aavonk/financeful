@@ -21,6 +21,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr7v0153pgqs0hvjj93h',
       name: 'Utilities',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'EXPENSE',
     date: new Date('2021-05-07T21:22:24.176Z'),
@@ -46,6 +49,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr8a0179pgqs2bqzo9de',
       name: 'Transfers',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'INCOME',
     date: new Date('2021-05-07T10:14:11.804Z'),
@@ -70,6 +76,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr8a0179pgqs2bqzo9de',
       name: 'Transfers',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'EXPENSE',
     date: new Date('2021-05-05T00:54:49.082Z'),
@@ -94,6 +103,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr7v0153pgqs0hvjj93h',
       name: 'Utilities',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'EXPENSE',
     date: new Date('2021-05-03T23:54:51.943Z'),
@@ -118,6 +130,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr8a0179pgqs2bqzo9de',
       name: 'Transfers',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'EXPENSE',
     date: new Date('2021-05-02T18:31:52.813Z'),
@@ -142,6 +157,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr7n0139pgqswmhy4ums',
       name: 'Drinks & Snacks',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'INCOME',
     date: new Date('2021-05-01T14:23:56.192Z'),
@@ -166,6 +184,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr860172pgqs9sy8yj2f',
       name: 'Electronics',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'INCOME',
     date: new Date('2021-04-30T12:39:44.126Z'),
@@ -190,6 +211,9 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     category: {
       id: 'ckooygr8h0192pgqs99eoc9ke',
       name: 'Paycheck',
+      excludeFromBudget: false,
+      isHidden: false,
+      isIncome: false,
     },
     type: 'EXPENSE',
     date: new Date('2021-04-29T05:47:30.384Z'),

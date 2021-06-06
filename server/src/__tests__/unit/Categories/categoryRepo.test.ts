@@ -64,6 +64,10 @@ describe('Category Repo CRUD Operations', () => {
       name: 'New Category',
       id: '123',
       userId: USER_ID,
+      isIncome: false,
+      isHidden: false,
+      excludeFromBudget: false,
+      description: null,
     });
   });
 
@@ -82,6 +86,10 @@ describe('Category Repo CRUD Operations', () => {
       id: updated.id,
       name: 'Updated Category',
       userId: USER_ID,
+      isIncome: false,
+      isHidden: false,
+      excludeFromBudget: false,
+      description: null,
     });
   });
 
