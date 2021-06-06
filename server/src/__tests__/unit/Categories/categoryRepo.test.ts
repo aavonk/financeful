@@ -58,9 +58,11 @@ describe('Category Repo CRUD Operations', () => {
       description: null,
     };
 
+    const { userId, ...input } = data;
+
     mock.prisma.category.create.mockResolvedValue(data);
 
-    await expect(repo.createOne(USER_ID, 'New Category')).resolves.toEqual({
+    await expect(repo.createOne(USER_ID, input)).resolves.toEqual({
       name: 'New Category',
       id: '123',
       userId: USER_ID,

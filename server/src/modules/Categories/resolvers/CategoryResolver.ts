@@ -1,6 +1,7 @@
 import { UserInputError } from 'apollo-server-express';
 import { Resolver, Authorized, Ctx, Query, Mutation, Arg } from 'type-graphql';
 import { Context, Category } from '@Shared/types';
+import { CategoryCreateInput } from '../types/category.types';
 
 @Resolver()
 export class CategoryResolver {
@@ -17,17 +18,20 @@ export class CategoryResolver {
   @Authorized()
   @Mutation(() => Category)
   async createCategory(
-    @Arg('name') name: string,
+    @Arg('input') input: CategoryCreateInput,
     @Ctx() { user, categoryRepo }: Context,
   ): Promise<Category> {
-    const existingCategory = await categoryRepo.findExisting(user.id, name);
+    const existingCategory = await categoryRepo.findExisting(
+      user.id,
+      input.name,
+    );
 
     if (existingCategory) {
       throw new UserInputError(
         `${existingCategory.name} category already exists.`,
       );
     }
-    const newCategory = await categoryRepo.createOne(user.id, name);
+    const newCategory = await categoryRepo.createOne(user.id, input);
 
     return newCategory;
   }

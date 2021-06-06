@@ -1,6 +1,7 @@
 import { IDataBase } from '@Shared/database/IDataBase';
 import { ICategoryRepo } from '../categoryRepo';
 import { Category } from '@Shared/types';
+import { CategoryCreateInput } from '../../types/category.types';
 
 export class CategoryRepo implements ICategoryRepo {
   private client: IDataBase;
@@ -23,11 +24,14 @@ export class CategoryRepo implements ICategoryRepo {
       },
     });
   }
-  async createOne(userId: string, name: string): Promise<Category> {
+  async createOne(
+    userId: string,
+    input: CategoryCreateInput,
+  ): Promise<Category> {
     return await this.client.category.create({
       data: {
         userId,
-        name,
+        ...input,
       },
     });
   }
