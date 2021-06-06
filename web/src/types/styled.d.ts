@@ -27,6 +27,7 @@ declare module 'styled-components' {
       cardLight: string;
       cardDark: string;
       border: string;
+      list: string;
     };
     charts: {
       greenFill: string;

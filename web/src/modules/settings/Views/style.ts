@@ -14,3 +14,9 @@ export const Section = styled.section`
   width: 100%;
   margin-top: 8px;
 `;
+
+export const Title = styled.h5`
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-size: 0.875rem;
+  font-weight: 600;
+`;

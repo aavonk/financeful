@@ -27,6 +27,7 @@ const theme: DefaultTheme = {
     green: 'rgb(27, 170, 118, 1)',
     turqouise: 'rgb(2,164,153)',
     border: '#242c37',
+    list: '#161b22',
   },
   charts: {
     greenFill: '#34c38f',
