@@ -15,7 +15,12 @@ function CreateCategoryController() {
       <Button variant="primary" onClick={() => setIsOpen(true)}>
         Create category
       </Button>
-      <ModalRoot ariaLabel="Create Category Form" isOpen={isOpen} onDismiss={close}>
+      <ModalRoot
+        ariaLabel="Create Category Form"
+        isOpen={isOpen}
+        onDismiss={close}
+        initialFocusRef={initialFocusRef}
+      >
         <ModalTitle title="Create a category" onClose={close} />
         <ModalBody overrideStyle={{ justifyContent: 'flex-start' }}>
           <CreateCategoryForm initialFocusRef={initialFocusRef} />

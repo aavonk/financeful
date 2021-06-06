@@ -31,10 +31,8 @@ function SettingsMenu() {
       <ul>
         <li>Account settings</li>
         {items.map((item, index) => (
-          <li>
-            <Link to={`/settings${item.subpath}`} key={index}>
-              {item.text}
-            </Link>
+          <li key={index}>
+            <Link to={`/settings${item.subpath}`}>{item.text}</Link>
           </li>
         ))}
       </ul>
