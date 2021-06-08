@@ -1,14 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ModalRoot, ModalTitle, ModalActions, ModalBody } from '@Components/Modal';
+import { ModalRoot, ModalTitle, ModalBody } from '@Components/Modal';
 import Button from '@Common/Button';
 import CreateCategoryForm from './CreateCategoryForm';
+import type { CategoryCreateInput } from '@Generated/graphql';
 
 function CreateCategoryController() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const close = () => setIsOpen(false);
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
+
+  const onCategorySubmit = (values: CategoryCreateInput) => {
+    alert('Success');
+  };
 
   return (
     <Container>
@@ -23,13 +28,11 @@ function CreateCategoryController() {
       >
         <ModalTitle title="Create a category" onClose={close} />
         <ModalBody overrideStyle={{ justifyContent: 'flex-start' }}>
-          <CreateCategoryForm initialFocusRef={initialFocusRef} />
+          <CreateCategoryForm
+            initialFocusRef={initialFocusRef}
+            onFormSubmit={onCategorySubmit}
+          />
         </ModalBody>
-        {/* <ModalActions>
-          <Button variant="primary" type="submit">
-            Save
-          </Button>
-        </ModalActions> */}
       </ModalRoot>
     </Container>
   );

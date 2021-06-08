@@ -6,9 +6,11 @@ import ToggleSwitch from '@Common/ToggleSwitch';
 import { SectionTitle, Label } from './style';
 import { Footer } from '@Components/Modal/style';
 import Button from '@Common/Button';
+import type { CategoryCreateInput } from '@Generated/graphql';
 
 type Props = {
   initialFocusRef: React.MutableRefObject<HTMLInputElement | null>;
+  onFormSubmit: (values: CategoryCreateInput) => void;
 };
 
 type InputType = {
@@ -18,7 +20,7 @@ type InputType = {
   isIncome: boolean;
 };
 
-function CreateCategoryForm({ initialFocusRef }: Props) {
+function CreateCategoryForm({ initialFocusRef, onFormSubmit }: Props) {
   const {
     values,
     handleChange,
@@ -51,7 +53,7 @@ function CreateCategoryForm({ initialFocusRef }: Props) {
         description: values.description.length ? values.description : null,
       };
 
-      console.log(formattedValues);
+      onFormSubmit(formattedValues);
     },
   });
   return (

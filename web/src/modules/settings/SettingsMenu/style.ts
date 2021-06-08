@@ -41,7 +41,8 @@ export const Link = styled(NavLink).attrs({ activeClassName })<NavLinkProps>`
     border-left: 2px solid ${({ theme }) => theme.colors.primary};
   }
 
-  :hover {
+  :hover,
+  :focus-within {
     transition: background-color 0.2s ease-in;
     background-color: var(--menu-bg-active);
   }
