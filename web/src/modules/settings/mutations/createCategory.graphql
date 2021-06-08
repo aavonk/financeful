@@ -1,0 +1,15 @@
+mutation CreateCategory($input: CategoryCreateInput!) {
+  createCategory(input: $input) {
+    category {
+      id
+      name
+      description
+      excludeFromBudget
+      isHidden
+      isIncome
+    }
+    error {
+      message
+    }
+  }
+}

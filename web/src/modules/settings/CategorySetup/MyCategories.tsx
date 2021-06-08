@@ -20,7 +20,7 @@ function MyCategories() {
         <ListItem
           key={category.id}
           heading={category.name}
-          subheading="An optional description of the category which might be reall "
+          subheading={category.description || ''}
           withButton
           buttonProps={{
             text: 'Edit',

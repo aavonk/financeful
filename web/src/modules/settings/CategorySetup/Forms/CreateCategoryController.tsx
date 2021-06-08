@@ -4,15 +4,35 @@ import { ModalRoot, ModalTitle, ModalBody } from '@Components/Modal';
 import Button from '@Common/Button';
 import CreateCategoryForm from './CreateCategoryForm';
 import type { CategoryCreateInput } from '@Generated/graphql';
+import { useCreateCategory } from '../../mutations/useCreateCategory';
+import { useAlert } from '@Context/alert/alertContext';
 
 function CreateCategoryController() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { mutate: createCategory } = useCreateCategory();
+  const { showAlert } = useAlert();
 
   const close = () => setIsOpen(false);
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
-  const onCategorySubmit = (values: CategoryCreateInput) => {
-    alert('Success');
+  const onCategorySubmit = async (values: CategoryCreateInput) => {
+    const response = await createCategory({ variables: { input: values } });
+
+    const category = response.data?.createCategory.category;
+    const createError = response.data?.createCategory.error;
+
+    if (createError) {
+      showAlert(createError.message, 'error', 5000);
+    }
+
+    if (response.errors) {
+      showAlert('We ran into a problem. Try again?', 'error');
+    }
+
+    if (category) {
+      close();
+      showAlert(`Successfully added ${category.name}`, 'info');
+    }
   };
 
   return (
