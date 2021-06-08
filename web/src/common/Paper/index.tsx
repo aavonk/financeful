@@ -10,6 +10,7 @@ export type Props = {
   withElevation?: boolean;
   children: React.ReactNode;
   'data-testid'?: string;
+  style?: React.CSSProperties;
 };
 export const StyledPaper = styled.div<Props>`
   width: 100%;
@@ -32,30 +33,6 @@ export const StyledPaper = styled.div<Props>`
       justify-content: ${center ? 'center' : 'flex-start'};
       align-items: ${center ? 'center' : 'flex-start'};
     `};
-  ::-webkit-scrollbar {
-    width: 14px;
-    height: 16px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    height: 4px;
-    border: 4px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    background-color: rgba(255, 255, 255, 0.2);
-    -webkit-border-radius: 16px;
-    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
-      inset 1px 1px 0px rgba(0, 0, 0, 0.05);
-  }
-
-  ::-webkit-scrollbar-button {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-
-  ::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
 `;
 
 function Paper({
@@ -66,6 +43,7 @@ function Paper({
   center,
   withElevation = true,
   maxWidth,
+  style,
   ...props
 }: Props) {
   return (
@@ -77,6 +55,7 @@ function Paper({
       maxHeight={maxHeight}
       maxWidth={maxWidth}
       withElevation={withElevation}
+      style={style}
     >
       {children}
     </StyledPaper>

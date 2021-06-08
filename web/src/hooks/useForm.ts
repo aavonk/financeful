@@ -52,12 +52,14 @@ interface Validation {
 type ErrorRecord<T> = Record<keyof T, string>;
 type Validations<T extends {}> = Partial<Record<keyof T, Validation>>;
 
-export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
+type OptionType<T> = {
   validations?: Validations<T>;
   initialValue?: Partial<T>;
   onSubmit?: () => void;
   useEffectOnMount?: boolean;
-}) => {
+};
+
+export const useForm = <T extends Record<keyof T, any> = {}>(options?: OptionType<T>) => {
   const [values, setValues] = useState<T>((options?.initialValue || {}) as T);
   const [errors, setErrors] = useState<ErrorRecord<T>>({} as ErrorRecord<T>);
 
@@ -72,6 +74,13 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
     sanitizeFn?: (value: string) => S,
   ) => (e: ChangeEvent<HTMLInputElement & HTMLSelectElement>) => {
     const value = sanitizeFn ? sanitizeFn(e.target.value) : e.target.value;
+    setValues({
+      ...values,
+      [key]: value,
+    });
+  };
+
+  const handleBooleanChange = (key: keyof T, value: boolean) => {
     setValues({
       ...values,
       [key]: value,
@@ -138,6 +147,7 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: {
   return {
     values,
     handleChange,
+    handleBooleanChange,
     handleSubmit,
     handleTrim,
     errors,

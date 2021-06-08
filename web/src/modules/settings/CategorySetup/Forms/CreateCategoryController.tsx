@@ -25,11 +25,11 @@ function CreateCategoryController() {
         <ModalBody overrideStyle={{ justifyContent: 'flex-start' }}>
           <CreateCategoryForm initialFocusRef={initialFocusRef} />
         </ModalBody>
-        <ModalActions>
-          <Button variant="primary" onClick={() => alert('save')}>
+        {/* <ModalActions>
+          <Button variant="primary" type="submit">
             Save
           </Button>
-        </ModalActions>
+        </ModalActions> */}
       </ModalRoot>
     </Container>
   );
