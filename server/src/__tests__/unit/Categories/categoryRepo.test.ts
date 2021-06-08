@@ -82,9 +82,7 @@ describe('Category Repo CRUD Operations', () => {
 
     mock.prisma.category.update.mockResolvedValue(updated);
 
-    await expect(
-      repo.updateOne(updated.id, 'Updated Category'),
-    ).resolves.toEqual({
+    await expect(repo.updateOne(updated.id, updated)).resolves.toEqual({
       id: updated.id,
       name: 'Updated Category',
       userId: USER_ID,
