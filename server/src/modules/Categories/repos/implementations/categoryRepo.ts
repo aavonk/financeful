@@ -57,13 +57,16 @@ export class CategoryRepo implements ICategoryRepo {
     });
   }
 
-  async updateOne(categoryId: string, name: string): Promise<Category> {
+  async updateOne(
+    categoryId: string,
+    input: CategoryCreateInput,
+  ): Promise<Category> {
     return await this.client.category.update({
       where: {
         id: categoryId,
       },
       data: {
-        name,
+        ...input,
       },
     });
   }

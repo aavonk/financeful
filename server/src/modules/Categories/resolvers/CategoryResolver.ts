@@ -41,13 +41,25 @@ export class CategoryResolver {
   }
 
   @Authorized()
-  @Mutation(() => Category)
+  @Mutation(() => CategoryCreateResult)
   async updateCategory(
-    @Arg('name') name: string,
+    @Arg('input') input: CategoryCreateInput,
     @Arg('categoryId') categoryId: string,
-    @Ctx() { categoryRepo }: Context,
-  ): Promise<Category> {
-    return await categoryRepo.updateOne(categoryId, name);
+    @Ctx() { categoryRepo, user }: Context,
+  ): Promise<CategoryCreateResult> {
+    const existing = await categoryRepo.findExisting(user.id, input.name);
+
+    if (existing) {
+      return {
+        error: {
+          message: `${existing.name} is already in your categories`,
+        },
+      };
+    }
+
+    const updated = await categoryRepo.updateOne(categoryId, input);
+
+    return { category: updated };
   }
 
   @Authorized()
