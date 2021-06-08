@@ -9,18 +9,39 @@ export class CategoryRepo implements ICategoryRepo {
   constructor(database: IDataBase) {
     this.client = database;
   }
+
+  private capitalizeFirstLetter(s: string): string {
+    return s && s[0].toUpperCase() + s.slice(1);
+  }
   async findAll(userId: string): Promise<Category[]> {
     return await this.client.category.findMany({
       where: {
         userId,
       },
+      orderBy: {
+        name: 'asc',
+      },
     });
   }
   async findExisting(userId: string, name: string): Promise<Category | null> {
+    const lowerCaseName = name.toLowerCase();
+    const upperCaseName = this.capitalizeFirstLetter(name);
+
     return await this.client.category.findFirst({
       where: {
         userId,
-        name,
+        OR: [
+          {
+            name: {
+              equals: lowerCaseName,
+            },
+          },
+          {
+            name: {
+              equals: upperCaseName,
+            },
+          },
+        ],
       },
     });
   }
