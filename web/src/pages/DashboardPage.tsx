@@ -7,6 +7,7 @@ function DashboardPage() {
       <div>
         TODO:
         <ul>
+          <li>Setup Cypress with Docker</li>
           <li>Add Arrow to Selects for Accessibility reasons</li>
         </ul>
         <div

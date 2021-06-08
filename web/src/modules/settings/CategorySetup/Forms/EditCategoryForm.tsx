@@ -57,6 +57,8 @@ function EditCategoryForm({ initialFocusRef, onFormSubmit, category }: Props) {
       onFormSubmit(formattedValues);
     },
   });
+
+  console.log(values);
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormRow>
