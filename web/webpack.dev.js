@@ -3,16 +3,16 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './public/index.html',
+  favicon: './public/assets/favicon.ico',
   inject: false,
 });
 
-const config  = {
+const config = {
   mode: 'development',
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'public'),
-    publicPath: '/',
   },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
