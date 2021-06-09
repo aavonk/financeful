@@ -3,7 +3,9 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './public/index.html',
-  filename: './index.html',
+  favicon: './public/assets/favicon.ico',
+  // filename: './index.html',
+  inject: false,
 });
 
 const config = {
@@ -15,7 +17,7 @@ const config = {
   },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.tsx','.ts', '.js', '.json'],
+    extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: {
       '@Components': path.resolve(__dirname, 'src/components/'),
       '@Common': path.resolve(__dirname, 'src/common'),

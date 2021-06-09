@@ -16,23 +16,29 @@ function CreateCategoryController() {
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   const onCategorySubmit = async (values: CategoryCreateInput) => {
-    const response = await createCategory({ variables: { input: values } });
 
-    const category = response.data?.createCategory.category;
-    const createError = response.data?.createCategory.error;
+    try{
+      const response = await createCategory({ variables: { input: values } });
 
-    if (createError) {
-      showAlert(createError.message, 'error', 5000);
-    }
-
-    if (response.errors) {
+      const category = response.data?.createCategory.category;
+      const createError = response.data?.createCategory.error;
+  
+      if (createError) {
+        showAlert(createError.message, 'error', 5000);
+      }
+  
+      if (response.errors) {
+        showAlert('We ran into a problem. Try again?', 'error');
+      }
+  
+      if (category) {
+        close();
+        showAlert(`Successfully added ${category.name}`, 'info');
+      }
+    } catch (err) {
       showAlert('We ran into a problem. Try again?', 'error');
     }
-
-    if (category) {
-      close();
-      showAlert(`Successfully added ${category.name}`, 'info');
-    }
+   
   };
 
   return (

@@ -1,0 +1,10 @@
+mutation UpdateCategory($categoryId: String!, $input: CategoryCreateInput!) {
+  updateCategory(categoryId: $categoryId, input: $input) {
+    id
+    name
+    description
+    excludeFromBudget
+    isHidden
+    isIncome
+  }
+}

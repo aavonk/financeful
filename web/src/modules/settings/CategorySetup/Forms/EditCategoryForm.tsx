@@ -12,6 +12,7 @@ type Props = {
   initialFocusRef: React.MutableRefObject<HTMLInputElement | null>;
   onFormSubmit: (values: CategoryCreateInput) => void;
   category: Category;
+  disableSubmit: boolean;
 };
 
 type InputType = {
@@ -21,7 +22,12 @@ type InputType = {
   isIncome: boolean;
 };
 
-function EditCategoryForm({ initialFocusRef, onFormSubmit, category }: Props) {
+function EditCategoryForm({
+  initialFocusRef,
+  onFormSubmit,
+  category,
+  disableSubmit,
+}: Props) {
   const {
     values,
     handleChange,
@@ -58,7 +64,6 @@ function EditCategoryForm({ initialFocusRef, onFormSubmit, category }: Props) {
     },
   });
 
-  console.log(values);
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <FormRow>
@@ -115,7 +120,7 @@ function EditCategoryForm({ initialFocusRef, onFormSubmit, category }: Props) {
         </Label>
       </FormRow>
       <Footer>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={disableSubmit}>
           Save
         </Button>
       </Footer>
