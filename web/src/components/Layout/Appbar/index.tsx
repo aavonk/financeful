@@ -9,29 +9,15 @@ import NotificationsMenu from './NotificationsMenu';
 import UserMenu from './UserMenu';
 import { AppbarRoot, AppbarContainer, AppbarMenu, AppbarActions } from './style';
 
-type Props = {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-function Appbar({ isSidebarOpen, setIsSidebarOpen }: Props) {
+function Appbar() {
   const { pathname } = useLocation();
   const mobileDevice = useMediaQuery('(max-width: 500px)');
 
   return (
     <>
-      <AppbarRoot $open={isSidebarOpen}>
+      <AppbarRoot>
         <AppbarContainer>
           <AppbarMenu>
-            <IconButton
-              grey
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              data-testid="toggle-button"
-              aria-label="toggle-sidebar"
-              ariaText="Toggle sidebar"
-            >
-              <MenuIcon />
-            </IconButton>
             <PageTitle location={pathname.split('/')[1]} />
           </AppbarMenu>
           <AppbarActions>

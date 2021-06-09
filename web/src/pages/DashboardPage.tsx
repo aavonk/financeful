@@ -9,6 +9,10 @@ function DashboardPage() {
         <ul>
           <li>Setup Cypress with Docker</li>
           <li>Add Arrow to Selects for Accessibility reasons</li>
+          <li>
+            Add ability to delete category (Which will delete all transactions with that
+            category)
+          </li>
         </ul>
         <div
           style={{

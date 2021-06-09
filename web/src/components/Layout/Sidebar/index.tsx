@@ -20,11 +20,6 @@ import {
 import Tooltip from '@Common/Tooltip';
 import IconButton from '@Common/IconButton';
 
-type Props = {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
-};
-
 const items = [
   {
     tooltip: 'Dashboard',
@@ -68,19 +63,13 @@ const items = [
   },
 ];
 
-function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
+function Sidebar() {
   return (
-    <SidebarRoot $open={isSidebarOpen} data-testid="sidebar">
+    <SidebarRoot data-testid="sidebar">
       <SidebarBrand>
         <Logo>
           <IconSvg />
-          <h2>financeful</h2>
         </Logo>
-        <span>
-          <IconButton onClick={() => setIsSidebarOpen(false)} ariaText="Close sidebar">
-            <ChevronLeftIcon />
-          </IconButton>
-        </span>
       </SidebarBrand>
       <NavWrapper>
         <NavigationItems>
