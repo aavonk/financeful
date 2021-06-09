@@ -7,7 +7,7 @@ import {
   NavWrapper,
   Logo,
 } from './style';
-import IconSvg from '@Common/LogoSvg/IconSvg';
+import IconSvg from '@Common/LogoSvg/Logo';
 import {
   DashboardIcon,
   SettingsIcon,

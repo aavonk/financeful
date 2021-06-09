@@ -103,7 +103,9 @@ export const Logo = styled.div`
   }
 
   & > svg {
-    margin-top: 0.313rem;
+    margin-top: 4px;
+    height: 40px;
+    width: 40px;
     vertical-align: text-bottom;
   }
 `;
