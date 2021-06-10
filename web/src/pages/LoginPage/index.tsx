@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { isApolloError } from '@apollo/client';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-
-import IconSvg from '@Common/LogoSvg/IconSvg';
-import Button from '@Common/Button';
-import { Card, CardBody } from '@Common/Card';
-import { UnderlineInput } from '@Common/FormElements';
+import { InsetInput } from '@Common/FormElements';
+import { FormRow } from '@Globals/index';
 import { useForm } from '@Hooks/useForm';
 import { useLoginMutation } from '@Generated/graphql';
 import { useAuth } from '@Context/auth/authContext';
-import { Container, Brand, ErrorMessage } from './style';
+import { useAlert } from '@Context/alert/alertContext';
+import { Container, Header, Paper, Form } from './style';
 import Progressbar from '@Common/Progressbar';
+import Blob from './Blob';
+import Logo from './Logo';
+import Button from '@Common/Button';
 
 type User = {
   email: string;
@@ -24,11 +24,9 @@ type LoginErrors = {
 };
 
 function LoginPage() {
-  const [loginErrors, setLoginErrors] = React.useState<
-    LoginErrors | Record<string, never>
-  >({});
   const [loginMutation, { loading }] = useLoginMutation();
   const { dispatch } = useAuth();
+  const { showAlert } = useAlert();
   const history = useHistory();
 
   const { values, handleChange, handleSubmit } = useForm<User>({
@@ -54,75 +52,48 @@ function LoginPage() {
         });
         history.push('/dashboard');
       }
-    } catch (e) {
-      if (isApolloError(e)) {
-        for (const error of e.graphQLErrors) {
-          const err: LoginErrors = error.extensions?.errors;
-          setLoginErrors(err);
-          dispatch({
-            type: 'AUTH_ERROR',
-            payload: err,
-          });
-        }
-      } else {
-        setLoginErrors({
-          general: 'An error has occured. Please try again later',
-        });
-        dispatch({
-          type: 'AUTH_ERROR',
-          payload: { error: 'An error has occured in the login process.' },
-        });
+
+      if (response.errors) {
+        showAlert('Invalid Credentials', 'error');
       }
+    } catch (e) {
+      showAlert('Invalid Credentials', 'error');
+
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: { error: 'An error has occured in the login process.' },
+      });
     }
   };
   return (
     <Container>
-      {Object.keys(loginErrors).length > 0 &&
-        Object.values(loginErrors).map((err) => (
-          <ErrorMessage role="alert" key={err}>
-            {err}
-          </ErrorMessage>
-        ))}
-      <Card minWidth="400px">
-        {loading && <Progressbar />}
-        <CardBody>
-          <Brand>
-            <h1>financeful</h1>
-            <IconSvg />
-          </Brand>
-          <form onSubmit={handleSubmit}>
-            <UnderlineInput
-              type="text"
-              id="email"
-              autoFocus={true}
-              value={values.email}
-              onChange={handleChange('email')}
-              data-testid="email-input"
-            >
+      <Logo />
+      <Blob />
+      <Paper>
+        <Form onSubmit={handleSubmit}>
+          <Header>Welcome back!</Header>
+          <FormRow>
+            <InsetInput type="text" value={values.email} onChange={handleChange('email')}>
               Email
-            </UnderlineInput>
-            <UnderlineInput
+            </InsetInput>
+          </FormRow>
+          <FormRow>
+            <InsetInput
               type="password"
-              id="password"
               value={values.password}
               onChange={handleChange('password')}
-              data-testid="password-input"
             >
               Password
-            </UnderlineInput>
-            <Button
-              type="submit"
-              fullWidth
-              margin="1.2rem 0 0 0"
-              disabled={loading}
-              variant="primary"
-              data-testid="login-submit"
-            >
-              Login
+            </InsetInput>
+          </FormRow>
+          <FormRow style={{ marginTop: '20px' }}>
+            <Button type="submit" variant="primary" fullWidth disabled={loading}>
+              Log in
             </Button>
-          </form>
-        </CardBody>
-      </Card>
+          </FormRow>
+        </Form>
+        {loading && <Progressbar />}
+      </Paper>
     </Container>
   );
 }
