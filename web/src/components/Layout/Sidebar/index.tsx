@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import {
   SidebarRoot,
   SidebarBrand,
@@ -14,11 +14,9 @@ import {
   CalendarIcon,
   BillsIcon,
   CreditCardIcon,
-  ChevronLeftIcon,
   WalletIcon,
 } from '@Common/Icons';
 import Tooltip from '@Common/Tooltip';
-import IconButton from '@Common/IconButton';
 
 const items = [
   {

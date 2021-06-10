@@ -19,7 +19,8 @@ const theme: DefaultTheme = {
     textPrimaryInversed: '#000000',
     textGrey: '#8c91a1',
     textGreyMuted: '#9699a8',
-    textSecondary: '#5d7292',
+    textSecondary: '#8c91a1', // Same as text grey
+    // textSecondary: '#5d7292',
     textError: 'rgb(224, 36, 94)',
     tooltip: '#3E4954',
     red: 'rgb(236,69,97)',

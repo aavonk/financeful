@@ -52,7 +52,7 @@ export const StyledButton = styled.button<ButtonProps>`
   ${(props) =>
     props.$grey &&
     css`
-      color: ${({ theme }) => theme.colors.textSecondary};
+      color: ${({ theme }) => theme.colors.textGrey};
     `}
       ${(props) =>
     props.$active &&
