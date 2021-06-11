@@ -20,6 +20,7 @@ type InputType = {
   description: string;
   excludeFromBudget: boolean;
   isIncome: boolean;
+  isHidden: boolean;
 };
 
 function EditCategoryForm({
@@ -41,6 +42,7 @@ function EditCategoryForm({
       description: category.description ? category.description : '',
       excludeFromBudget: category.excludeFromBudget!,
       isIncome: category.isIncome!,
+      isHidden: category.isHidden!,
     },
     validations: {
       name: {
@@ -115,6 +117,19 @@ function EditCategoryForm({
             checked={values.excludeFromBudget}
             onChange={(checked: boolean) => {
               handleBooleanChange('excludeFromBudget', checked);
+            }}
+          />
+        </Label>
+      </FormRow>
+      <FormRow>
+        <Label>
+          Hide Category
+          <ToggleSwitch
+            small
+            ariaLabel="Hide category switch"
+            checked={values.isHidden}
+            onChange={(checked: boolean) => {
+              handleBooleanChange('isHidden', checked);
             }}
           />
         </Label>

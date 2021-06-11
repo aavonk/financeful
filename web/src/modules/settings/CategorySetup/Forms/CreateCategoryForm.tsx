@@ -51,6 +51,7 @@ function CreateCategoryForm({ initialFocusRef, onFormSubmit }: Props) {
       const formattedValues = {
         ...values,
         description: values.description.length ? values.description : null,
+        isHidden: false,
       };
 
       onFormSubmit(formattedValues);

@@ -14,6 +14,9 @@ export class CategoryCreateInput {
 
   @Field(() => Boolean)
   excludeFromBudget: boolean;
+
+  @Field(() => Boolean)
+  isHidden: boolean;
 }
 
 @ObjectType()

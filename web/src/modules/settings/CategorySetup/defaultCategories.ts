@@ -39,12 +39,14 @@ const defaultExpenseOptions = {
   description: null,
   excludeFromBudget: false,
   isIncome: false,
+  isHidden: false,
 };
 
 const defaultIncomeOptions = {
   description: null,
   excludeFromBudget: false,
   isIncome: true,
+  isHidden: false,
 };
 
 const DEFAULT_EXPENSE_CATEGORIES: ExpenseGroup = {

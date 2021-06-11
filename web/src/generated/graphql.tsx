@@ -377,6 +377,7 @@ export type CategoryCreateInput = {
   description?: Maybe<Scalars['String']>;
   isIncome: Scalars['Boolean'];
   excludeFromBudget: Scalars['Boolean'];
+  isHidden: Scalars['Boolean'];
 };
 
 export type GetAccountInsightsQueryVariables = Exact<{
