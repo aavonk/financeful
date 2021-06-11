@@ -3,6 +3,8 @@ import { NavLink, NavLinkProps } from 'react-router-dom';
 
 export const NavMenu = styled.nav`
   --menu-bg-active: #161b22;
+  position: sticky;
+  top: 80px;
   width: 100%;
   border-radius: 6px;
   border: 1px solid ${({ theme }) => theme.colors.border};

@@ -1,6 +1,6 @@
-import type { Category } from '@Generated/graphql';
+import type { CategoryCreateInput } from '@Generated/graphql';
 
-type DefaultCategory = Omit<Category, 'id' | 'user' | 'userId'>;
+type DefaultCategory = CategoryCreateInput;
 
 export type Group = {
   groupName: string;
@@ -38,14 +38,12 @@ type DefaultCategoryStruct = {
 const defaultExpenseOptions = {
   description: null,
   excludeFromBudget: false,
-  isHidden: false,
   isIncome: false,
 };
 
 const defaultIncomeOptions = {
   description: null,
   excludeFromBudget: false,
-  isHidden: false,
   isIncome: true,
 };
 

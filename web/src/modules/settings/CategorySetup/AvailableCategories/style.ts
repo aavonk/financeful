@@ -4,6 +4,13 @@ type HeadingProps = {
   isExpanded?: boolean;
 };
 
+export const Title = styled.h6<{ isLast?: boolean }>`
+  font-size: 0.825rem;
+  padding-bottom: 4px;
+  padding-top: ${({ isLast }) => (isLast ? '4px' : 0)};
+  font-weight: 600;
+`;
+
 export const GroupListContainer = styled.div`
   min-width: 280px;
   position: relative;
@@ -22,7 +29,7 @@ export const GroupHeading = styled.div<HeadingProps>`
   & > h4 {
     color: ${({ theme }) => theme.colors.textPrimary};
     font-size: 0.8rem;
-    font-weight: 600;
+    font-weight: 500;
     padding-left: 8px;
   }
 

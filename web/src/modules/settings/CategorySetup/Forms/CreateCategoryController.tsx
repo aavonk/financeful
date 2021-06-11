@@ -6,31 +6,32 @@ import CreateCategoryForm from './CreateCategoryForm';
 import type { CategoryCreateInput } from '@Generated/graphql';
 import { useCreateCategory } from '../../mutations/useCreateCategory';
 import { useAlert } from '@Context/alert/alertContext';
+import { useMediaQuery } from '@Hooks/useMediaQuery';
 
 function CreateCategoryController() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { mutate: createCategory } = useCreateCategory();
   const { showAlert } = useAlert();
+  const isMobileDevice = useMediaQuery('(max-width: 500px)');
 
   const close = () => setIsOpen(false);
   const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
 
   const onCategorySubmit = async (values: CategoryCreateInput) => {
-
-    try{
+    try {
       const response = await createCategory({ variables: { input: values } });
 
       const category = response.data?.createCategory.category;
       const createError = response.data?.createCategory.error;
-  
+
       if (createError) {
         showAlert(createError.message, 'error', 5000);
       }
-  
+
       if (response.errors) {
         showAlert('We ran into a problem. Try again?', 'error');
       }
-  
+
       if (category) {
         close();
         showAlert(`Successfully added ${category.name}`, 'info');
@@ -38,12 +39,15 @@ function CreateCategoryController() {
     } catch (err) {
       showAlert('We ran into a problem. Try again?', 'error');
     }
-   
   };
 
   return (
     <Container>
-      <Button variant="primary" onClick={() => setIsOpen(true)}>
+      <Button
+        variant="primary"
+        onClick={() => setIsOpen(true)}
+        fullWidth={isMobileDevice}
+      >
         Create category
       </Button>
       <ModalRoot
