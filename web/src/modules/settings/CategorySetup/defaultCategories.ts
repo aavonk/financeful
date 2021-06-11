@@ -2,7 +2,7 @@ import type { Category } from '@Generated/graphql';
 
 type DefaultCategory = Omit<Category, 'id' | 'user' | 'userId'>;
 
-type Group = {
+export type Group = {
   groupName: string;
   categories: DefaultCategory[];
 };
@@ -31,6 +31,7 @@ type IncomeGroup = {
 type DefaultCategoryStruct = {
   income: IncomeGroup;
   expense: ExpenseGroup;
+  getIncomeGroup: () => Group[];
 };
 
 const defaultExpenseOptions = {
@@ -452,4 +453,9 @@ const DEFAULT_INCOME_CATEGORIES: IncomeGroup = {
 export const DEFAULT_CATEGORIES: DefaultCategoryStruct = {
   income: DEFAULT_INCOME_CATEGORIES,
   expense: DEFAULT_EXPENSE_CATEGORIES,
+  getIncomeGroup: () => {
+    const data = DEFAULT_INCOME_CATEGORIES;
+    //@ts-ignore
+    return Object.keys(data).map((key) => data[key]);
+  },
 };
