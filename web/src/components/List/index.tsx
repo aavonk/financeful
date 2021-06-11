@@ -1,15 +1,13 @@
 import Button from '@Common/Button';
 import React from 'react';
 import styled from 'styled-components';
+import Skeleton from '@Common/Skeleton';
 
-type StyleProps = {
-  maxWidth?: string;
-};
-const StyledList = styled.ul<StyleProps>`
+const StyledList = styled.ul`
   background-color: ${({ theme }) => theme.colors.list};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 6px;
-  width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100%')};
+  width: 100%;
   list-style: none;
   font-size: 0.875rem;
 
@@ -20,11 +18,10 @@ const StyledList = styled.ul<StyleProps>`
 
 interface ListProps {
   children: React.ReactNode;
-  maxWidth?: string;
 }
 
-export function List({ children, maxWidth }: ListProps) {
-  return <StyledList maxWidth={maxWidth}>{children}</StyledList>;
+export function List({ children }: ListProps) {
+  return <StyledList>{children}</StyledList>;
 }
 
 const StyledItem = styled.li`
@@ -57,6 +54,7 @@ const ItemRight = styled.div`
 type ItemProps = {
   heading: string;
   subheading?: string;
+  asLoader?: boolean;
 };
 
 type ButtonProps = {
@@ -75,12 +73,19 @@ export function ListItem({
   subheading,
   withButton,
   buttonProps,
+  asLoader,
 }: ListItemProps) {
   return (
     <StyledItem>
       <ItemLeft>
-        <p>{heading}</p>
-        <small>{subheading}</small>
+        {asLoader ? (
+          <Skeleton width="80%" height="24px" />
+        ) : (
+          <>
+            <p>{heading}</p>
+            <small>{subheading}</small>
+          </>
+        )}
       </ItemLeft>
       {withButton && buttonProps && (
         <ItemRight>

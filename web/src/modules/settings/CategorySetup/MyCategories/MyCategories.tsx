@@ -1,8 +1,10 @@
 import React from 'react';
 import { List, ListItem } from '@Components/List';
 import { useFetchCategoriesQuery } from '@Generated/graphql';
-import EditCategoryController from './Forms/EditCategoryController';
+import EditCategoryController from '../Forms/EditCategoryController';
 import type { Category } from '@Generated/graphql';
+import MyCategoriesSkeleton from './MyCategoriesSkeleton';
+import MyCategoriesError from './MyCategoriesError';
 
 function MyCategories() {
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null);
@@ -10,12 +12,11 @@ function MyCategories() {
   const { data, loading, error } = useFetchCategoriesQuery();
 
   if (error) {
-    console.log(error);
-    return <div>Error!</div>;
+    return <MyCategoriesError />;
   }
 
   if (loading) {
-    return <div>loading!</div>;
+    return <MyCategoriesSkeleton />;
   }
 
   return (
@@ -25,7 +26,7 @@ function MyCategories() {
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
       />
-      <List maxWidth="380px">
+      <List>
         {data?.getCategories.map((category) => (
           <ListItem
             key={category.id}

@@ -19,4 +19,5 @@ export const Title = styled.h5`
   color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 0.875rem;
   font-weight: 600;
+  margin-bottom: 0.625rem;
 `;

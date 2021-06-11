@@ -7,9 +7,10 @@ export const Container = styled.div`
 `;
 
 export const Left = styled.div`
-  flex: 1 0 auto;
+  flex: 0 0 40%;
+  padding-right: 36px;
 `;
 
 export const Right = styled.div`
-  flex: 1 0 auto;
+  flex: 0 0 60%;
 `;
