@@ -10,6 +10,9 @@ function AvailableCategories() {
       {DEFAULT_CATEGORIES.getIncomeGroup().map((group, index) => (
         <GroupList data={group} key={index} />
       ))}
+      {DEFAULT_CATEGORIES.getExpenseGroup().map((group, index) => (
+        <GroupList data={group} key={index} />
+      ))}
     </Container>
   );
 }

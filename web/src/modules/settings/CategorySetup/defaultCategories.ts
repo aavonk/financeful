@@ -32,6 +32,7 @@ type DefaultCategoryStruct = {
   income: IncomeGroup;
   expense: ExpenseGroup;
   getIncomeGroup: () => Group[];
+  getExpenseGroup: () => Group[];
 };
 
 const defaultExpenseOptions = {
@@ -455,6 +456,12 @@ export const DEFAULT_CATEGORIES: DefaultCategoryStruct = {
   expense: DEFAULT_EXPENSE_CATEGORIES,
   getIncomeGroup: () => {
     const data = DEFAULT_INCOME_CATEGORIES;
+    //@ts-ignore
+    return Object.keys(data).map((key) => data[key]);
+  },
+  getExpenseGroup: () => {
+    const data = DEFAULT_EXPENSE_CATEGORIES;
+
     //@ts-ignore
     return Object.keys(data).map((key) => data[key]);
   },
