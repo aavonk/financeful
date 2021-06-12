@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading, Section } from './style';
-import CategorySetup from '../CategorySetup';
-import CreateCategoryController from '../CategorySetup/Forms/CreateCategoryController';
+import CategorySetup from '../categories';
+import CreateCategoryController from '../categories/Forms/CreateCategoryController';
 
 function Categories() {
   return (
