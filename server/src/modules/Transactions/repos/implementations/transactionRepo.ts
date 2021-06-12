@@ -140,9 +140,18 @@ export class TransactionRepo implements ITransactionRepo {
         AND: [
           {
             userId,
-            isUncategorized: {
-              equals: true,
-            },
+            OR: [
+              {
+                isUncategorized: {
+                  equals: true,
+                },
+              },
+              {
+                categoryId: {
+                  equals: null,
+                },
+              },
+            ],
           },
         ],
       },
@@ -159,9 +168,18 @@ export class TransactionRepo implements ITransactionRepo {
         AND: [
           {
             userId,
-            isUncategorized: {
-              equals: true,
-            },
+            OR: [
+              {
+                isUncategorized: {
+                  equals: true,
+                },
+              },
+              {
+                categoryId: {
+                  equals: null,
+                },
+              },
+            ],
           },
         ],
       },
