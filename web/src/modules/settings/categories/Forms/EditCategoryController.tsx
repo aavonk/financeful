@@ -1,10 +1,11 @@
 import React from 'react';
 import EditCategoryForm from './EditCategoryForm';
 import { ModalRoot, ModalTitle, ModalBody } from '@Components/Modal';
-import { useUpdateCategoryMutation } from '@Generated/graphql';
+import { useUpdateCategoryMutation, useDeleteCategoryMutation } from '@Generated/graphql';
 import type { Category, CategoryCreateInput } from '@Generated/graphql';
 import { useAlert } from '@Context/alert/alertContext';
-
+import { useConfirmation } from '@Context/confirmation/confirmationContext';
+import { useDeleteCategory } from '../../mutations/useDeleteCategory';
 type Props = {
   category: Category | null;
   isOpen: boolean;
@@ -12,16 +13,17 @@ type Props = {
 };
 
 function EditCategoryController({ category, isOpen, setIsOpen }: Props) {
-  const [updateCategory, { loading }] = useUpdateCategoryMutation();
-
-  const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
-  const { showAlert } = useAlert();
-
-  const close = () => setIsOpen(false);
-
   if (!category) {
     return null;
   }
+  const [updateCategory, { loading }] = useUpdateCategoryMutation();
+  const { mutate: deleteCategory } = useDeleteCategory(category!.id);
+  const { showAlert } = useAlert();
+  const confirm = useConfirmation();
+
+  const initialFocusRef = React.useRef<HTMLInputElement | null>(null);
+
+  const close = () => setIsOpen(false);
 
   const onEditSubmit = async (values: CategoryCreateInput) => {
     try {
@@ -43,6 +45,27 @@ function EditCategoryController({ category, isOpen, setIsOpen }: Props) {
     }
   };
 
+  const onDeleteSubmit = async (category: Category) => {
+    const shouldProceed = await confirm({
+      dangerButtonText: 'Delete',
+      title: 'Are you sure?',
+      description: `If you delete ${category.name} from your categories, you will no longer be able to apply transactions to this category, and will have to recategorize the transactions that currently have this category.`,
+    });
+
+    if (!shouldProceed) return;
+
+    try {
+      const res = await deleteCategory({ variables: { categoryId: category.id } });
+
+      if (res.data?.deleteCategory) {
+        showAlert(res.data.deleteCategory, 'info');
+        close();
+      }
+    } catch (err) {
+      showAlert('We ran into a problem. Try again?', 'error', 7000);
+    }
+  };
+
   return (
     <>
       <ModalRoot
@@ -58,6 +81,7 @@ function EditCategoryController({ category, isOpen, setIsOpen }: Props) {
             onFormSubmit={onEditSubmit}
             initialFocusRef={initialFocusRef}
             disableSubmit={loading}
+            onDeleteSubmit={onDeleteSubmit}
           />
         </ModalBody>
       </ModalRoot>

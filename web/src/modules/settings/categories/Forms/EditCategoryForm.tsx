@@ -11,6 +11,7 @@ import type { CategoryCreateInput, Category } from '@Generated/graphql';
 type Props = {
   initialFocusRef: React.MutableRefObject<HTMLInputElement | null>;
   onFormSubmit: (values: CategoryCreateInput) => void;
+  onDeleteSubmit: (category: Category) => void;
   category: Category;
   disableSubmit: boolean;
 };
@@ -26,6 +27,7 @@ type InputType = {
 function EditCategoryForm({
   initialFocusRef,
   onFormSubmit,
+  onDeleteSubmit,
   category,
   disableSubmit,
 }: Props) {
@@ -134,7 +136,16 @@ function EditCategoryForm({
           />
         </Label>
       </FormRow>
-      <Footer>
+      <Footer justify="space-between">
+        <Button
+          variant="danger-secondary"
+          onClick={(e: React.MouseEvent) => {
+            e.preventDefault();
+            onDeleteSubmit(category);
+          }}
+        >
+          Delete
+        </Button>
         <Button variant="primary" type="submit" disabled={disableSubmit}>
           Save
         </Button>
