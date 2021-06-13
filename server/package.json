@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "dev:local": "cross-env NODE_ENV=local tsc-watch --onSuccess \"node dist/index.js\"",
     "build": "tsc",
     "migrate": "yarn prisma migrate dev --preview-feature",
     "migrate:test": "DATABASE_URL=postgresql://prisma:prisma@localhost:5433/tests yarn prisma migrate dev --name init",
@@ -29,7 +30,7 @@
     "TypeScript"
   ],
   "author": "Aaron von Kreisler",
-  "license": "BSD 3-Clause",
+  "license": "BSD",
   "_moduleAliases": {
     "@Modules": "dist/modules",
     "@Lib": "dist/lib",
@@ -47,6 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "chalk": "^4.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.20.0",
     "eslint-plugin-node": "^11.1.0",
     "faker": "^5.5.3",
