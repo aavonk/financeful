@@ -59,6 +59,13 @@ export const StyledInsetSelect = styled.select<LabelProps>`
   padding: 0.5rem 0.5rem;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.39), 0 -1px 1px #131619, 0 1px 0 #131619;
   color: ${({ theme }) => theme.colors.textPrimary};
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  background-size: 0.65em auto;
+  appearance: none;
+
   &:focus-within {
     border: 2px solid ${({ theme }) => theme.colors.primary};
   }
