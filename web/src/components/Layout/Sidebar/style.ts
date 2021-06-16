@@ -2,7 +2,10 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { TooltipBody } from '@Common/Tooltip/style';
 
-export const SidebarRoot = styled.div<{ $open: boolean }>`
+export const SidebarRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 75px;
   position: fixed;
   top: 0;
@@ -12,59 +15,13 @@ export const SidebarRoot = styled.div<{ $open: boolean }>`
   z-index: 1005;
   box-shadow: ${({ theme }) => theme.elevation.two};
   transition: width 225ms cubic-bezier(0.4, 0, 0.4, 1) 0ms;
+
   @media ${({ theme }) => theme.device.mobile} {
     display: none;
   }
-
-  ${(props) =>
-    props.$open &&
-    css`
-      display: block !important;
-      width: 250px;
-      ${SidebarBrand} {
-        width: 250px;
-      }
-      ${NavWrapper} {
-        padding: 0 1.35rem;
-        align-items: flex-start;
-      }
-      ${NavigationItems} {
-        align-items: flex-start;
-      }
-      ${Logo} {
-        /* justify-content: flex-start; */
-        padding: 0 1.55rem;
-
-        & > h2 {
-          display: inline-flex;
-        }
-      }
-      ${NavItem} {
-        justify-content: flex-start;
-        padding: 0 1.2rem;
-        border-radius: 12px;
-        & > span {
-          display: inline-flex;
-        }
-
-        & > svg {
-          height: 1em;
-          width: 1em;
-          margin-right: 20px;
-        }
-      }
-      ${TooltipBody} {
-        display: none;
-      }
-
-      @media ${({ theme }) => theme.device.mobile} {
-        width: 100vw;
-
-        ${Logo} {
-          justify-content: flex-start;
-        }
-      }
-    `}
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100vw;
+  }
 `;
 
 export const SidebarBrand = styled.div`
@@ -103,13 +60,16 @@ export const Logo = styled.div`
   }
 
   & > svg {
-    margin-top: 0.313rem;
+    margin-top: 4px;
+    height: 40px;
+    width: 40px;
     vertical-align: text-bottom;
   }
 `;
 
 export const NavWrapper = styled.nav`
   display: flex;
+  width: 50px;
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 70px);
@@ -122,12 +82,13 @@ export const NavigationItems = styled.div`
   align-items: center;
   padding: 10px 0 30px;
 `;
+
 const activeClassName = 'nav-item-active';
 export const NavItem = styled(NavLink).attrs({ activeClassName })<{
   $last?: boolean;
 }>`
   width: 100%;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.textGrey};
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -135,6 +96,7 @@ export const NavItem = styled(NavLink).attrs({ activeClassName })<{
   min-height: 50px;
   transition: background-color 0.2s ease-in;
   margin-top: 5px;
+  border-radius: 50%;
 
   & > span {
     display: none;
@@ -147,15 +109,13 @@ export const NavItem = styled(NavLink).attrs({ activeClassName })<{
     vertical-align: text-bottom;
   }
   &.${activeClassName} {
-    color: #fff;
-    /* background-color: #0d34ff; */
-    background-color: ${({ theme }) => theme.colors.darkFour};
+    color: ${({ theme }) => theme.colors.primary};
   }
 
   &:hover,
-  :focus {
-    color: #fff;
-    background-color: ${({ theme }) => theme.colors.darkThree};
+  :focus-within {
+    color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.effects.buttonHover};
   }
 
   ${(props) =>

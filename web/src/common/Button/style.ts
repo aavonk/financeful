@@ -30,6 +30,18 @@ export const StyledButton = styled.button<ButtonProps>`
   }
 
   ${({ variant }) =>
+    variant === 'cubed' &&
+    css`
+      border-radius: 0.25em;
+      font-size: 0.875rem;
+      width: 1em;
+      height: 1em;
+      min-width: 0;
+      padding: 0;
+      background-color: ${({ theme }) => theme.colors.primary};
+    `}
+
+  ${({ variant }) =>
     variant === 'primary' &&
     css`
       background-color: ${({ theme }) => theme.colors.primary};

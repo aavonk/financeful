@@ -9,17 +9,17 @@ import { AuthResolver } from '@Modules/Auth/resolvers/AuthResolver';
 import { TransactionResolver } from '@Modules/Transactions/resolvers/TransactionResolver';
 import { TransferResolver } from '@Modules/Transactions/resolvers/TransferResolver';
 import { AccountResolver } from '@Modules/BankAccounts/resolvers/AccountResolver';
-import { CategoryResolver } from '@Modules/Transactions/resolvers/CategoryResolver';
+import { CategoryResolver } from '@Modules/Categories/resolvers/CategoryResolver';
 import { TransferRepo } from '@Modules/Transactions/repos/implementations/transferRepo';
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
-import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
+import { CategoryRepo } from '@Modules/Categories/repos/implementations/categoryRepo';
 import { UserRepo } from '@Modules/Users/repos/implementations/userRepo';
 import { AccountDataRepo } from '@Modules/BankAccounts/repos/implementations/accountDataRepo';
 import { AggregateAccountData } from '@Modules/BankAccounts/repos/implementations/aggregateAccountData';
 import { InsightsService } from '@Modules/BankAccounts/services/implementations/insightService';
 import { AccountDataResolver } from '@Modules/BankAccounts/resolvers/AccountDataResolver';
 import { transactionService } from '@Modules/Transactions/services';
-import { authService } from '@Modules/Auth/services'
+import { authService } from '@Modules/Auth/services';
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -54,7 +54,7 @@ const main = async () => {
     }),
   });
 
-  app.listen({ port: PORT }, () => 
+  app.listen({ port: PORT }, () =>
     console.log(
       `👍 Server ready at http://localhost:${PORT}${server.graphqlPath}`,
     ),

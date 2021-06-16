@@ -9,17 +9,18 @@ const theme: DefaultTheme = {
     // darkTwo: '#1c1c25',
     darkThree: '#242c37',
     darkFour: '#323d4d',
-    cardLight: '#21222d',
-    cardDark: '#1c1c25',
+    cardLight: '#21222d', //TODO: Remove
+    cardDark: '#1c1c25', //TODO: Remove
     primary: '#1e88e5',
     primaryDark: '#007dcb',
-    primaryDarkest: '#0d34ff',
+    primaryDarkest: '#0d34ff', //TODO: Remove
     paper: '#202020',
     textPrimary: '#fff',
     textPrimaryInversed: '#000000',
     textGrey: '#8c91a1',
-    textGreyMuted: '#9699a8',
-    textSecondary: '#5d7292',
+    textGreyMuted: '#9699a8', //TODO: Remove
+    textSecondary: '#8c91a1', // Same as text grey
+    // textSecondary: '#5d7292',
     textError: 'rgb(224, 36, 94)',
     tooltip: '#3E4954',
     red: 'rgb(236,69,97)',

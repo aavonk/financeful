@@ -1,6 +1,9 @@
-import { UserInputError } from 'apollo-server-express';
 import { Resolver, Authorized, Ctx, Query, Mutation, Arg } from 'type-graphql';
 import { Context, Category } from '@Shared/types';
+import {
+  CategoryCreateInput,
+  CategoryCreateResult,
+} from '../types/category.types';
 
 @Resolver()
 export class CategoryResolver {
@@ -15,31 +18,36 @@ export class CategoryResolver {
   }
 
   @Authorized()
-  @Mutation(() => Category)
+  @Mutation(() => CategoryCreateResult)
   async createCategory(
-    @Arg('name') name: string,
+    @Arg('input') input: CategoryCreateInput,
     @Ctx() { user, categoryRepo }: Context,
-  ): Promise<Category> {
-    const existingCategory = await categoryRepo.findExisting(user.id, name);
+  ): Promise<CategoryCreateResult> {
+    const existingCategory = await categoryRepo.findExisting(
+      user.id,
+      input.name,
+    );
 
     if (existingCategory) {
-      throw new UserInputError(
-        `${existingCategory.name} category already exists.`,
-      );
+      return {
+        error: {
+          message: `${existingCategory.name} is already in your categories`,
+        },
+      };
     }
-    const newCategory = await categoryRepo.createOne(user.id, name);
+    const newCategory = await categoryRepo.createOne(user.id, input);
 
-    return newCategory;
+    return { category: newCategory };
   }
 
   @Authorized()
   @Mutation(() => Category)
   async updateCategory(
-    @Arg('name') name: string,
+    @Arg('input') input: CategoryCreateInput,
     @Arg('categoryId') categoryId: string,
     @Ctx() { categoryRepo }: Context,
   ): Promise<Category> {
-    return await categoryRepo.updateOne(categoryId, name);
+    return await categoryRepo.updateOne(categoryId, input);
   }
 
   @Authorized()

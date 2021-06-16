@@ -5,8 +5,9 @@ import { theme } from '@Constants/theme';
 
 interface ToggleProps extends ReactSwitchProps {
   ariaLabel: string;
-  uncheckedLabel: string;
-  checkedLabel: string;
+  uncheckedLabel?: string;
+  checkedLabel?: string;
+  small?: boolean;
 }
 
 interface LabelProps {
@@ -31,6 +32,7 @@ function ToggleSwitch({
   checkedLabel,
   checked,
   onChange,
+  small = false,
 }: ToggleProps) {
   return (
     <Switch
@@ -40,7 +42,7 @@ function ToggleSwitch({
       offColor="#242c37"
       onHandleColor={theme.colors.primary}
       height={20}
-      width={100}
+      width={small ? 50 : 100}
       aria-label={ariaLabel}
       uncheckedIcon={<ToggleLabel $right>{uncheckedLabel}</ToggleLabel>}
       checkedIcon={<ToggleLabel $left>{checkedLabel}</ToggleLabel>}

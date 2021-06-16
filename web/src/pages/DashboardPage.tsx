@@ -7,10 +7,8 @@ function DashboardPage() {
       <div>
         TODO:
         <ul>
-          <li>
-            Make the Toolbar visible when Transactions are loading -- causes big shift
-          </li>
-          <li>Add Arrow to Selects for Accessibility reasons</li>
+          <li>Setup Cypress with Docker</li>
+          <li>Design and implement Budget Page</li>
         </ul>
         <div
           style={{

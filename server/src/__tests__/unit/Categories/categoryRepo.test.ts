@@ -1,5 +1,5 @@
 import { MockContext, Context, createMockContext } from '../../../testSetup';
-import { CategoryRepo } from '@Modules/Transactions/repos/implementations/categoryRepo';
+import { CategoryRepo } from '@Modules/Categories/repos/implementations/categoryRepo';
 import { categories } from '../../__mocks__/fixtures';
 
 let ctx: Context;
@@ -48,14 +48,28 @@ describe('Category Repo CRUD Operations', () => {
   });
 
   it('createOne', async () => {
-    const data = { name: 'New Category', userId: USER_ID, id: '123' };
+    const data = {
+      name: 'New Category',
+      userId: USER_ID,
+      id: '123',
+      isIncome: false,
+      isHidden: false,
+      excludeFromBudget: false,
+      description: null,
+    };
+
+    const { userId, ...input } = data;
 
     mock.prisma.category.create.mockResolvedValue(data);
 
-    await expect(repo.createOne(USER_ID, 'New Category')).resolves.toEqual({
+    await expect(repo.createOne(USER_ID, input)).resolves.toEqual({
       name: 'New Category',
       id: '123',
       userId: USER_ID,
+      isIncome: false,
+      isHidden: false,
+      excludeFromBudget: false,
+      description: null,
     });
   });
 
@@ -68,12 +82,14 @@ describe('Category Repo CRUD Operations', () => {
 
     mock.prisma.category.update.mockResolvedValue(updated);
 
-    await expect(
-      repo.updateOne(updated.id, 'Updated Category'),
-    ).resolves.toEqual({
+    await expect(repo.updateOne(updated.id, updated)).resolves.toEqual({
       id: updated.id,
       name: 'Updated Category',
       userId: USER_ID,
+      isIncome: false,
+      isHidden: false,
+      excludeFromBudget: false,
+      description: null,
     });
   });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heading, Section } from './style';
-import CategorySetup from '../CategorySetup';
+import CategorySetup from '../categories';
+import CreateCategoryController from '../categories/Forms/CreateCategoryController';
 
 function Categories() {
   return (
@@ -9,6 +10,7 @@ function Categories() {
         <h2>Categories</h2>
       </Heading>
       <Section>
+        <CreateCategoryController />
         <CategorySetup />
       </Section>
     </>

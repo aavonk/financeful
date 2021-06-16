@@ -1,9 +1,6 @@
 import styled, { css } from 'styled-components';
 
-type Props = {
-  $open: boolean;
-};
-export const AppbarRoot = styled.header<Props>`
+export const AppbarRoot = styled.header`
   position: fixed;
   top: 0;
   right: 0;
@@ -15,12 +12,6 @@ export const AppbarRoot = styled.header<Props>`
   @media ${({ theme }) => theme.device.mobile} {
     left: 0;
   }
-
-  ${(props) =>
-    props.$open &&
-    css`
-      left: 250px !important;
-    `}
 `;
 
 export const AppbarContainer = styled.div`

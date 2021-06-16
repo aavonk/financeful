@@ -17,11 +17,11 @@ services:
     build: ./server/
     ports:
       - '4000:4000'
-    environment: 
-      DATABASE_URL: "postgresql://dev:dev@postgres/dev"
-      JWT_SECRET: "supersecretpassword"
-      JWT_EXP: "1d"
-      NODE_ENV: "develpopment"
+    environment:
+      DATABASE_URL: 'postgresql://dev:dev@postgres/dev'
+      JWT_SECRET: 'supersecretpassword'
+      JWT_EXP: '1d'
+      NODE_ENV: 'development'
     networks:
       - financeful
     volumes:
@@ -30,7 +30,6 @@ services:
     depends_on:
       - database
 
-      
   database:
     image: postgres:13
     container_name: postgres
@@ -41,7 +40,7 @@ services:
       POSTGRES_USER: dev
       POSTGRES_PASSWORD: dev
       POSTGRES_DB: dev
-    volumes: 
+    volumes:
       - pgdata:/var/lib/postgresql/data
 
     networks:
@@ -49,5 +48,5 @@ services:
 networks:
   financeful:
     driver: bridge
-volumes: 
+volumes:
   pgdata:

@@ -14,4 +14,16 @@ export class Category {
 
   @Field(() => String)
   name: string;
+
+  @Field(() => String, { nullable: true })
+  description?: string | null;
+
+  @Field(() => Boolean, { nullable: true })
+  excludeFromBudget: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isHidden: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isIncome: boolean;
 }

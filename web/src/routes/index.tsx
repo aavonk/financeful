@@ -63,9 +63,9 @@ function Routes() {
                     component={MyWalletPage}
                     exact={false}
                   />
+                  <PrivateRoute exact={false} path="/settings" component={SettingsPage} />
+                  <PrivateRoute exact path="/account/:id" component={AccountPage} />
                 </ConfirmationProvider>
-                <PrivateRoute exact path="/account/:id" component={AccountPage} />
-                <PrivateRoute exact={false} path="/settings" component={SettingsPage} />
               </Layout>
             </Switch>
           </AlertProvider>

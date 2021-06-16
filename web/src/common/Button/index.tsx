@@ -8,7 +8,7 @@ type ButtonProps = {
   type?: 'submit' | undefined;
   margin?: string;
   disabled?: boolean;
-  variant: 'primary' | 'outline' | 'dark' | 'danger' | 'danger-secondary';
+  variant: 'primary' | 'outline' | 'dark' | 'danger' | 'danger-secondary' | 'cubed';
   id?: string;
   onClick?: (e?: any) => void;
   'data-testid'?: string;

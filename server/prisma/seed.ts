@@ -1,13 +1,15 @@
 const chalk = require('chalk');
 import ask from 'prompt';
 import { PrismaClient } from '@prisma/client';
-import { AuthRepo } from '../src/modules/Auth/repos/implementations/authRepo';
+import { AuthService } from '../src/modules/Auth/services/implementations/authService';
+import { UserRepo } from '../src/modules/Users/repos/implementations/userRepo';
 import { RegisterInput } from '../src/modules/Auth/resolvers/types';
 import { User } from '../src/shared/types';
 import { createCategories } from './seed-data/categories';
 import { createBankAccounts } from './seed-data/accounts';
 import { createBankBalances } from './seed-data/balances';
 import { createTransactions } from './seed-data/transactions';
+
 const prisma = new PrismaClient();
 
 const schema = {
@@ -66,7 +68,8 @@ async function main() {
   console.log(chalk.blue('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n'));
 
   // ------- Create the User & Test User ---------------//
-  const auth = new AuthRepo(prisma);
+  const userRepo = new UserRepo(prisma);
+  const auth = new AuthService(userRepo);
 
   const userValues: RegisterInput = {
     displayName: name as string,

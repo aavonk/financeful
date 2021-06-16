@@ -109,6 +109,10 @@ export type Category = {
   user?: Maybe<User>;
   userId?: Maybe<Scalars['ID']>;
   name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  excludeFromBudget?: Maybe<Scalars['Boolean']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  isIncome?: Maybe<Scalars['Boolean']>;
 };
 
 export type Account = {
@@ -214,7 +218,7 @@ export type Mutation = {
   editAccount: Account;
   toggleAccountActiveStatus: Account;
   deleteAccount: Scalars['ID'];
-  createCategory: Category;
+  createCategory: CategoryCreateResult;
   updateCategory: Category;
   deleteCategory: Scalars['String'];
 };
@@ -285,13 +289,13 @@ export type MutationDeleteAccountArgs = {
 
 
 export type MutationCreateCategoryArgs = {
-  name: Scalars['String'];
+  input: CategoryCreateInput;
 };
 
 
 export type MutationUpdateCategoryArgs = {
   categoryId: Scalars['String'];
-  name: Scalars['String'];
+  input: CategoryCreateInput;
 };
 
 
@@ -355,6 +359,25 @@ export type EditAccountInput = {
   accountType: Scalars['String'];
   bankName?: Maybe<Scalars['String']>;
   classification: AccountType;
+};
+
+export type CategoryCreateResult = {
+  __typename?: 'CategoryCreateResult';
+  category?: Maybe<Category>;
+  error?: Maybe<CategoryCreateError>;
+};
+
+export type CategoryCreateError = {
+  __typename?: 'CategoryCreateError';
+  message: Scalars['String'];
+};
+
+export type CategoryCreateInput = {
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  isIncome: Scalars['Boolean'];
+  excludeFromBudget: Scalars['Boolean'];
+  isHidden: Scalars['Boolean'];
 };
 
 export type GetAccountInsightsQueryVariables = Exact<{
@@ -422,6 +445,49 @@ export type FetchUserQuery = (
   & { getCurrentUser: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'>
+  ) }
+);
+
+export type CreateCategoryMutationVariables = Exact<{
+  input: CategoryCreateInput;
+}>;
+
+
+export type CreateCategoryMutation = (
+  { __typename?: 'Mutation' }
+  & { createCategory: (
+    { __typename?: 'CategoryCreateResult' }
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'name' | 'description' | 'excludeFromBudget' | 'isHidden' | 'isIncome'>
+    )>, error?: Maybe<(
+      { __typename?: 'CategoryCreateError' }
+      & Pick<CategoryCreateError, 'message'>
+    )> }
+  ) }
+);
+
+export type DeleteCategoryMutationVariables = Exact<{
+  categoryId: Scalars['String'];
+}>;
+
+
+export type DeleteCategoryMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteCategory'>
+);
+
+export type UpdateCategoryMutationVariables = Exact<{
+  categoryId: Scalars['String'];
+  input: CategoryCreateInput;
+}>;
+
+
+export type UpdateCategoryMutation = (
+  { __typename?: 'Mutation' }
+  & { updateCategory: (
+    { __typename?: 'Category' }
+    & Pick<Category, 'id' | 'name' | 'description' | 'excludeFromBudget' | 'isHidden' | 'isIncome'>
   ) }
 );
 
@@ -583,7 +649,7 @@ export type FetchCategoriesQuery = (
   { __typename?: 'Query' }
   & { getCategories: Array<(
     { __typename?: 'Category' }
-    & Pick<Category, 'id' | 'name'>
+    & Pick<Category, 'id' | 'name' | 'description' | 'excludeFromBudget' | 'isHidden' | 'isIncome'>
   )> }
 );
 
@@ -969,6 +1035,119 @@ export function useFetchUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type FetchUserQueryHookResult = ReturnType<typeof useFetchUserQuery>;
 export type FetchUserLazyQueryHookResult = ReturnType<typeof useFetchUserLazyQuery>;
 export type FetchUserQueryResult = Apollo.QueryResult<FetchUserQuery, FetchUserQueryVariables>;
+export const CreateCategoryDocument = gql`
+    mutation CreateCategory($input: CategoryCreateInput!) {
+  createCategory(input: $input) {
+    category {
+      id
+      name
+      description
+      excludeFromBudget
+      isHidden
+      isIncome
+    }
+    error {
+      message
+    }
+  }
+}
+    `;
+export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
+
+/**
+ * __useCreateCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
+      }
+export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
+export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
+export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
+export const DeleteCategoryDocument = gql`
+    mutation DeleteCategory($categoryId: String!) {
+  deleteCategory(categoryId: $categoryId)
+}
+    `;
+export type DeleteCategoryMutationFn = Apollo.MutationFunction<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
+
+/**
+ * __useDeleteCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCategoryMutation, { data, loading, error }] = useDeleteCategoryMutation({
+ *   variables: {
+ *      categoryId: // value for 'categoryId'
+ *   },
+ * });
+ */
+export function useDeleteCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCategoryMutation, DeleteCategoryMutationVariables>(DeleteCategoryDocument, options);
+      }
+export type DeleteCategoryMutationHookResult = ReturnType<typeof useDeleteCategoryMutation>;
+export type DeleteCategoryMutationResult = Apollo.MutationResult<DeleteCategoryMutation>;
+export type DeleteCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
+export const UpdateCategoryDocument = gql`
+    mutation UpdateCategory($categoryId: String!, $input: CategoryCreateInput!) {
+  updateCategory(categoryId: $categoryId, input: $input) {
+    id
+    name
+    description
+    excludeFromBudget
+    isHidden
+    isIncome
+  }
+}
+    `;
+export type UpdateCategoryMutationFn = Apollo.MutationFunction<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
+
+/**
+ * __useUpdateCategoryMutation__
+ *
+ * To run a mutation, you first call `useUpdateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCategoryMutation, { data, loading, error }] = useUpdateCategoryMutation({
+ *   variables: {
+ *      categoryId: // value for 'categoryId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCategoryMutation, UpdateCategoryMutationVariables>(UpdateCategoryDocument, options);
+      }
+export type UpdateCategoryMutationHookResult = ReturnType<typeof useUpdateCategoryMutation>;
+export type UpdateCategoryMutationResult = Apollo.MutationResult<UpdateCategoryMutation>;
+export type UpdateCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
 export const AddTransactionDocument = gql`
     mutation addTransaction($input: TransactionInput!) {
   createTransaction(input: $input) {
@@ -1326,6 +1505,10 @@ export const FetchCategoriesDocument = gql`
   getCategories {
     id
     name
+    description
+    excludeFromBudget
+    isHidden
+    isIncome
   }
 }
     `;

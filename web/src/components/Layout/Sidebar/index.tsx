@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import {
   SidebarRoot,
   SidebarBrand,
@@ -7,23 +7,16 @@ import {
   NavWrapper,
   Logo,
 } from './style';
-import IconSvg from '@Common/LogoSvg/IconSvg';
+import IconSvg from '@Common/LogoSvg/Logo';
 import {
   DashboardIcon,
   SettingsIcon,
   CalendarIcon,
   BillsIcon,
   CreditCardIcon,
-  ChevronLeftIcon,
   WalletIcon,
 } from '@Common/Icons';
 import Tooltip from '@Common/Tooltip';
-import IconButton from '@Common/IconButton';
-
-type Props = {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
-};
 
 const items = [
   {
@@ -68,19 +61,13 @@ const items = [
   },
 ];
 
-function Sidebar({ isSidebarOpen, setIsSidebarOpen }: Props) {
+function Sidebar() {
   return (
-    <SidebarRoot $open={isSidebarOpen} data-testid="sidebar">
+    <SidebarRoot data-testid="sidebar">
       <SidebarBrand>
         <Logo>
           <IconSvg />
-          <h2>financeful</h2>
         </Logo>
-        <span>
-          <IconButton onClick={() => setIsSidebarOpen(false)} ariaText="Close sidebar">
-            <ChevronLeftIcon />
-          </IconButton>
-        </span>
       </SidebarBrand>
       <NavWrapper>
         <NavigationItems>
