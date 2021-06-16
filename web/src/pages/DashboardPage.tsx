@@ -8,6 +8,7 @@ function DashboardPage() {
         TODO:
         <ul>
           <li>Setup Cypress with Docker</li>
+          <li>Design and implement Budget Page</li>
         </ul>
         <div
           style={{
