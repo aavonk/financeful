@@ -1,15 +1,15 @@
 import { Resolver, Mutation, Ctx, Authorized, Arg } from 'type-graphql';
-import { Budget, Context } from '@Shared/types';
-import { CreateBudgetInput } from '../types/budget.types';
+import { Context } from '@Shared/types';
+import { CreateBudgetInput, CreateBudgetResponse } from '../types/budget.types';
 
 @Resolver()
 export class BudgetResolver {
   @Authorized()
-  @Mutation(() => Budget)
+  @Mutation(() => CreateBudgetResponse)
   async createBudget(
     @Arg('input') input: CreateBudgetInput,
     @Ctx() { user, services: { budgetService } }: Context,
-  ): Promise<Budget> {
+  ): Promise<CreateBudgetResponse> {
     return await budgetService.newBudget(input, user.id);
   }
 }

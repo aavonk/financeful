@@ -1,7 +1,10 @@
-import { CreateBudgetInput } from '../../types/budget.types';
+import {
+  CreateBudgetInput,
+  CreateBudgetResponse,
+} from '../../types/budget.types';
 import type { IBudgetService } from '../budgetService';
 import type { IBudgetRepo } from '../../repos/budgetRepo';
-import type { Budget } from '@Shared/types';
+// import type { Budget } from '@Shared/types';
 
 export class BudgetService implements IBudgetService {
   private budgetRepo: IBudgetRepo;
@@ -10,8 +13,21 @@ export class BudgetService implements IBudgetService {
     this.budgetRepo = budgetRepo;
   }
 
-  async newBudget(input: CreateBudgetInput, userId: string): Promise<Budget> {
-    //TODO: Check to see if the budget already exists for the current month.
-    return await this.budgetRepo.createOne(input, userId);
+  async newBudget(
+    input: CreateBudgetInput,
+    userId: string,
+  ): Promise<CreateBudgetResponse> {
+    const exists = await this.budgetRepo.exists(input, userId);
+
+    if (exists) {
+      return {
+        error: {
+          message: `A budget already exists for ${input.month} ${input.year}`,
+        },
+      };
+    }
+
+    const data = await this.budgetRepo.createOne(input, userId);
+    return { data };
   }
 }

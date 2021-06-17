@@ -9,6 +9,8 @@ export * from './User';
 export * from './DailyBalance';
 export * from './Budget';
 export * from './BudgetItem';
+export * from './objectTypes';
+export * from './inputTypes';
 
 type Success = { success: boolean };
 type PossibleError =
