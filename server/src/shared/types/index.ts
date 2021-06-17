@@ -7,6 +7,8 @@ export * from './Category';
 export * from './Context';
 export * from './User';
 export * from './DailyBalance';
+export * from './Budget';
+export * from './BudgetItem';
 
 type Success = { success: boolean };
 type PossibleError =

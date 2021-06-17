@@ -95,14 +95,14 @@ model Budget {
 }
 
 model BudgetItem {
-  id         String   @id @default(cuid())
-  amount     Int
-  budget     Int
-  isExpense  Boolean
-  isIncome   Boolean
-  isTransfer Boolean
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
-  Budget     Budget   @relation(fields: [budgetId], references: [id])
-  budgetId   String
+  id           String   @id @default(cuid())
+  amount       Int
+  budgetAmount Int
+  isExpense    Boolean
+  isIncome     Boolean
+  isTransfer   Boolean
+  category     Category @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  budget       Budget   @relation(fields: [budgetId], references: [id])
+  budgetId     String
 }
