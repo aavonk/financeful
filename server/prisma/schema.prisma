@@ -55,6 +55,7 @@ model Category {
   isHidden          Boolean       @default(false)
   isIncome          Boolean       @default(false)
   transaction       Transaction[]
+  BudgetItem        BudgetItem[]
 }
 
 model Account {
@@ -82,4 +83,26 @@ model DailyBalances {
   date      DateTime @db.Date
   account   Account  @relation(fields: [accountId], references: [id])
   accountId String
+}
+
+model Budget {
+  id        String       @id @default(cuid())
+  month     String
+  year      Int
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  items     BudgetItem[]
+}
+
+model BudgetItem {
+  id         String   @id @default(cuid())
+  amount     Int
+  budget     Int
+  isExpense  Boolean
+  isIncome   Boolean
+  isTransfer Boolean
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  Budget     Budget   @relation(fields: [budgetId], references: [id])
+  budgetId   String
 }
