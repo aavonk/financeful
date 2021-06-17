@@ -94,7 +94,8 @@ export class AggregateAccountData implements IAggregateAccountData {
           },
         ],
       },
-      sum: {
+
+      _sum: {
         amount: true,
       },
       orderBy: {
@@ -104,7 +105,7 @@ export class AggregateAccountData implements IAggregateAccountData {
 
     const data = aggregatedBalances.map((item) => ({
       date: DateUtils.formatNumericDate(item.date),
-      balance: MoneyUtils.convertToFloat(item.sum.amount!),
+      balance: MoneyUtils.convertToFloat(item._sum.amount!),
     }));
 
     return data;
