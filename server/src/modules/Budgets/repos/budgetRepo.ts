@@ -1,5 +1,7 @@
 import { Budget } from '@Shared/types';
+import type { CreateBudgetInput } from '../types/budget.types';
 
 export interface IBudgetRepo {
-  createOne: () => Promise<Budget>;
+  exists: (input: CreateBudgetInput, userId: string) => Promise<boolean>;
+  createOne: (input: CreateBudgetInput, userId: string) => Promise<Budget>;
 }

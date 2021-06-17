@@ -4,12 +4,17 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { authChecker as customAuthChecker } from './lib/auth-checker';
+
+// Resolvers  =========================================================================
 import { UserResolver } from '@Modules/Users/resolvers/UserResolver';
 import { AuthResolver } from '@Modules/Auth/resolvers/AuthResolver';
 import { TransactionResolver } from '@Modules/Transactions/resolvers/TransactionResolver';
 import { TransferResolver } from '@Modules/Transactions/resolvers/TransferResolver';
 import { AccountResolver } from '@Modules/BankAccounts/resolvers/AccountResolver';
 import { CategoryResolver } from '@Modules/Categories/resolvers/CategoryResolver';
+import { BudgetResolver } from '@Modules/Budgets/resolvers/BudgetResolver';
+
+// Repos & Services =========================================================================
 import { TransferRepo } from '@Modules/Transactions/repos/implementations/transferRepo';
 import { AccountRepo } from '@Modules/BankAccounts/repos/implementations/accountRepo';
 import { CategoryRepo } from '@Modules/Categories/repos/implementations/categoryRepo';
@@ -20,6 +25,7 @@ import { InsightsService } from '@Modules/BankAccounts/services/implementations/
 import { AccountDataResolver } from '@Modules/BankAccounts/resolvers/AccountDataResolver';
 import { transactionService } from '@Modules/Transactions/services';
 import { authService } from '@Modules/Auth/services';
+import { budgetService } from '@Modules/Budgets/services';
 import prisma from '@Shared/database/prisma';
 
 const main = async () => {
@@ -35,6 +41,7 @@ const main = async () => {
         CategoryResolver,
         AccountResolver,
         AccountDataResolver,
+        BudgetResolver,
       ],
       authChecker: customAuthChecker,
     }),
@@ -50,6 +57,7 @@ const main = async () => {
         insightService: new InsightsService(),
         transactionService,
         authService,
+        budgetService,
       },
     }),
   });

@@ -19,5 +19,5 @@ export class Budget {
   updatedAt?: Date | string;
 
   @Field(() => [BudgetItem], { nullable: true })
-  items: BudgetItem[] | [];
+  items?: BudgetItem[] | [];
 }
