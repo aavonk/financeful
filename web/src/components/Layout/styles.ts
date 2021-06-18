@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import type * as React from 'react';
 
 export const Left = styled.div`
   min-height: 350px;
@@ -36,4 +37,13 @@ export const ContentContainer = styled.div`
       margin-bottom: 40px;
     }
   }
+`;
+
+export const SectionTitle = styled.h2`
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 `;

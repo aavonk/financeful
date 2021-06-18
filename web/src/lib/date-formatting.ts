@@ -8,12 +8,19 @@ import {
   endOfDay,
   startOfYear,
   endOfYear,
+  getYear,
 } from 'date-fns';
 
 type FormatOptions = 'MMM do yyyy' | 'M/d/yyyy' | 'MMMM do yyyy';
 
 export const formatDate = (date: Date | string, options: FormatOptions): string => {
   return format(new Date(date), options);
+};
+
+export const getCurrentYear = (): number => {
+  const date = new Date();
+
+  return getYear(date);
 };
 
 export const getCurrentMonthName = () => {
