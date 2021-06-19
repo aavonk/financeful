@@ -40,7 +40,7 @@ const config = {
     hot: true,
     port: 3000,
   },
-
+  devtool: 'source-map',
   module: {
     rules: [
       {

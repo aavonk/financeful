@@ -950,6 +950,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.8.3":
+  version "7.14.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
+  integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.12.13", "@babel/template@^7.3.3":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.12.13.tgz#530265be8a2589dbb37523844c5bcb55947fb327"
@@ -1012,6 +1019,158 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bit/mui-org.material-ui.colors@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.colors/-/mui-org.material-ui.colors-4.9.10.tgz#58cec41ff55ad645681ba050b36fe4db96811015"
+  integrity sha1-WM7EH/Va1kVoG6BQs2/k25aBEBU=
+
+"@bit/mui-org.material-ui.internal.capitalize@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.internal.capitalize/-/mui-org.material-ui.internal.capitalize-4.9.10.tgz#93a1575ac3fa8f0a5978bcb9d80ac6084674bfcb"
+  integrity sha1-k6FXWsP6jwpZeLy52ArGCEZ0v8s=
+
+"@bit/mui-org.material-ui.internal.check-circle@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.internal.check-circle/-/mui-org.material-ui.internal.check-circle-4.9.10.tgz#9ebf884daa0090ff6a727a612afcdcd087cba4ea"
+  integrity sha1-nr+ITaoAkP9qcnphKvzc0IfLpOo=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.create-svg-icon" "4.9.10"
+
+"@bit/mui-org.material-ui.internal.create-svg-icon@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.internal.create-svg-icon/-/mui-org.material-ui.internal.create-svg-icon-4.9.10.tgz#133cacb2697dd851fb602f2e80df367f639c5c48"
+  integrity sha1-Ezyssml92FH7YC8ugN82f2OcXEg=
+  dependencies:
+    "@bit/mui-org.material-ui.svg-icon" "4.9.10"
+
+"@bit/mui-org.material-ui.internal.overridable-component@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.internal.overridable-component/-/mui-org.material-ui.internal.overridable-component-4.9.10.tgz#256dcc7ec36961e55631277937c40593ca46a2ec"
+  integrity sha1-JW3MfsNpYeVWMSd5N8QFk8pGouw=
+  dependencies:
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    "@material-ui/types" "^5.0.1"
+
+"@bit/mui-org.material-ui.internal.types@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.internal.types/-/mui-org.material-ui.internal.types-4.9.10.tgz#42b4933354d7a1adf4b50fe6e629b7122c1ab5d6"
+  integrity sha1-QrSTM1TXoa30tQ/m5im3EiwatdY=
+  dependencies:
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    "@material-ui/types" "^5.0.1"
+
+"@bit/mui-org.material-ui.internal.warning@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.internal.warning/-/mui-org.material-ui.internal.warning-4.9.10.tgz#aa081136c25e7c73510bf085246548c2aa427177"
+  integrity sha1-qggRNsJefHNRC/CFJGVIwqpCcXc=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.create-svg-icon" "4.9.10"
+
+"@bit/mui-org.material-ui.paper@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.paper/-/mui-org.material-ui.paper-4.9.10.tgz#e68f426622388eb03ea751c373542760cd6d5fda"
+  integrity sha1-5o9CZiI4jrA+p1HDc1QnYM1tX9o=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    "@material-ui/utils" "^4.9.6"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@bit/mui-org.material-ui.step-connector@4.9.10", "@bit/mui-org.material-ui.step-connector@^4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.step-connector/-/mui-org.material-ui.step-connector-4.9.10.tgz#6eefce86e846c7567991a92abf3693c593b4ca9a"
+  integrity sha1-bu/OhuhGx1Z5kakqvzaTxZO0ypo=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@bit/mui-org.material-ui.step-icon@4.9.10", "@bit/mui-org.material-ui.step-icon@^4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.step-icon/-/mui-org.material-ui.step-icon-4.9.10.tgz#b6660e8c4701afb9e24ffad91c9d6ad77cb7459f"
+  integrity sha1-tmYOjEcBr7niT/rZHJ1q13y3RZ8=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.check-circle" "4.9.10"
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.internal.warning" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    "@bit/mui-org.material-ui.svg-icon" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@bit/mui-org.material-ui.step-label@^4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.step-label/-/mui-org.material-ui.step-label-4.9.10.tgz#9765a6599311ebb2afd4b53d56e2abf5f3b0482b"
+  integrity sha1-l2WmWZMR67Kv1LU9VuKr9fOwSCs=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.step-icon" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    "@bit/mui-org.material-ui.typography" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@bit/mui-org.material-ui.step@^4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.step/-/mui-org.material-ui.step-4.9.10.tgz#d0c1c9c1ccbd42c42add00fb782c6464983c7b54"
+  integrity sha1-0MHJwcy9QsQq3QD7eCxkZJg8e1Q=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.stepper" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0"
+
+"@bit/mui-org.material-ui.stepper@4.9.10", "@bit/mui-org.material-ui.stepper@^4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.stepper/-/mui-org.material-ui.stepper-4.9.10.tgz#abcafd07912587d45bb8c73e31e6f16a0bd399e9"
+  integrity sha1-q8r9B5Elh9RbuMc+MebxagvTmek=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.paper" "4.9.10"
+    "@bit/mui-org.material-ui.step-connector" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@bit/mui-org.material-ui.styles@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.styles/-/mui-org.material-ui.styles-4.9.10.tgz#6e837b31bd0c00bf7f00b428b0e572201160872c"
+  integrity sha1-boN7Mb0MAL9/ALQosOVyIBFghyw=
+  dependencies:
+    "@bit/mui-org.material-ui.colors" "4.9.10"
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@material-ui/styles" "^4.9.10"
+    "@material-ui/system" "^4.9.10"
+    "@material-ui/types" "^5.0.1"
+    "@material-ui/utils" "^4.9.6"
+
+"@bit/mui-org.material-ui.svg-icon@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.svg-icon/-/mui-org.material-ui.svg-icon-4.9.10.tgz#05f389f80a4508c7f3146905459f7fe606a52d10"
+  integrity sha1-BfOJ+ApFCMfzFGkFRZ9/5galLRA=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.capitalize" "4.9.10"
+    "@bit/mui-org.material-ui.internal.overridable-component" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
+"@bit/mui-org.material-ui.typography@4.9.10":
+  version "4.9.10"
+  resolved "https://node.bit.dev/mui-org.material-ui.typography/-/mui-org.material-ui.typography-4.9.10.tgz#a1a94f23cf622149788b8ddd3688e88f46da0209"
+  integrity sha1-oalPI89iIUl4i43dNojoj0baAgk=
+  dependencies:
+    "@bit/mui-org.material-ui.internal.capitalize" "4.9.10"
+    "@bit/mui-org.material-ui.internal.overridable-component" "4.9.10"
+    "@bit/mui-org.material-ui.internal.types" "4.9.10"
+    "@bit/mui-org.material-ui.styles" "4.9.10"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -1068,6 +1227,11 @@
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
+
+"@emotion/hash@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
+  integrity sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==
 
 "@emotion/is-prop-valid@^0.8.2", "@emotion/is-prop-valid@^0.8.8":
   version "0.8.8"
@@ -1660,6 +1824,52 @@
     "@types/node" "*"
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
+
+"@material-ui/styles@^4.9.10":
+  version "4.11.4"
+  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.11.4.tgz#eb9dfccfcc2d208243d986457dff025497afa00d"
+  integrity sha512-KNTIZcnj/zprG5LW0Sao7zw+yG3O35pviHzejMdcSGCdWbiO8qzRgOYL8JAxAsWBKOKYwVZxXtHWaB5T2Kvxew==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@emotion/hash" "^0.8.0"
+    "@material-ui/types" "5.1.0"
+    "@material-ui/utils" "^4.11.2"
+    clsx "^1.0.4"
+    csstype "^2.5.2"
+    hoist-non-react-statics "^3.3.2"
+    jss "^10.5.1"
+    jss-plugin-camel-case "^10.5.1"
+    jss-plugin-default-unit "^10.5.1"
+    jss-plugin-global "^10.5.1"
+    jss-plugin-nested "^10.5.1"
+    jss-plugin-props-sort "^10.5.1"
+    jss-plugin-rule-value-function "^10.5.1"
+    jss-plugin-vendor-prefixer "^10.5.1"
+    prop-types "^15.7.2"
+
+"@material-ui/system@^4.9.10":
+  version "4.11.3"
+  resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.11.3.tgz#466bc14c9986798fd325665927c963eb47cc4143"
+  integrity sha512-SY7otguNGol41Mu2Sg6KbBP1ZRFIbFLHGK81y4KYbsV2yIcaEPOmsCK6zwWlp+2yTV3J/VwT6oSBARtGIVdXPw==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.11.2"
+    csstype "^2.5.2"
+    prop-types "^15.7.2"
+
+"@material-ui/types@5.1.0", "@material-ui/types@^5.0.1":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-5.1.0.tgz#efa1c7a0b0eaa4c7c87ac0390445f0f88b0d88f2"
+  integrity sha512-7cqRjrY50b8QzRSYyhSpx4WRw2YuO0KKIGQEVk5J8uoz2BanawykgZGoWEqKm7pVIbzFDN0SpPcVV4IhOFkl8A==
+
+"@material-ui/utils@^4.11.2", "@material-ui/utils@^4.9.6":
+  version "4.11.2"
+  resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.11.2.tgz#f1aefa7e7dff2ebcb97d31de51aecab1bb57540a"
+  integrity sha512-Uul8w38u+PICe2Fg2pDKCaIG7kOyhowZ9vjiC1FsVwPABTW8vPPKfF6OvxRq3IiBaI1faOJmgdvMG7rMJARBhA==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0 || ^17.0.0"
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -3909,6 +4119,11 @@ clone-response@^1.0.2:
   dependencies:
     mimic-response "^1.0.0"
 
+clsx@^1.0.4:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -4259,6 +4474,14 @@ css-unit-converter@^1.1.1:
   resolved "https://registry.yarnpkg.com/css-unit-converter/-/css-unit-converter-1.1.2.tgz#4c77f5a1954e6dbff60695ecb214e3270436ab21"
   integrity sha512-IiJwMC8rdZE0+xiEZHeru6YoONC4rfPMqGm2W85jMIbkFvv5nFTwJVFHam2eFrN6txmoUYFAFXiv8ICVeTO0MA==
 
+css-vendor@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/css-vendor/-/css-vendor-2.0.8.tgz#e47f91d3bd3117d49180a3c935e62e3d9f7f449d"
+  integrity sha512-x9Aq0XTInxrkuFeHKbYC7zWY8ai7qJ04Kxd9MnvbC1uO5DagxoHQjm4JvG+vCdXOoFtCjbL2XSZfxmoYa9uQVQ==
+  dependencies:
+    "@babel/runtime" "^7.8.3"
+    is-in-browser "^1.0.2"
+
 css-what@^3.2.1:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-3.4.2.tgz#ea7026fcb01777edbde52124e21f327e7ae950e4"
@@ -4306,6 +4529,11 @@ cssstyle@^2.3.0:
   integrity sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
   dependencies:
     cssom "~0.3.6"
+
+csstype@^2.5.2:
+  version "2.6.17"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.17.tgz#4cf30eb87e1d1a005d8b6510f95292413f6a1c0e"
+  integrity sha512-u1wmTI1jJGzCJzWndZo8mk4wnPTZd1eOIYTYvuEyOQGfmDl3TrabCCfKnOC86FZwW/9djqTl933UF/cS425i9A==
 
 csstype@^3.0.2:
   version "3.0.7"
@@ -6312,6 +6540,11 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
+hyphenate-style-name@^1.0.3:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.4.tgz#691879af8e220aea5750e8827db4ef62a54e361d"
+  integrity sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==
+
 iconv-lite@0.4.24, iconv-lite@^0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -6386,6 +6619,13 @@ imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
+
+indefinite-observable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/indefinite-observable/-/indefinite-observable-2.0.1.tgz#574af29bfbc17eb5947793797bddc94c9d859400"
+  integrity sha512-G8vgmork+6H9S8lUAg1gtXEj2JxIQTo0g2PbFiYOdjkziSI0F7UYBiVwhZRuixhBCNGczAls34+5HJPyZysvxQ==
+  dependencies:
+    symbol-observable "1.2.0"
 
 indent-string@^2.1.0:
   version "2.1.0"
@@ -6700,6 +6940,11 @@ is-glob@^3.1.0:
   integrity sha1-e6WuJCF4BKxwcHuWkiVnSGzD6Eo=
   dependencies:
     is-extglob "^2.1.0"
+
+is-in-browser@^1.0.2, is-in-browser@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/is-in-browser/-/is-in-browser-1.1.3.tgz#56ff4db683a078c6082eb95dad7dc62e1d04f835"
+  integrity sha1-Vv9NtoOgeMYILrldrX3GLh0E+DU=
 
 is-installed-globally@~0.4.0:
   version "0.4.0"
@@ -7521,6 +7766,77 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+jss-plugin-camel-case@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-camel-case/-/jss-plugin-camel-case-10.6.0.tgz#93d2cd704bf0c4af70cc40fb52d74b8a2554b170"
+  integrity sha512-JdLpA3aI/npwj3nDMKk308pvnhoSzkW3PXlbgHAzfx0yHWnPPVUjPhXFtLJzgKZge8lsfkUxvYSQ3X2OYIFU6A==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    hyphenate-style-name "^1.0.3"
+    jss "10.6.0"
+
+jss-plugin-default-unit@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-default-unit/-/jss-plugin-default-unit-10.6.0.tgz#af47972486819b375f0f3a9e0213403a84b5ef3b"
+  integrity sha512-7y4cAScMHAxvslBK2JRK37ES9UT0YfTIXWgzUWD5euvR+JR3q+o8sQKzBw7GmkQRfZijrRJKNTiSt1PBsLI9/w==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+
+jss-plugin-global@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-global/-/jss-plugin-global-10.6.0.tgz#3e8011f760f399cbadcca7f10a485b729c50e3ed"
+  integrity sha512-I3w7ji/UXPi3VuWrTCbHG9rVCgB4yoBQLehGDTmsnDfXQb3r1l3WIdcO8JFp9m0YMmyy2CU7UOV6oPI7/Tmu+w==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+
+jss-plugin-nested@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-nested/-/jss-plugin-nested-10.6.0.tgz#5f83c5c337d3b38004834e8426957715a0251641"
+  integrity sha512-fOFQWgd98H89E6aJSNkEh2fAXquC9aZcAVjSw4q4RoQ9gU++emg18encR4AT4OOIFl4lQwt5nEyBBRn9V1Rk8g==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    tiny-warning "^1.0.2"
+
+jss-plugin-props-sort@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-props-sort/-/jss-plugin-props-sort-10.6.0.tgz#297879f35f9fe21196448579fee37bcde28ce6bc"
+  integrity sha512-oMCe7hgho2FllNc60d9VAfdtMrZPo9n1Iu6RNa+3p9n0Bkvnv/XX5San8fTPujrTBScPqv9mOE0nWVvIaohNuw==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+
+jss-plugin-rule-value-function@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-rule-value-function/-/jss-plugin-rule-value-function-10.6.0.tgz#3c1a557236a139d0151e70a82c810ccce1c1c5ea"
+  integrity sha512-TKFqhRTDHN1QrPTMYRlIQUOC2FFQb271+AbnetURKlGvRl/eWLswcgHQajwuxI464uZk91sPiTtdGi7r7XaWfA==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    tiny-warning "^1.0.2"
+
+jss-plugin-vendor-prefixer@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-vendor-prefixer/-/jss-plugin-vendor-prefixer-10.6.0.tgz#e1fcd499352846890c38085b11dbd7aa1c4f2c78"
+  integrity sha512-doJ7MouBXT1lypLLctCwb4nJ6lDYqrTfVS3LtXgox42Xz0gXusXIIDboeh6UwnSmox90QpVnub7au8ybrb0krQ==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    css-vendor "^2.0.8"
+    jss "10.6.0"
+
+jss@10.6.0, jss@^10.5.1:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss/-/jss-10.6.0.tgz#d92ff9d0f214f65ca1718591b68e107be4774149"
+  integrity sha512-n7SHdCozmxnzYGXBHe0NsO0eUf9TvsHVq2MXvi4JmTn3x5raynodDVE/9VQmBdWFyyj9HpHZ2B4xNZ7MMy7lkw==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    csstype "^3.0.2"
+    indefinite-observable "^2.0.1"
+    is-in-browser "^1.1.3"
+    tiny-warning "^1.0.2"
 
 "jsx-ast-utils@^2.4.1 || ^3.0.0":
   version "3.2.0"
@@ -9232,10 +9548,15 @@ react-is@16.10.2:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
   integrity sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
 
-react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
+react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+"react-is@^16.8.0 || ^17.0.0":
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
+  integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
 react-is@^17.0.1:
   version "17.0.1"
@@ -10743,7 +11064,7 @@ swap-case@^2.0.1:
   dependencies:
     tslib "^2.0.3"
 
-symbol-observable@^1.1.0:
+symbol-observable@1.2.0, symbol-observable@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
@@ -10880,7 +11201,7 @@ tiny-invariant@^1.0.2:
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
   integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
 
-tiny-warning@^1.0.0, tiny-warning@^1.0.3:
+tiny-warning@^1.0.0, tiny-warning@^1.0.2, tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==

@@ -15,7 +15,9 @@ function BudgetPage() {
         <Button
           variant="primary"
           data-testid="budget-create-button"
-          onClick={() => history.push(`/budget/create?month=${month}&year=${year}`)}
+          onClick={() =>
+            history.push(`/budget/create?month=${month}&year=${year}&step=1`)
+          }
           fullWidth
         >
           {`Create ${month} budget`}

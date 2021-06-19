@@ -89,6 +89,11 @@
   "dependencies": {
     "@apollo/client": "^3.3.13",
     "@apollo/react-hooks": "^4.0.0",
+    "@bit/mui-org.material-ui.step": "^4.9.10",
+    "@bit/mui-org.material-ui.step-connector": "^4.9.10",
+    "@bit/mui-org.material-ui.step-icon": "^4.9.10",
+    "@bit/mui-org.material-ui.step-label": "^4.9.10",
+    "@bit/mui-org.material-ui.stepper": "^4.9.10",
     "@reach/alert-dialog": "^0.15.0",
     "@reach/dialog": "^0.13.2",
     "@reach/menu-button": "^0.13.2",
