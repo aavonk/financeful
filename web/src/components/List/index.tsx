@@ -1,6 +1,8 @@
+import React from 'react';
 import Button from '@Common/Button';
 import type { ButtonVariants } from '@Common/Button';
-import React from 'react';
+import { CheckBox } from '@Common/FormElements';
+import type { CheckboxProps } from '@Common/FormElements';
 import styled from 'styled-components';
 import Skeleton from '@Common/Skeleton';
 
@@ -64,9 +66,27 @@ type ButtonProps = {
   variant?: ButtonVariants;
 };
 
+type ModifiedCheckboxProps = Omit<CheckboxProps, 'checked'>;
+
 type OptionalProps =
-  | { withButton?: false; buttonProps?: never }
-  | { withButton: true; buttonProps: ButtonProps };
+  | {
+      withButton?: false;
+      buttonProps?: never;
+      withCheckbox?: never;
+      checkboxProps?: never;
+    }
+  | {
+      withButton: true;
+      buttonProps: ButtonProps;
+      withCheckbox?: never;
+      checkboxProps?: never;
+    }
+  | {
+      withCheckbox: true;
+      checkboxProps: ModifiedCheckboxProps;
+      withButton?: never;
+      buttonProps?: never;
+    };
 
 type ListItemProps = ItemProps & OptionalProps;
 
@@ -76,7 +96,11 @@ export function ListItem({
   withButton,
   buttonProps,
   asLoader,
+  withCheckbox,
+  checkboxProps,
 }: ListItemProps) {
+  const [checked, setChecked] = React.useState(false);
+
   return (
     <StyledItem>
       <ItemLeft>
@@ -89,12 +113,22 @@ export function ListItem({
           </>
         )}
       </ItemLeft>
-      {withButton && buttonProps && (
+      {withButton && (
         <ItemRight>
-          <Button variant={buttonProps.variant || 'dark'} onClick={buttonProps.onClick}>
-            {buttonProps.text}
+          <Button variant={buttonProps!.variant || 'dark'} {...buttonProps}>
+            {buttonProps!.text}
           </Button>
         </ItemRight>
+      )}
+      {!withButton && withCheckbox && (
+        <CheckBox
+          {...checkboxProps!}
+          checked={checked}
+          onChange={(e) => {
+            setChecked(e.target.checked);
+            checkboxProps!.onChange(e);
+          }}
+        />
       )}
     </StyledItem>
   );
