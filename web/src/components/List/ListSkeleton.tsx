@@ -1,8 +1,12 @@
 import React from 'react';
 import { List, ListItem } from '@Components/List';
 
-function MyCategoriesSkeleton() {
-  const arr = new Array(10).fill(null).map((i: any, index) => index);
+type Props = {
+  count: number;
+};
+
+function ListSkeleton({ count }: Props) {
+  const arr = new Array(count).fill(null).map((i: any, index) => index);
   return (
     <List>
       {arr.map((item) => (
@@ -12,4 +16,4 @@ function MyCategoriesSkeleton() {
   );
 }
 
-export default MyCategoriesSkeleton;
+export default ListSkeleton;

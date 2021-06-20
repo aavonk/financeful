@@ -2,14 +2,17 @@ import React from 'react';
 import { ViewError } from '@Components/ErrorViews';
 import { List } from '@Components/List';
 
-function MyCategoriesError() {
+type Props = {
+  message?: string;
+};
+function ListError({ message = 'Uh oh. We ran into a problem' }: Props) {
   return (
     <List>
       <div style={{ padding: '20px 0', width: '100%' }}>
-        <ViewError heading="Uh oh. We ran into an error" />
+        <ViewError heading={message} />
       </div>
     </List>
   );
 }
 
-export default MyCategoriesError;
+export default ListError;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Left, Right } from './style';
 import { Title } from '../Views/style';
-import MyCategories from './MyCategories/MyCategories';
+import MyCategories from './MyCategories';
 import AvailableCategories from './AvailableCategories';
 
 function CategorySetup() {

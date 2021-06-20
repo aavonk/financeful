@@ -1,4 +1,5 @@
 import Button from '@Common/Button';
+import type { ButtonVariants } from '@Common/Button';
 import React from 'react';
 import styled from 'styled-components';
 import Skeleton from '@Common/Skeleton';
@@ -60,6 +61,7 @@ type ItemProps = {
 type ButtonProps = {
   text: string;
   onClick: () => void;
+  variant?: ButtonVariants;
 };
 
 type OptionalProps =
@@ -89,7 +91,7 @@ export function ListItem({
       </ItemLeft>
       {withButton && buttonProps && (
         <ItemRight>
-          <Button variant="dark" onClick={buttonProps.onClick}>
+          <Button variant={buttonProps.variant || 'dark'} onClick={buttonProps.onClick}>
             {buttonProps.text}
           </Button>
         </ItemRight>
