@@ -15,6 +15,7 @@ import {
   StyledInsetInput,
   InsetLabel,
   StyledInsetSelect,
+  StyledCheckbox,
 } from './style';
 
 type InputTypes = {
@@ -34,6 +35,30 @@ type InputTypes = {
   required?: boolean;
   'data-testid'?: string;
 };
+
+export type CheckboxProps = {
+  disabled?: boolean;
+  id?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+  'data-testid'?: string;
+};
+
+export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  (props, ref) => {
+    return (
+      <StyledCheckbox
+        type="checkbox"
+        checked={props.checked}
+        onChange={props.onChange}
+        id={props.id}
+        disabled={props.disabled}
+        data-testid={props['data-testid']}
+        ref={ref}
+      />
+    );
+  },
+);
 
 export const InsetInput = React.forwardRef<HTMLInputElement, InputTypes>((props, ref) => {
   return (
