@@ -8,7 +8,7 @@ import {
   StepContent,
 } from '@Common/Stepper';
 import { PageHeader, ButtonGroup } from './style';
-import CategoryChoice from '@Modules/budget/BudgetCreation/CategoryChoice';
+import CategoryChoice from '@Modules/budget/BudgetCreation/CategoryChoiceView';
 
 function CreateBudgetPage() {
   const query = useQuery();

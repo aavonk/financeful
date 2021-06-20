@@ -25,13 +25,14 @@ function MyCategoryList() {
         <List>
           {data.getCategories.map((category) => (
             <ListItem
+              key={category.id}
               heading={category.name}
               subheading={category.description || ''}
-              withButton
-              buttonProps={{
-                text: '',
-                onClick: () => alert(JSON.stringify(category, null, 2)),
-                variant: 'cubed',
+              withCheckbox
+              checkboxProps={{
+                onChange: (e) => {
+                  console.log(e.target.checked);
+                },
               }}
             />
           ))}
