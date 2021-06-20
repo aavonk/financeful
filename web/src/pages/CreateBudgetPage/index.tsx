@@ -1,6 +1,5 @@
 import React from 'react';
 import { useQuery } from '@Hooks/useQuery';
-import { SectionTitle } from '@Components/Layout/styles';
 import {
   StepperProvider,
   Stepper,
@@ -8,6 +7,8 @@ import {
   NextButton,
   StepContent,
 } from '@Common/Stepper';
+import { PageHeader, ButtonGroup } from './style';
+import CategoryChoice from '@Modules/budget/BudgetCreation/CategoryChoice';
 
 function CreateBudgetPage() {
   const query = useQuery();
@@ -16,21 +17,22 @@ function CreateBudgetPage() {
 
   return (
     <StepperProvider steps={['Choose Categories', 'Set Budget Amounts', 'Review & Save']}>
-      <SectionTitle as="h2">{`${month} Budget`}</SectionTitle>
+      <PageHeader>
+        <h2>{`${month} ${year} Budget`}</h2>
+        <ButtonGroup>
+          <BackButton />
+          <NextButton
+            fnBeforeStep={() => console.log('hi')}
+            onComplete={() => {
+              alert('Done');
+            }}
+          />
+        </ButtonGroup>
+      </PageHeader>
       <Stepper />
       <StepContent
-        content={[<div>Hi Ther</div>, <div>Second One</div>, <div>Third one</div>]}
+        content={[<CategoryChoice />, <div>Second One</div>, <div>Third one</div>]}
       />
-
-      <div style={{ marginTop: '40px' }}>
-        <BackButton />
-        <NextButton
-          fnBeforeStep={() => console.log('hi')}
-          onComplete={() => {
-            alert('Done');
-          }}
-        />
-      </div>
     </StepperProvider>
   );
 }

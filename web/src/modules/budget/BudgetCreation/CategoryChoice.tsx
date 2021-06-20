@@ -1,8 +1,12 @@
 import React from 'react';
-import {} from '@Generated/graphql';
+import MyCategoryList from './MyCategoryList';
 
 function CategoryChoice() {
-  return <div>Choose your mf categories</div>;
+  return (
+    <div>
+      <MyCategoryList />
+    </div>
+  );
 }
 
 export default CategoryChoice;
