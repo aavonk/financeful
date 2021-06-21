@@ -4,9 +4,11 @@ import ListError from '@Components/List/ListError';
 import ListSkeleton from '@Components/List/ListSkeleton';
 
 import { useFetchCategoriesQuery } from '@Generated/graphql';
+import { useBudgetFlowContext } from '@Modules/budget/BudgetCreation/BudgetFlowProvider';
 
 function MyCategoryList() {
   const { data, loading, error } = useFetchCategoriesQuery();
+  const { prepareForSelection } = useBudgetFlowContext();
 
   if (loading) {
     return <ListSkeleton count={15} />;
@@ -15,9 +17,6 @@ function MyCategoryList() {
   if (error) {
     return <ListError />;
   }
-
-  //TODO: Add categories to useState -- When a category is selected, remove it from the list and add
-  // to the selected Categories list in the next column.
 
   return (
     <>
@@ -30,8 +29,8 @@ function MyCategoryList() {
               subheading={category.description || ''}
               withCheckbox
               checkboxProps={{
-                onChange: (e) => {
-                  console.log(e.target.checked);
+                onChange: () => {
+                  prepareForSelection(category);
                 },
               }}
             />

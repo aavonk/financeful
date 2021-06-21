@@ -1,5 +1,6 @@
 import React from 'react';
 import MyCategoryList from './MyCategoryList';
+import CategoryControls from './CategoryControls';
 import { Container, GridOutter, GridInner } from './style';
 
 //TODO: Note: Maybe put selected categories into context to
@@ -7,16 +8,18 @@ import { Container, GridOutter, GridInner } from './style';
 // rather than putting everything in local storage, parsing it,
 // and remembering to delete it.
 
-function CategoryChoice() {
+function CategoryChoiceView() {
   return (
     <Container>
       <GridOutter>
         <MyCategoryList />
       </GridOutter>
-      <GridInner>Inner Area</GridInner>
+      <GridInner>
+        <CategoryControls />
+      </GridInner>
       <GridOutter>Right Out Area</GridOutter>
     </Container>
   );
 }
 
-export default CategoryChoice;
+export default CategoryChoiceView;
