@@ -2,13 +2,13 @@ import React from 'react';
 import { List, ListItem } from '@Components/List';
 import ListError from '@Components/List/ListError';
 import ListSkeleton from '@Components/List/ListSkeleton';
-
-import { useFetchCategoriesQuery } from '@Generated/graphql';
-import { useBudgetFlowContext } from '@Modules/budget/BudgetCreation/BudgetFlowProvider';
+import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 
 function MyCategoryList() {
-  const { data, loading, error } = useFetchCategoriesQuery();
-  const { prepareForSelection } = useBudgetFlowContext();
+  const {
+    addToQueue,
+    state: { categories, loading, error },
+  } = useCreateBudgetContext();
 
   if (loading) {
     return <ListSkeleton count={15} />;
@@ -20,9 +20,9 @@ function MyCategoryList() {
 
   return (
     <>
-      {data?.getCategories ? (
+      {categories ? (
         <List>
-          {data.getCategories.map((category) => (
+          {categories.map((category) => (
             <ListItem
               key={category.id}
               heading={category.name}
@@ -30,7 +30,7 @@ function MyCategoryList() {
               withCheckbox
               checkboxProps={{
                 onChange: () => {
-                  prepareForSelection(category);
+                  addToQueue(category);
                 },
               }}
             />

@@ -9,7 +9,7 @@ import {
 } from '@Common/Stepper';
 import { PageHeader, ButtonGroup } from './style';
 import CategoryChoice from '@Modules/budget/BudgetCreation/CategoryChoiceView';
-import { BudgetFlowProvider } from '@Modules/budget/BudgetCreation/BudgetFlowProvider';
+import { CreateBudgetProvider } from '@Context/create-budget/createBudgetContext';
 
 function CreateBudgetPage() {
   const query = useQuery();
@@ -17,7 +17,7 @@ function CreateBudgetPage() {
   const year = query.get('year');
 
   return (
-    <BudgetFlowProvider>
+    <CreateBudgetProvider>
       <StepperProvider
         steps={['Choose Categories', 'Set Budget Amounts', 'Review & Save']}
       >
@@ -38,7 +38,7 @@ function CreateBudgetPage() {
           content={[<CategoryChoice />, <div>Second One</div>, <div>Third one</div>]}
         />
       </StepperProvider>
-    </BudgetFlowProvider>
+    </CreateBudgetProvider>
   );
 }
 
