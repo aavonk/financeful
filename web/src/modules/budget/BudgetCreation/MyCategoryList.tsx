@@ -6,7 +6,7 @@ import { useCreateBudgetContext } from '@Context/create-budget/createBudgetConte
 
 function MyCategoryList() {
   const {
-    addToQueue,
+    handleQueue,
     state: { categories, loading, error },
   } = useCreateBudgetContext();
 
@@ -29,8 +29,8 @@ function MyCategoryList() {
               subheading={category.description || ''}
               withCheckbox
               checkboxProps={{
-                onChange: () => {
-                  addToQueue(category);
+                onChange: (e) => {
+                  handleQueue(category, e.target.checked);
                 },
               }}
             />

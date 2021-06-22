@@ -21,4 +21,9 @@ export const ControlsContainer = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
+  padding: 0 2rem;
+
+  & > button {
+    margin-bottom: 1rem;
+  }
 `;

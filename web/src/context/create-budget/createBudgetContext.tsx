@@ -3,6 +3,10 @@ import type { Category } from '@Generated/graphql';
 import { createBudgetReducer } from './createBudgetReducer';
 import { useFetchCategoriesQuery } from '@Generated/graphql';
 
+interface ModifiedCategory extends Category {
+  isChecked: boolean;
+}
+
 export type State = {
   categories: Category[] | undefined;
   queue: Category[];
@@ -11,15 +15,18 @@ export type State = {
   error: boolean;
 };
 
+type ID = string;
+
 export type Action =
   | { type: 'FETCH_ERROR' }
   | { type: 'FETCH_SUCCESS'; payload: Category[] }
   | { type: 'ADD_TO_QUEUE'; payload: Category }
-  | { type: 'ADD_TO_SELECTED' };
+  | { type: 'ADD_TO_SELECTED' }
+  | { type: 'REMOVE_FROM_QUEUE'; payload: ID };
 
 type ICreateBudgetContext = {
   state: State;
-  addToQueue: (category: Category) => void;
+  handleQueue: (category: Category, checked: boolean) => void;
   routeToSelected: () => void;
 };
 
@@ -44,7 +51,10 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
 
   React.useEffect(() => {
     if (data?.getCategories) {
-      dispatch({ type: 'FETCH_SUCCESS', payload: data.getCategories });
+      dispatch({
+        type: 'FETCH_SUCCESS',
+        payload: data.getCategories,
+      });
     }
   }, [data]);
 
@@ -52,7 +62,10 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     dispatch({ type: 'FETCH_ERROR' });
   }
 
-  const addToQueue = (category: Category) => {
+  const handleQueue = (category: Category, checked: boolean) => {
+    if (!checked) {
+      return dispatch({ type: 'REMOVE_FROM_QUEUE', payload: category.id });
+    }
     dispatch({ type: 'ADD_TO_QUEUE', payload: category });
   };
 
@@ -62,7 +75,7 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
 
   const value: ICreateBudgetContext = {
     state,
-    addToQueue,
+    handleQueue,
     routeToSelected,
   };
 

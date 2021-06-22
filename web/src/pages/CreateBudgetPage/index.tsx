@@ -16,6 +16,9 @@ function CreateBudgetPage() {
   const month = query.get('month');
   const year = query.get('year');
 
+  //TODO: Validate that there are selected categories before
+  // going to step two
+
   return (
     <CreateBudgetProvider>
       <StepperProvider

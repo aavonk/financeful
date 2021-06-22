@@ -19,13 +19,25 @@ export function createBudgetReducer(state: State, action: Action): State {
     case 'ADD_TO_QUEUE':
       return {
         ...state,
+        categories: state.categories?.map((item) =>
+          item.id === action.payload.id ? { ...item, isChecked: true } : item,
+        ),
         queue: [...state.queue, action.payload],
       };
-    case 'ADD_TO_SELECTED':
+    case 'REMOVE_FROM_QUEUE':
       return {
         ...state,
-        selected: [...state.selected, ...state.queue],
+        queue: state.queue.filter((item) => item.id !== action.payload),
+      };
+    case 'ADD_TO_SELECTED':
+      const filteredCategories = state.categories!.filter(
+        (i) => !state.queue.some((j) => j.id === i.id),
+      );
+      return {
+        ...state,
         queue: [],
+        categories: [...filteredCategories],
+        selected: [...state.selected, ...state.queue],
       };
   }
 }
