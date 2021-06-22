@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
 import MuiStepper, {
   StepperProps as MuiStepperProps,
 } from '@bit/mui-org.material-ui.stepper';
@@ -10,7 +9,7 @@ import MuiStepLabel from '@bit/mui-org.material-ui.step-label';
 import Button from '@Common/Button';
 import { makeStyles, withStyles } from '@bit/mui-org.material-ui.styles';
 import { theme } from '@Constants/theme';
-import { useQuery } from '@Hooks/useQuery';
+import { useAlert } from '@Context/alert/alertContext';
 
 // Override Material UI Styles ===================================================
 const useStyles = makeStyles({
@@ -132,6 +131,8 @@ export function StepperProvider({ children, steps }: ProviderDefaultProps) {
 
 // Build the Components  ==============================================================
 
+// Main Stepper  ==============================================================
+
 export function Stepper() {
   const { activeStep, handleNext, handleBack, steps } = useStepperContext();
   const styles = useStyles();
@@ -161,9 +162,12 @@ export function Stepper() {
   );
 }
 
+// Stepper Content  ==============================================================
+
 type StepperContentProps = {
   content: Array<React.ReactNode>;
 };
+
 export function StepContent({ content }: StepperContentProps) {
   const { steps, activeStep } = useStepperContext();
   function getStepContent(stepIndex: number) {
@@ -186,6 +190,8 @@ export function StepContent({ content }: StepperContentProps) {
   return <div>{activeStep === steps.length ? null : getStepContent(activeStep)}</div>;
 }
 
+// Back Button  ==============================================================
+
 export function BackButton() {
   const { activeStep, handleBack } = useStepperContext();
 
@@ -196,13 +202,34 @@ export function BackButton() {
   );
 }
 
-type NextButtonProps = {
+// Next Step Button  ==============================================================
+
+/* With these props we can optionally require some sort of validation
+ * before proceeding to the next step. Validate just flags that the component
+ * should call the validator function prior to moving to the next step.
+ * The validator must return a boolean, and if false, will display an error
+ * message and prevent the Stepper from proceeding.
+ */
+type ValidationProps =
+  | { validate?: false; validator?: never; errorMessage?: never }
+  | { validate: true; validator: () => boolean; errorMessage: string };
+
+type NextButtonDefaultProps = {
   fnBeforeStep?: () => void;
   onComplete?: () => void;
 };
 
-export function NextButton({ fnBeforeStep, onComplete }: NextButtonProps) {
+type NextButtonProps = NextButtonDefaultProps & ValidationProps;
+
+export function NextButton({
+  fnBeforeStep,
+  onComplete,
+  validate,
+  validator,
+  errorMessage,
+}: NextButtonProps) {
   const { activeStep, handleNext, steps } = useStepperContext();
+  const { showAlert } = useAlert();
 
   const handleClick = () => {
     if (fnBeforeStep) {
@@ -216,8 +243,20 @@ export function NextButton({ fnBeforeStep, onComplete }: NextButtonProps) {
     handleNext();
   };
 
+  const validateThenProceed = () => {
+    if (!validate || !validator) return;
+
+    const isValid = validator();
+
+    if (!isValid) {
+      return showAlert(errorMessage!, 'error', 5000);
+    }
+
+    handleNext();
+  };
+
   return (
-    <Button variant="primary" onClick={handleClick}>
+    <Button variant="primary" onClick={validate ? validateThenProceed : handleClick}>
       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
     </Button>
   );

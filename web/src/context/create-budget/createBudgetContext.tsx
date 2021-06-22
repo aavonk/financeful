@@ -22,11 +22,15 @@ export type Action =
   | { type: 'FETCH_SUCCESS'; payload: Category[] }
   | { type: 'ADD_TO_QUEUE'; payload: Category }
   | { type: 'ADD_TO_SELECTED' }
-  | { type: 'REMOVE_FROM_QUEUE'; payload: ID };
+  | { type: 'REMOVE_FROM_QUEUE'; payload: ID }
+  | { type: 'SELECT_ALL_CATEGORIES' }
+  | { type: 'REMOVE_ALL_SELECTED' };
 
 type ICreateBudgetContext = {
   state: State;
   handleQueue: (category: Category, checked: boolean) => void;
+  selectAll: () => void;
+  removeAllSelected: () => void;
   routeToSelected: () => void;
 };
 
@@ -46,9 +50,6 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
   const [state, dispatch] = React.useReducer(createBudgetReducer, initialState);
   const { data, error } = useFetchCategoriesQuery();
 
-  //@ts-ignore
-  window.state = state;
-
   React.useEffect(() => {
     if (data?.getCategories) {
       dispatch({
@@ -61,6 +62,14 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
   if (error) {
     dispatch({ type: 'FETCH_ERROR' });
   }
+
+  const selectAll = () => {
+    dispatch({ type: 'SELECT_ALL_CATEGORIES' });
+  };
+
+  const removeAllSelected = () => {
+    dispatch({ type: 'REMOVE_ALL_SELECTED' });
+  };
 
   const handleQueue = (category: Category, checked: boolean) => {
     if (!checked) {
@@ -77,6 +86,8 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     state,
     handleQueue,
     routeToSelected,
+    removeAllSelected,
+    selectAll,
   };
 
   return (

@@ -19,9 +19,6 @@ export function createBudgetReducer(state: State, action: Action): State {
     case 'ADD_TO_QUEUE':
       return {
         ...state,
-        categories: state.categories?.map((item) =>
-          item.id === action.payload.id ? { ...item, isChecked: true } : item,
-        ),
         queue: [...state.queue, action.payload],
       };
     case 'REMOVE_FROM_QUEUE':
@@ -38,6 +35,22 @@ export function createBudgetReducer(state: State, action: Action): State {
         queue: [],
         categories: [...filteredCategories],
         selected: [...state.selected, ...state.queue],
+      };
+    case 'SELECT_ALL_CATEGORIES':
+      return {
+        ...state,
+        selected: [...state.selected, ...state.categories!],
+        categories: [],
+        queue: [],
+      };
+    case 'REMOVE_ALL_SELECTED':
+      const cats = state.categories ? [...state.categories] : [];
+      // move the items in the selected queue back to the original
+      // "my categories" queue.
+      return {
+        ...state,
+        categories: [...state.selected, ...cats],
+        selected: [],
       };
   }
 }

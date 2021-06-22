@@ -4,14 +4,17 @@ import { ControlsContainer } from './style';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 
 function CategoryControls() {
-  const { routeToSelected } = useCreateBudgetContext();
+  const { routeToSelected, selectAll, removeAllSelected } = useCreateBudgetContext();
   return (
     <ControlsContainer>
       <Button variant="dark" onClick={routeToSelected} fullWidth>
         Move &gt;&gt;
       </Button>
-      <Button variant="dark" onClick={() => alert('all')} fullWidth>
+      <Button variant="dark" onClick={selectAll} fullWidth>
         Select All
+      </Button>
+      <Button variant="dark" onClick={removeAllSelected} fullWidth>
+        Remove All
       </Button>
     </ControlsContainer>
   );
