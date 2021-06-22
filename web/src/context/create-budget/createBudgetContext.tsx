@@ -3,10 +3,6 @@ import type { Category } from '@Generated/graphql';
 import { createBudgetReducer } from './createBudgetReducer';
 import { useFetchCategoriesQuery } from '@Generated/graphql';
 
-interface ModifiedCategory extends Category {
-  isChecked: boolean;
-}
-
 export type State = {
   categories: Category[] | undefined;
   queue: Category[];

@@ -49,3 +49,5 @@ export const PageHeader = styled.div`
     flex: 1 0 auto;
   }
 `;
+
+export const ListHeader = styled.h3;

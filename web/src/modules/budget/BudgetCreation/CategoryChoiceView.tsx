@@ -1,6 +1,6 @@
 import React from 'react';
 import MyCategoryList from './MyCategoryList';
-import SelectedCategories from './SelectedCategories';
+import SelectedCategoryList from './SelectedCategoryList';
 import CategoryControls from './CategoryControls';
 import { Container, GridOutter, GridInner } from './style';
 
@@ -14,7 +14,7 @@ function CategoryChoiceView() {
         <CategoryControls />
       </GridInner>
       <GridOutter>
-        <SelectedCategories />
+        <SelectedCategoryList />
       </GridOutter>
     </Container>
   );

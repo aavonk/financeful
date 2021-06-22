@@ -2,7 +2,7 @@ import React from 'react';
 import { List, ListItem } from '@Components/List';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 
-function SelectedCategories() {
+function SelectedCategoryList() {
   const {
     state: { selected },
   } = useCreateBudgetContext();
@@ -15,4 +15,4 @@ function SelectedCategories() {
   );
 }
 
-export default SelectedCategories;
+export default SelectedCategoryList;

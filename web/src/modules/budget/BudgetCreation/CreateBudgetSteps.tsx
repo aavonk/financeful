@@ -3,14 +3,12 @@ import { ButtonGroup, PageHeader } from './style';
 import { Stepper, BackButton, NextButton, StepContent } from '@Common/Stepper';
 import { useQuery } from '@Hooks/useQuery';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
-import { useAlert } from '@Context/alert/alertContext';
 import CategoryChoiceView from './CategoryChoiceView';
 
 function CreateBudgetSteps() {
   const {
     state: { selected },
   } = useCreateBudgetContext();
-  const { showAlert } = useAlert();
   const query = useQuery();
   const month = query.get('month');
   const year = query.get('year');

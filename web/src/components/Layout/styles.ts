@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import type * as React from 'react';
 
 export const Left = styled.div`
@@ -39,11 +39,23 @@ export const ContentContainer = styled.div`
   }
 `;
 
-export const SectionTitle = styled.h2`
+type Variants = 1 | 2;
+
+type SectionTitleProps = {
+  variant: Variants;
+  withBorder?: boolean;
+};
+
+export const SectionTitle = styled.h2<SectionTitleProps>`
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
-  font-size: 1.5rem;
+  font-size: ${({ variant }) => (variant === 1 ? '1.5rem' : '1rem')};
   font-weight: 600;
+
+  ${({ withBorder }) =>
+    withBorder &&
+    css`
+      border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    `}
 `;

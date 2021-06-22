@@ -7,7 +7,9 @@ import CreateCategoryController from '../categories/Forms/CreateCategoryControll
 function Categories() {
   return (
     <>
-      <SectionTitle as="h5">Categories</SectionTitle>
+      <SectionTitle as="h5" variant={1} withBorder>
+        Categories
+      </SectionTitle>
       <Section>
         <CreateCategoryController />
         <CategorySetup />
