@@ -7,8 +7,13 @@ function CategoryControls() {
   const { routeToSelected, selectAll, removeAllSelected } = useCreateBudgetContext();
   return (
     <ControlsContainer>
-      <Button variant="dark" onClick={routeToSelected} fullWidth>
-        Move &gt;&gt;
+      <Button
+        variant="dark"
+        onClick={routeToSelected}
+        fullWidth
+        className="fixed-on-mobile"
+      >
+        Add Selected
       </Button>
       <Button variant="dark" onClick={selectAll} fullWidth>
         Select All

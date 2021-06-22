@@ -18,7 +18,7 @@ export const Right = styled.div`
 
 export const ContentContainer = styled.div`
   min-height: 350px;
-  padding-bottom: 1rem;
+  padding-bottom: 5rem;
   margin-top: 1.5rem;
   display: flex;
   max-width: 1440px;

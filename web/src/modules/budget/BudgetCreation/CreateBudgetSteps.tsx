@@ -28,7 +28,13 @@ function CreateBudgetSteps() {
       </PageHeader>
       <Stepper />
       <StepContent
-        content={[<CategoryChoiceView />, <div>Second One</div>, <div>Third one</div>]}
+        content={[
+          <CategoryChoiceView />,
+          <div>
+            New React-Table with Editable Cells and grouped by income/expense cats
+          </div>,
+          <div>Third one</div>,
+        ]}
       />
     </>
   );
