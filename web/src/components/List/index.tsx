@@ -5,6 +5,7 @@ import { CheckBox } from '@Common/FormElements';
 import type { CheckboxProps } from '@Common/FormElements';
 import styled from 'styled-components';
 import Skeleton from '@Common/Skeleton';
+import { motion, usePresence, AnimatePresence } from 'framer-motion';
 
 const StyledList = styled.ul`
   background-color: ${({ theme }) => theme.colors.list};
@@ -24,10 +25,14 @@ interface ListProps {
 }
 
 export function List({ children }: ListProps) {
-  return <StyledList>{children}</StyledList>;
+  return (
+    <AnimatePresence>
+      <StyledList>{children}</StyledList>;
+    </AnimatePresence>
+  );
 }
 
-const StyledItem = styled.li`
+const StyledAnimatedItem = styled(motion.li)`
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -40,7 +45,6 @@ const StyledItem = styled.li`
     color: ${({ theme }) => theme.colors.textGrey};
   }
 `;
-
 const ItemLeft = styled.div`
   flex: 1 0 75%;
 `;
@@ -90,6 +94,8 @@ type OptionalProps =
 
 type ListItemProps = ItemProps & OptionalProps;
 
+const transition = { type: 'spring', stiffness: 500, damping: 50, mass: 1 };
+
 export function ListItem({
   heading,
   subheading,
@@ -100,9 +106,22 @@ export function ListItem({
   checkboxProps,
 }: ListItemProps) {
   const [checked, setChecked] = React.useState(false);
+  const [isPresent, safeToRemove] = usePresence();
+
+  const animations = {
+    layout: true,
+    initial: 'out',
+    animate: isPresent ? 'in' : 'out',
+    variants: {
+      in: { scaleY: 1, opacity: 1 },
+      out: { scaleY: 0, opacity: 0, zIndex: -1 },
+    },
+    onAnimationComplete: () => !isPresent && safeToRemove!(),
+    transition,
+  };
 
   return (
-    <StyledItem>
+    <StyledAnimatedItem {...animations}>
       <ItemLeft>
         {asLoader ? (
           <Skeleton width="80%" height="24px" />
@@ -130,6 +149,6 @@ export function ListItem({
           }}
         />
       )}
-    </StyledItem>
+    </StyledAnimatedItem>
   );
 }
