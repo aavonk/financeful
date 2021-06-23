@@ -1,4 +1,4 @@
-import type { Row, RowPropGetter } from 'react-table';
+import type { Row } from 'react-table';
 import { useTableContext } from '@Context/react-table/reactTableContext';
 import { TableRoot, TableHead, TableRow, Header, TableBody, TableCell } from './style';
 import { UpArrow, DownArrow } from '@Common/Icons';
