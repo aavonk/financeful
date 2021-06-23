@@ -57,6 +57,7 @@ export const ControlsContainer = styled.div`
 export const ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-start;
+  padding-top: 1rem;
 
   & > :first-child {
     margin-right: 1rem;
@@ -81,7 +82,7 @@ export const PageHeader = styled.div`
 
     ${ButtonGroup} {
       display: block;
-      padding-top: 1rem;
+      padding-top: 0;
     }
   }
 `;
@@ -91,4 +92,5 @@ export const Outline = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 6px;
   height: 100%;
+  min-height: 300px;
 `;
