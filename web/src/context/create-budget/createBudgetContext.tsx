@@ -3,10 +3,18 @@ import type { Category } from '@Generated/graphql';
 import { createBudgetReducer } from './createBudgetReducer';
 import { useFetchCategoriesQuery } from '@Generated/graphql';
 
+export type ModifiedCategory = {
+  id: string;
+  name: string;
+  description?: string | undefined | null;
+  currentMonth: number;
+  isIncome: boolean;
+};
+
 export type State = {
-  categories: Category[] | undefined;
-  queue: Category[];
-  selected: Category[];
+  categories: ModifiedCategory[] | undefined;
+  queue: ModifiedCategory[];
+  selected: ModifiedCategory[];
   loading: boolean;
   error: boolean;
 };
@@ -15,8 +23,8 @@ type ID = string;
 
 export type Action =
   | { type: 'FETCH_ERROR' }
-  | { type: 'FETCH_SUCCESS'; payload: Category[] }
-  | { type: 'ADD_TO_QUEUE'; payload: Category }
+  | { type: 'FETCH_SUCCESS'; payload: ModifiedCategory[] }
+  | { type: 'ADD_TO_QUEUE'; payload: ModifiedCategory }
   | { type: 'ADD_TO_SELECTED' }
   | { type: 'REMOVE_FROM_QUEUE'; payload: ID }
   | { type: 'SELECT_ALL_CATEGORIES' }
@@ -24,7 +32,7 @@ export type Action =
 
 type ICreateBudgetContext = {
   state: State;
-  handleQueue: (category: Category, checked: boolean) => void;
+  handleQueue: (category: ModifiedCategory, checked: boolean) => void;
   selectAll: () => void;
   removeAllSelected: () => void;
   routeToSelected: () => void;
@@ -48,9 +56,19 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
 
   React.useEffect(() => {
     if (data?.getCategories) {
+      const modifiedCategories: ModifiedCategory[] = data.getCategories.map((item) => {
+        const { name, id, description, isIncome } = item;
+        return {
+          name,
+          id: id as string,
+          description,
+          currentMonth: 0,
+          isIncome: isIncome as boolean,
+        };
+      });
       dispatch({
         type: 'FETCH_SUCCESS',
-        payload: data.getCategories,
+        payload: modifiedCategories,
       });
     }
   }, [data]);
@@ -67,7 +85,7 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     dispatch({ type: 'REMOVE_ALL_SELECTED' });
   };
 
-  const handleQueue = (category: Category, checked: boolean) => {
+  const handleQueue = (category: ModifiedCategory, checked: boolean) => {
     if (!checked) {
       return dispatch({ type: 'REMOVE_FROM_QUEUE', payload: category.id });
     }

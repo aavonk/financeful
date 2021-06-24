@@ -30,6 +30,7 @@ export function createBudgetReducer(state: State, action: Action): State {
       const filteredCategories = state.categories!.filter(
         (i) => !state.queue.some((j) => j.id === i.id),
       );
+
       return {
         ...state,
         queue: [],

@@ -106,6 +106,15 @@ function DashboardPage() {
         <ul>
           <li>Setup Cypress with Docker</li>
           <li>Design and implement Budget Page</li>
+          <li>
+            Create a new Theme Object using colors from
+            <a
+              href="https://dribbble.com/shots/15025442-Dark-UI-Elements"
+              rel="no_referrer no opener"
+            >
+              This link
+            </a>
+          </li>
         </ul>
         <div
           style={{

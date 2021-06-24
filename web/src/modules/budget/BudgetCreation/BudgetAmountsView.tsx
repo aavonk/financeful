@@ -1,41 +1,95 @@
 import React from 'react';
-import type { Cell, Column } from 'react-table';
+import type { Cell, Column, Row } from 'react-table';
 import TableRows from '../Table/TableRows';
 import { theme } from '@Constants/theme';
 import { Category } from '@Generated/graphql';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
+import type { ModifiedCategory } from '@Context/create-budget/createBudgetContext';
+
+import { NestedCell, GroupHeading } from '@Modules/budget/Table/style';
 import EditableCell from '@Modules/budget/Table/EditableCell';
 
-const getIncomeCategories = (cats: Category[]): Category[] => {
+const getIncomeCategories = (cats: ModifiedCategory[]): ModifiedCategory[] => {
   return cats.filter((item) => item.isIncome === true);
 };
 
-const getExpenseCategories = (cats: Category[]): Category[] => {
+const getExpenseCategories = (cats: ModifiedCategory[]): ModifiedCategory[] => {
   return cats.filter((item) => item.isIncome === false);
+};
+
+type DataType = {
+  name: 'Income' | 'Expense';
+  amount: string;
+  currentMonth: number;
+  expanded: boolean;
+  subRows: ModifiedCategory[];
 };
 
 function BudgetAmountsView() {
   const {
     state: { selected },
   } = useCreateBudgetContext();
-  const DATA = [
+  const DATA: DataType[] = [
     {
       name: 'Income',
       amount: '$2,750.00',
-      isIncome: true,
+      currentMonth: 0,
       expanded: true,
-      subRows: [...getIncomeCategories(selected)],
+      subRows: [
+        ...getIncomeCategories(selected).map((item) => ({ ...item, currentMonth: 0 })),
+      ],
     },
     {
       name: 'Expense',
       amount: '$2,750.00',
-      isIncome: true,
+      currentMonth: 0,
       expanded: true,
-      subRows: [...getExpenseCategories(selected)],
+      subRows: [
+        ...getExpenseCategories(selected).map((item) => ({ ...item, currentMonth: 0 })),
+      ],
     },
   ];
 
-  console.log(DATA);
+  const [data, setData] = React.useState<DataType[]>(DATA);
+
+  const updateRowOnEdit = (
+    columnId: string,
+    value: string,
+    originalRow: Row<ModifiedCategory>['original'],
+  ) => {
+    setData((old) => {
+      const [parentEl] = old.filter((parent, i) =>
+        parent.subRows.some((j) => j.id === originalRow.id),
+      );
+      const parentIndex = old.indexOf(parentEl);
+
+      const updates = old.map((parent, index) => {
+        if (index === parentIndex) {
+          const subRows = parent.subRows.map((child, i) => {
+            // This is the subRow being changed -- apply edits
+            if (child.id === originalRow.id) {
+              return {
+                ...child,
+                [columnId]: parseInt(value),
+              };
+            }
+            return child;
+          });
+
+          const totalAmount = parentEl.subRows.reduce(
+            (total, obj) => obj.currentMonth + total,
+            0,
+          );
+
+          return { ...parent, subRows, currentMonth: totalAmount };
+        }
+        return parent;
+      });
+
+      return updates;
+    });
+  };
+
   const columns = React.useMemo<Column<Record<string, unknown>>[]>(
     () => [
       {
@@ -43,11 +97,9 @@ function BudgetAmountsView() {
         accessor: 'name',
         Cell: ({ row, value }: Cell<any>) => {
           return 'subRows' in row.original ? (
-            // Styles applied to the top row (not subRows) "Income/Expense"
-            <span style={{ fontWeight: 600, paddingLeft: 0 }}>{value}</span>
+            <GroupHeading>{value}</GroupHeading>
           ) : (
-            // Categories that are not the group "Income/Expense"
-            <span style={{ paddingLeft: '40px' }}>{value}</span>
+            <NestedCell>{value}</NestedCell>
           );
         },
       },
@@ -60,7 +112,7 @@ function BudgetAmountsView() {
       },
       {
         Header: 'This month',
-        accessor: 'isIncome',
+        accessor: 'currentMonth',
         style: {
           textAlign: 'right',
         },
@@ -69,7 +121,12 @@ function BudgetAmountsView() {
           return hasKey ? (
             <span>{value}</span>
           ) : (
-            <EditableCell value={value} row={row} column={column} />
+            <EditableCell
+              value={value}
+              row={row}
+              column={column}
+              updateData={updateRowOnEdit}
+            />
           );
         },
       },
@@ -81,15 +138,11 @@ function BudgetAmountsView() {
     <div>
       <TableRows
         columns={columns}
-        data={DATA}
+        data={data}
         expandSubRows
         getRowProps={(row) => ({
           style: {
-            background:
-              'subRows' in row.original ? theme.colors.background : 'transparent',
-          },
-          onClick: () => {
-            console.log(row.original);
+            background: 'subRows' in row.original ? theme.colors.darkTwo : 'transparent',
           },
         })}
       />

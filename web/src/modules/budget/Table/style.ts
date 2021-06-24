@@ -15,7 +15,7 @@ export const TableRoot = styled.table`
   }
 
   th {
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.darkTwo};
   }
 `;
 
@@ -42,7 +42,6 @@ export const Header = styled.th`
   /* Apply these styles below to normal table-cells as well */
   display: table-cell;
   font-size: 0.875rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.darkThree};
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
@@ -77,4 +76,13 @@ export const BoldCell = styled.td`
   text-overflow: ellipsis;
   display: table-cell;
   padding: 0.25rem 0.45rem;
+`;
+
+export const NestedCell = styled.span`
+  padding-left: 40px;
+`;
+
+export const GroupHeading = styled.span`
+  font-weight: 600;
+  padding-left: 0;
 `;

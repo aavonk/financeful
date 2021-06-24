@@ -5,6 +5,7 @@ import { useQuery } from '@Hooks/useQuery';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 import CategoryChoiceView from './CategoryChoiceView';
 import BudgetAmountsView from './BudgetAmountsView';
+import ReviewAndSaveView from './ReviewAndSaveView';
 
 function CreateBudgetSteps() {
   const {
@@ -29,7 +30,7 @@ function CreateBudgetSteps() {
       </PageHeader>
       <Stepper />
       <StepContent
-        content={[<CategoryChoiceView />, <BudgetAmountsView />, <div>Third one</div>]}
+        content={[<CategoryChoiceView />, <BudgetAmountsView />, <ReviewAndSaveView />]}
       />
     </>
   );
