@@ -87,7 +87,7 @@ function TableRows<T extends Record<string, unknown>>({
             return (
               <TableRow {...row.getRowProps(getRowProps(row as RowParam))}>
                 {row.cells.map((cell) => {
-                  return cell.row.canExpand ? (
+                  return 'subRow' in cell.row.original ? (
                     <BoldCell
                       {...cell.getCellProps([
                         {

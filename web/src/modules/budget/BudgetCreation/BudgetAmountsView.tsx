@@ -42,7 +42,7 @@ function BudgetAmountsView() {
         Header: 'Name',
         accessor: 'name',
         Cell: ({ row, value }: Cell<any>) => {
-          return row.canExpand ? (
+          return 'subRows' in row.original ? (
             // Styles applied to the top row (not subRows) "Income/Expense"
             <span style={{ fontWeight: 600, paddingLeft: 0 }}>{value}</span>
           ) : (
@@ -65,7 +65,8 @@ function BudgetAmountsView() {
           textAlign: 'right',
         },
         Cell: ({ value, row, column }: Cell<any>) => {
-          return row.canExpand ? (
+          const hasKey = 'subRows' in row.original;
+          return hasKey ? (
             <span>{value}</span>
           ) : (
             <EditableCell value={value} row={row} column={column} />
@@ -76,9 +77,6 @@ function BudgetAmountsView() {
     [],
   );
 
-  //TODO: Reproduce BUG::: Select 2 Expense categories (or more) and NO income categories.
-  // The issue is that row.canExpand doesn't care whether or not I consider the row a "group".
-  // It just cares if there are subrows
   return (
     <div>
       <TableRows
@@ -87,7 +85,11 @@ function BudgetAmountsView() {
         expandSubRows
         getRowProps={(row) => ({
           style: {
-            background: row.canExpand ? theme.colors.background : 'transparent',
+            background:
+              'subRows' in row.original ? theme.colors.background : 'transparent',
+          },
+          onClick: () => {
+            console.log(row.original);
           },
         })}
       />
