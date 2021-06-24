@@ -35,18 +35,14 @@ function BudgetAmountsView() {
       amount: '$2,750.00',
       currentMonth: 0,
       expanded: true,
-      subRows: [
-        ...getIncomeCategories(selected).map((item) => ({ ...item, currentMonth: 0 })),
-      ],
+      subRows: [...getIncomeCategories(selected)],
     },
     {
       name: 'Expense',
       amount: '$2,750.00',
       currentMonth: 0,
       expanded: true,
-      subRows: [
-        ...getExpenseCategories(selected).map((item) => ({ ...item, currentMonth: 0 })),
-      ],
+      subRows: [...getExpenseCategories(selected)],
     },
   ];
 

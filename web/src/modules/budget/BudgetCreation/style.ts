@@ -33,7 +33,7 @@ export const ControlsContainer = styled.div`
   }
 
   @media ${({ theme }) => theme.device.tabletAndUp} {
-    padding: 40px 2rem 0 2rem;
+    padding: 40px 1.5rem 0 1.5rem;
   }
 
   @media ${({ theme }) => theme.device.tablet} {
