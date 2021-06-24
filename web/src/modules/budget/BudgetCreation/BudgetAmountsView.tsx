@@ -1,12 +1,12 @@
 import React from 'react';
-import type { Column, Cell } from 'react-table';
-import ExpandableTable from '@Modules/budget/Table/TableRows';
+import type { Cell, Column } from 'react-table';
+import TableRows from '../Table/TableRows';
 import { theme } from '@Constants/theme';
 
 const testData = [
   {
     name: 'Income',
-    description: 'Income Categories',
+    amount: '$2,750.00',
     isIncome: true,
     expanded: true,
     subRows: [
@@ -30,7 +30,7 @@ const testData = [
   },
   {
     name: 'Expenses',
-    description: 'Expense Categories',
+    amount: '$3,220.00',
     isIncome: false,
     expanded: true,
     subRows: [
@@ -70,7 +70,7 @@ const testData = [
   },
 ];
 
-function DashboardPage() {
+function BudgetAmountsView() {
   const columns = React.useMemo<Column<Record<string, unknown>>[]>(
     () => [
       {
@@ -87,50 +87,36 @@ function DashboardPage() {
         },
       },
       {
-        Header: 'Description',
-        accessor: 'description',
+        Header: 'Last month',
+        accessor: 'amount',
+        style: {
+          textAlign: 'right',
+        },
       },
       {
-        Header: 'Is Income',
+        Header: 'This month',
         accessor: 'isIncome',
+        style: {
+          textAlign: 'right',
+        },
       },
     ],
     [],
   );
   return (
-    <>
-      <p>Hi</p>
-      <div style={{ marginTop: '20px', maxWidth: '800px' }}></div>
-      <div>
-        TODO:
-        <ul>
-          <li>Setup Cypress with Docker</li>
-          <li>Design and implement Budget Page</li>
-        </ul>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
-            padding: '10px',
-          }}
-        >
-          <div>How to apply a style to a specific row? e.g. background-color</div>
-          <ExpandableTable
-            columns={columns}
-            data={testData}
-            expandSubRows
-            getRowProps={(row) => ({
-              style: {
-                background: row.canExpand ? theme.colors.background : 'transparent',
-              },
-            })}
-          />
-        </div>
-      </div>
-    </>
+    <div>
+      <TableRows
+        columns={columns}
+        data={testData}
+        expandSubRows
+        getRowProps={(row) => ({
+          style: {
+            background: row.canExpand ? theme.colors.background : 'transparent',
+          },
+        })}
+      />
+    </div>
   );
 }
 
-export default DashboardPage;
+export default BudgetAmountsView;

@@ -1,13 +1,40 @@
 import React from 'react';
 import { useTable, useExpanded } from 'react-table';
-import type { TableOptions, Row } from 'react-table';
+import type { TableOptions, Row, HeaderGroup, HeaderGroupPropGetter } from 'react-table';
+import {
+  TableBody,
+  TableHead,
+  TableRoot,
+  TableCell,
+  TableRow,
+  Header,
+  BoldCell,
+} from './style';
+import Paper from '@Common/Paper';
+
+/* This table differs from the Table Component in the modules/transaction/table
+ * directory in a few ways:
+ * 1. It has a different color/style scheme
+ * 2. It has expandable rows which can be triggered by a column or default to expanded
+ * 3. It supports editable cell(s)
+ * 4. It does *not* support pagination
+ * 5. It uses data passed in as a prop rather than through Context
+ * 6. The way it responds to small screens is different
+ */
 
 type RowParam = Row<Record<string, unknown>>;
+type HeaderParam = HeaderGroup;
+
+interface RowPropsReturned extends Record<string, unknown> {
+  style?: React.CSSProperties;
+}
 
 interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
   debugMode?: boolean;
-  getRowProps?: (row: RowParam) => Record<string, unknown>;
+  getRowProps?: (row: RowParam) => RowPropsReturned;
+  getColumnProps?: (col: HeaderGroup) => Record<string, unknown>;
 }
+
 const defaultPropGetter = () => ({});
 
 function TableRows<T extends Record<string, unknown>>({
@@ -15,6 +42,7 @@ function TableRows<T extends Record<string, unknown>>({
   columns: userColumns,
   debugMode = false,
   getRowProps = defaultPropGetter,
+  getColumnProps = defaultPropGetter,
 }: TableProps<T>) {
   const {
     getTableProps,
@@ -26,47 +54,73 @@ function TableRows<T extends Record<string, unknown>>({
   } = useTable<T>({ columns: userColumns, data }, useExpanded);
 
   return (
-    <>
+    <Paper style={{ paddingBottom: '1rem' }}>
       {debugMode && (
         <pre>
           <code>{JSON.stringify({ expanded: expanded }, null, 2)}</code>
         </pre>
       )}
-      <table {...getTableProps()}>
-        <thead style={{ backgroundColor: 'blue' }}>
+      <TableRoot {...getTableProps()}>
+        <TableHead>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <Header
+                  {...column.getHeaderProps([
+                    {
+                      //@ts-ignore
+                      className: column.className,
+                      //@ts-ignore
+                      style: column.style,
+                    },
+                  ])}
+                >
+                  {column.render('Header')}
+                </Header>
               ))}
-            </tr>
+            </TableRow>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
+        </TableHead>
+        <TableBody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps(getRowProps(row as RowParam))}>
+              <TableRow {...row.getRowProps(getRowProps(row as RowParam))}>
                 {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      // If a row has subrows  then it's considered a
-                      // group -- apply these styles
-                      // style={{
-                      //   background: row.subRows.length > 0 ? 'blue' : 'transparent',
-                      // }}
+                  return cell.row.canExpand ? (
+                    <BoldCell
+                      {...cell.getCellProps([
+                        {
+                          //@ts-ignore
+                          className: cell.column.className,
+                          //@ts-ignore
+                          style: cell.column.style,
+                        },
+                      ])}
                     >
                       {cell.render('Cell')}
-                    </td>
+                    </BoldCell>
+                  ) : (
+                    <TableCell
+                      {...cell.getCellProps([
+                        {
+                          //@ts-ignore
+                          className: cell.column.className,
+                          //@ts-ignore
+                          style: cell.column.style,
+                        },
+                      ])}
+                    >
+                      {cell.render('Cell')}
+                    </TableCell>
                   );
                 })}
-              </tr>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
-    </>
+        </TableBody>
+      </TableRoot>
+    </Paper>
   );
 }
 

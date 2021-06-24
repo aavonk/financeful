@@ -4,6 +4,7 @@ import { Stepper, BackButton, NextButton, StepContent } from '@Common/Stepper';
 import { useQuery } from '@Hooks/useQuery';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 import CategoryChoiceView from './CategoryChoiceView';
+import BudgetAmountsView from './BudgetAmountsView';
 
 function CreateBudgetSteps() {
   const {
@@ -28,13 +29,7 @@ function CreateBudgetSteps() {
       </PageHeader>
       <Stepper />
       <StepContent
-        content={[
-          <CategoryChoiceView />,
-          <div>
-            New React-Table with Editable Cells and grouped by income/expense cats
-          </div>,
-          <div>Third one</div>,
-        ]}
+        content={[<CategoryChoiceView />, <BudgetAmountsView />, <div>Third one</div>]}
       />
     </>
   );
