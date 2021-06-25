@@ -105,7 +105,8 @@ export const BudgetAmountContainer = styled.div`
   }
 
   & > div {
-    padding: 1rem 0;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
 `;
 
@@ -130,7 +131,9 @@ export const InputArea = styled.div`
   flex-direction: column;
   width: 100%;
 
-  /* flex: 1 0 auto; */
+  @media ${({ theme }) => theme.device.tabletAndDown} {
+    padding-top: 2rem;
+  }
 `;
 
 export const InputItem = styled.div`
@@ -142,6 +145,10 @@ export const InputItem = styled.div`
 
   & > input {
     max-width: 150px;
+  }
+
+  @media ${({ theme }) => theme.device.tabletAndDown} {
+    padding-left: 0;
   }
 `;
 
