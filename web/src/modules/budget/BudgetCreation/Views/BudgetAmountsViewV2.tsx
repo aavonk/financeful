@@ -12,7 +12,11 @@ import {
   BudgetAmountContainer,
 } from '../style';
 import type { ModifiedCategory } from '@Context/create-budget/createBudgetContext';
-import { convertInputAmountToCents, isValidCurrencyFormat } from '@Lib/money-utils';
+import {
+  convertInputAmountToCents,
+  isValidCurrencyFormat,
+  formatMoneyFromCentsToDollars,
+} from '@Lib/money-utils';
 
 const getIncomeCategories = (cats: ModifiedCategory[]): ModifiedCategory[] => {
   return cats.filter((item) => item.isIncome === true);
@@ -79,7 +83,7 @@ function CurrentAmountInput({ item }: { item: ModifiedCategory }) {
     amount: string;
   }>({
     initialValue: {
-      amount: item.currentMonth.toString(),
+      amount: formatMoneyFromCentsToDollars(item.currentMonth, false),
     },
     validations: {
       amount: {

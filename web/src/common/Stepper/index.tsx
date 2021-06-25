@@ -88,7 +88,20 @@ function MUIStepper(props: MUIStepperProps) {
 
 // Context Setup  ==============================================================
 
-type StepType = Array<string>;
+// type StepType = Array<string>;
+
+type ValidationOptions =
+  | { validate?: true; canProceed: () => boolean; errorMessage: string }
+  | { validate?: false; canProceed?: never; errorMessage?: never };
+
+type StepItem = {
+  label: string;
+  content: React.ReactNode;
+};
+
+type IStep = StepItem & ValidationOptions;
+
+export type StepType = Array<IStep>;
 
 type IStepperContext = {
   activeStep: number;
@@ -115,8 +128,22 @@ type ProviderDefaultProps = {
 
 export function StepperProvider({ children, steps }: ProviderDefaultProps) {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { showAlert } = useAlert();
 
   const handleNext = () => {
+    const currentStep = steps[activeStep];
+
+    if (currentStep.validate) {
+      const isValid = currentStep.canProceed();
+
+      if (!isValid) {
+        showAlert(currentStep.errorMessage, 'error', 5000);
+        return;
+      }
+
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      return;
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -145,15 +172,15 @@ export function Stepper() {
         className={styles.container}
         connector={<QontoConnector />}
       >
-        {steps.map((label) => {
+        {steps.map((step) => {
           const stepProps: {
             completed?: boolean;
             className?: Record<string, unknown>;
           } = {};
 
           return (
-            <Step key={label} {...stepProps}>
-              <StepLabel StepIconComponent={StepIcon}>{label}</StepLabel>
+            <Step key={step.label} {...stepProps}>
+              <StepLabel StepIconComponent={StepIcon}>{step.label}</StepLabel>
             </Step>
           );
         })}
@@ -164,24 +191,21 @@ export function Stepper() {
 
 // Stepper Content  ==============================================================
 
-type StepperContentProps = {
-  content: Array<React.ReactNode>;
-};
-
-export function StepContent({ content }: StepperContentProps) {
+export function StepContent() {
   const { steps, activeStep } = useStepperContext();
+
   function getStepContent(stepIndex: number) {
     switch (stepIndex) {
       case 0:
-        return content[0];
+        return steps[0].content;
       case 1:
-        return content[1];
+        return steps[1].content;
       case 2:
-        return content[2];
+        return steps[2].content;
       case 3:
-        return content[3];
+        return steps[3].content;
       case 4:
-        return content[4];
+        return steps[4].content;
       default:
         throw new Error('<Stepper /> only supports up to 5 Steps');
     }
@@ -204,32 +228,13 @@ export function BackButton() {
 
 // Next Step Button  ==============================================================
 
-/* With these props we can optionally require some sort of validation
- * before proceeding to the next step. Validate just flags that the component
- * should call the validator function prior to moving to the next step.
- * The validator must return a boolean, and if false, will display an error
- * message and prevent the Stepper from proceeding.
- */
-type ValidationProps =
-  | { validate?: false; validator?: never; errorMessage?: never }
-  | { validate: true; validator: () => boolean; errorMessage: string };
-
-type NextButtonDefaultProps = {
+type NextButtonProps = {
   fnBeforeStep?: () => void;
   onComplete?: () => void;
 };
 
-type NextButtonProps = NextButtonDefaultProps & ValidationProps;
-
-export function NextButton({
-  fnBeforeStep,
-  onComplete,
-  validate,
-  validator,
-  errorMessage,
-}: NextButtonProps) {
+export function NextButton({ fnBeforeStep, onComplete }: NextButtonProps) {
   const { activeStep, handleNext, steps } = useStepperContext();
-  const { showAlert } = useAlert();
 
   const handleClick = () => {
     if (fnBeforeStep) {
@@ -243,20 +248,8 @@ export function NextButton({
     handleNext();
   };
 
-  const validateThenProceed = () => {
-    if (!validate || !validator) return;
-
-    const isValid = validator();
-
-    if (!isValid) {
-      return showAlert(errorMessage!, 'error', 5000);
-    }
-
-    handleNext();
-  };
-
   return (
-    <Button variant="primary" onClick={validate ? validateThenProceed : handleClick}>
+    <Button variant="primary" onClick={handleClick}>
       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
     </Button>
   );

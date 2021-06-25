@@ -6,7 +6,7 @@ import { ModalRoot, ModalBody } from '@Components/LargeModal';
 import CategoryChoiceView from './Views/CategoryChoiceView';
 import BudgetAmountsView from './Views/BudgetAmountsView';
 import ReviewAndSaveView from './Views/ReviewAndSaveView';
-import BUdgetAmountsViewV2 from './Views/BudgetAmountsViewV2';
+import BudgetAmountsViewV2 from './Views/BudgetAmountsViewV2';
 import {
   Stepper,
   BackButton,
@@ -14,6 +14,7 @@ import {
   StepContent,
   StepperProvider,
 } from '@Common/Stepper';
+import type { StepType } from '@Common/Stepper';
 import { ButtonGroup } from './style';
 import { useQuery } from '@Hooks/useQuery';
 import { PageHeader } from './style';
@@ -27,8 +28,32 @@ function CreateBudgetModal() {
   const month = query.get('month');
   const year = query.get('year');
 
-  const open = () => history.push('/budget/create');
   const close = () => history.push('/budget');
+
+  const steps: StepType = [
+    {
+      label: 'Choose Categories',
+      content: <CategoryChoiceView />,
+      validate: true,
+      canProceed: () => {
+        return selected.length > 0;
+      },
+      errorMessage: 'Please select at least 1 category',
+    },
+    {
+      label: 'Set Budget Amounts',
+      content: <BudgetAmountsViewV2 />,
+      validate: true,
+      canProceed: () => {
+        return true;
+      },
+      errorMessage: 'Got eeeeemmmm',
+    },
+    {
+      label: 'Review & Save',
+      content: <ReviewAndSaveView />,
+    },
+  ];
 
   return (
     <>
@@ -38,28 +63,16 @@ function CreateBudgetModal() {
         aria-label="Create a budget"
       >
         <ModalBody>
-          <StepperProvider
-            steps={['Choose Categories', 'Set Budget Amounts', 'Review & Save']}
-          >
+          <StepperProvider steps={steps}>
             <PageHeader>
               <h2>{`${month} ${year} Budget`}</h2>
               <ButtonGroup>
                 <BackButton />
-                <NextButton
-                  validate
-                  errorMessage="Please select at least 1 category"
-                  validator={() => selected.length > 0}
-                />
+                <NextButton />
               </ButtonGroup>
             </PageHeader>
             <Stepper />
-            <StepContent
-              content={[
-                <CategoryChoiceView />,
-                <BUdgetAmountsViewV2 />,
-                <ReviewAndSaveView />,
-              ]}
-            />
+            <StepContent />
           </StepperProvider>
         </ModalBody>
       </ModalRoot>

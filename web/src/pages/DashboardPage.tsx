@@ -106,7 +106,14 @@ function DashboardPage() {
         <ul>
           <li>Setup Cypress with Docker</li>
           <li>Design and implement Budget Page</li>
-          <li>IMPORTANT: In budget create flow -- fetch categories where excludeFromBudget === false</li>
+          <li>
+            Add Income/Expense Badges & Hidden badges to Categories in Setting page to
+            show what they are without having to open up the edit modal
+          </li>
+          <li>
+            IMPORTANT: In budget create flow -- fetch categories where excludeFromBudget
+            === false
+          </li>
           <li>
             Create a new Theme Object using colors from
             <a
