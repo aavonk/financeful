@@ -54,11 +54,19 @@ export function createBudgetReducer(state: State, action: Action): State {
         selected: [],
       };
     case 'UPDATE_CURRENT_AMOUNT':
-      console.log('UPDATE_AMOUNT from reducer!')
       return {
         ...state,
         selected: state.selected.map((i) =>
-          i.id === action.payload.id ? { ...i, currentMonth: action.payload.amount } : i,
+          i.id === action.payload.id
+            ? { ...i, currentMonth: action.payload.amount, isValid: true }
+            : i,
+        ),
+      };
+    case 'INVALIDATE_BUDGET_ITEM':
+      return {
+        ...state,
+        selected: state.selected.map((i) =>
+          i.id === action.payload.id ? { ...i, isValid: false } : i,
         ),
       };
   }

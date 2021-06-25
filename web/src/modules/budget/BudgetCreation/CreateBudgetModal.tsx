@@ -1,12 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
+import {
+  ModifiedCategory,
+  useCreateBudgetContext,
+} from '@Context/create-budget/createBudgetContext';
 import { ModalRoot, ModalBody } from '@Components/LargeModal';
-
 import CategoryChoiceView from './Views/CategoryChoiceView';
 import BudgetAmountsView from './Views/BudgetAmountsView';
 import ReviewAndSaveView from './Views/ReviewAndSaveView';
-import BudgetAmountsViewV2 from './Views/BudgetAmountsViewV2';
 import {
   Stepper,
   BackButton,
@@ -18,6 +19,13 @@ import type { StepType } from '@Common/Stepper';
 import { ButtonGroup } from './style';
 import { useQuery } from '@Hooks/useQuery';
 import { PageHeader } from './style';
+
+const validateBudetAmounts = (categories: ModifiedCategory[]) => {
+  const invalidItems = categories.filter((i) => i.isValid === false);
+  const invalid = invalidItems.length > 0;
+
+  return !invalid;
+};
 
 function CreateBudgetModal() {
   const {
@@ -35,19 +43,15 @@ function CreateBudgetModal() {
       label: 'Choose Categories',
       content: <CategoryChoiceView />,
       validate: true,
-      canProceed: () => {
-        return selected.length > 0;
-      },
+      canProceed: () => selected.length > 0,
       errorMessage: 'Please select at least 1 category',
     },
     {
       label: 'Set Budget Amounts',
-      content: <BudgetAmountsViewV2 />,
+      content: <BudgetAmountsView />,
       validate: true,
-      canProceed: () => {
-        return true;
-      },
-      errorMessage: 'Got eeeeemmmm',
+      canProceed: () => validateBudetAmounts(selected),
+      errorMessage: 'Please use the correct format -- 1,200.00',
     },
     {
       label: 'Review & Save',

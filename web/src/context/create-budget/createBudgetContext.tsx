@@ -9,6 +9,7 @@ export type ModifiedCategory = {
   description?: string | undefined | null;
   currentMonth: number;
   isIncome: boolean;
+  isValid: boolean;
 };
 
 export type State = {
@@ -32,6 +33,10 @@ export type Action =
   | {
       type: 'UPDATE_CURRENT_AMOUNT';
       payload: { id: ModifiedCategory['id']; amount: number };
+    }
+  | {
+      type: 'INVALIDATE_BUDGET_ITEM';
+      payload: { id: ModifiedCategory['id'] };
     };
 
 type ICreateBudgetContext = {
@@ -40,6 +45,7 @@ type ICreateBudgetContext = {
   selectAll: () => void;
   removeAllSelected: () => void;
   routeToSelected: () => void;
+  markBudgetItemAsInvalid: (categoryId: string) => void;
   updateBudgetAmount: (categoryId: string, amount: number) => void;
 };
 
@@ -69,6 +75,7 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
           description,
           currentMonth: 0,
           isIncome: isIncome as boolean,
+          isValid: true,
         };
       });
       dispatch({
@@ -105,6 +112,10 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     dispatch({ type: 'UPDATE_CURRENT_AMOUNT', payload: { id: categoryId, amount } });
   };
 
+  const markBudgetItemAsInvalid = (categoryId: string) => {
+    dispatch({ type: 'INVALIDATE_BUDGET_ITEM', payload: { id: categoryId } });
+  };
+
   const value: ICreateBudgetContext = {
     state,
     selectAll,
@@ -112,7 +123,11 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     routeToSelected,
     removeAllSelected,
     updateBudgetAmount,
+    markBudgetItemAsInvalid,
   };
+
+  //@ts-ignore
+  window.state = state;
 
   return (
     <CreateBudgetContext.Provider value={value}>{children}</CreateBudgetContext.Provider>
