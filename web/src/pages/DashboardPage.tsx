@@ -106,6 +106,7 @@ function DashboardPage() {
         <ul>
           <li>Setup Cypress with Docker</li>
           <li>Design and implement Budget Page</li>
+          <li>IMPORTANT: In budget create flow -- fetch categories where excludeFromBudget === false</li>
           <li>
             Create a new Theme Object using colors from
             <a

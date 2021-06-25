@@ -28,7 +28,11 @@ export type Action =
   | { type: 'ADD_TO_SELECTED' }
   | { type: 'REMOVE_FROM_QUEUE'; payload: ID }
   | { type: 'SELECT_ALL_CATEGORIES' }
-  | { type: 'REMOVE_ALL_SELECTED' };
+  | { type: 'REMOVE_ALL_SELECTED' }
+  | {
+      type: 'UPDATE_CURRENT_AMOUNT';
+      payload: { id: ModifiedCategory['id']; amount: number };
+    };
 
 type ICreateBudgetContext = {
   state: State;
@@ -36,6 +40,7 @@ type ICreateBudgetContext = {
   selectAll: () => void;
   removeAllSelected: () => void;
   routeToSelected: () => void;
+  updateBudgetAmount: (categoryId: string, amount: number) => void;
 };
 
 const CreateBudgetContext = React.createContext<ICreateBudgetContext | undefined>(
@@ -96,12 +101,17 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     dispatch({ type: 'ADD_TO_SELECTED' });
   };
 
+  const updateBudgetAmount = (categoryId: string, amount: number) => {
+    dispatch({ type: 'UPDATE_CURRENT_AMOUNT', payload: { id: categoryId, amount } });
+  };
+
   const value: ICreateBudgetContext = {
     state,
+    selectAll,
     handleQueue,
     routeToSelected,
     removeAllSelected,
-    selectAll,
+    updateBudgetAmount,
   };
 
   return (

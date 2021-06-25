@@ -21,6 +21,7 @@ export const TableRoot = styled.table`
 
 export const TableHead = styled.thead`
   /* background-color: ${({ theme }) => theme.colors.primary}; */
+  background-color: ${({ theme }) => theme.colors.darkThree};
   display: table-header-group;
   white-space: nowrap;
 `;

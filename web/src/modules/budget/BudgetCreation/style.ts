@@ -96,3 +96,65 @@ export const Outline = styled.div`
   height: 100%;
   min-height: 300px;
 `;
+
+export const BudgetAmountContainer = styled.div`
+  width: 100%;
+
+  & > div:first-child {
+    border-bottom: 2px solid ${({ theme }) => theme.colors.border};
+  }
+
+  & > div {
+    padding: 1rem 0;
+  }
+`;
+
+export const FormSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  @media ${({ theme }) => theme.device.tabletAndDown} {
+    flex-direction: column;
+  }
+`;
+
+export const DescriptionArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 40%;
+`;
+
+export const InputArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  /* flex: 1 0 auto; */
+`;
+
+export const InputItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+  width: 100%;
+
+  & > input {
+    max-width: 150px;
+  }
+`;
+
+export const ItemLabel = styled.div`
+  flex: 1 0 60%;
+  padding-right: 0.5rem;
+  & > p {
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  & > small {
+    font-size: 0.8rem;
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;

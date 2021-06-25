@@ -5,7 +5,8 @@ import { ModalRoot, ModalBody } from '@Components/LargeModal';
 
 import CategoryChoiceView from './Views/CategoryChoiceView';
 import BudgetAmountsView from './Views/BudgetAmountsView';
-import ReviewAndSaveView from './Views//ReviewAndSaveView';
+import ReviewAndSaveView from './Views/ReviewAndSaveView';
+import BUdgetAmountsViewV2 from './Views/BudgetAmountsViewV2';
 import {
   Stepper,
   BackButton,
@@ -55,7 +56,7 @@ function CreateBudgetModal() {
             <StepContent
               content={[
                 <CategoryChoiceView />,
-                <BudgetAmountsView />,
+                <BUdgetAmountsViewV2 />,
                 <ReviewAndSaveView />,
               ]}
             />
