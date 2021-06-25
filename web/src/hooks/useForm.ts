@@ -98,37 +98,45 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: OptionTyp
     });
   };
 
+  const handleValidations = () => {
+    const validations = options!.validations;
+
+    let valid = true;
+    const newErrors = {} as ErrorRecord<T>;
+    for (const key in validations) {
+      const value = values[key];
+      const validation = validations[key];
+
+      // REQUIRED
+      if (validation?.required?.value && !value) {
+        valid = false;
+        newErrors[key] = validation?.required?.message;
+      }
+
+      // PATTERN
+      const pattern = validation?.pattern;
+      if (pattern?.value && !RegExp(pattern.value).test(value)) {
+        valid = false;
+        newErrors[key] = pattern.message;
+      }
+
+      // CUSTOM
+
+      const custom = validation?.custom;
+      if (custom?.isValid && !custom.isValid(value)) {
+        valid = false;
+        newErrors[key] = custom.message;
+      }
+    }
+
+    return { valid, newErrors };
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validations = options?.validations;
     if (validations) {
-      let valid = true;
-      const newErrors = {} as ErrorRecord<T>;
-      for (const key in validations) {
-        const value = values[key];
-        const validation = validations[key];
-
-        // REQUIRED
-        if (validation?.required?.value && !value) {
-          valid = false;
-          newErrors[key] = validation?.required?.message;
-        }
-
-        // PATTERN
-        const pattern = validation?.pattern;
-        if (pattern?.value && !RegExp(pattern.value).test(value)) {
-          valid = false;
-          newErrors[key] = pattern.message;
-        }
-
-        // CUSTOM
-
-        const custom = validation?.custom;
-        if (custom?.isValid && !custom.isValid(value)) {
-          valid = false;
-          newErrors[key] = custom.message;
-        }
-      }
+      const { valid, newErrors } = handleValidations();
 
       if (!valid) {
         setErrors(newErrors);
@@ -144,10 +152,26 @@ export const useForm = <T extends Record<keyof T, any> = {}>(options?: OptionTyp
     }
   };
 
+  const handleValidationOnBlur = (): boolean => {
+    const validations = options?.validations;
+    if (validations) {
+      const { valid, newErrors } = handleValidations();
+
+      if (!valid) {
+        setErrors(newErrors);
+        return false;
+      }
+    }
+
+    setErrors({} as ErrorRecord<T>);
+    return true;
+  };
+
   return {
     values,
     handleChange,
     handleBooleanChange,
+    handleValidationOnBlur,
     handleSubmit,
     handleTrim,
     errors,
