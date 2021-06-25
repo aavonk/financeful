@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Cell, Column, Row } from 'react-table';
-import TableRows from '../Table/TableRows';
+import TableRows from '../../Table/TableRows';
 import { theme } from '@Constants/theme';
 import { Category } from '@Generated/graphql';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';

@@ -2,9 +2,9 @@ import React from 'react';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 import { ModalRoot, ModalBody } from '@Components/LargeModal';
 
-import CategoryChoiceView from './CategoryChoiceView';
-import BudgetAmountsView from './BudgetAmountsView';
-import ReviewAndSaveView from './ReviewAndSaveView';
+import CategoryChoiceView from './Views/CategoryChoiceView';
+import BudgetAmountsView from './Views/BudgetAmountsView';
+import ReviewAndSaveView from './Views//ReviewAndSaveView';
 import {
   Stepper,
   BackButton,

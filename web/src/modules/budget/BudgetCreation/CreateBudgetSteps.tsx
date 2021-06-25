@@ -3,9 +3,9 @@ import { ButtonGroup, PageHeader } from './style';
 import { Stepper, BackButton, NextButton, StepContent } from '@Common/Stepper';
 import { useQuery } from '@Hooks/useQuery';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
-import CategoryChoiceView from './CategoryChoiceView';
-import BudgetAmountsView from './BudgetAmountsView';
-import ReviewAndSaveView from './ReviewAndSaveView';
+import CategoryChoiceView from './Views/CategoryChoiceView';
+import BudgetAmountsView from './Views/BudgetAmountsView';
+import ReviewAndSaveView from './Views/ReviewAndSaveView';
 
 function CreateBudgetSteps() {
   const {
