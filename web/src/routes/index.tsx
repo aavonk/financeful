@@ -10,7 +10,6 @@ import MyWalletPage from '@Pages/MyWalletPage';
 import AccountPage from '@Pages/AccountPage';
 import SettingsPage from '@Pages/SettingsPage';
 import BudgetPage from '@Pages/BudgetPage';
-import CreateBudgetPage from '@Pages/CreateBudgetPage';
 import { GlobalStyle } from '../constants/reset.css';
 import Layout from '@Components/Layout';
 import { BlueScreen, DefaultView } from '@Components/ErrorViews';
@@ -67,12 +66,7 @@ function Routes() {
                   />
                   <PrivateRoute exact={false} path="/settings" component={SettingsPage} />
                   <PrivateRoute exact path="/account/:id" component={AccountPage} />
-                  <PrivateRoute exact path="/budget" component={BudgetPage} />
-                  <PrivateRoute
-                    exact
-                    path="/budget/create"
-                    component={CreateBudgetPage}
-                  />
+                  <PrivateRoute path="/budget" component={BudgetPage} />
                 </ConfirmationProvider>
               </Layout>
             </Switch>

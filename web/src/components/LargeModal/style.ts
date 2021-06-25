@@ -23,6 +23,13 @@ export const Content = styled(DialogContent)<DialogContentProps>`
   padding: 0;
   overflow-y: auto;
   border-radius: 8px;
+
+  @media ${({ theme }) => theme.device.tabletAndDown} {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    border-radius: 0;
+  }
 `;
 
 export const Body = styled.div`

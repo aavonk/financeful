@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   padding-top: 2rem;
+  padding-bottom: 5rem;
 
   @media ${({ theme }) => theme.device.tabletAndUp} {
     flex-direction: row;
@@ -70,6 +71,7 @@ export const PageHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
+
   & > h2 {
     font-size: 1.5rem;
     font-weight: 600;
