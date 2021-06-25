@@ -1,8 +1,8 @@
 import React from 'react';
-import MyCategoryList from './MyCategoryList';
-import SelectedCategoryList from './SelectedCategoryList';
-import CategoryControls from './CategoryControls';
-import { Container, GridOutter, GridInner } from './style';
+import MyCategoryList from '../MyCategoryList';
+import SelectedCategoryList from '../SelectedCategoryList';
+import CategoryControls from '../CategoryControls';
+import { Container, GridOutter, GridInner } from '../style';
 import { useMediaQuery } from '@Hooks/useMediaQuery';
 
 function CategoryChoiceView() {
