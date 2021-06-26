@@ -9,6 +9,50 @@ Financeful is a personal finance web application that provides people with a bet
 Running locally:
 ====================
 
+Without Docker (local):
+-----------------------
+
+_Prerequisite [Install Postgresql](https://www.postgresql.org/)_
+
+## 1. Install dependencies locally
+```
+$ cd server
+$ yarn install
+
+-----------------------------------------------
+
+$ cd web
+$ yarn install
+```
+
+## 2. Run the server 
+```
+$ cd server
+$ yarn dev:local
+```
+
+## 3. Run the React app
+```
+$ cd web
+$ yarn dev
+```
+
+## 4. Interact with the API & React App
+
+Once the development server is running, you can view the GraphQL schema at
+
+[http://localhost:4000/graphql](http://localhost:4000/graphql)
+
+
+The React app will be available at [http://localhost:3000](http://localhost:3000)
+
+
+
+
+
+With Docker:
+----------------------
+
 This project uses Docker to create different environments that already have all the tools and services needed configured and ready to go. 
 
 _Prerequisite: [Install Docker](https://docs.docker.com/install) on your local environment._
