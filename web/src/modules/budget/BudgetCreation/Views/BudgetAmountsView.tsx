@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 import { SectionTitle } from '@Components/Layout/styles';
 import { InsetInput, ErrorMessage } from '@Common/FormElements';
@@ -38,16 +39,18 @@ function BudgetAmountsView() {
         <DescriptionArea>
           <SectionTitle variant={2}>Income Categories</SectionTitle>
           {/* //TODO: Make the alert a motion.div with AnimatePresence and have it appear */}
-          <MessageAlert
-            variant="info"
-            customMessage
-            messageComponent={
-              <span>
-                Missing some categories? You might need to{' '}
-                <Link to="/settings/categories">mark them as income</Link>
-              </span>
-            }
-          />
+          <AnimatePresence initial={false}>
+            <MessageAlert
+              variant="info"
+              customMessage
+              messageComponent={
+                <span>
+                  Missing some categories? You might need to{' '}
+                  <Link to="/settings/categories">mark them as income</Link>
+                </span>
+              }
+            />
+          </AnimatePresence>
         </DescriptionArea>
         <InputArea>
           {getIncomeCategories(selected).map((item) => (

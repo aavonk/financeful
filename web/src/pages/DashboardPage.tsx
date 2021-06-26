@@ -5,7 +5,7 @@ import { theme } from '@Constants/theme';
 import Task from '@Components/Tasks';
 import { InfoIcon } from '@Common/Icons';
 import MessageAlert from '@Common/Alerts/AlertMessage';
-
+import { AnimatePresence } from 'framer-motion';
 const testData = [
   {
     name: 'Income',
@@ -74,6 +74,7 @@ const testData = [
 ];
 
 function DashboardPage() {
+  const [messages, setMessages] = React.useState(1);
   // const columns = React.useMemo<Column<Record<string, unknown>>[]>(
   //   () => [
   //     {
@@ -136,31 +137,28 @@ function DashboardPage() {
             padding: '10px',
           }}
         >
-          <Task
-            heading="Missing categories?"
-            subheading="If you think some categories should be in the income group, 
-            you might need to mark them as Income"
-            icon={<InfoIcon />}
-            variant="info"
-          />
-          <MessageAlert
-            variant="info"
-            customMessage
-            messageComponent={
-              <span>
-                Missing some categories? You might need to <a>mark them as income</a>
-              </span>
-            }
-          />
-          {/* <ExpandableTable
-            columns={columns}
-            data={testData}
-            expandSubRows
-            getRowProps={(row) => ({
-              style: {
-                background: row.canExpand ? theme.colors.background : 'transparent',
-              },
-            })} */}
+          <button onClick={() => setMessages((old) => old - 1)}>
+            Remove message alert
+          </button>
+
+          <button onClick={() => setMessages((old) => old + 1)}>Add message alert</button>
+          <AnimatePresence>
+            {new Array(messages)
+              .fill(null)
+              .map((i, idx) => idx)
+              .map((i) => (
+                <MessageAlert
+                  variant="info"
+                  customMessage
+                  messageComponent={
+                    <span>
+                      Missing some categories? You might need to{' '}
+                      <a>mark them as income</a>
+                    </span>
+                  }
+                />
+              ))}
+          </AnimatePresence>
         </div>
       </div>
     </>

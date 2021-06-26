@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { IAlert } from '@Context/alert/alertContext';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
 export const AlertRoot = styled.div<{ $type: IAlert['type'] }>`
   position: fixed;
@@ -84,9 +84,11 @@ export type MessageRootProps = {
   $variant: MessageRootVariants;
 };
 
+type IMessageRoot = MessageRootProps & HTMLMotionProps<'div'>;
+
 //TODO: Make the alert a motion.div and have it appear
 
-export const MessageRoot = styled.div<MessageRootProps>`
+export const MessageRoot = styled(motion.div)<IMessageRoot>`
   display: flex;
   padding: 6px 16px;
   font-size: 0.875rem;
