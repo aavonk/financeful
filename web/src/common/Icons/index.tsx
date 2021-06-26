@@ -31,9 +31,13 @@ import {
   MdErrorOutline,
   MdInfoOutline,
 } from 'react-icons/md';
+import { ImWarning } from 'react-icons/im';
 
 export * from './LineChart';
 
+export const WarningIcon = ({ ...props }) => {
+  return <ImWarning {...props} />;
+};
 export const VerticalMenuIcon = ({ ...props }) => {
   return <BsThreeDotsVertical {...props} aria-hidden="true" />;
 };

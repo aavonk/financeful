@@ -2,6 +2,9 @@ import React from 'react';
 import type { Column, Cell } from 'react-table';
 import ExpandableTable from '@Modules/budget/Table/TableRows';
 import { theme } from '@Constants/theme';
+import Task from '@Components/Tasks';
+import { InfoIcon } from '@Common/Icons';
+import MessageAlert from '@Common/Alerts/AlertMessage';
 
 const testData = [
   {
@@ -71,32 +74,32 @@ const testData = [
 ];
 
 function DashboardPage() {
-  const columns = React.useMemo<Column<Record<string, unknown>>[]>(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        Cell: ({ row, value }: Cell<any>) => {
-          return row.canExpand ? (
-            // Styles applied to the top row (not subRows) "Income/Expense"
-            <span style={{ fontWeight: 600, paddingLeft: 0 }}>{value}</span>
-          ) : (
-            // Categories that are not the group "Income/Expense"
-            <span style={{ paddingLeft: '40px' }}>{value}</span>
-          );
-        },
-      },
-      {
-        Header: 'Description',
-        accessor: 'description',
-      },
-      {
-        Header: 'Is Income',
-        accessor: 'isIncome',
-      },
-    ],
-    [],
-  );
+  // const columns = React.useMemo<Column<Record<string, unknown>>[]>(
+  //   () => [
+  //     {
+  //       Header: 'Name',
+  //       accessor: 'name',
+  //       Cell: ({ row, value }: Cell<any>) => {
+  //         return row.canExpand ? (
+  //           // Styles applied to the top row (not subRows) "Income/Expense"
+  //           <span style={{ fontWeight: 600, paddingLeft: 0 }}>{value}</span>
+  //         ) : (
+  //           // Categories that are not the group "Income/Expense"
+  //           <span style={{ paddingLeft: '40px' }}>{value}</span>
+  //         );
+  //       },
+  //     },
+  //     {
+  //       Header: 'Description',
+  //       accessor: 'description',
+  //     },
+  //     {
+  //       Header: 'Is Income',
+  //       accessor: 'isIncome',
+  //     },
+  //   ],
+  //   [],
+  // );
   return (
     <>
       <p>Hi</p>
@@ -133,8 +136,23 @@ function DashboardPage() {
             padding: '10px',
           }}
         >
-          <div>How to apply a style to a specific row? e.g. background-color</div>
-          <ExpandableTable
+          <Task
+            heading="Missing categories?"
+            subheading="If you think some categories should be in the income group, 
+            you might need to mark them as Income"
+            icon={<InfoIcon />}
+            variant="info"
+          />
+          <MessageAlert
+            variant="info"
+            customMessage
+            messageComponent={
+              <span>
+                Missing some categories? You might need to <a>mark them as income</a>
+              </span>
+            }
+          />
+          {/* <ExpandableTable
             columns={columns}
             data={testData}
             expandSubRows
@@ -142,8 +160,7 @@ function DashboardPage() {
               style: {
                 background: row.canExpand ? theme.colors.background : 'transparent',
               },
-            })}
-          />
+            })} */}
         </div>
       </div>
     </>

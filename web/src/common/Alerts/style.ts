@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { IAlert } from '@Context/alert/alertContext';
+import { motion } from 'framer-motion';
 
 export const AlertRoot = styled.div<{ $type: IAlert['type'] }>`
   position: fixed;
@@ -47,4 +48,68 @@ export const AlertIcon = styled.div`
 
 export const AlertMessage = styled.div`
   padding: 8px 0;
+`;
+
+export const MessageIcon = styled.div`
+  display: flex;
+  opacity: 0.9;
+  padding: 7px 0;
+  font-size: 22px;
+  margin-right: 12px;
+
+  & > svg {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+`;
+
+export const MessageText = styled.p`
+  padding: 8px 0;
+
+  & > span > a,
+  > a {
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    color: inherit;
+  }
+`;
+
+export type MessageRootVariants = 'info' | 'warning';
+
+export type MessageRootProps = {
+  $variant: MessageRootVariants;
+};
+
+//TODO: Make the alert a motion.div and have it appear
+
+export const MessageRoot = styled.div<MessageRootProps>`
+  display: flex;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  border-radius: 6px;
+
+  ${(props) =>
+    props.$variant === 'info' &&
+    css`
+      color: rgb(166, 213, 250);
+      background-color: rgb(3, 14, 24);
+      ${MessageIcon} {
+        color: ${({ theme }) => theme.colors.primary};
+      }
+    `}
+
+  ${(props) =>
+    props.$variant === 'warning' &&
+    css`
+      color: rgb(255, 213, 153);
+      background-color: rgb(25, 15, 0);
+      ${MessageIcon} {
+        color: ##ff9800;
+      }
+    `}
 `;

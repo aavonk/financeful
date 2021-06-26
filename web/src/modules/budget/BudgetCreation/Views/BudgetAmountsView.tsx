@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
 import { SectionTitle } from '@Components/Layout/styles';
 import { InsetInput, ErrorMessage } from '@Common/FormElements';
@@ -17,6 +18,7 @@ import {
   isValidCurrencyFormat,
   formatMoneyFromCentsToDollars,
 } from '@Lib/money-utils';
+import MessageAlert from '@Common/Alerts/AlertMessage';
 
 const getIncomeCategories = (cats: ModifiedCategory[]): ModifiedCategory[] => {
   return cats.filter((item) => item.isIncome === true);
@@ -35,10 +37,17 @@ function BudgetAmountsView() {
       <FormSection>
         <DescriptionArea>
           <SectionTitle variant={2}>Income Categories</SectionTitle>
-          <small>
-            Don't see what you're looking for? You might need to mark your categories as
-            Income.{' '}
-          </small>
+
+          <MessageAlert
+            variant="info"
+            customMessage
+            messageComponent={
+              <span>
+                Missing some categories? You might need to{' '}
+                <Link to="/settings/categories">mark them as income</Link>
+              </span>
+            }
+          />
         </DescriptionArea>
         <InputArea>
           {getIncomeCategories(selected).map((item) => (
