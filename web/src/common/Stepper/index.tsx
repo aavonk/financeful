@@ -124,9 +124,10 @@ function useStepperContext() {
 type ProviderDefaultProps = {
   children: React.ReactNode;
   steps: StepType;
+  onComplete?: () => void;
 };
 
-export function StepperProvider({ children, steps }: ProviderDefaultProps) {
+export function StepperProvider({ children, steps, onComplete }: ProviderDefaultProps) {
   const [activeStep, setActiveStep] = React.useState(0);
   const { showAlert } = useAlert();
 
@@ -144,6 +145,12 @@ export function StepperProvider({ children, steps }: ProviderDefaultProps) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       return;
     }
+
+    // On the last step. The button will say "Finish"
+    if (activeStep === steps.length - 1) {
+      return onComplete ? onComplete() : null;
+    }
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -161,7 +168,7 @@ export function StepperProvider({ children, steps }: ProviderDefaultProps) {
 // Main Stepper  ==============================================================
 
 export function Stepper() {
-  const { activeStep, handleNext, handleBack, steps } = useStepperContext();
+  const { activeStep, steps } = useStepperContext();
   const styles = useStyles();
 
   return (
@@ -230,10 +237,9 @@ export function BackButton() {
 
 type NextButtonProps = {
   fnBeforeStep?: () => void;
-  onComplete?: () => void;
 };
 
-export function NextButton({ fnBeforeStep, onComplete }: NextButtonProps) {
+export function NextButton({ fnBeforeStep }: NextButtonProps) {
   const { activeStep, handleNext, steps } = useStepperContext();
 
   const handleClick = () => {
@@ -241,10 +247,6 @@ export function NextButton({ fnBeforeStep, onComplete }: NextButtonProps) {
       fnBeforeStep();
     }
 
-    // On the last step. The button will say "Finish"
-    if (activeStep === steps.length - 1) {
-      return onComplete ? onComplete() : null;
-    }
     handleNext();
   };
 

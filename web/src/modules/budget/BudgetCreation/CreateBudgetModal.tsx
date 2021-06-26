@@ -59,6 +59,10 @@ function CreateBudgetModal() {
     },
   ];
 
+  const onStepsComplete = () => {
+    alert('all done!!!');
+  };
+
   return (
     <>
       <ModalRoot
@@ -67,7 +71,7 @@ function CreateBudgetModal() {
         aria-label="Create a budget"
       >
         <ModalBody>
-          <StepperProvider steps={steps}>
+          <StepperProvider steps={steps} onComplete={onStepsComplete}>
             <PageHeader>
               <h2>{`${month} ${year} Budget`}</h2>
               <ButtonGroup>
