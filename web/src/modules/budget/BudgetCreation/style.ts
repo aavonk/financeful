@@ -124,6 +124,11 @@ export const DescriptionArea = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 40%;
+  padding-right: 1.5rem;
+
+  @media ${({ theme }) => theme.device.tabletAndDown} {
+    padding-right: 0;
+  }
 `;
 
 export const InputArea = styled.div`

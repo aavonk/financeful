@@ -90,6 +90,7 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
   }
 
   const selectAll = () => {
+    if (state.loading) return;
     dispatch({ type: 'SELECT_ALL_CATEGORIES' });
   };
 

@@ -37,7 +37,7 @@ function BudgetAmountsView() {
       <FormSection>
         <DescriptionArea>
           <SectionTitle variant={2}>Income Categories</SectionTitle>
-
+          {/* //TODO: Make the alert a motion.div with AnimatePresence and have it appear */}
           <MessageAlert
             variant="info"
             customMessage
