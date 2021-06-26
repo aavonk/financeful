@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { useCreateBudgetContext } from '@Context/create-budget/createBudgetContext';
+import {
+  ModifiedCategory,
+  useCreateBudgetContext,
+} from '@Context/create-budget/createBudgetContext';
 import { SectionTitle } from '@Components/Layout/styles';
-import type { ModifiedCategory } from '@Context/create-budget/createBudgetContext';
 import MessageAlert from '@Common/Alerts/AlertMessage';
 import CurrentAmountInput from '../CurrentAmountInput';
 import {
@@ -14,13 +16,18 @@ import {
   ItemLabel,
   BudgetAmountContainer,
 } from '../style';
+import { getIncomeCategories, getExpenseCategories } from './helpers';
 
-const getIncomeCategories = (cats: ModifiedCategory[]): ModifiedCategory[] => {
-  return cats.filter((item) => item.isIncome === true);
-};
-
-const getExpenseCategories = (cats: ModifiedCategory[]): ModifiedCategory[] => {
-  return cats.filter((item) => item.isIncome === false);
+const renderItem = (item: ModifiedCategory) => {
+  return (
+    <InputItem key={item.id}>
+      <ItemLabel>
+        <p>{item.name}</p>
+        {item.description && <small>{item.description}</small>}
+      </ItemLabel>
+      <CurrentAmountInput item={item} />
+    </InputItem>
+  );
 };
 
 function BudgetAmountsView() {
@@ -29,7 +36,7 @@ function BudgetAmountsView() {
   } = useCreateBudgetContext();
   return (
     <BudgetAmountContainer>
-      <FormSection>
+      <FormSection className="divider">
         <DescriptionArea>
           <SectionTitle variant={2}>Income Categories</SectionTitle>
           <AnimatePresence initial={false}>
@@ -46,35 +53,15 @@ function BudgetAmountsView() {
           </AnimatePresence>
         </DescriptionArea>
         <InputArea>
-          {getIncomeCategories(selected).map((item) => (
-            <InputItem key={item.id}>
-              <ItemLabel>
-                <p>{item.name}</p>
-                {item.description && <small>{item.description}</small>}
-              </ItemLabel>
-              <CurrentAmountInput item={item} />
-            </InputItem>
-          ))}
+          {getIncomeCategories(selected).map((item) => renderItem(item))}
         </InputArea>
       </FormSection>
       <FormSection>
         <DescriptionArea>
           <SectionTitle variant={2}>Expense Categories</SectionTitle>
-          {/* <small>
-            Don't see what you're looking for? You might need to mark your categories as
-            Income or remove the "Exclude from Budget" option.{' '}
-          </small> */}
         </DescriptionArea>
         <InputArea>
-          {getExpenseCategories(selected).map((item) => (
-            <InputItem key={item.id}>
-              <ItemLabel>
-                <p>{item.name}</p>
-                {item.description && <small>{item.description}</small>}
-              </ItemLabel>
-              <CurrentAmountInput item={item} />
-            </InputItem>
-          ))}
+          {getExpenseCategories(selected).map((item) => renderItem(item))}
         </InputArea>
       </FormSection>
     </BudgetAmountContainer>

@@ -100,7 +100,7 @@ export const Outline = styled.div`
 export const BudgetAmountContainer = styled.div`
   width: 100%;
 
-  & > div:first-child {
+  & > div.divider {
     border-bottom: 2px solid ${({ theme }) => theme.colors.border};
   }
 
