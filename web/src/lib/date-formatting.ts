@@ -29,6 +29,11 @@ export const getCurrentMonthName = () => {
   return date.split(' ')[0];
 };
 
+export const getMonthName = (date: Date) => {
+  const dirtyDate = formatDate(date, 'MMMM do yyyy');
+  return dirtyDate.split(' ')[0];
+};
+
 export const addDays = (date: Date, duration: Duration) => {
   // Set the beginning date to the very start of the day so
   // that results from the day aren't excluded because

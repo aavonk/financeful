@@ -2,12 +2,17 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Left, Right, ContentContainer } from '@Components/Layout/styles';
 import Button from '@Common/Button';
-import { getCurrentMonthName, getCurrentYear } from '@Lib/date-formatting';
+import {
+  getCurrentMonthName,
+  getCurrentYear,
+  addDays as addDuration,
+  getMonthName,
+} from '@Lib/date-formatting';
 import CreateBudgetModal from '@Modules/budget/BudgetCreation/CreateBudgetModal';
 import { CreateBudgetProvider } from '@Context/create-budget/createBudgetContext';
 
 function BudgetPage() {
-  const month = getCurrentMonthName();
+  const month = getMonthName(addDuration(new Date(), { months: 1 }));
   const year = getCurrentYear();
   const history = useHistory();
 
