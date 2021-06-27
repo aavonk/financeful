@@ -8,6 +8,7 @@ import { SectionTitle } from '@Components/Layout/styles';
 import MessageAlert from '@Common/Alerts/AlertMessage';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
 import { useQuery } from '@Hooks/useQuery';
+import Progressbar from '@Common/Progressbar';
 import {
   FormSection,
   InputArea,
@@ -43,7 +44,7 @@ const renderTotal = (type: 'Income' | 'Expenses', cats: ModifiedCategory[]) => {
 
 function ReviewAndSaveView() {
   const {
-    state: { selected },
+    state: { selected, isSubmitting },
   } = useCreateBudgetContext();
   const query = useQuery();
   return (
@@ -55,6 +56,7 @@ function ReviewAndSaveView() {
             'month',
           )} budget for ${query.get('year')}.`}
         />
+        {isSubmitting && <Progressbar />}
       </div>
       <FormSection className="divider">
         <DescriptionArea>

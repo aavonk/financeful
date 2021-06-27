@@ -15,7 +15,7 @@
     "migrate": "yarn prisma migrate dev --preview-feature",
     "migrate:local": "dotenv -e .env.local -- yarn migrate",
     "migrate:test": "dotenv -e .env.test -- yarn prisma migrate dev --name init",
-    "studio": "yarn prisma studio",
+    "studio": "dotenv -e .env.local -- yarn prisma studio",
     "seed:db": "yarn prisma db seed --preview-feature",
     "seed:db:local": "dotenv -e .env.local -- yarn seed:db",
     "reset:db": "yarn prisma migrate reset --skip-seed",

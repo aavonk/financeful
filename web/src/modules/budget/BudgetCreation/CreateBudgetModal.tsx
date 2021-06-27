@@ -20,6 +20,10 @@ import { ButtonGroup } from './style';
 import { useQuery } from '@Hooks/useQuery';
 import { PageHeader } from './style';
 
+type Props = {
+  onComplete: () => void;
+};
+
 const validateBudetAmounts = (categories: ModifiedCategory[]) => {
   const invalidItems = categories.filter((i) => i.isValid === false);
   const invalid = invalidItems.length > 0;
@@ -27,7 +31,7 @@ const validateBudetAmounts = (categories: ModifiedCategory[]) => {
   return !invalid;
 };
 
-function CreateBudgetModal() {
+function CreateBudgetModal({ onComplete }: Props) {
   const {
     state: { selected },
   } = useCreateBudgetContext();
@@ -59,10 +63,6 @@ function CreateBudgetModal() {
     },
   ];
 
-  const onStepsComplete = () => {
-    alert('all done!!!');
-  };
-
   return (
     <>
       <ModalRoot
@@ -71,7 +71,7 @@ function CreateBudgetModal() {
         aria-label="Create a budget"
       >
         <ModalBody>
-          <StepperProvider steps={steps} onComplete={onStepsComplete}>
+          <StepperProvider steps={steps} onComplete={onComplete}>
             <PageHeader>
               <h2>{`${month} ${year} Budget`}</h2>
               <ButtonGroup>

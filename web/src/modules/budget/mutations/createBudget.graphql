@@ -1,0 +1,27 @@
+mutation CreateBudget($input: CreateBudgetInput!) {
+  createBudget(input: $input) {
+    data {
+      id
+      month
+      year
+      updatedAt
+      items {
+        id
+        amount
+        budgetAmount
+        budgetId
+        isExpense
+        isIncome
+        isTransfer
+        category {
+          id
+          description
+          name
+        }
+      }
+    }
+    error {
+      message
+    }
+  }
+}

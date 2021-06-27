@@ -18,6 +18,7 @@ export type State = {
   selected: ModifiedCategory[];
   loading: boolean;
   error: boolean;
+  isSubmitting: boolean;
 };
 
 type ID = string;
@@ -25,6 +26,7 @@ type ID = string;
 export type Action =
   | { type: 'FETCH_ERROR' }
   | { type: 'FETCH_SUCCESS'; payload: ModifiedCategory[] }
+  | { type: 'SET_SUBMITTING'; payload: boolean }
   | { type: 'ADD_TO_QUEUE'; payload: ModifiedCategory }
   | { type: 'ADD_TO_SELECTED' }
   | { type: 'REMOVE_FROM_QUEUE'; payload: ID }
@@ -47,6 +49,7 @@ type ICreateBudgetContext = {
   routeToSelected: () => void;
   markBudgetItemAsInvalid: (categoryId: string) => void;
   updateBudgetAmount: (categoryId: string, amount: number) => void;
+  dispatchSubmittingState: (submitting: boolean) => void;
 };
 
 const CreateBudgetContext = React.createContext<ICreateBudgetContext | undefined>(
@@ -59,6 +62,7 @@ const initialState: State = {
   selected: [],
   loading: true,
   error: false,
+  isSubmitting: false,
 };
 
 export function CreateBudgetProvider({ children }: { children: React.ReactNode }) {
@@ -117,6 +121,10 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     dispatch({ type: 'INVALIDATE_BUDGET_ITEM', payload: { id: categoryId } });
   };
 
+  const dispatchSubmittingState = React.useCallback((submitting: boolean) => {
+    dispatch({ type: 'SET_SUBMITTING', payload: submitting });
+  }, []);
+
   const value: ICreateBudgetContext = {
     state,
     selectAll,
@@ -125,10 +133,8 @@ export function CreateBudgetProvider({ children }: { children: React.ReactNode }
     removeAllSelected,
     updateBudgetAmount,
     markBudgetItemAsInvalid,
+    dispatchSubmittingState,
   };
-
-  //@ts-ignore
-  window.state = state;
 
   return (
     <CreateBudgetContext.Provider value={value}>{children}</CreateBudgetContext.Provider>

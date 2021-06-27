@@ -3,13 +3,12 @@ import { useHistory } from 'react-router-dom';
 import { Left, Right, ContentContainer } from '@Components/Layout/styles';
 import Button from '@Common/Button';
 import {
-  getCurrentMonthName,
   getCurrentYear,
   addDays as addDuration,
   getMonthName,
 } from '@Lib/date-formatting';
-import CreateBudgetModal from '@Modules/budget/BudgetCreation/CreateBudgetModal';
 import { CreateBudgetProvider } from '@Context/create-budget/createBudgetContext';
+import CreateBudgetController from '@Modules/budget/BudgetCreation/CreateBudgetController';
 
 function BudgetPage() {
   const month = getMonthName(addDuration(new Date(), { months: 1 }));
@@ -30,7 +29,7 @@ function BudgetPage() {
         </Button>
         <div>
           <CreateBudgetProvider>
-            <CreateBudgetModal />
+            <CreateBudgetController />
           </CreateBudgetProvider>
         </div>
       </Right>
