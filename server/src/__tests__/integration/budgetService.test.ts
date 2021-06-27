@@ -4,7 +4,6 @@ import type { CreateBudgetItemInput } from '@Modules/Budgets/types/budget.types'
 import { PrismaClient } from '@prisma/client';
 import { resetDatabase, createCategories, createUser } from '../helpers';
 import { categories as MockCategories } from '../__mocks__/fixtures/categories';
-// import type { CreateBudgetInput } from '@Modules/Budgets/types/budget.types'
 
 let prisma: PrismaClient;
 let budgetRepo: BudgetRepo;
@@ -42,7 +41,7 @@ const setupBudgetCreation = async () => {
 };
 
 describe('Budget Creation', () => {
-  it('Creates and returns the budget & items given correct input', async () => {
+  it('Creates and returns the budget & items', async () => {
     const { user, budgetItemsInput } = await setupBudgetCreation();
 
     const budget = await budgetService.newBudget(
