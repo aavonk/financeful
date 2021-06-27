@@ -1,4 +1,4 @@
-import type { IDataBase, Budget } from '@Shared/types';
+import type { IDataBase, Budget, MonthAndYear } from '@Shared/types';
 import type { IBudgetRepo } from '../budgetRepo';
 import type { CreateBudgetInput } from '../../types/budget.types';
 
@@ -7,6 +7,18 @@ export class BudgetRepo implements IBudgetRepo {
 
   constructor(database: IDataBase) {
     this.client = database;
+  }
+
+  private getCategoryOptions(): any {
+    return {
+      include: {
+        items: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    };
   }
 
   async exists(input: CreateBudgetInput, userId: string): Promise<boolean> {
@@ -55,13 +67,30 @@ export class BudgetRepo implements IBudgetRepo {
           },
         },
       },
-      include: {
-        items: {
-          include: {
-            category: true,
+      ...this.getCategoryOptions(),
+    });
+  }
+
+  async getBudget(date: MonthAndYear, userId: string): Promise<Budget | null> {
+    const { monthName, year } = date;
+
+    return await this.client.budget.findFirst({
+      where: {
+        userId,
+        AND: [
+          {
+            month: {
+              equals: monthName,
+            },
           },
-        },
+          {
+            year: {
+              equals: year,
+            },
+          },
+        ],
       },
+      ...this.getCategoryOptions(),
     });
   }
 }

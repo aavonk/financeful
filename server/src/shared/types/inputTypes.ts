@@ -1,4 +1,4 @@
-import { InputType, Field, ID } from 'type-graphql';
+import { InputType, Field, ID, Int } from 'type-graphql';
 
 @InputType()
 export class RangeParams {
@@ -13,4 +13,13 @@ export class RangeParams {
 export class RangeWithAccountID extends RangeParams {
   @Field(() => ID)
   accountId: string;
+}
+
+@InputType()
+export class MonthAndYear{
+  @Field(() => String)
+  monthName: string
+
+  @Field(() => Int)
+  year: number;
 }

@@ -4,7 +4,7 @@ import {
 } from '../../types/budget.types';
 import type { IBudgetService } from '../budgetService';
 import type { IBudgetRepo } from '../../repos/budgetRepo';
-// import type { Budget } from '@Shared/types';
+import type { Budget, MonthAndYear } from '@Shared/types';
 
 export class BudgetService implements IBudgetService {
   private budgetRepo: IBudgetRepo;
@@ -29,5 +29,9 @@ export class BudgetService implements IBudgetService {
 
     const data = await this.budgetRepo.createOne(input, userId);
     return { data };
+  }
+
+  async getBudget(date: MonthAndYear, userId: string): Promise<Budget | null> {
+    return await this.budgetRepo.getBudget(date, userId);
   }
 }

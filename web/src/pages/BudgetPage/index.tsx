@@ -9,6 +9,7 @@ import {
 } from '@Lib/date-formatting';
 import { CreateBudgetProvider } from '@Context/create-budget/createBudgetContext';
 import CreateBudgetController from '@Modules/budget/BudgetCreation/CreateBudgetController';
+import BudgetController from '@Modules/budget/BudgetController';
 
 function BudgetPage() {
   const month = getMonthName(addDuration(new Date(), { months: 1 }));
@@ -17,7 +18,9 @@ function BudgetPage() {
 
   return (
     <ContentContainer>
-      <Left>Left Side!</Left>
+      <Left>
+        <BudgetController />
+      </Left>
       <Right>
         <Button
           variant="primary"
