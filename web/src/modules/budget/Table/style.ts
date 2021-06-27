@@ -4,7 +4,7 @@ export const TableRoot = styled.table`
   width: 100%;
   display: table;
   border-spacing: 0;
-  border-collapse: separate;
+  border-collapse: collapse;
 
   th:first-child {
     border-top-left-radius: 6px;
@@ -20,8 +20,6 @@ export const TableRoot = styled.table`
 `;
 
 export const TableHead = styled.thead`
-  /* background-color: ${({ theme }) => theme.colors.primary}; */
-  background-color: ${({ theme }) => theme.colors.darkThree};
   display: table-header-group;
   white-space: nowrap;
 `;
@@ -34,15 +32,15 @@ export const TableRow = styled.tr`
 `;
 
 export const Header = styled.th`
-  color: ${({ theme }) => theme.colors.textPrimary};
-  font-weight: 600;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-weight: 500;
   line-height: 1.43rem;
   text-align: left;
   /* padding: 2px 8px; */
   padding: 0.25rem 0.45rem;
   /* Apply these styles below to normal table-cells as well */
   display: table-cell;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   letter-spacing: 0.01071em;
   vertical-align: inherit;
 `;
@@ -64,6 +62,7 @@ export const TableCell = styled.td`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 export const BoldCell = styled.td`

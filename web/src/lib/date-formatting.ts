@@ -26,7 +26,7 @@ export const getCurrentYear = (): number => {
 export const getCurrentMonthName = () => {
   const today = new Date();
   const date = formatDate(today, 'MMMM do yyyy');
-  return date.split(' ')[0];
+  return date.split(' ')[0].trim();
 };
 
 export const getMonthName = (date: Date) => {
