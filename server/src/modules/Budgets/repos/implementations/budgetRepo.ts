@@ -55,6 +55,13 @@ export class BudgetRepo implements IBudgetRepo {
           },
         },
       },
+      include: {
+        items: {
+          include: {
+            category: true,
+          },
+        },
+      },
     });
   }
 }
