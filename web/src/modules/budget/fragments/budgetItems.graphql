@@ -1,0 +1,16 @@
+fragment BudgetItems on Budget {
+  items {
+    id
+    amount
+    budgetAmount
+    budgetId
+    isExpense
+    isIncome
+    isTransfer
+    category {
+      id
+      description
+      name
+    }
+  }
+}

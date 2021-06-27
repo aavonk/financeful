@@ -27,6 +27,7 @@ export type Query = {
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
+  getBudget?: Maybe<Budget>;
   getAccountDailyBalances: Array<HistoryObject>;
   getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
   getAggregatedDailyBalances: Array<HistoryObject>;
@@ -53,6 +54,11 @@ export type QueryGetTransferArgs = {
 
 export type QueryGetAccountsArgs = {
   filter?: Maybe<AccountQueryFilters>;
+};
+
+
+export type QueryGetBudgetArgs = {
+  date: MonthAndYear;
 };
 
 
@@ -149,6 +155,35 @@ export type Transfer = {
 
 export type AccountQueryFilters = {
   isInactive: Scalars['Boolean'];
+};
+
+export type Budget = {
+  __typename?: 'Budget';
+  id: Scalars['ID'];
+  month: Scalars['String'];
+  year: Scalars['Int'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  items?: Maybe<Array<BudgetItem>>;
+};
+
+export type BudgetItem = {
+  __typename?: 'BudgetItem';
+  id: Scalars['ID'];
+  amount: Scalars['Int'];
+  budgetAmount: Scalars['Int'];
+  isExpense: Scalars['Boolean'];
+  isIncome: Scalars['Boolean'];
+  isTransfer: Scalars['Boolean'];
+  categoryId: Scalars['ID'];
+  category?: Maybe<Category>;
+  budgetId: Scalars['ID'];
+  budget?: Maybe<Budget>;
+};
+
+export type MonthAndYear = {
+  monthName: Scalars['String'];
+  year: Scalars['Int'];
 };
 
 export type HistoryObject = {
@@ -392,30 +427,6 @@ export type CreateBudgetResponse = {
   error?: Maybe<ErrorMessage>;
 };
 
-export type Budget = {
-  __typename?: 'Budget';
-  id: Scalars['ID'];
-  month: Scalars['String'];
-  year: Scalars['Int'];
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  items?: Maybe<Array<BudgetItem>>;
-};
-
-export type BudgetItem = {
-  __typename?: 'BudgetItem';
-  id: Scalars['ID'];
-  amount: Scalars['Int'];
-  budgetAmount: Scalars['Int'];
-  isExpense: Scalars['Boolean'];
-  isIncome: Scalars['Boolean'];
-  isTransfer: Scalars['Boolean'];
-  categoryId: Scalars['ID'];
-  category?: Maybe<Category>;
-  budgetId: Scalars['ID'];
-  budget?: Maybe<Budget>;
-};
-
 export type ErrorMessage = {
   __typename?: 'ErrorMessage';
   message: Scalars['String'];
@@ -502,6 +513,18 @@ export type FetchUserQuery = (
   ) }
 );
 
+export type BudgetItemsFragment = (
+  { __typename?: 'Budget' }
+  & { items?: Maybe<Array<(
+    { __typename?: 'BudgetItem' }
+    & Pick<BudgetItem, 'id' | 'amount' | 'budgetAmount' | 'budgetId' | 'isExpense' | 'isIncome' | 'isTransfer'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'description' | 'name'>
+    )> }
+  )>> }
+);
+
 export type CreateBudgetMutationVariables = Exact<{
   input: CreateBudgetInput;
 }>;
@@ -527,6 +550,20 @@ export type CreateBudgetMutation = (
       & Pick<ErrorMessage, 'message'>
     )> }
   ) }
+);
+
+export type GetBudgetQueryVariables = Exact<{
+  date: MonthAndYear;
+}>;
+
+
+export type GetBudgetQuery = (
+  { __typename?: 'Query' }
+  & { getBudget?: Maybe<(
+    { __typename?: 'Budget' }
+    & Pick<Budget, 'id' | 'month' | 'year' | 'updatedAt'>
+    & BudgetItemsFragment
+  )> }
 );
 
 export type CreateCategoryMutationVariables = Exact<{
@@ -904,6 +941,24 @@ export type GetBalanceHistoriesQuery = (
   )> }
 );
 
+export const BudgetItemsFragmentDoc = gql`
+    fragment BudgetItems on Budget {
+  items {
+    id
+    amount
+    budgetAmount
+    budgetId
+    isExpense
+    isIncome
+    isTransfer
+    category {
+      id
+      description
+      name
+    }
+  }
+}
+    `;
 export const TransactionFieldsFragmentDoc = gql`
     fragment TransactionFields on Transaction {
   id
@@ -1171,6 +1226,45 @@ export function useCreateBudgetMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateBudgetMutationHookResult = ReturnType<typeof useCreateBudgetMutation>;
 export type CreateBudgetMutationResult = Apollo.MutationResult<CreateBudgetMutation>;
 export type CreateBudgetMutationOptions = Apollo.BaseMutationOptions<CreateBudgetMutation, CreateBudgetMutationVariables>;
+export const GetBudgetDocument = gql`
+    query GetBudget($date: MonthAndYear!) {
+  getBudget(date: $date) {
+    id
+    month
+    year
+    updatedAt
+    ...BudgetItems
+  }
+}
+    ${BudgetItemsFragmentDoc}`;
+
+/**
+ * __useGetBudgetQuery__
+ *
+ * To run a query within a React component, call `useGetBudgetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBudgetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBudgetQuery({
+ *   variables: {
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useGetBudgetQuery(baseOptions: Apollo.QueryHookOptions<GetBudgetQuery, GetBudgetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBudgetQuery, GetBudgetQueryVariables>(GetBudgetDocument, options);
+      }
+export function useGetBudgetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBudgetQuery, GetBudgetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBudgetQuery, GetBudgetQueryVariables>(GetBudgetDocument, options);
+        }
+export type GetBudgetQueryHookResult = ReturnType<typeof useGetBudgetQuery>;
+export type GetBudgetLazyQueryHookResult = ReturnType<typeof useGetBudgetLazyQuery>;
+export type GetBudgetQueryResult = Apollo.QueryResult<GetBudgetQuery, GetBudgetQueryVariables>;
 export const CreateCategoryDocument = gql`
     mutation CreateCategory($input: CategoryCreateInput!) {
   createCategory(input: $input) {
