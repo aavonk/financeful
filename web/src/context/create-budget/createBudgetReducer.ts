@@ -70,7 +70,6 @@ export function createBudgetReducer(state: State, action: Action): State {
         ),
       };
     case 'SET_SUBMITTING':
-      console.log('submitting from reducer!!!!');
       return {
         ...state,
         isSubmitting: action.payload,
