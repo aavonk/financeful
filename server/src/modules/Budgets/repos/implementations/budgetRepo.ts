@@ -38,11 +38,22 @@ export class BudgetRepo implements IBudgetRepo {
   }
 
   async createOne(input: CreateBudgetInput, userId: string): Promise<Budget> {
+    const { items } = input;
+    const itemsCreateInput = items.map((item) => ({
+      ...item,
+      amount: 0,
+      isTransfer: false,
+    }));
     return await this.client.budget.create({
       data: {
         month: input.month,
         year: input.year,
         userId,
+        items: {
+          createMany: {
+            data: itemsCreateInput,
+          },
+        },
       },
     });
   }
