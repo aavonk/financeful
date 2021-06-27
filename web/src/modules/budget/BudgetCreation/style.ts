@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -141,7 +141,7 @@ export const InputArea = styled.div`
   }
 `;
 
-export const InputItem = styled.div`
+export const InputItem = styled.div<{ withBorder?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -155,13 +155,34 @@ export const InputItem = styled.div`
   @media ${({ theme }) => theme.device.tabletAndDown} {
     padding-left: 0;
   }
+
+  ${({ withBorder }) =>
+    withBorder &&
+    css`
+      border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    `}
+`;
+
+type ItemAmountProps = {
+  largeItem?: boolean;
+};
+export const ItemAmount = styled.p<ItemAmountProps>`
+  font-weight: 400;
+  font-size: 0.85rem;
+
+  ${({ largeItem }) =>
+    largeItem &&
+    css`
+      font-weight: 700;
+      font-size: 1rem;
+    `}
 `;
 
 export const ItemLabel = styled.div`
   flex: 1 0 60%;
   padding-right: 0.5rem;
   & > p {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.85rem;
   }
 

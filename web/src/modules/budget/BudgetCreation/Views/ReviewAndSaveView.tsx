@@ -3,7 +3,7 @@ import {
   ModifiedCategory,
   useCreateBudgetContext,
 } from '@Context/create-budget/createBudgetContext';
-import { getIncomeCategories, getExpenseCategories } from './helpers';
+import { getIncomeCategories, getExpenseCategories, getTotalAmount } from './helpers';
 import { SectionTitle } from '@Components/Layout/styles';
 import MessageAlert from '@Common/Alerts/AlertMessage';
 import { formatMoneyFromCentsToDollars } from '@Lib/money-utils';
@@ -14,6 +14,7 @@ import {
   DescriptionArea,
   InputItem,
   ItemLabel,
+  ItemAmount,
   BudgetAmountContainer,
 } from '../style';
 
@@ -24,7 +25,18 @@ const renderItem = (item: ModifiedCategory) => {
         <p>{item.name}</p>
         {item.description && <small>{item.description}</small>}
       </ItemLabel>
-      <div>{formatMoneyFromCentsToDollars(item.currentMonth)}</div>
+      <ItemAmount>{formatMoneyFromCentsToDollars(item.currentMonth)}</ItemAmount>
+    </InputItem>
+  );
+};
+
+const renderTotal = (type: 'Income' | 'Expenses', cats: ModifiedCategory[]) => {
+  return (
+    <InputItem withBorder>
+      <ItemLabel>
+        <p style={{ fontWeight: 700, fontSize: '1rem' }}>Total {type}</p>
+      </ItemLabel>
+      <ItemAmount largeItem>{getTotalAmount(cats)}</ItemAmount>
     </InputItem>
   );
 };
@@ -49,6 +61,7 @@ function ReviewAndSaveView() {
           <SectionTitle variant={2}>Income Categories</SectionTitle>
         </DescriptionArea>
         <InputArea>
+          {renderTotal('Income', getIncomeCategories(selected))}
           {getIncomeCategories(selected).map((item) => renderItem(item))}
         </InputArea>
       </FormSection>
@@ -57,6 +70,7 @@ function ReviewAndSaveView() {
           <SectionTitle variant={2}>Expense Categories</SectionTitle>
         </DescriptionArea>
         <InputArea>
+          {renderTotal('Expenses', getExpenseCategories(selected))}
           {getExpenseCategories(selected).map((item) => renderItem(item))}
         </InputArea>
       </FormSection>
