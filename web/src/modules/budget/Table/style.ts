@@ -5,7 +5,7 @@ export const TableRoot = styled.table`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
-
+  color: ${({ theme }) => theme.colors.textSecondary};
   th:first-child {
     border-top-left-radius: 6px;
   }

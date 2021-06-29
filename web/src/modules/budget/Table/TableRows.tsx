@@ -30,7 +30,6 @@ interface RowPropsReturned extends Record<string, unknown> {
 }
 
 interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
-  debugMode?: boolean;
   getRowProps?: (row: RowParam) => RowPropsReturned;
   getColumnProps?: (col: HeaderGroup) => Record<string, unknown>;
 }
@@ -40,7 +39,6 @@ const defaultPropGetter = () => ({});
 function TableRows<T extends Record<string, unknown>>({
   data,
   columns: userColumns,
-  debugMode = false,
   getRowProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
 }: TableProps<T>) {
@@ -54,73 +52,66 @@ function TableRows<T extends Record<string, unknown>>({
   } = useTable<T>({ columns: userColumns, data }, useExpanded);
 
   return (
-    <Paper style={{ paddingBottom: '1rem' }}>
-      {debugMode && (
-        <pre>
-          <code>{JSON.stringify({ expanded: expanded }, null, 2)}</code>
-        </pre>
-      )}
-      <TableRoot {...getTableProps()}>
-        <TableHead>
-          {headerGroups.map((headerGroup) => (
-            <TableRow {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <Header
-                  {...column.getHeaderProps([
-                    {
-                      //@ts-ignore
-                      className: column.className,
-                      //@ts-ignore
-                      style: column.style,
-                    },
-                  ])}
-                >
-                  {column.render('Header')}
-                </Header>
-              ))}
+    <TableRoot {...getTableProps()}>
+      <TableHead>
+        {headerGroups.map((headerGroup) => (
+          <TableRow {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <Header
+                {...column.getHeaderProps([
+                  {
+                    //@ts-ignore
+                    className: column.className,
+                    //@ts-ignore
+                    style: column.style,
+                  },
+                ])}
+              >
+                {column.render('Header')}
+              </Header>
+            ))}
+          </TableRow>
+        ))}
+      </TableHead>
+      <TableBody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <TableRow {...row.getRowProps(getRowProps(row as RowParam))}>
+              {row.cells.map((cell) => {
+                return 'subRow' in cell.row.original ? (
+                  <BoldCell
+                    {...cell.getCellProps([
+                      {
+                        //@ts-ignore
+                        className: cell.column.className,
+                        //@ts-ignore
+                        style: cell.column.style,
+                      },
+                    ])}
+                  >
+                    {cell.render('Cell')}
+                  </BoldCell>
+                ) : (
+                  <TableCell
+                    {...cell.getCellProps([
+                      {
+                        //@ts-ignore
+                        className: cell.column.className,
+                        //@ts-ignore
+                        style: cell.column.style,
+                      },
+                    ])}
+                  >
+                    {cell.render('Cell')}
+                  </TableCell>
+                );
+              })}
             </TableRow>
-          ))}
-        </TableHead>
-        <TableBody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <TableRow {...row.getRowProps(getRowProps(row as RowParam))}>
-                {row.cells.map((cell) => {
-                  return 'subRow' in cell.row.original ? (
-                    <BoldCell
-                      {...cell.getCellProps([
-                        {
-                          //@ts-ignore
-                          className: cell.column.className,
-                          //@ts-ignore
-                          style: cell.column.style,
-                        },
-                      ])}
-                    >
-                      {cell.render('Cell')}
-                    </BoldCell>
-                  ) : (
-                    <TableCell
-                      {...cell.getCellProps([
-                        {
-                          //@ts-ignore
-                          className: cell.column.className,
-                          //@ts-ignore
-                          style: cell.column.style,
-                        },
-                      ])}
-                    >
-                      {cell.render('Cell')}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </TableRoot>
-    </Paper>
+          );
+        })}
+      </TableBody>
+    </TableRoot>
   );
 }
 

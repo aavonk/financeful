@@ -3,7 +3,7 @@ import { BadgeWrapper, StyledBadge } from './style';
 
 interface BadgeProps {
   badgeContent: string | number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function Badge({ badgeContent, children }: BadgeProps) {

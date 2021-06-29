@@ -39,6 +39,22 @@ const theme: DefaultTheme = {
     blueStroke: '#2451B7',
     strokeWidth: 4,
   },
+  elements: {
+    pills: {
+      primary: {
+        text: 'rgb(166,213,250)',
+        background: 'rgba(30, 136, 229, 0.15)',
+      },
+      warning: {
+        text: 'rgb(255, 213, 153)',
+        background: 'rgba(133, 104, 0, 0.15)',
+      },
+      danger: {
+        text: 'rgba(218, 78, 122, 0.91)',
+        background: 'rgba(148, 16, 38, .15)',
+      },
+    },
+  },
   effects: {
     buttonHover: 'rgba(29, 161, 242, 0.1)',
     dangerHover: 'rgba(224, 36, 94, 0.2)',
