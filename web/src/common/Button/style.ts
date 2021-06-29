@@ -27,6 +27,7 @@ export const StyledButton = styled.button<ButtonProps>`
   &:disabled {
     opacity: 0.5;
     cursor: auto;
+    pointer-events: none;
   }
 
   ${({ variant }) =>

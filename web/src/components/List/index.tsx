@@ -1,7 +1,11 @@
-import Button from '@Common/Button';
 import React from 'react';
+import Button from '@Common/Button';
+import type { ButtonVariants } from '@Common/Button';
+import { CheckBox } from '@Common/FormElements';
+import type { CheckboxProps } from '@Common/FormElements';
 import styled from 'styled-components';
 import Skeleton from '@Common/Skeleton';
+import { motion, usePresence, AnimatePresence } from 'framer-motion';
 
 const StyledList = styled.ul`
   background-color: ${({ theme }) => theme.colors.list};
@@ -21,10 +25,14 @@ interface ListProps {
 }
 
 export function List({ children }: ListProps) {
-  return <StyledList>{children}</StyledList>;
+  return (
+    <AnimatePresence>
+      <StyledList>{children}</StyledList>;
+    </AnimatePresence>
+  );
 }
 
-const StyledItem = styled.li`
+const StyledAnimatedItem = styled(motion.li)`
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -37,7 +45,6 @@ const StyledItem = styled.li`
     color: ${({ theme }) => theme.colors.textGrey};
   }
 `;
-
 const ItemLeft = styled.div`
   flex: 1 0 75%;
 `;
@@ -60,13 +67,34 @@ type ItemProps = {
 type ButtonProps = {
   text: string;
   onClick: () => void;
+  variant?: ButtonVariants;
 };
 
+type ModifiedCheckboxProps = Omit<CheckboxProps, 'checked'>;
+
 type OptionalProps =
-  | { withButton?: false; buttonProps?: never }
-  | { withButton: true; buttonProps: ButtonProps };
+  | {
+      withButton?: false;
+      buttonProps?: never;
+      withCheckbox?: never;
+      checkboxProps?: never;
+    }
+  | {
+      withButton: true;
+      buttonProps: ButtonProps;
+      withCheckbox?: never;
+      checkboxProps?: never;
+    }
+  | {
+      withCheckbox: true;
+      checkboxProps: ModifiedCheckboxProps;
+      withButton?: never;
+      buttonProps?: never;
+    };
 
 type ListItemProps = ItemProps & OptionalProps;
+
+const transition = { type: 'spring', stiffness: 500, damping: 50, mass: 1 };
 
 export function ListItem({
   heading,
@@ -74,9 +102,26 @@ export function ListItem({
   withButton,
   buttonProps,
   asLoader,
+  withCheckbox,
+  checkboxProps,
 }: ListItemProps) {
+  const [checked, setChecked] = React.useState(false);
+  const [isPresent, safeToRemove] = usePresence();
+
+  const animations = {
+    layout: true,
+    initial: 'out',
+    animate: isPresent ? 'in' : 'out',
+    variants: {
+      in: { scaleY: 1, opacity: 1 },
+      out: { scaleY: 0, opacity: 0, zIndex: -1 },
+    },
+    onAnimationComplete: () => !isPresent && safeToRemove!(),
+    transition,
+  };
+
   return (
-    <StyledItem>
+    <StyledAnimatedItem {...animations}>
       <ItemLeft>
         {asLoader ? (
           <Skeleton width="80%" height="24px" />
@@ -87,13 +132,23 @@ export function ListItem({
           </>
         )}
       </ItemLeft>
-      {withButton && buttonProps && (
+      {withButton && (
         <ItemRight>
-          <Button variant="dark" onClick={buttonProps.onClick}>
-            {buttonProps.text}
+          <Button variant={buttonProps!.variant || 'dark'} {...buttonProps}>
+            {buttonProps!.text}
           </Button>
         </ItemRight>
       )}
-    </StyledItem>
+      {!withButton && withCheckbox && (
+        <CheckBox
+          {...checkboxProps!}
+          checked={checked}
+          onChange={(e) => {
+            setChecked(e.target.checked);
+            checkboxProps!.onChange(e);
+          }}
+        />
+      )}
+    </StyledAnimatedItem>
   );
 }

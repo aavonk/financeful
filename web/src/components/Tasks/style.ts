@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
+import type { Variants } from './index';
 
 type Props = {
   isClickable?: boolean;
+  $variant: Variants;
 };
 
 export const TaskContainer = styled.div<Props>`
@@ -12,7 +14,7 @@ export const TaskContainer = styled.div<Props>`
   background-color: ${({ theme }) => theme.colors.darkTwo};
   padding: 0.75rem;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 2px;
+  border-radius: 6px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   max-width: 275px;
 
@@ -30,6 +32,16 @@ export const TaskContainer = styled.div<Props>`
       :hover {
         transition: background-color 0.2s ease-in-out;
         background-color: #171f26;
+      }
+    `}
+
+  ${(props) =>
+    props.$variant === 'info' &&
+    css`
+      background-color: rgb(3, 14, 24);
+      & > svg {
+        color: ${({ theme }) => theme.colors.primary};
+        fill: ${({ theme }) => theme.colors.primary};
       }
     `}
 `;

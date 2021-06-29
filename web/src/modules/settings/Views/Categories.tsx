@@ -1,14 +1,15 @@
 import React from 'react';
-import { Heading, Section } from './style';
+import { Section } from './style';
+import { SectionTitle } from '@Components/Layout/styles';
 import CategorySetup from '../categories';
 import CreateCategoryController from '../categories/Forms/CreateCategoryController';
 
 function Categories() {
   return (
     <>
-      <Heading>
-        <h2>Categories</h2>
-      </Heading>
+      <SectionTitle as="h5" variant={1} withBorder>
+        Categories
+      </SectionTitle>
       <Section>
         <CreateCategoryController />
         <CategorySetup />

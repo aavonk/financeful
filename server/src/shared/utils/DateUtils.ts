@@ -4,6 +4,7 @@ type StartAndEnd = {
 };
 
 export class DateUtils {
+  public static getMonthName;
   public static formatNumericDate(date: Date): string {
     const d = new Date(date);
 

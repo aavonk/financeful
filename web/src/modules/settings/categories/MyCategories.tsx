@@ -1,10 +1,11 @@
 import React from 'react';
 import { List, ListItem } from '@Components/List';
 import { useFetchCategoriesQuery } from '@Generated/graphql';
-import EditCategoryController from '../Forms/EditCategoryController';
+import EditCategoryController from './Forms/EditCategoryController';
 import type { Category } from '@Generated/graphql';
-import MyCategoriesSkeleton from './MyCategoriesSkeleton';
-import MyCategoriesError from './MyCategoriesError';
+
+import ListSkeleton from '@Components/List/ListSkeleton';
+import ListError from '@Components/List/ListError';
 
 function MyCategories() {
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null);
@@ -12,11 +13,10 @@ function MyCategories() {
   const { data, loading, error } = useFetchCategoriesQuery();
 
   if (error) {
-    return <MyCategoriesError />;
+    return <ListError />;
   }
-
   if (loading) {
-    return <MyCategoriesSkeleton />;
+    return <ListSkeleton count={10} />;
   }
 
   return (
@@ -35,6 +35,7 @@ function MyCategories() {
             withButton
             buttonProps={{
               text: 'Edit',
+              variant: 'dark',
               onClick: () => {
                 setSelectedCategory(category);
                 setIsModalOpen(true);

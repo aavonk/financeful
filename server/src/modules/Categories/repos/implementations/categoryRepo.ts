@@ -23,6 +23,13 @@ export class CategoryRepo implements ICategoryRepo {
       },
     });
   }
+  async findById(categoryId: string): Promise<Category | null> {
+    return await this.client.category.findUnique({
+      where: {
+        id: categoryId,
+      },
+    });
+  }
   async findExisting(userId: string, name: string): Promise<Category | null> {
     const lowerCaseName = name.toLowerCase();
     const upperCaseName = this.capitalizeFirstLetter(name);

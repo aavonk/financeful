@@ -15,6 +15,7 @@ import {
   StyledInsetInput,
   InsetLabel,
   StyledInsetSelect,
+  StyledCheckbox,
 } from './style';
 
 type InputTypes = {
@@ -33,29 +34,85 @@ type InputTypes = {
   ariaDescribedBy?: string;
   required?: boolean;
   'data-testid'?: string;
+  style?: React.CSSProperties;
 };
 
-export const InsetInput = React.forwardRef<HTMLInputElement, InputTypes>((props, ref) => {
-  return (
-    <InsetLabel>
-      {props.children}
+export type CheckboxProps = {
+  disabled?: boolean;
+  id?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+  'data-testid'?: string;
+};
 
-      <StyledInsetInput
-        type={props.type}
-        id={props.id}
-        placeholder={props.placeholder}
-        value={props.value}
+export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  (props, ref) => {
+    return (
+      <StyledCheckbox
+        type="checkbox"
+        checked={props.checked}
         onChange={props.onChange}
-        autoFocus={props.autoFocus}
+        id={props.id}
         disabled={props.disabled}
-        aria-describedby={props.ariaDescribedBy}
-        aria-required={props.required}
         data-testid={props['data-testid']}
         ref={ref}
       />
-    </InsetLabel>
-  );
-});
+    );
+  },
+);
+
+type InsetOptions =
+  | { withoutLabel: true; children?: never }
+  | { withoutLabel?: false; children: React.ReactNode };
+
+type InputPropsWithoutChilren = Omit<InputTypes, 'children'>;
+
+type InsetInputProps = InputPropsWithoutChilren & InsetOptions;
+
+export const InsetInput = React.forwardRef<HTMLInputElement, InsetInputProps>(
+  ({ withoutLabel = false, ...props }, ref) => {
+    return (
+      <>
+        {withoutLabel ? (
+          <StyledInsetInput
+            type={props.type}
+            id={props.id}
+            placeholder={props.placeholder}
+            value={props.value}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
+            autoFocus={props.autoFocus}
+            disabled={props.disabled}
+            aria-describedby={props.ariaDescribedBy}
+            aria-required={props.required}
+            data-testid={props['data-testid']}
+            ref={ref}
+            style={props.style}
+          />
+        ) : (
+          <InsetLabel>
+            {props.children}
+            <StyledInsetInput
+              type={props.type}
+              id={props.id}
+              placeholder={props.placeholder}
+              value={props.value}
+              onChange={props.onChange}
+              onBlur={props.onBlur}
+              autoFocus={props.autoFocus}
+              disabled={props.disabled}
+              aria-describedby={props.ariaDescribedBy}
+              aria-required={props.required}
+              data-testid={props['data-testid']}
+              ref={ref}
+              style={props.style}
+            />
+          </InsetLabel>
+        )}
+      </>
+    );
+  },
+);
 
 export function InsetSelect(props: SelectProps) {
   return (

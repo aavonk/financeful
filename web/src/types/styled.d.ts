@@ -38,6 +38,22 @@ declare module 'styled-components' {
       blueStroke: string;
       strokeWidth: number;
     };
+    elements: {
+      pills: {
+        primary: {
+          text: string;
+          background: string;
+        };
+        warning: {
+          text: string;
+          background: string;
+        };
+        danger: {
+          text: string;
+          background: string;
+        };
+      };
+    };
     effects: {
       buttonHover: string;
       dangerHover: string;

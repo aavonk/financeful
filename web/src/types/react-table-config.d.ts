@@ -44,12 +44,12 @@ import {
   UseSortByInstanceProps,
   UseSortByOptions,
   UseSortByState,
+  HeaderGroup,
+  Get,
 } from 'react-table';
 
 declare module 'react-table' {
-  export interface UseFlexLayoutInstanceProps<
-    D extends Record<string, unknown>
-  > {
+  export interface UseFlexLayoutInstanceProps<D extends Record<string, unknown>> {
     totalColumnsMinWidth: number;
   }
 
@@ -68,9 +68,8 @@ declare module 'react-table' {
       UseRowSelectOptions<D>,
       UseSortByOptions<D> {}
 
-  export interface Hooks<
-    D extends Record<string, unknown> = Record<string, unknown>
-  > extends UseExpandedHooks<D>,
+  export interface Hooks<D extends Record<string, unknown> = Record<string, unknown>>
+    extends UseExpandedHooks<D>,
       UseGroupByHooks<D>,
       UseRowSelectHooks<D>,
       UseSortByHooks<D> {}
@@ -88,9 +87,8 @@ declare module 'react-table' {
       UsePaginationInstanceProps<D>,
       UseSortByInstanceProps<D> {}
 
-  export interface TableState<
-    D extends Record<string, unknown> = Record<string, unknown>
-  > extends UseColumnOrderState<D>,
+  export interface TableState<D extends Record<string, unknown> = Record<string, unknown>>
+    extends UseColumnOrderState<D>,
       UseExpandedState<D>,
       UseFiltersState<D>,
       UseGlobalFiltersState<D>,
@@ -120,9 +118,8 @@ declare module 'react-table' {
       UseSortByColumnProps<D> {}
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface Cell<
-    D extends Record<string, unknown> = Record<string, unknown>
-  > extends UseGroupByCellProps<D> {}
+  export interface Cell<D extends Record<string, unknown> = Record<string, unknown>>
+    extends UseGroupByCellProps<D> {}
 
   export interface Row<D extends object = {}>
     extends UseExpandedRowProps<D>,
@@ -130,6 +127,4 @@ declare module 'react-table' {
       UseRowSelectRowProps<D> {}
 }
 
-export type TableMouseEventHandler = (
-  instance: TableInstance<T>,
-) => MouseEventHandler;
+export type TableMouseEventHandler = (instance: TableInstance<T>) => MouseEventHandler;

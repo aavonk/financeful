@@ -3,10 +3,14 @@ import { TaskContainer, TaskTitle, SecondaryText } from './style';
 import { LineChart as LineChartSVG } from '@Common/Icons';
 import Skeleton from '@Common/Skeleton';
 
+export type Variants = 'default' | 'info';
+
 type BaseProps = {
   heading: string | null;
   subheading: string;
   loading?: boolean;
+  icon?: JSX.Element;
+  variant?: Variants;
 };
 
 type ActionProps =
@@ -16,7 +20,17 @@ type ActionProps =
 
 type Props = BaseProps & ActionProps;
 
-function Task({ heading, subheading, onClick, loading, isClickable }: Props) {
+function Task({
+  heading,
+  subheading,
+  onClick,
+  loading,
+  isClickable,
+  icon: IconComp,
+  variant = 'default',
+}: Props) {
+  const DefaultIcon = IconComp ? IconComp : <LineChartSVG />;
+
   const handleClick = () => {
     if (!isClickable || !onClick) return;
     if (loading) return;
@@ -24,7 +38,7 @@ function Task({ heading, subheading, onClick, loading, isClickable }: Props) {
     return onClick();
   };
   return (
-    <TaskContainer onClick={handleClick} isClickable={isClickable}>
+    <TaskContainer onClick={handleClick} isClickable={isClickable} $variant={variant}>
       {loading ? (
         <>
           <TaskTitle>
@@ -36,7 +50,7 @@ function Task({ heading, subheading, onClick, loading, isClickable }: Props) {
         </>
       ) : (
         <>
-          <LineChartSVG />
+          {DefaultIcon}
           <TaskTitle>{heading}</TaskTitle>
           <SecondaryText>{subheading}</SecondaryText>
         </>

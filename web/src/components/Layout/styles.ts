@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import type * as React from 'react';
 
 export const Left = styled.div`
   min-height: 350px;
@@ -17,7 +18,7 @@ export const Right = styled.div`
 
 export const ContentContainer = styled.div`
   min-height: 350px;
-  padding-bottom: 1rem;
+  padding-bottom: 5rem;
   margin-top: 1.5rem;
   display: flex;
   max-width: 1440px;
@@ -36,4 +37,25 @@ export const ContentContainer = styled.div`
       margin-bottom: 40px;
     }
   }
+`;
+
+type Variants = 1 | 2;
+
+type SectionTitleProps = {
+  variant: Variants;
+  withBorder?: boolean;
+};
+
+export const SectionTitle = styled.h2<SectionTitleProps>`
+  width: 100%;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: ${({ variant }) => (variant === 1 ? '1.5rem' : '1rem')};
+  font-weight: 600;
+
+  ${({ withBorder }) =>
+    withBorder &&
+    css`
+      border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    `}
 `;

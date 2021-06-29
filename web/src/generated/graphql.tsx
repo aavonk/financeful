@@ -27,6 +27,7 @@ export type Query = {
   getTransfer: Transfer;
   getAccounts: Array<Account>;
   getCategories: Array<Category>;
+  getBudget?: Maybe<Budget>;
   getAccountDailyBalances: Array<HistoryObject>;
   getAssetsAndLiabilites: AssetsAndLiabilitesResponse;
   getAggregatedDailyBalances: Array<HistoryObject>;
@@ -53,6 +54,11 @@ export type QueryGetTransferArgs = {
 
 export type QueryGetAccountsArgs = {
   filter?: Maybe<AccountQueryFilters>;
+};
+
+
+export type QueryGetBudgetArgs = {
+  date: MonthAndYear;
 };
 
 
@@ -151,6 +157,35 @@ export type AccountQueryFilters = {
   isInactive: Scalars['Boolean'];
 };
 
+export type Budget = {
+  __typename?: 'Budget';
+  id: Scalars['ID'];
+  month: Scalars['String'];
+  year: Scalars['Int'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  items?: Maybe<Array<BudgetItem>>;
+};
+
+export type BudgetItem = {
+  __typename?: 'BudgetItem';
+  id: Scalars['ID'];
+  amount: Scalars['Int'];
+  budgetAmount: Scalars['Int'];
+  isExpense: Scalars['Boolean'];
+  isIncome: Scalars['Boolean'];
+  isTransfer: Scalars['Boolean'];
+  categoryId: Scalars['ID'];
+  category?: Maybe<Category>;
+  budgetId: Scalars['ID'];
+  budget?: Maybe<Budget>;
+};
+
+export type MonthAndYear = {
+  monthName: Scalars['String'];
+  year: Scalars['Int'];
+};
+
 export type HistoryObject = {
   __typename?: 'HistoryObject';
   /** Date formated in mm/dd/yyyy format */
@@ -221,6 +256,7 @@ export type Mutation = {
   createCategory: CategoryCreateResult;
   updateCategory: Category;
   deleteCategory: Scalars['String'];
+  createBudget: CreateBudgetResponse;
 };
 
 
@@ -303,6 +339,11 @@ export type MutationDeleteCategoryArgs = {
   categoryId: Scalars['String'];
 };
 
+
+export type MutationCreateBudgetArgs = {
+  input: CreateBudgetInput;
+};
+
 export type RegisterInput = {
   displayName: Scalars['String'];
   email: Scalars['String'];
@@ -380,6 +421,30 @@ export type CategoryCreateInput = {
   isHidden: Scalars['Boolean'];
 };
 
+export type CreateBudgetResponse = {
+  __typename?: 'CreateBudgetResponse';
+  data?: Maybe<Budget>;
+  error?: Maybe<ErrorMessage>;
+};
+
+export type ErrorMessage = {
+  __typename?: 'ErrorMessage';
+  message: Scalars['String'];
+};
+
+export type CreateBudgetInput = {
+  month: Scalars['String'];
+  year: Scalars['Int'];
+  items: Array<CreateBudgetItemInput>;
+};
+
+export type CreateBudgetItemInput = {
+  categoryId: Scalars['ID'];
+  budgetAmount: Scalars['Int'];
+  isIncome: Scalars['Boolean'];
+  isExpense: Scalars['Boolean'];
+};
+
 export type GetAccountInsightsQueryVariables = Exact<{
   accountId: Scalars['String'];
 }>;
@@ -446,6 +511,59 @@ export type FetchUserQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'displayName' | 'email' | 'avatar' | 'createdAt'>
   ) }
+);
+
+export type BudgetItemsFragment = (
+  { __typename?: 'Budget' }
+  & { items?: Maybe<Array<(
+    { __typename?: 'BudgetItem' }
+    & Pick<BudgetItem, 'id' | 'amount' | 'budgetAmount' | 'budgetId' | 'isExpense' | 'isIncome' | 'isTransfer'>
+    & { category?: Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'id' | 'description' | 'name'>
+    )> }
+  )>> }
+);
+
+export type CreateBudgetMutationVariables = Exact<{
+  input: CreateBudgetInput;
+}>;
+
+
+export type CreateBudgetMutation = (
+  { __typename?: 'Mutation' }
+  & { createBudget: (
+    { __typename?: 'CreateBudgetResponse' }
+    & { data?: Maybe<(
+      { __typename?: 'Budget' }
+      & Pick<Budget, 'id' | 'month' | 'year' | 'updatedAt'>
+      & { items?: Maybe<Array<(
+        { __typename?: 'BudgetItem' }
+        & Pick<BudgetItem, 'id' | 'amount' | 'budgetAmount' | 'budgetId' | 'isExpense' | 'isIncome' | 'isTransfer'>
+        & { category?: Maybe<(
+          { __typename?: 'Category' }
+          & Pick<Category, 'id' | 'description' | 'name'>
+        )> }
+      )>> }
+    )>, error?: Maybe<(
+      { __typename?: 'ErrorMessage' }
+      & Pick<ErrorMessage, 'message'>
+    )> }
+  ) }
+);
+
+export type GetBudgetQueryVariables = Exact<{
+  date: MonthAndYear;
+}>;
+
+
+export type GetBudgetQuery = (
+  { __typename?: 'Query' }
+  & { getBudget?: Maybe<(
+    { __typename?: 'Budget' }
+    & Pick<Budget, 'id' | 'month' | 'year' | 'updatedAt'>
+    & BudgetItemsFragment
+  )> }
 );
 
 export type CreateCategoryMutationVariables = Exact<{
@@ -823,6 +941,24 @@ export type GetBalanceHistoriesQuery = (
   )> }
 );
 
+export const BudgetItemsFragmentDoc = gql`
+    fragment BudgetItems on Budget {
+  items {
+    id
+    amount
+    budgetAmount
+    budgetId
+    isExpense
+    isIncome
+    isTransfer
+    category {
+      id
+      description
+      name
+    }
+  }
+}
+    `;
 export const TransactionFieldsFragmentDoc = gql`
     fragment TransactionFields on Transaction {
   id
@@ -1035,6 +1171,100 @@ export function useFetchUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type FetchUserQueryHookResult = ReturnType<typeof useFetchUserQuery>;
 export type FetchUserLazyQueryHookResult = ReturnType<typeof useFetchUserLazyQuery>;
 export type FetchUserQueryResult = Apollo.QueryResult<FetchUserQuery, FetchUserQueryVariables>;
+export const CreateBudgetDocument = gql`
+    mutation CreateBudget($input: CreateBudgetInput!) {
+  createBudget(input: $input) {
+    data {
+      id
+      month
+      year
+      updatedAt
+      items {
+        id
+        amount
+        budgetAmount
+        budgetId
+        isExpense
+        isIncome
+        isTransfer
+        category {
+          id
+          description
+          name
+        }
+      }
+    }
+    error {
+      message
+    }
+  }
+}
+    `;
+export type CreateBudgetMutationFn = Apollo.MutationFunction<CreateBudgetMutation, CreateBudgetMutationVariables>;
+
+/**
+ * __useCreateBudgetMutation__
+ *
+ * To run a mutation, you first call `useCreateBudgetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBudgetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBudgetMutation, { data, loading, error }] = useCreateBudgetMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateBudgetMutation(baseOptions?: Apollo.MutationHookOptions<CreateBudgetMutation, CreateBudgetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateBudgetMutation, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
+      }
+export type CreateBudgetMutationHookResult = ReturnType<typeof useCreateBudgetMutation>;
+export type CreateBudgetMutationResult = Apollo.MutationResult<CreateBudgetMutation>;
+export type CreateBudgetMutationOptions = Apollo.BaseMutationOptions<CreateBudgetMutation, CreateBudgetMutationVariables>;
+export const GetBudgetDocument = gql`
+    query GetBudget($date: MonthAndYear!) {
+  getBudget(date: $date) {
+    id
+    month
+    year
+    updatedAt
+    ...BudgetItems
+  }
+}
+    ${BudgetItemsFragmentDoc}`;
+
+/**
+ * __useGetBudgetQuery__
+ *
+ * To run a query within a React component, call `useGetBudgetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBudgetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBudgetQuery({
+ *   variables: {
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useGetBudgetQuery(baseOptions: Apollo.QueryHookOptions<GetBudgetQuery, GetBudgetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBudgetQuery, GetBudgetQueryVariables>(GetBudgetDocument, options);
+      }
+export function useGetBudgetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBudgetQuery, GetBudgetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBudgetQuery, GetBudgetQueryVariables>(GetBudgetDocument, options);
+        }
+export type GetBudgetQueryHookResult = ReturnType<typeof useGetBudgetQuery>;
+export type GetBudgetLazyQueryHookResult = ReturnType<typeof useGetBudgetLazyQuery>;
+export type GetBudgetQueryResult = Apollo.QueryResult<GetBudgetQuery, GetBudgetQueryVariables>;
 export const CreateCategoryDocument = gql`
     mutation CreateCategory($input: CategoryCreateInput!) {
   createCategory(input: $input) {

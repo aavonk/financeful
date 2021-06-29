@@ -1,0 +1,9 @@
+query GetBudget($date: MonthAndYear!) {
+  getBudget(date: $date) {
+    id
+    month
+    year
+    updatedAt
+    ...BudgetItems
+  }
+}

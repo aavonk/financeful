@@ -1,6 +1,0 @@
-https://stackoverflow.com/questions/65667037/connect-to-existing-instance-of-postgresql-from-wsl-2
-
-
-Connecting to Postgres through wsl
-
-https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql
